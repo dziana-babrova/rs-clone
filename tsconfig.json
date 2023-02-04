@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+        "target": "es2016" /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */,
+        "resolveJsonModule": true,
+        "moduleResolution": "node",
+        "esModuleInterop": true /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables 'allowSyntheticDefaultImports' for type compatibility. */,
+        "forceConsistentCasingInFileNames": true,
+        // "moduleResolution": "node",           /* Ensure that casing is correct in imports. */
+
+        /* Type Checking */
+        "strict": true /* Enable all strict type-checking options. */,
+        "noImplicitAny": true /* Enable error reporting for expressions and declarations with an implied 'any' type. */,
+        "skipLibCheck": true,
+        "baseUrl": "src",
+        "paths": {
+            "assets": ["assets/", "common/"],
+        } /* Skip type checking all .d.ts files. */
+    },
+    "buildOptions": {
+        "exclude": ["node_modules", "dist"]
+    }
+}
