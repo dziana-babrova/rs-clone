@@ -1,13 +1,11 @@
 import Phaser from 'phaser';
+import { TextObjectProps } from 'types/types';
 
 export default class ProgressPercentText extends Phaser.GameObjects.Text {
-  constructor(
-    scene: Phaser.Scene,
-    x: number,
-    y: number,
-    text: string,
-    style: Phaser.Types.GameObjects.Text.TextStyle,
-  ) {
+  constructor(scene: Phaser.Scene, textObject: TextObjectProps) {
+    const {
+      x, y, text, style,
+    } = textObject;
     super(scene, x, y, text, style);
     const { width, height } = scene.cameras.main;
     this.x = width / 2;

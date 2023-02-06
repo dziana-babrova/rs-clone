@@ -29,16 +29,14 @@ export default class PreloadScene extends Phaser.Scene {
   }
 
   public preload(): void {
-    // to test
-    // this.load.image('logo', 'saw.png');
-    // for (let i = 0; i < 500; i += 1) {
-    //   this.load.image(`logo: ${i}`, 'saw.png');
-    // }
+    this.load.image('logo', 'saw.png');
+    for (let i = 0; i < 500; i += 1) {
+      this.load.image(`logo: ${i}`, 'saw.png');
+    }
   }
 
   public create(): void {
-    // to test
-    // const logo = this.add.image(this.scale.width / 2, this.scale.height / 2, 'logo');
+    this.add.text(this.scale.width / 2, this.scale.height / 2, 'Loaded').setOrigin(0.5, 0.5);
   }
 
   private trackProgress(value: number): void {
@@ -51,24 +49,41 @@ export default class PreloadScene extends Phaser.Scene {
   }
 
   private removeLoader(): void {
-    this.progressBar.destroy();
-    this.progressBox.destroy();
     this.progressText.destroy();
     this.progressPercentText.destroy();
     this.progressAssets.destroy();
+    this.progressBar.destroy();
+    this.progressBox.destroy();
   }
 
   createLoader() {
     this.progressBar = new ProgressBar(this);
     this.progressBox = new ProgressBox(this);
-    this.progressText = new ProgressText(this, 0, 0, 'Loading...', {
-      font: '20px monospace',
+    this.progressText = new ProgressText(this, {
+      x: 0,
+      y: 0,
+      text: 'Loading...',
+      style: {
+        font: '20px monospace',
+      },
     });
-    this.progressPercentText = new ProgressPercentText(this, 0, 0, '0%', {
-      font: '18px monospace',
+
+    this.progressPercentText = new ProgressPercentText(this, {
+      x: 0,
+      y: 0,
+      text: '0%',
+      style: {
+        font: '18px monospace',
+      },
     });
-    this.progressAssets = new ProgressAssets(this, 0, 0, '', {
-      font: '18px monospace',
+
+    this.progressAssets = new ProgressAssets(this, {
+      x: 0,
+      y: 0,
+      text: '',
+      style: {
+        font: '18px monospace',
+      },
     });
   }
 }
