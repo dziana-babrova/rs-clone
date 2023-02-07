@@ -5,6 +5,7 @@ import PreloadScene from './scenes/PreloadScene';
 
 const config: Types.Core.GameConfig = {
   type: AUTO,
+  parent: 'app',
   width: gameConfig.screenWidth,
   height: gameConfig.screenHeight,
   backgroundColor: gameConfig.backgroundColor,
@@ -24,4 +25,5 @@ const config: Types.Core.GameConfig = {
   },
 };
 
-const g = new Game(config);
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const game = new Game(config);
