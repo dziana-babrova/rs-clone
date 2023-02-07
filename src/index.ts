@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import GameScene from 'scenes/game-scene/GameScene';
 import PreloadScene from 'scenes/preload-scene/PreloadScene';
 
 const config = {
@@ -13,7 +14,7 @@ const config = {
       debug: true,
     },
   },
-  scene: [PreloadScene],
+  scene: [PreloadScene, GameScene],
 };
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

@@ -1,3 +1,5 @@
+import platfrom from 'assets/tiles.png';
+import texture from 'assets/tiles.json';
 import SceneKeys from 'const/SceneKeys';
 import Phaser from 'phaser';
 import ProgressAssets from './components/ProgressAssets';
@@ -29,14 +31,13 @@ export default class PreloadScene extends Phaser.Scene {
   }
 
   public preload(): void {
-    this.load.image('logo', 'saw.png');
-    for (let i = 0; i < 500; i += 1) {
-      this.load.image(`logo: ${i}`, 'saw.png');
-    }
+    this.load.atlas('platforms', platfrom, texture);
   }
 
   public create(): void {
     this.add.text(this.scale.width / 2, this.scale.height / 2, 'Loaded').setOrigin(0.5, 0.5);
+
+    this.scene.start(SceneKeys.Game);
   }
 
   private trackProgress(value: number): void {
