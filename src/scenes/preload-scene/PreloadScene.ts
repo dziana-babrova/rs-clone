@@ -31,12 +31,12 @@ export default class PreloadScene extends Phaser.Scene {
   }
 
   public preload(): void {
+    this.load.image('ball', '../assets/Golf-Ball-big.png');
     this.load.atlas('platforms', platfrom, texture);
   }
 
   public create(): void {
     this.add.text(this.scale.width / 2, this.scale.height / 2, 'Loaded').setOrigin(0.5, 0.5);
-
     this.scene.start(SceneKeys.Game);
   }
 

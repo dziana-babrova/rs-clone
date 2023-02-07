@@ -1,9 +1,17 @@
+import Ball from 'components/Ball';
 import SceneKeys from 'const/SceneKeys';
 import Phaser from 'phaser';
+import Trajectory from 'components/Trajectory';
+import HitHandler from 'handlers/HitHandler';
+import { IComponent, IComponentManager } from 'types/types';
 import Map from './components/Map';
 import TilesGroup from './components/PlatfromGroup';
 
-export default class GameScene extends Phaser.Scene {
+export default class GameScene extends Phaser.Scene implements IComponentManager {
+  components: IComponent[] = [];
+
+  public hitHandler!: HitHandler;
+
   level!: number;
 
   map!: Map;
@@ -23,6 +31,20 @@ export default class GameScene extends Phaser.Scene {
       this,
       map.info.filter((el) => el.type === 'tile'),
     );
-    // const slope = new
+
+    this.matter.world.setBounds();
+    const trajectory = new Trajectory(this);
+    const ball = new Ball(this, { x: 100, y: 0 });
+    this.addComponents(trajectory, ball);
+    this.hitHandler = new HitHandler(this, ball, trajectory);
+  }
+
+  update() {
+    this.components.forEach((el) => el.update());
+    this.hitHandler.update();
+  }
+
+  addComponents(...args: IComponent[]) {
+    args.forEach((el) => this.components.push(el));
   }
 }
