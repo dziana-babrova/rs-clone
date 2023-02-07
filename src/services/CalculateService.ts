@@ -1,4 +1,4 @@
-import { ballSettings } from 'constants/constants';
+import { ballSettings } from 'const/constants';
 import { Position } from 'types/types';
 
 export default class CalculateService {

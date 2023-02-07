@@ -1,4 +1,4 @@
-import { ballSettings } from 'constants/constants';
+import { ballSettings } from 'const/constants';
 import { Scene } from 'phaser';
 import { IComponent, Position } from 'types/types';
 import BallText from './BallText';

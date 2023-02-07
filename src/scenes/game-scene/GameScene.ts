@@ -1,5 +1,6 @@
 import Ball from 'components/Ball';
 import Trajectory from 'components/Trajectory';
+import SceneKeys from 'const/SceneKeys';
 import HitHandler from 'handlers/HitHandler';
 import { IComponent, IComponentManager } from 'types/types';
 
@@ -9,7 +10,7 @@ export default class GameScene extends Phaser.Scene implements IComponentManager
   public hitHandler!: HitHandler;
 
   constructor() {
-    super('GameScene');
+    super(SceneKeys.Game);
   }
 
   create() {

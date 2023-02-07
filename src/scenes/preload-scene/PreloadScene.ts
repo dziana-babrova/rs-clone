@@ -33,10 +33,12 @@ export default class PreloadScene extends Phaser.Scene {
     for (let i = 0; i < 500; i += 1) {
       this.load.image(`logo: ${i}`, 'saw.png');
     }
+    this.load.image('ball', '../assets/Golf-Ball-big.png');
   }
 
   public create(): void {
     this.add.text(this.scale.width / 2, this.scale.height / 2, 'Loaded').setOrigin(0.5, 0.5);
+    this.scene.start(SceneKeys.Game);
   }
 
   private trackProgress(value: number): void {

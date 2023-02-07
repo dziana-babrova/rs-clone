@@ -1,4 +1,4 @@
-import { ballSettings, trajectorySettings } from 'constants/constants';
+import { ballSettings, trajectorySettings } from 'const/constants';
 import { GameObjects, Scene } from 'phaser';
 import CalculateService from 'services/CalculateService';
 import EventNames from 'types/events';

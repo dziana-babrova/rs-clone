@@ -1,4 +1,4 @@
-import { ballText } from 'constants/constants';
+import { ballText } from 'const/constants';
 import { GameObjects, Scene } from 'phaser';
 
 export default class BallText extends GameObjects.Text {

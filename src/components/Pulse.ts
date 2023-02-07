@@ -1,4 +1,4 @@
-import { pulseSettings } from 'constants/constants';
+import { pulseSettings } from 'const/constants';
 import { GameObjects, Scene } from 'phaser';
 
 export default class Pulse extends GameObjects.Arc {
