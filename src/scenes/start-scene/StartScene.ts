@@ -8,7 +8,11 @@ import TextButton from './components/TextButton';
 export default class StartScene extends Phaser.Scene {
   centerX!: number;
 
+  music!: Phaser.Sound.BaseSound;
+
   logoGroup!: LogoGroup;
+
+  startSceneBtns!: Phaser.GameObjects.Group;
 
   btnStartSingleGame!: TextButton;
 
@@ -26,6 +30,7 @@ export default class StartScene extends Phaser.Scene {
 
   constructor() {
     super(SceneKeys.Start);
+    this.startSceneBtns = new Phaser.GameObjects.Group(this);
   }
 
   public init(): void {
@@ -41,25 +46,66 @@ export default class StartScene extends Phaser.Scene {
 
     this.logoGroup = new LogoGroup(this);
 
-    this.createButtons();
+    this.createStartSceneButtons();
 
     await Promise.all([
-      this.logoGroup.move(),
-      this.moveBtnStartSingleGame(),
-      this.moveBtnStartOnlineGame(),
+      this.logoGroup.show(),
+      this.showBtnStartSingleGame(),
+      this.showBtnStartOnlineGame(),
       this.showBtnSignIn(),
       this.showBtnSettings(),
     ]);
 
+    this.music = this.sound.add('music', {
+      volume: 0.2,
+      loop: true,
+    });
+    this.music.play();
+
     this.initEvents();
   }
 
-  initEvents() {
+  private initEvents(): void {
     this.btnStartSingleGame.on('pointerdown', this.startSingleGame.bind(this));
     this.btnStartOnlineGame.on('pointerdown', this.startOnlineGame.bind(this));
+    this.btnLevels.background.on('pointerdown', this.showLevels.bind(this));
+    this.btnLandscape.background.on('pointerdown', this.showLandscape.bind(this));
+    this.btnWinners.background.on('pointerdown', this.showWinners.bind(this));
+    this.btnSound.background.on('pointerdown', this.onOffSound.bind(this));
   }
 
-  moveBtnStartSingleGame() {
+  private onOffSound(): void {
+    if (this.music.isPlaying) {
+      this.btnSound.icon.setTexture('sound-off');
+      this.music.pause();
+      return;
+    }
+    this.btnSound.icon.setTexture('sound-on');
+    this.music.play();
+  }
+
+  private async showLevels() {
+    await Promise.all([
+      this.hideStartSceneBtns(),
+      // this.levels.show(),
+    ]);
+  }
+
+  private async showLandscape() {
+    await Promise.all([
+      this.hideStartSceneBtns(),
+      // this.landscape.show(),
+    ]);
+  }
+
+  private async showWinners() {
+    await Promise.all([
+      this.hideStartSceneBtns(),
+      // this.winners.show(),
+    ]);
+  }
+
+  private showBtnStartSingleGame(): Promise<void> {
     return new Promise((animationResolve) => {
       this.tweens.add({
         targets: this.btnStartSingleGame,
@@ -72,7 +118,7 @@ export default class StartScene extends Phaser.Scene {
     });
   }
 
-  moveBtnStartOnlineGame() {
+  private showBtnStartOnlineGame(): Promise<void> {
     return new Promise((animationResolve) => {
       this.tweens.add({
         targets: this.btnStartOnlineGame,
@@ -85,7 +131,7 @@ export default class StartScene extends Phaser.Scene {
     });
   }
 
-  showBtnSignIn() {
+  private showBtnSignIn(): Promise<void> {
     return new Promise((animationResolve) => {
       this.tweens.add({
         targets: this.btnSignIn,
@@ -98,7 +144,7 @@ export default class StartScene extends Phaser.Scene {
     });
   }
 
-  showBtnSettings() {
+  private showBtnSettings(): Promise<void> {
     return new Promise((animationResolve) => {
       this.tweens.add({
         targets: [
@@ -115,14 +161,41 @@ export default class StartScene extends Phaser.Scene {
     });
   }
 
-  startSingleGame() {
+  private showStartSceneBtns(): Promise<void> {
+    return new Promise((animationResolve) => {
+      this.tweens.add({
+        targets: this.startSceneBtns.getChildren(),
+        ease: 'Back', // 'Linear', 'Cubic', 'Elastic', 'Bounce', 'Back'
+        x: `-=${START_SCENE.btnStartOnlineGame.moveX}`,
+        duration: 1000,
+        delay: 100,
+        onComplete: animationResolve,
+      });
+    });
   }
 
-  startOnlineGame() {
+  private hideStartSceneBtns(): Promise<void> {
+    return new Promise((animationResolve) => {
+      this.tweens.add({
+        targets: this.startSceneBtns.getChildren(),
+        ease: 'Back', // 'Linear', 'Cubic', 'Elastic', 'Bounce', 'Back'
+        x: `+=${START_SCENE.btnStartOnlineGame.moveX}`,
+        duration: 1000,
+        delay: 100,
+        onComplete: animationResolve,
+      });
+    });
+  }
+
+  private startSingleGame(): void {
+    this.scene.start(SceneKeys.Game);
+  }
+
+  private startOnlineGame(): void {
 
   }
 
-  createButtons() {
+  private createStartSceneButtons(): void {
     this.btnStartSingleGame = new TextButton(
       this,
       {
@@ -193,7 +266,7 @@ export default class StartScene extends Phaser.Scene {
 
     this.btnSound = new IconButton(
       this,
-      START_SCENE.btnSettings.type.sound,
+      'sound-on',
       {
         x: this.centerX
           + START_SCENE.btnSettings.btnSettingsParams.width
@@ -203,5 +276,18 @@ export default class StartScene extends Phaser.Scene {
       },
       START_SCENE.btnSettings.btnSettingsParams,
     );
+
+    [
+      this.btnStartSingleGame,
+      this.btnStartOnlineGame,
+      ...this.btnLevels.getChildren(),
+      ...this.btnLandscape.getChildren(),
+      ...this.btnWinners.getChildren(),
+      ...this.btnSound.getChildren(),
+    ].forEach((obj) => {
+      this.startSceneBtns.add(obj, true);
+    });
+
+    this.add.existing(this.startSceneBtns);
   }
 }

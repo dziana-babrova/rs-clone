@@ -46,7 +46,7 @@ export default class LogoGroup extends Phaser.GameObjects.Group {
     scene.add.existing(this);
   }
 
-  move() {
+  show() {
     return new Promise((animationResolve) => {
       this.scene.tweens.add({
         targets: this.getChildren(),

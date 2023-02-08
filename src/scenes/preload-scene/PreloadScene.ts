@@ -30,12 +30,19 @@ export default class PreloadScene extends Phaser.Scene {
   }
 
   public preload(): void {
-    this.load.image('logo', 'logo.png');
-    this.load.image('eng', 'eng.png');
+    this.load.image('logo', '../assets/logo.png');
+    this.load.image('eng', '../assets/eng.png');
     this.load.image('ball', '../assets/Golf-Ball-big.png');
 
+    this.load.audio('music', '../assets/music.mp3');
+
     Object.values(START_SCENE.btnSettings.type).forEach((btn) => {
-      this.load.image(btn, `${btn}.svg`);
+      if (btn === 'sound') {
+        this.load.image(`${btn}-on`, `../assets/${btn}-on.svg`);
+        this.load.image(`${btn}-off`, `../assets/${btn}-off.svg`);
+      } else {
+        this.load.image(btn, `../assets/${btn}.svg`);
+      }
     });
   }
 
