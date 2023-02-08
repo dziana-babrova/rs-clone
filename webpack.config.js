@@ -59,7 +59,7 @@ const baseConfig = {
     new MiniCssExtractPlugin({}),
     new CopyPlugin({
       patterns: [
-        { from: 'src/assets', to: '' },
+        { from: 'src/assets', to: 'assets' },
       ],
     }),
   ],
