@@ -1,13 +1,13 @@
 import { LevelElements, Level } from 'types/types';
-import config from 'const/TileConfig';
-import { Levels } from './levels';
+import config from 'const/tileConfig';
+import { Levels } from 'const/levels';
 
 export default class Map {
-  public info: LevelElements[];
+  public mapElements: LevelElements[];
 
   constructor(currentLevel: number, tileSize: number) {
     const map = Levels[currentLevel];
-    this.info = this.createLevelConfig(map, tileSize);
+    this.mapElements = this.createLevelConfig(map, tileSize);
   }
 
   private createLevelConfig(levelScheme: Level, tileSize: number) {

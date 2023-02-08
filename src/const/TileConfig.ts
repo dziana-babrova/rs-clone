@@ -46,7 +46,7 @@ const config: TilesConfig = {
     texture: 'hole-center.png',
   },
   '!': {
-    type: 'slope',
+    type: 'tile',
     texture: 'connector-left-bootom.png',
   },
   '/': {

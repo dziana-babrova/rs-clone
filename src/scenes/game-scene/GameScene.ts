@@ -4,8 +4,7 @@ import Phaser from 'phaser';
 import Trajectory from 'components/Trajectory';
 import HitHandler from 'handlers/HitHandler';
 import { IComponent, IComponentManager } from 'types/types';
-import Map from './components/Map';
-import TilesGroup from './components/PlatfromGroup';
+import WorldBuilder from './WorldBuilder';
 
 export default class GameScene extends Phaser.Scene implements IComponentManager {
   components: IComponent[] = [];
@@ -14,10 +13,11 @@ export default class GameScene extends Phaser.Scene implements IComponentManager
 
   level!: number;
 
-  map!: Map;
+  worldBuilder: WorldBuilder;
 
   constructor() {
     super(SceneKeys.Game);
+    this.worldBuilder = new WorldBuilder(this);
   }
 
   init(props: { level?: number }) {
@@ -26,11 +26,8 @@ export default class GameScene extends Phaser.Scene implements IComponentManager
   }
 
   create() {
-    const map = new Map(this.level, 41);
-    const ground = new TilesGroup(
-      this,
-      map.info.filter((el) => el.type === 'tile'),
-    );
+    const world = this.worldBuilder.build(this.level, 41);
+    console.log(world);
 
     this.matter.world.setBounds();
     const trajectory = new Trajectory(this);

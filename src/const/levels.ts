@@ -24,6 +24,7 @@ const level0: Level = [
   '',
   '',
   '',
+  '',
   'TTTT',
   '....',
   '....                         /TTTT',
