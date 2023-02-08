@@ -30,23 +30,18 @@ export default class PreloadScene extends Phaser.Scene {
   }
 
   public preload(): void {
-    // to test
     this.load.image('logo', 'logo.png');
-    this.load.image('ball', 'ball.png');
     this.load.image('eng', 'eng.png');
+    this.load.image('ball', '../assets/Golf-Ball-big.png');
 
     Object.values(START_SCENE.btnSettings.type).forEach((btn) => {
       this.load.image(btn, `${btn}.svg`);
     });
-    // for (let i = 0; i < 1000; i += 1) {
-    //   this.load.image(`logo: ${i}`, 'saw.png');
-    // }
   }
 
   public create(): void {
-    // to test
+    this.add.text(this.scale.width / 2, this.scale.height / 2, 'Loaded').setOrigin(0.5, 0.5);
     this.scene.start(SceneKeys.Start);
-    // const logo = this.add.image(this.scale.width / 2, this.scale.height / 2, 'logo');
   }
 
   private trackProgress(value: number): void {
@@ -59,24 +54,41 @@ export default class PreloadScene extends Phaser.Scene {
   }
 
   private removeLoader(): void {
-    this.progressBar.destroy();
-    this.progressBox.destroy();
     this.progressText.destroy();
     this.progressPercentText.destroy();
     this.progressAssets.destroy();
+    this.progressBar.destroy();
+    this.progressBox.destroy();
   }
 
   createLoader() {
     this.progressBar = new ProgressBar(this);
     this.progressBox = new ProgressBox(this);
-    this.progressText = new ProgressText(this, 0, 0, 'Loading...', {
-      font: '20px monospace',
+    this.progressText = new ProgressText(this, {
+      x: 0,
+      y: 0,
+      text: 'Loading...',
+      style: {
+        font: '20px monospace',
+      },
     });
-    this.progressPercentText = new ProgressPercentText(this, 0, 0, '0%', {
-      font: '18px monospace',
+
+    this.progressPercentText = new ProgressPercentText(this, {
+      x: 0,
+      y: 0,
+      text: '0%',
+      style: {
+        font: '18px monospace',
+      },
     });
-    this.progressAssets = new ProgressAssets(this, 0, 0, '', {
-      font: '18px monospace',
+
+    this.progressAssets = new ProgressAssets(this, {
+      x: 0,
+      y: 0,
+      text: '',
+      style: {
+        font: '18px monospace',
+      },
     });
   }
 }

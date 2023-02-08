@@ -1,24 +1,31 @@
-import Phaser from 'phaser';
+import gameConfig from 'gameConfig';
+import { Game, Types, AUTO } from 'phaser';
 import PreloadScene from 'scenes/preload-scene/PreloadScene';
 import StartScene from 'scenes/start-scene/StartScene';
+import GameScene from './scenes/game-scene/GameScene';
 
-const config = {
-  type: Phaser.AUTO,
+const config: Types.Core.GameConfig = {
+  type: AUTO,
   parent: 'app',
-  width: 1366,
-  height: 768,
-  physics: {
-    default: 'arcade',
-    arcade: {
-      gravity: { y: 200 },
-      debug: true,
-    },
-  },
+  width: gameConfig.screenWidth,
+  height: gameConfig.screenHeight,
+  backgroundColor: gameConfig.backgroundColor,
   scene: [
     PreloadScene,
     StartScene,
+    GameScene,
   ],
+  scale: {
+    mode: Phaser.Scale.FIT,
+  },
+  physics: {
+    default: 'matter',
+    matter: {
+      debug: true,
+      gravity: true,
+    },
+  },
 };
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const game = new Phaser.Game(config);
+const game = new Game(config);
