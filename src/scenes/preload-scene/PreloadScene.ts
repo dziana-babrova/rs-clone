@@ -1,4 +1,5 @@
 import SceneKeys from 'const/SceneKeys';
+import START_SCENE from 'const/StartSceneConst';
 import Phaser from 'phaser';
 import ProgressAssets from './components/ProgressAssets';
 import ProgressBar from './components/ProgressBar';
@@ -30,14 +31,21 @@ export default class PreloadScene extends Phaser.Scene {
 
   public preload(): void {
     // to test
-    // this.load.image('logo', 'saw.png');
-    // for (let i = 0; i < 500; i += 1) {
+    this.load.image('logo', 'logo.png');
+    this.load.image('ball', 'ball.png');
+    this.load.image('eng', 'eng.png');
+
+    Object.values(START_SCENE.btnSettings.type).forEach((btn) => {
+      this.load.image(btn, `${btn}.svg`);
+    });
+    // for (let i = 0; i < 1000; i += 1) {
     //   this.load.image(`logo: ${i}`, 'saw.png');
     // }
   }
 
   public create(): void {
     // to test
+    this.scene.start(SceneKeys.Start);
     // const logo = this.add.image(this.scale.width / 2, this.scale.height / 2, 'logo');
   }
 
