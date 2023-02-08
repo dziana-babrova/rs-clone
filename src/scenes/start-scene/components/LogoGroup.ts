@@ -28,7 +28,7 @@ export default class LogoGroup extends Phaser.GameObjects.Group {
       -START_SCENE.logoGroup.moveY + START_SCENE.subtitle.y,
       START_SCENE.subtitle.text.eng,
       {
-        fontFamily: 'monospace',
+        fontFamily: 'Montserrat',
         fontSize: `${START_SCENE.subtitle.textSize}px`,
         align: 'center',
         color: START_SCENE.subtitle.color,

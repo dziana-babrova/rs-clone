@@ -1,6 +1,6 @@
 import { ColorsNumber } from 'const/Colors';
-import { IconButtonParams, Position } from 'const/StartSceneConst';
 import Phaser from 'phaser';
+import { IconButtonParams, Position } from 'types/types';
 
 export default class IconButton extends Phaser.GameObjects.Group {
   background: Phaser.GameObjects.Rectangle;

@@ -1,28 +1,5 @@
+import { Language } from 'types/types';
 import Colors, { ColorsNumber } from './Colors';
-
-export type Position = {
-  x: number,
-  y: number,
-};
-
-export type TextButtonParams = {
-  text: {
-    eng: string;
-    ru: string;
-  }
-  width: number,
-  textSize: number;
-  textColor: Colors;
-  bgColor: Colors;
-  hoverBgColor: Colors;
-};
-
-export type IconButtonParams = {
-  width: number;
-  height: number;
-  bgColor: ColorsNumber;
-  hoverBgColor: ColorsNumber;
-};
 
 const START_SCENE = {
   logoGroup: {
@@ -84,6 +61,17 @@ const START_SCENE = {
     hoverBgColor: Colors.BlueDark,
     y: 40,
   },
+  btnLang: {
+    textura: {
+      eng: 'eng',
+      ru: 'ru',
+    },
+    nextLang: {
+      eng: Language.ru,
+      ru: Language.eng,
+    },
+    y: 60,
+  },
   btnSettings: {
     type: {
       levels: 'levels',
@@ -98,6 +86,28 @@ const START_SCENE = {
       height: 75,
       bgColor: ColorsNumber.Blue,
       hoverBgColor: ColorsNumber.BlueDark,
+    },
+  },
+  winners: {
+    text: {
+      eng: 'Winners',
+      ru: 'Победители',
+    },
+    textSize: 32,
+    color: Colors.Pink,
+    moveX: 1000,
+    y: 275,
+  },
+  landscape: {
+    text: {
+      eng: 'Landscape',
+      ru: 'Изображения',
+    },
+  },
+  levels: {
+    text: {
+      eng: 'Levels',
+      ru: 'Уровни',
     },
   },
 };

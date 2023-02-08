@@ -1,6 +1,6 @@
 import Colors from 'const/Colors';
-import { TextButtonParams } from 'const/StartSceneConst';
 import Phaser from 'phaser';
+import { TextButtonParams } from 'types/types';
 
 type Position = {
   x: number,
@@ -15,7 +15,7 @@ export default class TextButton extends Phaser.GameObjects.Text {
   constructor(scene: Phaser.Scene, coords: Position, params: TextButtonParams) {
     const lang = 'eng';
     super(scene, coords.x, coords.y, params.text[lang], {
-      fontFamily: 'monospace',
+      fontFamily: 'Montserrat',
       fontSize: `${params.textSize}px`,
       backgroundColor: params.bgColor,
       color: params.textColor,

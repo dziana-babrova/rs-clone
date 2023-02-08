@@ -4,6 +4,8 @@ import PreloadScene from 'scenes/preload-scene/PreloadScene';
 import StartScene from 'scenes/start-scene/StartScene';
 import GameScene from './scenes/game-scene/GameScene';
 
+import './styles/fonts.scss';
+
 const config: Types.Core.GameConfig = {
   type: AUTO,
   parent: 'app',
