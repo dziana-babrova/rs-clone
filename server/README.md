@@ -58,11 +58,11 @@ None
 ```json
 {
 
-email: string,
+"email": "test@test.test",
 
-username: string,
+"username": "testname",
 
-password: string
+"password": "password"
 
 }
 ```
@@ -199,7 +199,18 @@ None
 
 * **Data Params**
 
-None
+```json
+
+{
+
+"email": "test@test.test",
+"password": "password"
+ 
+}
+
+}
+
+```
 
 * **Success Response:**
 
