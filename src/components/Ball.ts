@@ -23,7 +23,7 @@ export default class Ball extends Phaser.Physics.Matter.Sprite implements ICompo
   }
 
   private setBallBody() {
-    const props = ballSettings.ballProps;
+    const props = ballSettings.BALL_PROPS;
     this.displayHeight = props.circleRadius * 2;
     this.displayWidth = props.circleRadius * 2;
     this.setCircle(props.circleRadius);
@@ -35,6 +35,7 @@ export default class Ball extends Phaser.Physics.Matter.Sprite implements ICompo
   }
 
   update(): void {
+    if (!this.body) return;
     const isStopped = Math.abs(this.body.velocity.x) < 0.1 && Math.abs(this.body.velocity.y) < 0.1;
     if (this.isStopped !== isStopped) {
       this.isStopped = isStopped;

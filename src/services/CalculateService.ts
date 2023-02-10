@@ -15,11 +15,17 @@ export default class CalculateService {
     angle: number,
     distance: number,
   ): { velocityX: number; velocityY: number } {
-    const cos = Math.cos(angle);
-    const sin = Math.sin(angle);
+    const mouseVelocityX = Math.cos(angle) * distance * ballSettings.SPEED;
+    const mouseVelocityY = Math.sin(angle) * distance * ballSettings.SPEED;
     return {
-      velocityX: cos * distance * ballSettings.SPEED,
-      velocityY: sin * distance * ballSettings.SPEED,
+      velocityX: CalculateService.calculateMaxVelocity(mouseVelocityX),
+      velocityY: CalculateService.calculateMaxVelocity(mouseVelocityY),
     };
+  }
+
+  private static calculateMaxVelocity(velocity: number){
+    return velocity > 0 ?
+      Math.min(velocity, ballSettings.MAX_SPEED) :
+      Math.max(velocity, -ballSettings.MAX_SPEED);
   }
 }

@@ -1,8 +1,9 @@
 export const ballSettings = {
   SPEED: 0.1,
+  MAX_SPEED: 25,
   DEFAULT_ANGLE: -1,
   DEFAULT_DISTANCE: 100,
-  ballProps: {
+  BALL_PROPS: {
     label: 'ball',
     bounce: 0.2,
     friction: 0.7,
