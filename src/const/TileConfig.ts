@@ -26,7 +26,7 @@ const config: TilesConfig = {
     texture: 'hole-black-right.png',
   },
   '|': {
-    type: 'tile',
+    type: 'hole',
     texture: 'hole-black.png',
   },
   T: {
@@ -42,7 +42,7 @@ const config: TilesConfig = {
     texture: 'hole-end-right.png',
   },
   '+': {
-    type: 'tile',
+    type: 'hole',
     texture: 'hole-center.png',
   },
   '!': {
@@ -50,28 +50,24 @@ const config: TilesConfig = {
     texture: 'connector-left-bootom.png',
   },
   '/': {
-    type: 'slope',
+    type: 'slope-left',
     texture: 'left.png',
+  },
+  '?': {
+    type: 'tile',
+    texture: 'connector-right-bottom.png',
+  },
+  '\\': {
+    type: 'slope-right',
+    texture: 'right.png',
   },
   G: {
     type: 'goal',
     texture: 'goal',
   },
   O: {
-    type: 'coin',
-    texture: 'coin',
-  },
-  S: {
-    type: 'enemy',
-    texture: 'slime',
-  },
-  B: {
-    type: 'enemy',
-    texture: 'bee',
-  },
-  P: {
-    type: 'player',
-    texture: 'player',
+    type: 'star',
+    texture: 'star.png',
   },
 };
 

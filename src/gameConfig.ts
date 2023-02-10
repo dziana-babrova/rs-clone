@@ -1,5 +1,5 @@
 export default {
   screenWidth: 1366,
   screenHeight: 768,
-  backgroundColor: '#000000',
+  backgroundColor: '#6CE1ED',
 };

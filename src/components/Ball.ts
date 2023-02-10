@@ -26,7 +26,7 @@ export default class Ball extends Phaser.Physics.Matter.Sprite implements ICompo
     const props = ballSettings.ballProps;
     this.displayHeight = props.circleRadius * 2;
     this.displayWidth = props.circleRadius * 2;
-    this.setCircle(props.circleRadius / 1.5);
+    this.setCircle(props.circleRadius);
     this.setBounce(props.bounce);
     this.setFrictionAir(props.frictionAir);
     this.setFriction(props.friction);

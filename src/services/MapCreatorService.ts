@@ -2,7 +2,7 @@ import { LevelElements, Level } from 'types/types';
 import config from 'const/tileConfig';
 import { Levels } from 'const/levels';
 
-export default class Map {
+export default class MapCreatorService {
   public mapElements: LevelElements[];
 
   constructor(currentLevel: number, tileSize: number) {
@@ -11,7 +11,6 @@ export default class Map {
   }
 
   private createLevelConfig(levelScheme: Level, tileSize: number) {
-    console.log(levelScheme);
     const levelElements: LevelElements[] = [];
     levelScheme.forEach((row, y) => {
       for (let i = 0; i < row.length; i += 1) {

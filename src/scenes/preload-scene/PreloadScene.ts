@@ -1,5 +1,5 @@
-import platfrom from 'assets/tiles.png';
-import texture from 'assets/tiles.json';
+import platfrom from 'assets/platforms.png';
+import texture from 'assets/platforms.json';
 import SceneKeys from 'const/SceneKeys';
 import Phaser from 'phaser';
 import ProgressAssets from './components/ProgressAssets';

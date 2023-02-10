@@ -5,6 +5,7 @@ import Trajectory from 'components/Trajectory';
 import HitHandler from 'handlers/HitHandler';
 import { IComponent, IComponentManager } from 'types/types';
 import WorldBuilder from './WorldBuilder';
+import NextLevelButton from './components/NextLevelButton';
 
 export default class GameScene extends Phaser.Scene implements IComponentManager {
   components: IComponent[] = [];
@@ -14,6 +15,8 @@ export default class GameScene extends Phaser.Scene implements IComponentManager
   level!: number;
 
   worldBuilder: WorldBuilder;
+
+  nextLevelButton!: NextLevelButton;
 
   constructor() {
     super(SceneKeys.Game);
@@ -26,8 +29,9 @@ export default class GameScene extends Phaser.Scene implements IComponentManager
   }
 
   create() {
-    const world = this.worldBuilder.build(this.level, 41);
-    console.log(world);
+    this.worldBuilder.build(this.level, 41);
+    this.nextLevelButton = new NextLevelButton(this);
+    this.nextLevelButton.on('pointerup', this.switchLevel.bind(this));
 
     this.matter.world.setBounds();
     const trajectory = new Trajectory(this);
@@ -43,5 +47,15 @@ export default class GameScene extends Phaser.Scene implements IComponentManager
 
   addComponents(...args: IComponent[]) {
     args.forEach((el) => this.components.push(el));
+  }
+
+  switchLevel() {
+    this.cameras.main.fadeOut();
+    this.time.addEvent({
+      delay: 2000,
+      callback: () => {
+        this.scene.restart({ level: (this.level += 1) });
+      },
+    });
   }
 }

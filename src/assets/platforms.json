@@ -1,9 +1,9 @@
 {
   "frames": {
-    "platform-1/hole-black-right.png": {
+    "hole-black-right.png": {
       "frame": {
-        "x": 0,
-        "y": 0,
+        "x": 2,
+        "y": 2,
         "w": 41,
         "h": 41
       },
@@ -24,10 +24,10 @@
         "y": 0.5
       }
     },
-    "platform-1/bottom.png": {
+    "bottom.png": {
       "frame": {
-        "x": 41,
-        "y": 0,
+        "x": 47,
+        "y": 2,
         "w": 41,
         "h": 41
       },
@@ -48,10 +48,10 @@
         "y": 0.5
       }
     },
-    "platform-1/connector-right-bottom.png": {
+    "connector-right-bottom.png": {
       "frame": {
-        "x": 0,
-        "y": 41,
+        "x": 2,
+        "y": 47,
         "w": 41,
         "h": 41
       },
@@ -72,10 +72,10 @@
         "y": 0.5
       }
     },
-    "platform-1/ground.png": {
+    "ground.png": {
       "frame": {
-        "x": 41,
-        "y": 41,
+        "x": 47,
+        "y": 47,
         "w": 41,
         "h": 41
       },
@@ -96,10 +96,10 @@
         "y": 0.5
       }
     },
-    "platform-1/hole-black-bottom.png": {
+    "hole-black-bottom.png": {
       "frame": {
-        "x": 82,
-        "y": 0,
+        "x": 92,
+        "y": 2,
         "w": 41,
         "h": 41
       },
@@ -120,10 +120,10 @@
         "y": 0.5
       }
     },
-    "platform-1/hole-black-left-bottom.png": {
+    "hole-black-left-bottom.png": {
       "frame": {
-        "x": 82,
-        "y": 41,
+        "x": 92,
+        "y": 47,
         "w": 41,
         "h": 41
       },
@@ -144,10 +144,10 @@
         "y": 0.5
       }
     },
-    "platform-1/hole-black-left.png": {
+    "hole-black-left.png": {
       "frame": {
-        "x": 0,
-        "y": 82,
+        "x": 2,
+        "y": 92,
         "w": 41,
         "h": 41
       },
@@ -168,10 +168,10 @@
         "y": 0.5
       }
     },
-    "platform-1/hole-black-right-bottom.png": {
+    "hole-black-right-bottom.png": {
       "frame": {
-        "x": 41,
-        "y": 82,
+        "x": 47,
+        "y": 92,
         "w": 41,
         "h": 41
       },
@@ -192,10 +192,10 @@
         "y": 0.5
       }
     },
-    "platform-1/connector-left-bootom.png": {
+    "connector-left-bootom.png": {
       "frame": {
-        "x": 82,
-        "y": 82,
+        "x": 92,
+        "y": 92,
         "w": 41,
         "h": 41
       },
@@ -216,10 +216,10 @@
         "y": 0.5
       }
     },
-    "platform-1/hole-black.png": {
+    "hole-black.png": {
       "frame": {
-        "x": 123,
-        "y": 0,
+        "x": 137,
+        "y": 2,
         "w": 41,
         "h": 41
       },
@@ -240,10 +240,10 @@
         "y": 0.5
       }
     },
-    "platform-1/hole-center.png": {
+    "hole-center.png": {
       "frame": {
-        "x": 123,
-        "y": 41,
+        "x": 137,
+        "y": 47,
         "w": 41,
         "h": 41
       },
@@ -264,10 +264,10 @@
         "y": 0.5
       }
     },
-    "platform-1/hole-end-left.png": {
+    "hole-end-left.png": {
       "frame": {
-        "x": 123,
-        "y": 82,
+        "x": 137,
+        "y": 92,
         "w": 41,
         "h": 41
       },
@@ -288,10 +288,10 @@
         "y": 0.5
       }
     },
-    "platform-1/hole-end-right.png": {
+    "hole-end-right.png": {
       "frame": {
-        "x": 0,
-        "y": 123,
+        "x": 2,
+        "y": 137,
         "w": 41,
         "h": 41
       },
@@ -312,10 +312,10 @@
         "y": 0.5
       }
     },
-    "platform-1/left.png": {
+    "left.png": {
       "frame": {
-        "x": 41,
-        "y": 123,
+        "x": 47,
+        "y": 137,
         "w": 41,
         "h": 41
       },
@@ -336,10 +336,10 @@
         "y": 0.5
       }
     },
-    "platform-1/right.png": {
+    "right.png": {
       "frame": {
-        "x": 82,
-        "y": 123,
+        "x": 92,
+        "y": 137,
         "w": 41,
         "h": 41
       },
@@ -360,10 +360,10 @@
         "y": 0.5
       }
     },
-    "platform-1/star.png": {
+    "star.png": {
       "frame": {
-        "x": 123,
-        "y": 123,
+        "x": 137,
+        "y": 137,
         "w": 41,
         "h": 40
       },
@@ -388,11 +388,11 @@
   "meta": {
     "app": "http://free-tex-packer.com",
     "version": "0.6.7",
-    "image": "platform.png",
+    "image": "platforms.png",
     "format": "RGBA8888",
     "size": {
-      "w": 164,
-      "h": 164
+      "w": 180,
+      "h": 180
     },
     "scale": 1
   }
