@@ -1,7 +1,9 @@
 import platfrom from 'assets/platforms.png';
 import texture from 'assets/platforms.json';
 import SceneKeys from 'const/SceneKeys';
+import TextureKeys from 'const/TextureKeys';
 import START_SCENE from 'const/StartSceneConst';
+import PRELOAD_SCENE from 'const/PreloadSceneConsts';
 import Phaser from 'phaser';
 import ProgressAssets from './components/ProgressAssets';
 import ProgressBar from './components/ProgressBar';
@@ -32,8 +34,13 @@ export default class PreloadScene extends Phaser.Scene {
   }
 
   public preload(): void {
+    this.load.image('logo', '../assets/logo.png');
+    this.load.image('eng', '../assets/eng.png');
+    this.load.image('ru', '../assets/ru.png');
+    this.load.image('close', '../assets/close.svg');
     this.load.image('ball', '../assets/Golf-Ball-big.png');
-    this.load.atlas('platforms', platfrom, texture);
+
+    this.load.atlas(TextureKeys.Platforms, platfrom, texture);
 
     this.load.audio('music', '../assets/music.mp3');
 
@@ -70,33 +77,10 @@ export default class PreloadScene extends Phaser.Scene {
   }
 
   createLoader() {
-    this.progressBar = new ProgressBar(this);
-    this.progressBox = new ProgressBox(this);
-    this.progressText = new ProgressText(this, {
-      x: 0,
-      y: 0,
-      text: 'Loading...',
-      style: {
-        font: '20px monospace',
-      },
-    });
-
-    this.progressPercentText = new ProgressPercentText(this, {
-      x: 0,
-      y: 0,
-      text: '0%',
-      style: {
-        font: '18px monospace',
-      },
-    });
-
-    this.progressAssets = new ProgressAssets(this, {
-      x: 0,
-      y: 0,
-      text: '',
-      style: {
-        font: '18px monospace',
-      },
-    });
+    this.progressBar = new ProgressBar(this, PRELOAD_SCENE.gradientRectangle);
+    this.progressBox = new ProgressBox(this, PRELOAD_SCENE.coloredRectangle);
+    this.progressText = new ProgressText(this, PRELOAD_SCENE.mainText);
+    this.progressPercentText = new ProgressPercentText(this, PRELOAD_SCENE.secondaryText);
+    this.progressAssets = new ProgressAssets(this, PRELOAD_SCENE.secondaryText);
   }
 }

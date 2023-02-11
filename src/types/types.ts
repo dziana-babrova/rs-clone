@@ -3,8 +3,28 @@ import Colors, { ColorsNumber } from 'const/Colors';
 export type TextObjectProps = {
   x: number;
   y: number;
-  text: string;
   style: Phaser.Types.GameObjects.Text.TextStyle;
+};
+
+export type RectangleObjectProps = {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  color: number;
+  alpha: number;
+};
+
+export type GradientRectangleObjectProps = {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  alpha: number;
+  topLeft: number;
+  topRight: number;
+  bottomLeft: number;
+  bottomRight: number;
 };
 
 export type Position = {

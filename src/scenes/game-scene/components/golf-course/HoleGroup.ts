@@ -1,15 +1,11 @@
 import Phaser from 'phaser';
 import { LevelElements } from 'types/types';
+import TextureKeys from 'const/TextureKeys';
 
 export default class TunnelGroup extends Phaser.GameObjects.Group {
-  scene: Phaser.Scene;
-
-  constructor(scene: Phaser.Scene) {
+  constructor(scene: Phaser.Scene, tiles: LevelElements[]) {
     super(scene);
-    this.scene = scene;
-  }
 
-  public build(tiles: LevelElements[]): void {
     tiles.forEach((tile) => {
       this.create(tile.x, tile.y, tile.texture);
     });
@@ -18,7 +14,7 @@ export default class TunnelGroup extends Phaser.GameObjects.Group {
   public create(x: number, y: number, texture: string): void {
     const tile = this.scene.add.sprite(x, y, texture);
 
-    tile.setTexture('platforms', texture);
-    this.scene.add.existing(this);
+    tile.setTexture(TextureKeys.Platforms, texture);
+    this.add(tile);
   }
 }

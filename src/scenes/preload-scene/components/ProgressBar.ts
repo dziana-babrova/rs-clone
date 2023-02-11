@@ -1,16 +1,30 @@
 import Phaser from 'phaser';
+import { GradientRectangleObjectProps } from 'types/types';
 
 export default class ProgressBar extends Phaser.GameObjects.Graphics {
-  constructor(scene: Phaser.Scene) {
+  rectangleProps: GradientRectangleObjectProps;
+
+  constructor(scene: Phaser.Scene, rectangleProps: GradientRectangleObjectProps) {
     super(scene);
+    this.rectangleProps = rectangleProps;
     this.setPosition(this.scene.scale.width / 5, this.scene.scale.height / 5);
     scene.add.existing(this);
   }
 
   public fillProgressBar(value: number): void {
+    const {
+      topLeft,
+      topRight,
+      bottomLeft,
+      bottomRight,
+      x,
+      y,
+      width,
+      height,
+      alpha,
+    } = this.rectangleProps;
     this.clear();
-    this.fillStyle(0xffffff, 1);
-    this.fillGradientStyle(0xff0000, 0xff0000, 0xffff00, 0xffff00, 1);
-    this.fillRect(250, 280, 300 * value, 30);
+    this.fillGradientStyle(topLeft, topRight, bottomLeft, bottomRight, alpha);
+    this.fillRect(x, y, width * value, height);
   }
 }

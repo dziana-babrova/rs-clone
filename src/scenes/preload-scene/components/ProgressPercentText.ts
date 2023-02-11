@@ -4,9 +4,9 @@ import { TextObjectProps } from 'types/types';
 export default class ProgressPercentText extends Phaser.GameObjects.Text {
   constructor(scene: Phaser.Scene, textObject: TextObjectProps) {
     const {
-      x, y, text, style,
+      x, y, style,
     } = textObject;
-    super(scene, x, y, text, style);
+    super(scene, x, y, '0%', style);
     const { width, height } = scene.cameras.main;
     this.x = width / 2;
     this.y = height / 2 + 65;

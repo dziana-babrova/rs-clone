@@ -30,7 +30,7 @@ export const ballText = {
 };
 
 export const trajectorySettings = {
-  COLOR: 100000,
+  COLOR: 0xffffff,
   NUM_OF_POINTS: 20,
-  RADIUS: 10,
+  RADIUS: 5,
 };

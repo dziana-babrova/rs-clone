@@ -1,15 +1,14 @@
+import TextureKeys from 'const/TextureKeys';
 import Phaser from 'phaser';
 import { LevelElements } from 'types/types';
 
-export default class SlopeGroup extends Phaser.GameObjects.Group {
+export default class SlopeLeftGroup extends Phaser.GameObjects.Group {
   scene: Phaser.Scene;
 
-  constructor(scene: Phaser.Scene) {
+  constructor(scene: Phaser.Scene, tiles: LevelElements[]) {
     super(scene);
     this.scene = scene;
-  }
 
-  public build(tiles: LevelElements[]) {
     tiles.forEach((tile) => {
       this.create(tile.x, tile.y, tile.texture);
     });
@@ -17,7 +16,7 @@ export default class SlopeGroup extends Phaser.GameObjects.Group {
 
   public create(x: number, y: number, texture: string): void {
     const tile = this.scene.matter.add.sprite(x + 7, y + 15, texture);
-    tile.setTexture('platforms', texture);
+    tile.setTexture(TextureKeys.Platforms, texture);
     tile.setBody(
       {
         width: tile.width,
@@ -33,6 +32,6 @@ export default class SlopeGroup extends Phaser.GameObjects.Group {
       },
     );
     tile.setOrigin(0.67, 0.86);
-    this.scene.add.existing(this);
+    this.add(tile);
   }
 }
