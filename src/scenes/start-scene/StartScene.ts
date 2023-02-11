@@ -148,8 +148,19 @@ export default class StartScene extends Phaser.Scene {
   }
 
   private startSingleGame(): void {
+    this.removeStartScreenObjects();
     this.scene.start(SceneKeys.Game);
   }
 
   private startOnlineGame(): void {}
+
+  private removeStartScreenObjects(): void {
+    this.logoGroup.destroy();
+    this.startSceneBtns.destroy();
+    this.signIn.destroy();
+    this.langBtn.destroy();
+    this.levels.destroy();
+    this.winners.destroy();
+    this.landscape.destroy();
+  }
 }
