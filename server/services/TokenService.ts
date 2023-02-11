@@ -20,7 +20,7 @@ class TokenService {
       dbToken.refreshToken = refreshToken;
       return dbToken.save();
     }
-    const token = await Token.create({ user: userId, refreshToken: refreshToken });
+    const token = await Token.create({ user: userId, refreshToken });
     return token;
   }
 
@@ -42,6 +42,7 @@ class TokenService {
       return null;
     }
   }
+
   validateRefreshToken<T>(token: string): T | null {
     try {
       const data = jwt.verify(token, process.env.JWT_REFRESH_SECRET!) as T;

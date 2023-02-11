@@ -1,8 +1,8 @@
+import bcrypt from 'bcrypt';
 import UserDto from '../dto/UserDto';
-import { ApiError } from '../errors/ApiError';
+import ApiError from '../errors/ApiError';
 import User, { IUser } from '../models/User';
 import TokenService from './TokenService';
-import bcrypt from 'bcrypt';
 
 export type AuthApiResponse = {
   accessToken: string;

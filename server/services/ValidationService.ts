@@ -1,5 +1,5 @@
 import { Result, ValidationError } from 'express-validator';
-import { ApiError } from '../errors/ApiError';
+import ApiError from '../errors/ApiError';
 
 class ValidationService {
   handleValidationResult(validationResult: Result<ValidationError>) {

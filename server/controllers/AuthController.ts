@@ -1,8 +1,9 @@
 import { validationResult } from 'express-validator';
+import { NextFunction, Request, Response } from 'express';
 import UserService from '../services/UserService';
 import ValidationService from '../services/ValidationService';
-import { NextFunction, Request, Response } from 'express';
 
+/* eslint consistent-return: 0 */
 export default class AuthController {
   async signUp(req: Request, res: Response, next: NextFunction) {
     try {
@@ -19,6 +20,7 @@ export default class AuthController {
       next(e);
     }
   }
+
   async signIn(req: Request, res: Response, next: NextFunction) {
     try {
       const errors = validationResult(req);
@@ -34,6 +36,7 @@ export default class AuthController {
       next(e);
     }
   }
+
   async signOut(req: Request, res: Response, next: NextFunction) {
     try {
       const errors = validationResult(req);
@@ -46,6 +49,7 @@ export default class AuthController {
       next(e);
     }
   }
+
   async refresh(req: Request, res: Response, next: NextFunction) {
     try {
       const { refreshToken } = req.cookies;

@@ -1,10 +1,11 @@
 import express from 'express';
 import mongoose from 'mongoose';
-import { authRouter } from './routers/AuthRouter';
 import cookieParser from 'cookie-parser';
-import errorMiddleware from './middleware/error-middleware';
 import cors from 'cors';
 import * as dotenv from 'dotenv';
+import errorMiddleware from './middleware/error-middleware';
+import authRouter from './routers/AuthRouter';
+
 dotenv.config();
 
 const PORT = process.env.PORT || 3000;
