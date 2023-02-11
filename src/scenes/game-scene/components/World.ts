@@ -3,13 +3,13 @@ import ElementTypeKeys from 'const/ElementTypeKeys';
 import TweenAnimationService from 'utils/TweenAnimationBuilder';
 import GAME_SCENE_ANIMATION from 'const/GameSceneAnimationConsts';
 import TunnelGroup from './golf-course/HoleGroup';
-import MapCreatorService from '../../../services/MapCreatorService';
+import MapService from '../../../services/MapService';
 import TilesGroup from './golf-course/PlatformGroup';
 import SlopeLeftGroup from './golf-course/SlopeLeftGroup';
 import SlopeRightGroup from './golf-course/SlopeRightGroup';
 
-export default class World extends Phaser.GameObjects.Container {
-  map: MapCreatorService;
+export default class Map extends Phaser.GameObjects.Container {
+  mapService: MapService;
 
   tweenAnimationService: TweenAnimationService;
 
@@ -17,19 +17,21 @@ export default class World extends Phaser.GameObjects.Container {
     super(scene);
 
     this.tweenAnimationService = new TweenAnimationService();
-    this.map = new MapCreatorService(level, tileSize);
+    this.mapService = new MapService(level, tileSize);
     this.build();
   }
 
   public build(): void {
-    const groundConfig = this.map.mapElements.filter((el) => el.type === ElementTypeKeys.Tile);
-    const leftSlopeConfig = this.map.mapElements.filter(
+    const groundConfig = this.mapService.mapElements.filter(
+      (el) => el.type === ElementTypeKeys.Tile,
+    );
+    const leftSlopeConfig = this.mapService.mapElements.filter(
       (el) => el.type === ElementTypeKeys.LeftSlope,
     );
-    const rightSlopeConfig = this.map.mapElements.filter(
+    const rightSlopeConfig = this.mapService.mapElements.filter(
       (el) => el.type === ElementTypeKeys.RightSlope,
     );
-    const holeConfig = this.map.mapElements.filter(
+    const holeConfig = this.mapService.mapElements.filter(
       (el) => el.type === ElementTypeKeys.Hole || el.type === ElementTypeKeys.HoleWithCoin,
     );
 

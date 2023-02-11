@@ -1,8 +1,8 @@
 import { LevelElements, Level } from 'types/types';
-import config from 'const/tileConfig';
+import config from 'const/TileConfig';
 import { Levels } from 'const/levels';
 
-export default class MapCreatorService {
+export default class MapService {
   public mapElements: LevelElements[];
 
   constructor(currentLevel: number, tileSize: number) {

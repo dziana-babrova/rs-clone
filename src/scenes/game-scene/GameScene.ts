@@ -4,7 +4,7 @@ import Phaser from 'phaser';
 import Trajectory from 'components/Trajectory';
 import HitHandler from 'handlers/HitHandler';
 import { IComponent, IComponentManager } from 'types/types';
-import World from './components/World';
+import Map from './components/World';
 import NextLevelButton from './components/NextLevelButton';
 
 export default class GameScene extends Phaser.Scene implements IComponentManager {
@@ -14,7 +14,7 @@ export default class GameScene extends Phaser.Scene implements IComponentManager
 
   level!: number;
 
-  World!: World;
+  map!: Map;
 
   nextLevelButton!: NextLevelButton;
 
@@ -29,13 +29,9 @@ export default class GameScene extends Phaser.Scene implements IComponentManager
 
   async create() {
     this.cameras.main.fadeIn();
-    this.World = new World(this, this.level, 41);
+    this.map = new Map(this, this.level, 41);
 
-    await Promise.all(
-      [
-        this.World.animate(),
-      ],
-    );
+    await Promise.all([this.map.animate()]);
 
     this.nextLevelButton = new NextLevelButton(this);
     this.nextLevelButton.on('pointerup', this.switchLevel.bind(this));
@@ -46,10 +42,10 @@ export default class GameScene extends Phaser.Scene implements IComponentManager
     this.hitHandler = new HitHandler(this, ball, trajectory);
   }
 
-  async update() {
+  update() {
     try {
       this.components.forEach((el) => el.update());
-      await this.hitHandler.update();
+      this.hitHandler.update();
     } catch (e) {
       console.log();
     }
