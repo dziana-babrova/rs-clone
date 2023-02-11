@@ -1,7 +1,7 @@
 import Colors from 'const/Colors';
 import SceneKeys from 'const/SceneKeys';
 import START_SCENE from 'const/StartSceneConst';
-import { Language } from 'types/types';
+import { Language, Move } from 'types/types';
 import Landscape from './components/Landscape';
 import LangBtn from './components/LangBtn';
 import Levels from './components/Levels';
@@ -108,42 +108,42 @@ export default class StartScene extends Phaser.Scene {
   private async showLevels(): Promise<void> {
     await Promise.all([
       this.startSceneBtns.hide(),
-      this.levels.show(),
+      this.levels.move(Move.show),
     ]);
   }
 
   private async hideLevels(): Promise<void> {
     await Promise.all([
       this.startSceneBtns.show(),
-      this.levels.hide(),
+      this.levels.move(Move.hide),
     ]);
   }
 
   private async showLandscape(): Promise<void> {
     await Promise.all([
       this.startSceneBtns.hide(),
-      this.landscape.show(),
+      this.landscape.move(Move.show),
     ]);
   }
 
   private async hideLandscape(): Promise<void> {
     await Promise.all([
       this.startSceneBtns.show(),
-      this.landscape.hide(),
+      this.landscape.move(Move.hide),
     ]);
   }
 
   private async showWinners(): Promise<void> {
     await Promise.all([
       this.startSceneBtns.hide(),
-      this.winners.show(),
+      this.winners.move(Move.show),
     ]);
   }
 
   private async hideWinners() : Promise<void> {
     await Promise.all([
       this.startSceneBtns.show(),
-      this.winners.hide(),
+      this.winners.move(Move.hide),
     ]);
   }
 

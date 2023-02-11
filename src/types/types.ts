@@ -49,3 +49,8 @@ export enum Language {
   eng = 'eng',
   ru = 'ru',
 }
+
+export enum Move {
+  show,
+  hide,
+}

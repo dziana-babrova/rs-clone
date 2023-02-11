@@ -88,15 +88,24 @@ const START_SCENE = {
       hoverBgColor: ColorsNumber.BlueDark,
     },
   },
+  settingsScreen: {
+    title: {
+      textSize: 32,
+      color: Colors.Pink,
+      y: 275,
+    },
+    line: {
+      width: 400,
+      height: 3,
+      marginTop: 40,
+    },
+    moveX: 1000,
+  },
   winners: {
     text: {
       eng: 'Winners',
       ru: 'Победители',
     },
-    textSize: 32,
-    color: Colors.Pink,
-    moveX: 1000,
-    y: 275,
   },
   landscape: {
     text: {
