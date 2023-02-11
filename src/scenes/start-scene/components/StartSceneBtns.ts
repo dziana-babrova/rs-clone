@@ -105,11 +105,11 @@ export default class StartSceneBtns extends Phaser.GameObjects.Group {
   }
 
   public show(): Promise<void> {
-    return this.move(Move.show);
+    return this.move(Move.Show);
   }
 
   public hide(): Promise<void> {
-    return this.move(Move.hide);
+    return this.move(Move.Hide);
   }
 
   private move(type: Move): Promise<void> {
@@ -117,7 +117,7 @@ export default class StartSceneBtns extends Phaser.GameObjects.Group {
       this.scene.tweens.add({
         targets: this.getChildren(),
         ease: 'Back', // 'Linear', 'Cubic', 'Elastic', 'Bounce', 'Back'
-        x: `${type === Move.show ? '-' : '+'}=${START_SCENE.moveX}`,
+        x: `${type === Move.Show ? '-' : '+'}=${START_SCENE.moveX}`,
         duration: 1000,
         delay: 100,
         onComplete: animationResolve,

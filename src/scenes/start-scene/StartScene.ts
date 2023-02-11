@@ -42,7 +42,7 @@ export default class StartScene extends Phaser.Scene {
   }
 
   public async create(): Promise<void> {
-    this.lang = Language.eng;
+    this.lang = Language.Eng;
     this.logoGroup = new LogoGroup(this);
     this.startSceneBtns = new StartSceneBtns(this);
     this.signIn = new SignInBtn(this);

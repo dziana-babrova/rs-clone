@@ -66,8 +66,8 @@ const START_SCENE = {
       ru: 'ru',
     },
     nextLang: {
-      eng: Language.ru,
-      ru: Language.eng,
+      eng: Language.Ru,
+      ru: Language.Eng,
     },
     y: 60,
   },

@@ -46,11 +46,11 @@ export type IconButtonParams = {
 };
 
 export enum Language {
-  eng = 'eng',
-  ru = 'ru',
+  Eng = 'eng',
+  Ru = 'ru',
 }
 
 export enum Move {
-  show,
-  hide,
+  Show,
+  Hide,
 }
