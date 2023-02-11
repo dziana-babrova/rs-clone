@@ -1,6 +1,6 @@
 import { Scene } from 'phaser';
 import ElementTypeKeys from 'const/ElementTypeKeys';
-import TweenAnimationService from 'utils/TweenAnimationBuilder';
+import TweenAnimationBuilder from 'utils/TweenAnimationBuilder';
 import GAME_SCENE_ANIMATION from 'const/GameSceneAnimationConsts';
 import TunnelGroup from './golf-course/HoleGroup';
 import MapCreatorService from '../../../services/MapCreatorService';
@@ -11,12 +11,12 @@ import SlopeRightGroup from './golf-course/SlopeRightGroup';
 export default class World extends Phaser.GameObjects.Container {
   map: MapCreatorService;
 
-  tweenAnimationService: TweenAnimationService;
+  tweenAnimationBuilder: TweenAnimationBuilder;
 
   constructor(scene: Scene, level: number, tileSize: number) {
     super(scene);
 
-    this.tweenAnimationService = new TweenAnimationService();
+    this.tweenAnimationBuilder = new TweenAnimationBuilder();
     this.map = new MapCreatorService(level, tileSize);
     this.build();
   }
@@ -54,7 +54,7 @@ export default class World extends Phaser.GameObjects.Container {
   }
 
   public async show(): Promise<void> {
-    await this.tweenAnimationService.moveY(
+    await this.tweenAnimationBuilder.moveY(
       this.scene,
       this,
       GAME_SCENE_ANIMATION.moveYAnimation.y,
@@ -64,7 +64,7 @@ export default class World extends Phaser.GameObjects.Container {
   }
 
   public async jump(): Promise<void> {
-    await this.tweenAnimationService.moveYFrom(
+    await this.tweenAnimationBuilder.moveYFrom(
       this.scene,
       this,
       GAME_SCENE_ANIMATION.moveFromYAnimation.from,

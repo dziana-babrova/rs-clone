@@ -1,7 +1,7 @@
 export default class TweenAnimationBuilder {
   public async moveY(
     scene: Phaser.Scene,
-    target: Phaser.GameObjects.Container,
+    target: Phaser.GameObjects.Container | Phaser.GameObjects.Group,
     y: number,
     ease: string,
     duration: number,
