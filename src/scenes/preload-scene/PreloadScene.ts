@@ -1,6 +1,7 @@
 import platfrom from 'assets/platforms.png';
 import texture from 'assets/platforms.json';
 import SceneKeys from 'const/SceneKeys';
+import START_SCENE from 'const/StartSceneConst';
 import Phaser from 'phaser';
 import ProgressAssets from './components/ProgressAssets';
 import ProgressBar from './components/ProgressBar';
@@ -33,11 +34,22 @@ export default class PreloadScene extends Phaser.Scene {
   public preload(): void {
     this.load.image('ball', '../assets/Golf-Ball-big.png');
     this.load.atlas('platforms', platfrom, texture);
+
+    this.load.audio('music', '../assets/music.mp3');
+
+    Object.values(START_SCENE.btnSettings.type).forEach((btn) => {
+      if (btn === 'sound') {
+        this.load.image(`${btn}-on`, `../assets/${btn}-on.svg`);
+        this.load.image(`${btn}-off`, `../assets/${btn}-off.svg`);
+      } else {
+        this.load.image(btn, `../assets/${btn}.svg`);
+      }
+    });
   }
 
   public create(): void {
     this.add.text(this.scale.width / 2, this.scale.height / 2, 'Loaded').setOrigin(0.5, 0.5);
-    this.scene.start(SceneKeys.Game);
+    this.scene.start(SceneKeys.Start);
   }
 
   private trackProgress(value: number): void {

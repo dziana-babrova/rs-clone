@@ -2,6 +2,9 @@ import Phaser, { Game, Types, AUTO } from 'phaser';
 import GameScene from 'scenes/game-scene/GameScene';
 import gameConfig from 'gameConfig';
 import PreloadScene from 'scenes/preload-scene/PreloadScene';
+import StartScene from 'scenes/start-scene/StartScene';
+
+import './styles/style.scss';
 
 const config: Types.Core.GameConfig = {
   type: AUTO,
@@ -11,6 +14,7 @@ const config: Types.Core.GameConfig = {
   backgroundColor: gameConfig.backgroundColor,
   scene: [
     PreloadScene,
+    StartScene,
     GameScene,
   ],
   scale: {
