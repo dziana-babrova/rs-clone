@@ -33,7 +33,7 @@ export default class HitHandler {
     this.initEvents();
   }
 
-  async update() {
+  update() {
     if (!this.ball.isStopped) return;
     if (this.controls === Controls.Mouse) {
       this.setAngleAndDistance(this.scene.game.input.mousePointer);
