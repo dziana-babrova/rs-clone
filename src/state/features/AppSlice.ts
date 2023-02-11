@@ -12,7 +12,7 @@ const initialState: IAppState = {
 };
 
 /* eslint-disable no-param-reassign */
-const userSlice = createSlice({
+const appSlice = createSlice({
   name: 'app',
   initialState,
   reducers: {
@@ -37,6 +37,6 @@ const userSlice = createSlice({
 
 export const {
   setUser, setMaps, setLang, setMusic, setSound,
-} = userSlice.actions;
+} = appSlice.actions;
 
-export default userSlice.reducer;
+export default appSlice.reducer;

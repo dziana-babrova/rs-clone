@@ -1,7 +1,7 @@
 import Colors from 'const/Colors';
 import SceneKeys from 'const/SceneKeys';
 import START_SCENE from 'const/StartSceneConst';
-import { setLang, setMusic } from 'state/features/GameSlice';
+import { setLang, setMusic } from 'state/features/AppSlice';
 import store from 'state/store';
 import { Language } from 'types/types';
 import Landscape from './components/Landscape';
