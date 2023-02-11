@@ -4,7 +4,7 @@ import Phaser from 'phaser';
 import Trajectory from 'components/Trajectory';
 import HitHandler from 'handlers/HitHandler';
 import { IComponent, IComponentManager } from 'types/types';
-import WorldBuilder from './WorldBuilder';
+import World from './WorldBuilder';
 import NextLevelButton from './components/NextLevelButton';
 
 export default class GameScene extends Phaser.Scene implements IComponentManager {
@@ -14,22 +14,23 @@ export default class GameScene extends Phaser.Scene implements IComponentManager
 
   level!: number;
 
-  worldBuilder: WorldBuilder;
+  World: World;
 
   nextLevelButton!: NextLevelButton;
 
   constructor() {
     super(SceneKeys.Game);
-    this.worldBuilder = new WorldBuilder(this);
+    this.World = new World(this);
   }
 
   init(props: { level?: number }) {
-    const { level = 0 } = props;
+    const { level = 29 } = props;
     this.level = level;
   }
 
   create() {
-    this.worldBuilder.build(this.level, 41);
+    this.cameras.main.fadeIn();
+    this.World.build(this.level, 41);
     this.nextLevelButton = new NextLevelButton(this);
     this.nextLevelButton.on('pointerup', this.switchLevel.bind(this));
 
@@ -51,11 +52,17 @@ export default class GameScene extends Phaser.Scene implements IComponentManager
 
   switchLevel() {
     this.cameras.main.fadeOut();
+    this.destroySprites();
     this.time.addEvent({
       delay: 2000,
       callback: () => {
         this.scene.restart({ level: (this.level += 1) });
       },
     });
+  }
+
+  private destroySprites(): void {
+    const allSprites = this.children.list.filter((x) => x instanceof Phaser.GameObjects.Sprite);
+    allSprites.forEach((x) => x.destroy());
   }
 }

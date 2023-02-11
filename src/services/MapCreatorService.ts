@@ -17,12 +17,12 @@ export default class MapCreatorService {
         const tile = row[i];
         const x = i;
         if (tile !== ' ') {
-          const info = {
+          const element = {
             ...config[tile.toString()],
             x: x * tileSize,
             y: y * tileSize,
           };
-          levelElements.push(info);
+          levelElements.push(element);
         }
       }
     });

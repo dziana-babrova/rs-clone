@@ -29,6 +29,10 @@ const config: TilesConfig = {
     type: 'hole',
     texture: 'hole-black.png',
   },
+  '^': {
+    type: 'coin-in-hole',
+    texture: 'hole-black.png',
+  },
   T: {
     type: 'tile',
     texture: 'ground.png',

@@ -23,9 +23,9 @@ export default class CalculateService {
     };
   }
 
-  private static calculateMaxVelocity(velocity: number){
-    return velocity > 0 ?
-      Math.min(velocity, ballSettings.MAX_SPEED) :
-      Math.max(velocity, -ballSettings.MAX_SPEED);
+  private static calculateMaxVelocity(velocity: number) {
+    return velocity > 0
+      ? Math.min(velocity, ballSettings.MAX_SPEED)
+      : Math.max(velocity, -ballSettings.MAX_SPEED);
   }
 }

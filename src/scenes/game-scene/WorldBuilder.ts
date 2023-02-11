@@ -5,24 +5,28 @@ import TilesGroup from './components/golf-course/PlatformGroup';
 import SlopeGroup from './components/golf-course/SlopeLeftGroup';
 import SlopeRightGroup from './components/golf-course/SlopeRightGroup';
 
-export default class WorldBuilder {
+export default class World {
   scene: Scene;
+
+  map!: MapCreatorService;
 
   constructor(scene: Scene) {
     this.scene = scene;
   }
 
   build(level: number, tileSize: number) {
-    const map = new MapCreatorService(level, tileSize);
+    this.map = new MapCreatorService(level, tileSize);
 
     const ground = new TilesGroup(this.scene);
     const leftSlope = new SlopeGroup(this.scene);
     const rightSlope = new SlopeRightGroup(this.scene);
     const hole = new TunnelGroup(this.scene);
 
-    ground.build(map.mapElements.filter((el) => el.type === 'tile'));
-    leftSlope.build(map.mapElements.filter((el) => el.type === 'slope-left'));
-    rightSlope.build(map.mapElements.filter((el) => el.type === 'slope-right'));
-    hole.build(map.mapElements.filter((el) => el.type === 'hole'));
+    ground.build(this.map.mapElements.filter((el) => el.type === 'tile'));
+    leftSlope.build(this.map.mapElements.filter((el) => el.type === 'slope-left'));
+    rightSlope.build(this.map.mapElements.filter((el) => el.type === 'slope-right'));
+    hole.build(
+      this.map.mapElements.filter((el) => el.type === 'hole' || el.type === 'coin-in-hole'),
+    );
   }
 }
