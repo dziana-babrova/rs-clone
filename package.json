@@ -36,9 +36,7 @@
         "clean-webpack-plugin": "^3.0.0",
         "concurrently": "^7.6.0",
         "copy-webpack-plugin": "^7.0.0",
-        "cors": "^2.8.5",
         "css-loader": "^5.1.0",
-        "dotenv": "^16.0.3",
         "eslint": "^7.27.0",
         "eslint-config-airbnb-typescript": "^17.0.0",
         "eslint-config-prettier": "^8.3.0",
@@ -65,13 +63,7 @@
         "webpack-merge": "^5.7.3",
         "@types/bcrypt": "^5.0.0",
         "@types/cookie-parser": "^1.4.3",
-        "@types/jsonwebtoken": "^9.0.1",
-        "bcrypt": "^5.1.0",
-        "cookie-parser": "^1.4.6",
-        "express": "^4.18.2",
-        "express-validator": "^6.14.3",
-        "jsonwebtoken": "^9.0.0",
-        "mongoose": "^6.9.1"
+        "@types/jsonwebtoken": "^9.0.1"
     },
     "browserslist": [
         "defaults",
@@ -82,6 +74,14 @@
         "last 3 iOS versions"
     ],
     "dependencies": {
+        "bcrypt": "^5.1.0",
+        "cookie-parser": "^1.4.6",
+        "cors": "^2.8.5",
+        "dotenv": "^16.0.3",
+        "express": "^4.18.2",
+        "jsonwebtoken": "^9.0.0",
+        "mongoose": "^6.9.1",
+        "express-validator": "^6.14.3",
         "phaser": "^3.55.2"
     }
 }
