@@ -44,7 +44,8 @@ export default class HitHandler {
   }
 
   private initEvents() {
-    this.scene.input.on('pointerdown', (event: PointerEvent) => {
+    this.scene.input.on('pointerdown', (event: PointerEvent, targets: unknown[]) => {
+      if (targets.length) return;
       if (!this.ball.isStopped || this.isHit || this.controls === Controls.Keyboard) { return; }
       this.controls = Controls.Mouse;
       this.startAim({ x: event.x, y: event.y });

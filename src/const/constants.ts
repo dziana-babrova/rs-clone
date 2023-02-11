@@ -1,8 +1,9 @@
 export const ballSettings = {
   SPEED: 0.1,
+  MAX_SPEED: 25,
   DEFAULT_ANGLE: -1,
   DEFAULT_DISTANCE: 100,
-  ballProps: {
+  BALL_PROPS: {
     label: 'ball',
     bounce: 0.2,
     friction: 0.7,
@@ -29,7 +30,7 @@ export const ballText = {
 };
 
 export const trajectorySettings = {
-  COLOR: 100000,
+  COLOR: 0xffffff,
   NUM_OF_POINTS: 20,
-  RADIUS: 10,
+  RADIUS: 5,
 };

@@ -73,8 +73,8 @@ export default class Trajectory extends GameObjects.Group implements IComponent 
       arc.x = x;
       arc.y = y;
       // Change velocity according to friction with air
-      velocityX *= 1 - ballSettings.ballProps.frictionAir;
-      velocityY *= 1 - ballSettings.ballProps.frictionAir;
+      velocityX *= 1 - ballSettings.BALL_PROPS.frictionAir;
+      velocityY *= 1 - ballSettings.BALL_PROPS.frictionAir;
     });
   }
 }

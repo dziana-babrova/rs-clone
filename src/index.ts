@@ -1,8 +1,8 @@
+import Phaser, { Game, Types, AUTO } from 'phaser';
+import GameScene from 'scenes/game-scene/GameScene';
 import gameConfig from 'gameConfig';
-import { Game, Types, AUTO } from 'phaser';
 import PreloadScene from 'scenes/preload-scene/PreloadScene';
 import StartScene from 'scenes/start-scene/StartScene';
-import GameScene from './scenes/game-scene/GameScene';
 
 import './styles/style.scss';
 
