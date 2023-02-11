@@ -26,17 +26,24 @@ const baseConfig = {
             },
           },
           'sass-loader',
-          {
-            loader: 'sass-resources-loader',
-            options: {
-              resources: [path.join(__dirname, 'src', 'common', 'vars.scss')],
-            },
-          },
+          // {
+          //   loader: 'sass-resources-loader',
+          //   options: {
+          //     resources: [path.join(__dirname, 'src', 'common', 'vars.scss')],
+          //   },
+          // },
         ],
       },
       {
         test: /\.(ico|jpg|svg|png)$/,
         type: 'asset/resource',
+      },
+      {
+        test: /\.woff2?$/i,
+        type: 'asset/resource',
+        generator: {
+          filename: 'fonts/[name][ext]',
+        },
       },
     ],
   },
