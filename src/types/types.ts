@@ -50,8 +50,8 @@ export type TextButtonParams = {
   text: {
     eng: string;
     ru: string;
-  }
-  width: number,
+  };
+  width: number;
   textSize: number;
   textColor: Colors;
   bgColor: Colors;
@@ -78,8 +78,8 @@ export enum Move {
 export type Level = string[];
 
 export type TileProps = {
-  type: string,
-  texture: string,
+  type: string;
+  texture: string;
 };
 
 export type TilesConfig = {
@@ -87,13 +87,31 @@ export type TilesConfig = {
 };
 
 export type MapSize = {
-  x: number,
-  y: number,
-  width: number,
-  height: number,
+  x: number;
+  y: number;
+  width: number;
+  height: number;
 };
 
 export type LevelElements = {
-  x: number,
-  y: number,
+  x: number;
+  y: number;
 } & TileProps;
+
+export interface IAppState {
+  user: User | null;
+  maps: Maps | null;
+  lang: Language;
+  music: boolean;
+  sound: boolean;
+}
+
+export type User = {
+  email: string;
+  username: string;
+  password: string;
+};
+
+export type Maps = {
+  [key: string]: number;
+};

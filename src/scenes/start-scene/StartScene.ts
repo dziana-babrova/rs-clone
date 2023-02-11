@@ -1,6 +1,8 @@
 import Colors from 'const/Colors';
 import SceneKeys from 'const/SceneKeys';
 import START_SCENE from 'const/StartSceneConst';
+import { setLang, setMusic } from 'state/features/GameSlice';
+import store from 'state/store';
 import { Language } from 'types/types';
 import Landscape from './components/Landscape';
 import LangBtn from './components/LangBtn';
@@ -38,7 +40,7 @@ export default class StartScene extends Phaser.Scene {
   }
 
   public preload(): void {
-
+    store.subscribe(() => console.log(store.getState()));
   }
 
   public async create(): Promise<void> {
@@ -92,15 +94,18 @@ export default class StartScene extends Phaser.Scene {
     if (this.music.isPlaying) {
       this.startSceneBtns.btnSound.icon.setTexture('sound-off');
       this.music.pause();
+      store.dispatch(setMusic(false));
       return;
     }
     this.startSceneBtns.btnSound.icon.setTexture('sound-on');
     this.music.play();
+    store.dispatch(setMusic(true));
   }
 
   private changeLang(): void {
     this.lang = START_SCENE.btnLang.nextLang[this.lang];
     this.langBtn.setTexture(START_SCENE.btnLang.textura[this.lang]);
+    store.dispatch(setLang(this.lang));
   }
 
   private signInHandler(): void {}
