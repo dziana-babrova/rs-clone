@@ -2,26 +2,27 @@ import { Language } from 'types/types';
 import Colors, { ColorsNumber } from './Colors';
 
 const START_SCENE = {
+  moveX: 1000,
+  moveY: 500,
   logoGroup: {
-    moveY: 300,
-  },
-  logo: {
-    y: 30,
-  },
-  line: {
-    y: 180,
-    width: 400,
-    height: 3,
-    color: ColorsNumber.Text,
-  },
-  subtitle: {
-    y: 195,
-    text: {
-      eng: 'Time to play golf',
-      ru: 'Время играть в гольф',
+    logo: {
+      y: 30,
     },
-    textSize: 30,
-    color: Colors.Text,
+    line: {
+      y: 180,
+      width: 400,
+      height: 3,
+      color: ColorsNumber.Text,
+    },
+    subtitle: {
+      y: 195,
+      text: {
+        eng: 'Time to play golf',
+        ru: 'Время играть в гольф',
+      },
+      textSize: 30,
+      color: Colors.Text,
+    },
   },
   btnStartSingleGame: {
     text: {
@@ -33,7 +34,6 @@ const START_SCENE = {
     textColor: Colors.Text,
     bgColor: Colors.Pink,
     hoverBgColor: Colors.PinkDark,
-    moveX: 1000,
     y: 275,
   },
   btnStartOnlineGame: {
@@ -46,7 +46,6 @@ const START_SCENE = {
     textColor: Colors.Text,
     bgColor: Colors.Pink,
     hoverBgColor: Colors.PinkDark,
-    moveX: 1000,
     y: 370,
   },
   btnSignIn: {

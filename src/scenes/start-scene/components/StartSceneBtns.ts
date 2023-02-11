@@ -1,5 +1,6 @@
 import START_SCENE from 'const/StartSceneConst';
 import Phaser from 'phaser';
+import { Move } from 'types/types';
 import IconButton from './IconButton';
 import TextButton from './TextButton';
 
@@ -24,7 +25,7 @@ export default class StartSceneBtns extends Phaser.GameObjects.Group {
     this.btnStartSingleGame = new TextButton(
       this.scene,
       {
-        x: centerX - START_SCENE.btnStartSingleGame.moveX,
+        x: centerX - START_SCENE.moveX,
         y: START_SCENE.btnStartSingleGame.y,
       },
       START_SCENE.btnStartSingleGame,
@@ -33,7 +34,7 @@ export default class StartSceneBtns extends Phaser.GameObjects.Group {
     this.btnStartOnlineGame = new TextButton(
       this.scene,
       {
-        x: centerX + START_SCENE.btnStartOnlineGame.moveX,
+        x: centerX + START_SCENE.moveX,
         y: START_SCENE.btnStartOnlineGame.y,
       },
       START_SCENE.btnStartOnlineGame,
@@ -104,24 +105,19 @@ export default class StartSceneBtns extends Phaser.GameObjects.Group {
   }
 
   public show(): Promise<void> {
-    return new Promise((animationResolve) => {
-      this.scene.tweens.add({
-        targets: this.getChildren(),
-        ease: 'Back', // 'Linear', 'Cubic', 'Elastic', 'Bounce', 'Back'
-        x: `-=${START_SCENE.btnStartOnlineGame.moveX}`,
-        duration: 1000,
-        delay: 100,
-        onComplete: animationResolve,
-      });
-    });
+    return this.move(Move.show);
   }
 
   public hide(): Promise<void> {
+    return this.move(Move.hide);
+  }
+
+  private move(type: Move): Promise<void> {
     return new Promise((animationResolve) => {
       this.scene.tweens.add({
         targets: this.getChildren(),
         ease: 'Back', // 'Linear', 'Cubic', 'Elastic', 'Bounce', 'Back'
-        x: `+=${START_SCENE.btnStartOnlineGame.moveX}`,
+        x: `${type === Move.show ? '-' : '+'}=${START_SCENE.moveX}`,
         duration: 1000,
         delay: 100,
         onComplete: animationResolve,
@@ -129,25 +125,20 @@ export default class StartSceneBtns extends Phaser.GameObjects.Group {
     });
   }
 
-  public showBtnStartSingleGame(): Promise<void> {
-    return new Promise((animationResolve) => {
-      this.scene.tweens.add({
-        targets: this.btnStartSingleGame,
-        ease: 'Back', // 'Linear', 'Cubic', 'Elastic', 'Bounce', 'Back'
-        x: `+=${START_SCENE.btnStartOnlineGame.moveX}`,
-        duration: 1000,
-        delay: 100,
-        onComplete: animationResolve,
-      });
-    });
+  public showSingleGameBtn(): Promise<void> {
+    return this.showBtn(this.btnStartSingleGame);
   }
 
-  public showBtnStartOnlineGame(): Promise<void> {
+  public showOnlineGameBtn(): Promise<void> {
+    return this.showBtn(this.btnStartOnlineGame);
+  }
+
+  public showBtn(btn: TextButton): Promise<void> {
     return new Promise((animationResolve) => {
       this.scene.tweens.add({
-        targets: this.btnStartOnlineGame,
+        targets: btn,
         ease: 'Back', // 'Linear', 'Cubic', 'Elastic', 'Bounce', 'Back'
-        x: `-=${START_SCENE.btnStartOnlineGame.moveX}`,
+        x: this.scene.cameras.main.centerX,
         duration: 1000,
         delay: 100,
         onComplete: animationResolve,

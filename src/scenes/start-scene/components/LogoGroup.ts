@@ -9,29 +9,29 @@ export default class LogoGroup extends Phaser.GameObjects.Group {
     const image = new Phaser.GameObjects.Image(
       scene,
       centerX,
-      -START_SCENE.logoGroup.moveY + START_SCENE.logo.y,
+      -START_SCENE.moveY + START_SCENE.logoGroup.logo.y,
       'logo',
     );
 
     const line = new Phaser.GameObjects.Rectangle(
       scene,
       centerX,
-      -START_SCENE.logoGroup.moveY + START_SCENE.line.y,
-      START_SCENE.line.width,
-      START_SCENE.line.height,
-      START_SCENE.line.color,
+      -START_SCENE.moveY + START_SCENE.logoGroup.line.y,
+      START_SCENE.logoGroup.line.width,
+      START_SCENE.logoGroup.line.height,
+      START_SCENE.logoGroup.line.color,
     );
 
     const text = new Phaser.GameObjects.Text(
       scene,
       centerX,
-      -START_SCENE.logoGroup.moveY + START_SCENE.subtitle.y,
-      START_SCENE.subtitle.text.eng,
+      -START_SCENE.moveY + START_SCENE.logoGroup.subtitle.y,
+      START_SCENE.logoGroup.subtitle.text.eng,
       {
         fontFamily: 'Montserrat',
-        fontSize: `${START_SCENE.subtitle.textSize}px`,
+        fontSize: `${START_SCENE.logoGroup.subtitle.textSize}px`,
         align: 'center',
-        color: START_SCENE.subtitle.color,
+        color: START_SCENE.logoGroup.subtitle.color,
       },
     );
 
@@ -51,7 +51,7 @@ export default class LogoGroup extends Phaser.GameObjects.Group {
       this.scene.tweens.add({
         targets: this.getChildren(),
         ease: 'Back', // 'Linear', 'Cubic', 'Elastic', 'Bounce', 'Back'
-        y: `+=${START_SCENE.logoGroup.moveY}`,
+        y: `+=${START_SCENE.moveY}`,
         duration: 1000,
         delay: 100,
         onComplete: animationResolve,

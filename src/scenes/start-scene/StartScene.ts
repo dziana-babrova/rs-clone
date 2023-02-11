@@ -1,7 +1,7 @@
 import Colors from 'const/Colors';
 import SceneKeys from 'const/SceneKeys';
 import START_SCENE from 'const/StartSceneConst';
-import { Language, Move } from 'types/types';
+import { Language } from 'types/types';
 import Landscape from './components/Landscape';
 import LangBtn from './components/LangBtn';
 import Levels from './components/Levels';
@@ -52,8 +52,8 @@ export default class StartScene extends Phaser.Scene {
       this.logoGroup.show(),
       this.signIn.show(),
       this.langBtn.show(),
-      this.startSceneBtns.showBtnStartSingleGame(),
-      this.startSceneBtns.showBtnStartOnlineGame(),
+      this.startSceneBtns.showSingleGameBtn(),
+      this.startSceneBtns.showOnlineGameBtn(),
       this.startSceneBtns.showBtnSettings(),
     ]);
 
@@ -108,42 +108,42 @@ export default class StartScene extends Phaser.Scene {
   private async showLevels(): Promise<void> {
     await Promise.all([
       this.startSceneBtns.hide(),
-      this.levels.move(Move.show),
+      this.levels.show(),
     ]);
   }
 
   private async hideLevels(): Promise<void> {
     await Promise.all([
       this.startSceneBtns.show(),
-      this.levels.move(Move.hide),
+      this.levels.hide(),
     ]);
   }
 
   private async showLandscape(): Promise<void> {
     await Promise.all([
       this.startSceneBtns.hide(),
-      this.landscape.move(Move.show),
+      this.landscape.show(),
     ]);
   }
 
   private async hideLandscape(): Promise<void> {
     await Promise.all([
       this.startSceneBtns.show(),
-      this.landscape.move(Move.hide),
+      this.landscape.hide(),
     ]);
   }
 
   private async showWinners(): Promise<void> {
     await Promise.all([
       this.startSceneBtns.hide(),
-      this.winners.move(Move.show),
+      this.winners.show(),
     ]);
   }
 
   private async hideWinners() : Promise<void> {
     await Promise.all([
       this.startSceneBtns.show(),
-      this.winners.move(Move.hide),
+      this.winners.hide(),
     ]);
   }
 

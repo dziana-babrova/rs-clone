@@ -36,7 +36,7 @@ export default class SettingsScreen extends Phaser.GameObjects.Group {
       START_SCENE.settingsScreen.title.y + START_SCENE.settingsScreen.line.marginTop,
       START_SCENE.settingsScreen.line.width,
       START_SCENE.settingsScreen.line.height,
-      START_SCENE.line.color,
+      START_SCENE.logoGroup.line.color,
     );
 
     this.btnClose.setOrigin(1, 0);
@@ -54,7 +54,15 @@ export default class SettingsScreen extends Phaser.GameObjects.Group {
     scene.add.existing(this);
   }
 
-  move(type: Move) {
+  public show(): Promise<void> {
+    return this.move(Move.show);
+  }
+
+  public hide(): Promise<void> {
+    return this.move(Move.hide);
+  }
+
+  private move(type: Move): Promise<void> {
     return new Promise((animationResolve) => {
       this.scene.tweens.add({
         targets: this.getChildren(),
