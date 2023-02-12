@@ -37,4 +37,20 @@ export default class TweenAnimationBuilder {
       });
     });
   }
+
+  public async scaleToBig(
+    scene: Phaser.Scene,
+    target: Phaser.GameObjects.GameObject,
+    duration: number,
+    scale: number,
+  ) {
+    return new Promise((animationResolve) => {
+      scene.tweens.add({
+        targets: target,
+        duration,
+        scale,
+        onComplete: animationResolve,
+      });
+    });
+  }
 }

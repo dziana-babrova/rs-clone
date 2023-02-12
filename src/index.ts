@@ -1,10 +1,17 @@
 import Phaser, { Game, Types, AUTO } from 'phaser';
-import GameScene from 'scenes/game-scene/GameScene';
+import PhaserMatterCollisionPlugin from 'phaser-matter-collision-plugin';
 import gameConfig from 'gameConfig';
 import PreloadScene from 'scenes/preload-scene/PreloadScene';
 import StartScene from 'scenes/start-scene/StartScene';
+import GameScene from 'scenes/game-scene/GameScene';
 
 import './styles/style.scss';
+
+const pluginConfig = {
+  plugin: PhaserMatterCollisionPlugin,
+  key: 'matterCollision' as 'matterCollision',
+  mapping: 'matterCollision' as 'matterCollision',
+};
 
 const config: Types.Core.GameConfig = {
   type: AUTO,
@@ -26,6 +33,11 @@ const config: Types.Core.GameConfig = {
       debug: true,
       gravity: true,
     },
+  },
+  plugins: {
+    scene: [
+      pluginConfig,
+    ],
   },
 };
 

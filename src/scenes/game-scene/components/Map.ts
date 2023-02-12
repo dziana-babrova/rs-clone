@@ -16,7 +16,7 @@ export default class Map extends Phaser.GameObjects.Container {
   constructor(scene: Scene, level: number, tileSize: number) {
     super(scene);
 
-    this.tweenAnimationService = new TweenAnimationService();
+    this.tweenAnimationBuilder = new TweenAnimationBuilder();
     this.mapService = new MapService(level, tileSize);
     this.build();
   }
