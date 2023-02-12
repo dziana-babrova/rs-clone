@@ -1,9 +1,11 @@
 import Colors from 'const/Colors';
+import LANGUAGE, { Language, NEXT_LANG } from 'const/Language';
+import LocalStorageKeys from 'const/LocalStorageKeys';
 import SceneKeys from 'const/SceneKeys';
-import START_SCENE from 'const/StartSceneConst';
+import TextureKeys from 'const/TextureKeys';
+import LocalStorageService from 'services/LocalStorageService';
 import { setLang, setMusic } from 'state/features/AppSlice';
 import store from 'state/store';
-import { Language } from 'types/types';
 import Landscape from './components/Landscape';
 import LangBtn from './components/LangBtn';
 import Levels from './components/Levels';
@@ -13,7 +15,7 @@ import StartSceneBtns from './components/StartSceneBtns';
 import Winners from './components/Winners';
 
 export default class StartScene extends Phaser.Scene {
-  lang!: Language;
+  lang: Language = Language.Eng;
 
   music!: Phaser.Sound.BaseSound;
 
@@ -44,11 +46,10 @@ export default class StartScene extends Phaser.Scene {
   }
 
   public async create(): Promise<void> {
-    this.lang = Language.Eng;
     this.logoGroup = new LogoGroup(this);
     this.startSceneBtns = new StartSceneBtns(this);
     this.signIn = new SignInBtn(this);
-    this.langBtn = new LangBtn(this, this.lang);
+    this.langBtn = new LangBtn(this);
 
     await Promise.all([
       this.logoGroup.show(),
@@ -83,7 +84,7 @@ export default class StartScene extends Phaser.Scene {
     this.startSceneBtns.btnLandscape.background.on('pointerdown', this.showLandscape.bind(this));
     this.startSceneBtns.btnWinners.background.on('pointerdown', this.showWinners.bind(this));
 
-    this.startSceneBtns.btnSound.background.on('pointerdown', this.turnOnOffSound.bind(this));
+    this.startSceneBtns.btnMusic.background.on('pointerdown', this.turnOnOffSound.bind(this));
 
     this.levels.btnClose.on('pointerdown', this.hideLevels.bind(this));
     this.landscape.btnClose.on('pointerdown', this.hideLandscape.bind(this));
@@ -92,20 +93,33 @@ export default class StartScene extends Phaser.Scene {
 
   private turnOnOffSound(): void {
     if (this.music.isPlaying) {
-      this.startSceneBtns.btnSound.icon.setTexture('sound-off');
+      this.startSceneBtns.btnMusic.icon.setTexture(TextureKeys.MusicOff);
       this.music.pause();
       store.dispatch(setMusic(false));
+      LocalStorageService.setItem(LocalStorageKeys.music, false);
       return;
     }
-    this.startSceneBtns.btnSound.icon.setTexture('sound-on');
+    this.startSceneBtns.btnMusic.icon.setTexture(TextureKeys.MusicOn);
     this.music.play();
     store.dispatch(setMusic(true));
+    LocalStorageService.setItem(LocalStorageKeys.music, true);
   }
 
   private changeLang(): void {
-    this.lang = START_SCENE.btnLang.nextLang[this.lang];
-    this.langBtn.setTexture(START_SCENE.btnLang.textura[this.lang]);
+    this.lang = NEXT_LANG[store.getState().app.lang];
+    this.langBtn.setTexture(TextureKeys[this.lang]);
     store.dispatch(setLang(this.lang));
+    LocalStorageService.setItem(LocalStorageKeys.lang, this.lang);
+    this.updateText();
+  }
+
+  private updateText(): void {
+    this.signIn.setText(LANGUAGE.startScene.signIn[this.lang]);
+    this.startSceneBtns.updateText(this.lang);
+    this.logoGroup.updateText(this.lang);
+    this.levels.updateText(this.lang);
+    this.landscape.updateText(this.lang);
+    this.winners.updateText(this.lang);
   }
 
   private signInHandler(): void {}

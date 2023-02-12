@@ -1,4 +1,6 @@
+import LANGUAGE from 'const/Language';
 import Phaser from 'phaser';
+import store from 'state/store';
 import { TextObjectProps } from 'types/types';
 
 export default class ProgressAssets extends Phaser.GameObjects.Text {
@@ -15,6 +17,6 @@ export default class ProgressAssets extends Phaser.GameObjects.Text {
   }
 
   public updateAssetName(image: Phaser.Loader.File): void {
-    this.setText(`Loading asset: ${image.key}`);
+    this.setText(`${LANGUAGE.preloadScene.subtitle[store.getState().app.lang]} ${image.key}`);
   }
 }

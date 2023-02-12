@@ -1,4 +1,5 @@
 import Colors, { ColorsNumber } from 'const/Colors';
+import { Language } from 'const/Language';
 
 export type TextObjectProps = {
   x: number;
@@ -47,10 +48,6 @@ export enum Controls {
 }
 
 export type TextButtonParams = {
-  text: {
-    eng: string;
-    ru: string;
-  };
   width: number;
   textSize: number;
   textColor: Colors;
@@ -64,11 +61,6 @@ export type IconButtonParams = {
   bgColor: ColorsNumber;
   hoverBgColor: ColorsNumber;
 };
-
-export enum Language {
-  Eng = 'eng',
-  Ru = 'ru',
-}
 
 export enum Move {
   Show,

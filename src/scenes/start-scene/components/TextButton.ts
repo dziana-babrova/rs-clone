@@ -12,9 +12,8 @@ export default class TextButton extends Phaser.GameObjects.Text {
 
   hoverBgColor: Colors;
 
-  constructor(scene: Phaser.Scene, coords: Position, params: TextButtonParams) {
-    const lang = 'eng';
-    super(scene, coords.x, coords.y, params.text[lang], {
+  constructor(scene: Phaser.Scene, coords: Position, text: string, params: TextButtonParams) {
+    super(scene, coords.x, coords.y, text, {
       fontFamily: 'Montserrat',
       fontSize: `${params.textSize}px`,
       backgroundColor: params.bgColor,

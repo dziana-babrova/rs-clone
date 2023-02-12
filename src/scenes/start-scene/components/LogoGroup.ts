@@ -1,7 +1,12 @@
+import LANGUAGE, { Language } from 'const/Language';
 import START_SCENE from 'const/StartSceneConst';
+import TextureKeys from 'const/TextureKeys';
 import Phaser from 'phaser';
+import store from 'state/store';
 
 export default class LogoGroup extends Phaser.GameObjects.Group {
+  subtitle!: Phaser.GameObjects.Text;
+
   constructor(scene: Phaser.Scene) {
     super(scene);
 
@@ -10,7 +15,7 @@ export default class LogoGroup extends Phaser.GameObjects.Group {
       scene,
       centerX,
       -START_SCENE.moveY + START_SCENE.logoGroup.logo.y,
-      'logo',
+      TextureKeys.Logo,
     );
 
     const line = new Phaser.GameObjects.Rectangle(
@@ -22,11 +27,11 @@ export default class LogoGroup extends Phaser.GameObjects.Group {
       START_SCENE.logoGroup.line.color,
     );
 
-    const text = new Phaser.GameObjects.Text(
+    this.subtitle = new Phaser.GameObjects.Text(
       scene,
       centerX,
       -START_SCENE.moveY + START_SCENE.logoGroup.subtitle.y,
-      START_SCENE.logoGroup.subtitle.text.eng,
+      LANGUAGE.startScene.subtitle[store.getState().app.lang],
       {
         fontFamily: 'Montserrat',
         fontSize: `${START_SCENE.logoGroup.subtitle.textSize}px`,
@@ -37,11 +42,11 @@ export default class LogoGroup extends Phaser.GameObjects.Group {
 
     image.setOrigin(0.5, 0);
     line.setOrigin(0.5, 0);
-    text.setOrigin(0.5, 0);
+    this.subtitle.setOrigin(0.5, 0);
 
     this.add(image, true);
     this.add(line, true);
-    this.add(text, true);
+    this.add(this.subtitle, true);
 
     scene.add.existing(this);
   }
@@ -57,5 +62,9 @@ export default class LogoGroup extends Phaser.GameObjects.Group {
         onComplete: animationResolve,
       });
     });
+  }
+
+  public updateText(lang: Language): void {
+    this.subtitle.setText(LANGUAGE.startScene.subtitle[lang]);
   }
 }

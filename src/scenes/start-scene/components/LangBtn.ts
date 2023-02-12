@@ -1,14 +1,15 @@
 import START_SCENE from 'const/StartSceneConst';
+import TextureKeys from 'const/TextureKeys';
 import { GameObjects } from 'phaser';
-import { Language } from 'types/types';
+import store from 'state/store';
 
 export default class LangBtn extends GameObjects.Sprite {
-  constructor(scene: Phaser.Scene, lang: Language) {
+  constructor(scene: Phaser.Scene) {
     super(
       scene,
       START_SCENE.btnLang.y,
       START_SCENE.btnLang.y,
-      START_SCENE.btnLang.textura[lang],
+      TextureKeys[store.getState().app.lang],
     );
 
     this.setScale(0);

@@ -1,5 +1,7 @@
 import { ballText } from 'const/constants';
+import LANGUAGE from 'const/Language';
 import { GameObjects, Scene } from 'phaser';
+import store from 'state/store';
 
 export default class BallText extends GameObjects.Text {
   scene: Scene;
@@ -7,7 +9,7 @@ export default class BallText extends GameObjects.Text {
   private tween: Phaser.Tweens.Tween | undefined;
 
   constructor(scene: Scene) {
-    super(scene, 200, 200, ballText.text, ballText.style);
+    super(scene, 200, 200, LANGUAGE.gameScene.ball[store.getState().app.lang], ballText.style);
     this.scene = scene;
     this.scene.add.existing(this);
     this.alpha = 0;
