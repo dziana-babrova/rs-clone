@@ -42,7 +42,7 @@ export default class PreloadScene extends Phaser.Scene {
 
     this.load.atlas(TextureKeys.Platforms, platfrom, texture);
 
-    // this.load.audio('music', '../assets/music.mp3');
+    this.load.audio('music', '../assets/music.mp3');
 
     Object.values(START_SCENE.btnSettings.type).forEach((btn) => {
       if (btn === 'sound') {
@@ -56,7 +56,7 @@ export default class PreloadScene extends Phaser.Scene {
 
   public create(): void {
     this.add.text(this.scale.width / 2, this.scale.height / 2, 'Loaded').setOrigin(0.5, 0.5);
-    this.scene.start(SceneKeys.Game);
+    this.scene.start(SceneKeys.Start);
   }
 
   private trackProgress(value: number): void {
