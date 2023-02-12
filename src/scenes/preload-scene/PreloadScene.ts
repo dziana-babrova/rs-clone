@@ -32,7 +32,7 @@ export default class PreloadScene extends Phaser.Scene {
   }
 
   public init(): void {
-    this.setStateFromLocalStorage();
+    this.setStoreFromLocalStorage();
 
     this.createLoader();
     this.load.on('progress', this.trackProgress.bind(this));
@@ -91,9 +91,10 @@ export default class PreloadScene extends Phaser.Scene {
     this.progressAssets = new ProgressAssets(this, PRELOAD_SCENE.secondaryText);
   }
 
-  private setStateFromLocalStorage(): void {
+  private setStoreFromLocalStorage(): void {
     const lsLang: Language | null = LocalStorageService.getItem(LocalStorageKeys.lang);
     const lsMusic: boolean | null = LocalStorageService.getItem(LocalStorageKeys.music);
+    console.log('lsMusic: ', lsMusic);
     const lsSound: boolean | null = LocalStorageService.getItem(LocalStorageKeys.sound);
     if (lsLang !== null) store.dispatch(setLang(lsLang));
     if (lsMusic !== null) store.dispatch(setMusic(lsMusic));

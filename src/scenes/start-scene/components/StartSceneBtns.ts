@@ -84,7 +84,7 @@ export default class StartSceneBtns extends Phaser.GameObjects.Group {
 
     this.btnMusic = new IconButton(
       this.scene,
-      store.getState().app.music ? TextureKeys.MusicOn : TextureKeys.MusicOn,
+      store.getState().app.music ? TextureKeys.MusicOn : TextureKeys.MusicOff,
       {
         x: centerX
           + START_SCENE.btnSettings.btnSettingsParams.width

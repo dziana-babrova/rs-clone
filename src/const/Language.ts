@@ -26,7 +26,7 @@ const LANGUAGE = {
     },
     singleGame: {
       eng: 'Single Player',
-      ru: 'Игра для одного',
+      ru: 'Oдиночная игра',
     },
     onlineGame: {
       eng: 'Online Game',
@@ -42,7 +42,7 @@ const LANGUAGE = {
     },
     landscape: {
       eng: 'Landscape',
-      ru: 'Изображения',
+      ru: 'Фон для игры',
     },
     winners: {
       eng: 'Winners',

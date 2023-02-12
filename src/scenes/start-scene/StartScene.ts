@@ -64,7 +64,8 @@ export default class StartScene extends Phaser.Scene {
       volume: 0.2,
       loop: true,
     });
-    // this.music.play();
+
+    if (store.getState().app.music) this.music.play();
 
     this.levels = new Levels(this);
     this.landscape = new Landscape(this);
