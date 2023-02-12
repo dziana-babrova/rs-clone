@@ -83,6 +83,7 @@
         "express-validator": "^6.14.3",
         "jsonwebtoken": "^9.0.0",
         "mongoose": "^6.9.1",
-        "phaser": "^3.55.2"
+        "phaser": "^3.55.2",
+        "phaser-matter-collision-plugin": "^1.0.0"
     }
 }

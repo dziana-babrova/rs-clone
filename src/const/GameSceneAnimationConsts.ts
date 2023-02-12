@@ -12,6 +12,11 @@ const GAME_SCENE_ANIMATION = {
     duration: 500,
     yoyo: true,
   },
+
+  scaleToBig: {
+    scale: 1,
+    duration: 200,
+  },
 };
 
 export default GAME_SCENE_ANIMATION;
