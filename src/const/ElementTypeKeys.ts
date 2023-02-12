@@ -6,6 +6,7 @@ enum ElementTypeKeys {
   HoleWithCoin = 'coin-in-hole',
   Star = 'star',
   Ball = 'ball',
+  Flag = 'flag',
 }
 
 export default ElementTypeKeys;

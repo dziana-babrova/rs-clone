@@ -2,6 +2,7 @@ import platfrom from 'assets/platforms.png';
 import texture from 'assets/platforms.json';
 import SceneKeys from 'const/SceneKeys';
 import TextureKeys from 'const/TextureKeys';
+import AnimationKeys from 'const/AnimationKeys';
 import START_SCENE from 'const/StartSceneConst';
 import PRELOAD_SCENE from 'const/PreloadSceneConsts';
 import Phaser from 'phaser';
@@ -41,6 +42,7 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.image('ball', '../assets/Golf-Ball-big.png');
 
     this.load.atlas(TextureKeys.Platforms, platfrom, texture);
+    this.load.atlas(TextureKeys.Flag, '../assets/flag.png', '../assets/flag.json');
 
     this.load.audio('music', '../assets/music.mp3');
 
@@ -55,7 +57,18 @@ export default class PreloadScene extends Phaser.Scene {
   }
 
   public create(): void {
-    this.add.text(this.scale.width / 2, this.scale.height / 2, 'Loaded').setOrigin(0.5, 0.5);
+    this.anims.create({
+      key: AnimationKeys.Wave,
+      frames: this.anims.generateFrameNames(TextureKeys.Flag, {
+        prefix: '',
+        start: 4,
+        end: 46,
+        suffix: '.png',
+      }),
+      repeat: -1,
+      frameRate: 10,
+    });
+
     this.scene.start(SceneKeys.Start);
   }
 

@@ -46,7 +46,7 @@ const config: TilesConfig = {
     texture: 'hole-end-right.png',
   },
   '+': {
-    type: 'hole',
+    type: 'flag',
     texture: 'hole-center.png',
   },
   '!': {

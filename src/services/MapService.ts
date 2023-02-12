@@ -28,4 +28,12 @@ export default class MapService {
     });
     return levelElements;
   }
+
+  public getFilteredElements(...types: string[]): LevelElements[] {
+    const elements: LevelElements[] = [];
+    types.forEach((type) => {
+      elements.push(...this.mapElements.filter((el) => el.type === type));
+    });
+    return elements;
+  }
 }
