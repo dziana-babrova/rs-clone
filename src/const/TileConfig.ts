@@ -65,8 +65,8 @@ const config: TilesConfig = {
     type: 'slope-right',
     texture: 'right.png',
   },
-  G: {
-    type: 'goal',
+  B: {
+    type: 'ball',
     texture: 'goal',
   },
   O: {

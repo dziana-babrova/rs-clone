@@ -2,7 +2,7 @@ import Phaser, { Game, Types, AUTO } from 'phaser';
 import PhaserMatterCollisionPlugin from 'phaser-matter-collision-plugin';
 import gameConfig from 'gameConfig';
 import PreloadScene from 'scenes/preload-scene/PreloadScene';
-import StartScene from 'scenes/start-scene/StartScene';
+// import StartScene from 'scenes/start-scene/StartScene';
 import GameScene from 'scenes/game-scene/GameScene';
 
 import './styles/style.scss';
@@ -21,7 +21,7 @@ const config: Types.Core.GameConfig = {
   backgroundColor: gameConfig.backgroundColor,
   scene: [
     PreloadScene,
-    StartScene,
+    // StartScene,
     GameScene,
   ],
   scale: {

@@ -1,27 +1,19 @@
 import Phaser from 'phaser';
 import PhaserMatterCollisionPlugin from 'phaser-matter-collision-plugin';
 import TextureKeys from 'const/TextureKeys';
-import ElementTypeKeys from 'const/ElementTypeKeys';
 import TweenAnimationBuilder from 'utils/TweenAnimationBuilder';
-import MapService from 'services/MapService';
 import GAME_SCENE_ANIMATION from 'const/GameSceneAnimationConsts';
+import { LevelElements } from 'types/types';
 
 export default class StarsGroup extends Phaser.GameObjects.Group {
   tweenAnimationBuilder: TweenAnimationBuilder;
 
-  mapService: MapService;
-
   matterCollision!: PhaserMatterCollisionPlugin;
 
-  constructor(scene: Phaser.Scene, level: number, tileSize: number) {
+  constructor(scene: Phaser.Scene, tiles: LevelElements[]) {
     super(scene);
     this.tweenAnimationBuilder = new TweenAnimationBuilder();
-    this.mapService = new MapService(level, tileSize);
-    const stars = this.mapService.mapElements.filter(
-      (el) => el.type === ElementTypeKeys.Star || el.type === ElementTypeKeys.HoleWithCoin,
-    );
-
-    stars.forEach((tile) => {
+    tiles.forEach((tile) => {
       this.create(tile.x, tile.y, 'star.png');
     });
     this.scene.add.existing(this);
