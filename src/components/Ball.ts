@@ -1,11 +1,17 @@
 import { ballSettings } from 'const/constants';
 import { Scene } from 'phaser';
 import { IComponent, Position } from 'types/types';
+import MapService from 'services/MapService';
+import TweenAnimationBuilder from 'utils/TweenAnimationBuilder';
 import BallText from './BallText';
 import Pulse from './Pulse';
 
 export default class Ball extends Phaser.Physics.Matter.Sprite implements IComponent {
   scene: Scene;
+
+  mapService: MapService;
+
+  tweenAnimationBuilder: TweenAnimationBuilder;
 
   public isStopped = false;
 
@@ -13,9 +19,11 @@ export default class Ball extends Phaser.Physics.Matter.Sprite implements ICompo
 
   private text: BallText;
 
-  constructor(scene: Scene, props: Position) {
+  constructor(scene: Scene, props: Position, level: number, tileSize: number) {
     super(scene.matter.world, props.x, props.y, 'ball');
     this.scene = scene;
+    this.tweenAnimationBuilder = new TweenAnimationBuilder();
+    this.mapService = new MapService(level, tileSize);
     this.setBallBody();
     this.scene.add.existing(this);
     this.pulse = new Pulse(scene);

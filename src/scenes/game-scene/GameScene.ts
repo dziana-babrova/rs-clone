@@ -37,7 +37,7 @@ export default class GameScene extends Phaser.Scene implements IComponentManager
     this.nextLevelButton.on('pointerup', this.switchLevel.bind(this));
     this.matter.world.setBounds();
     const trajectory = new Trajectory(this);
-    const ball = new Ball(this, { x: 100, y: 0 });
+    const ball = new Ball(this, { x: 100, y: 0 }, this.level, 41);
     this.addComponents(trajectory, ball);
     this.hitHandler = new HitHandler(this, ball, trajectory);
   }
