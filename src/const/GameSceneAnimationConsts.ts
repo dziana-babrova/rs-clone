@@ -14,7 +14,7 @@ const GAME_SCENE_ANIMATION = {
   },
 
   scaleToBig: {
-    scale: 1,
+    scale: 1.2,
     duration: 200,
   },
 };
