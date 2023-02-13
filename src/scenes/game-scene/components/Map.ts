@@ -1,40 +1,34 @@
 import { Scene } from 'phaser';
-import ElementTypeKeys from 'const/ElementTypeKeys';
-import TweenAnimationService from 'utils/TweenAnimationBuilder';
+import TweenAnimationBuilder from 'utils/TweenAnimationBuilder';
 import GAME_SCENE_ANIMATION from 'const/GameSceneAnimationConsts';
+import { LevelElements } from 'types/types';
 import TunnelGroup from './golf-course/HoleGroup';
-import MapService from '../../../services/MapService';
 import TilesGroup from './golf-course/PlatformGroup';
 import SlopeLeftGroup from './golf-course/SlopeLeftGroup';
 import SlopeRightGroup from './golf-course/SlopeRightGroup';
 
 export default class Map extends Phaser.GameObjects.Container {
-  mapService: MapService;
+  tweenAnimationBuilder: TweenAnimationBuilder;
 
-  tweenAnimationService: TweenAnimationService;
-
-  constructor(scene: Scene, level: number, tileSize: number) {
+  constructor(
+    scene: Scene,
+    groundConfig: LevelElements[],
+    leftSlopeConfig: LevelElements[],
+    rightSlopeConfig: LevelElements[],
+    holeConfig: LevelElements[],
+  ) {
     super(scene);
 
-    this.tweenAnimationService = new TweenAnimationService();
-    this.mapService = new MapService(level, tileSize);
-    this.build();
+    this.tweenAnimationBuilder = new TweenAnimationBuilder();
+    this.build(groundConfig, leftSlopeConfig, rightSlopeConfig, holeConfig);
   }
 
-  public build(): void {
-    const groundConfig = this.mapService.mapElements.filter(
-      (el) => el.type === ElementTypeKeys.Tile,
-    );
-    const leftSlopeConfig = this.mapService.mapElements.filter(
-      (el) => el.type === ElementTypeKeys.LeftSlope,
-    );
-    const rightSlopeConfig = this.mapService.mapElements.filter(
-      (el) => el.type === ElementTypeKeys.RightSlope,
-    );
-    const holeConfig = this.mapService.mapElements.filter(
-      (el) => el.type === ElementTypeKeys.Hole || el.type === ElementTypeKeys.HoleWithCoin,
-    );
-
+  private build(
+    groundConfig: LevelElements[],
+    leftSlopeConfig: LevelElements[],
+    rightSlopeConfig: LevelElements[],
+    holeConfig: LevelElements[],
+  ): void {
     const ground = new TilesGroup(this.scene, groundConfig);
     const leftSlope = new SlopeLeftGroup(this.scene, leftSlopeConfig);
     const rightSlope = new SlopeRightGroup(this.scene, rightSlopeConfig);
@@ -56,7 +50,7 @@ export default class Map extends Phaser.GameObjects.Container {
   }
 
   public async show(): Promise<void> {
-    await this.tweenAnimationService.moveY(
+    await this.tweenAnimationBuilder.moveY(
       this.scene,
       this,
       GAME_SCENE_ANIMATION.moveYAnimation.y,
@@ -66,7 +60,7 @@ export default class Map extends Phaser.GameObjects.Container {
   }
 
   public async jump(): Promise<void> {
-    await this.tweenAnimationService.moveYFrom(
+    await this.tweenAnimationBuilder.moveYFrom(
       this.scene,
       this,
       GAME_SCENE_ANIMATION.moveFromYAnimation.from,

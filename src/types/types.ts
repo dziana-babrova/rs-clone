@@ -90,9 +90,14 @@ export type LevelElements = {
   y: number;
 } & TileProps;
 
+export interface IUserState {
+  isLoading: boolean;
+  isAuth: boolean;
+  user: User;
+}
+
 export interface IAppState {
-  user: User | null;
-  maps: Maps | null;
+  maps: Maps;
   lang: Language;
   music: boolean;
   sound: boolean;
@@ -104,6 +109,29 @@ export type User = {
   password: string;
 };
 
+export type LoginData = {
+  email: string;
+  password: string;
+};
+
 export type Maps = {
   [key: string]: number;
+};
+
+export type AuthResponse = {
+  accessToken: string;
+  refreshToken: string;
+  user: User;
+};
+
+export type AxiosErrorResponse = {
+  message: string;
+  errors?: ServerValidationError[];
+};
+
+export type ServerValidationError = {
+  value?: string;
+  msg: string;
+  param: string;
+  location: string;
 };

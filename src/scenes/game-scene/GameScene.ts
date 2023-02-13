@@ -1,25 +1,29 @@
-import Ball from 'components/Ball';
+import PhaserMatterCollisionPlugin from 'phaser-matter-collision-plugin';
 import SceneKeys from 'const/SceneKeys';
 import Phaser from 'phaser';
-import Trajectory from 'components/Trajectory';
 import HitHandler from 'handlers/HitHandler';
 import { IComponent, IComponentManager } from 'types/types';
-import Map from './components/World';
 import NextLevelButton from './components/NextLevelButton';
+import ElementsManager from './components/ElementsManager';
 
 export default class GameScene extends Phaser.Scene implements IComponentManager {
   components: IComponent[] = [];
 
   public hitHandler!: HitHandler;
 
+  elementsManager!: ElementsManager;
+
   level!: number;
 
-  map!: Map;
+  starsCount: number;
 
   nextLevelButton!: NextLevelButton;
 
+  matterCollision!: PhaserMatterCollisionPlugin;
+
   constructor() {
     super(SceneKeys.Game);
+    this.starsCount = 0;
   }
 
   init(props: { level?: number }) {
@@ -29,17 +33,37 @@ export default class GameScene extends Phaser.Scene implements IComponentManager
 
   async create() {
     this.cameras.main.fadeIn();
-    this.map = new Map(this, this.level, 41);
+    this.elementsManager = new ElementsManager(this, this.level, 41);
+    await this.elementsManager.create();
 
-    await Promise.all([this.map.animate()]);
+    this.addComponents(this.elementsManager.trajectory, this.elementsManager.ball);
+    this.hitHandler = new HitHandler(
+      this,
+      this.elementsManager.ball,
+      this.elementsManager.trajectory,
+    );
 
     this.nextLevelButton = new NextLevelButton(this);
     this.nextLevelButton.on('pointerup', this.switchLevel.bind(this));
     this.matter.world.setBounds();
-    const trajectory = new Trajectory(this);
-    const ball = new Ball(this, { x: 100, y: 0 });
-    this.addComponents(trajectory, ball);
-    this.hitHandler = new HitHandler(this, ball, trajectory);
+    await this.collectStar(this.elementsManager.ball, this.elementsManager.stars.getChildren());
+  }
+
+  private collectStar(
+    objectA: Phaser.GameObjects.GameObject,
+    objectB: Phaser.GameObjects.GameObject[],
+  ): Promise<void> {
+    return new Promise<void>((resolve) => {
+      this.matterCollision.addOnCollideStart({
+        objectA,
+        objectB,
+        callback: ({ gameObjectB }) => {
+          gameObjectB?.destroy();
+          this.starsCount += 1;
+        },
+      });
+      resolve();
+    });
   }
 
   update() {
@@ -58,6 +82,7 @@ export default class GameScene extends Phaser.Scene implements IComponentManager
   switchLevel() {
     this.cameras.main.fadeOut();
     this.destroySprites();
+    this.starsCount = 0;
     this.time.addEvent({
       delay: 2000,
       callback: () => {

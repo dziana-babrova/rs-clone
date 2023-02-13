@@ -10,6 +10,7 @@ import LocalStorageKeys from 'const/LocalStorageKeys';
 import { setLang, setMusic, setSound } from 'state/features/AppSlice';
 import store from 'state/store';
 import { Language } from 'const/Language';
+import { axiosCheckAuth } from 'state/features/UserSlice';
 import ProgressAssets from './components/ProgressAssets';
 import ProgressBar from './components/ProgressBar';
 import ProgressBox from './components/ProgressBox';
@@ -41,6 +42,9 @@ export default class PreloadScene extends Phaser.Scene {
   }
 
   public preload(): void {
+    if (LocalStorageService.getAccessToken()) {
+      store.dispatch(axiosCheckAuth());
+    }
     this.load.image(TextureKeys.Logo, '../assets/logo.png');
     this.load.image(TextureKeys.eng, '../assets/eng.png');
     this.load.image(TextureKeys.ru, '../assets/ru.png');

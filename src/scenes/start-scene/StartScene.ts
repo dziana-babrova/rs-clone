@@ -5,6 +5,7 @@ import SceneKeys from 'const/SceneKeys';
 import TextureKeys from 'const/TextureKeys';
 import LocalStorageService from 'services/LocalStorageService';
 import { setLang, setMusic } from 'state/features/AppSlice';
+import { axiosSignIn, axiosSignUp } from 'state/features/UserSlice';
 import store from 'state/store';
 import Landscape from './components/Landscape';
 import LangBtn from './components/LangBtn';
@@ -42,7 +43,7 @@ export default class StartScene extends Phaser.Scene {
   }
 
   public preload(): void {
-    store.subscribe(() => console.log(store.getState()));
+    store.subscribe(() => { console.log(store.getState()); });
   }
 
   public async create(): Promise<void> {
@@ -123,7 +124,10 @@ export default class StartScene extends Phaser.Scene {
     this.winners.updateText(this.lang);
   }
 
-  private signInHandler(): void {}
+  private signInHandler(): void {
+    store.dispatch(axiosSignUp({ email: 'asdsad@asd.sa', username: 'tester', password: 'asdasdasd123' }));
+    store.dispatch(axiosSignIn({ email: 'asdsad@asd.sa', password: 'asdasdasd123' }));
+  }
 
   private async showLevels(): Promise<void> {
     await Promise.all([
