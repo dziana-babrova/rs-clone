@@ -5,6 +5,7 @@ import cors from 'cors';
 import * as dotenv from 'dotenv';
 import errorMiddleware from './middleware/error-middleware';
 import authRouter from './routers/AuthRouter';
+import mapsRouter from './routers/MapsRouter';
 
 dotenv.config();
 
@@ -19,6 +20,7 @@ app.use(cors({
   origin: process.env.CLIENT,
 }));
 app.use('/api/auth', authRouter);
+app.use('/api/maps', mapsRouter);
 app.use(errorMiddleware);
 
 async function start() {

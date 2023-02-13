@@ -26,7 +26,15 @@
 
 - [Refresh](https://github.com/dziana-babrova/rs-clone/serveri#refresh)
 
-**Sign Up**
+ **Maps**
+
+- [Get Maps](https://github.com/dziana-babrova/rs-clone/serveri#get-maps)
+
+- [Update Maps](https://github.com/dziana-babrova/rs-clone/serveri#update-maps)
+
+
+
+<a name="sign-up"></a>**Sign Up**
 
 ----
 
@@ -169,7 +177,7 @@ None
 
 </details>
 
-**Sign In**
+<a name="sign-in"></a>**Sign In**
 
 ----
 
@@ -327,7 +335,7 @@ None
 
 </details>
 
-**Sing Out**
+<a name="sign-out"></a>**Sing Out**
 
 ----
 
@@ -410,7 +418,7 @@ None
 
 </details>
 
-**Refresh**
+<a name="refresh"></a>**Refresh**
 
 ----
 
@@ -472,6 +480,179 @@ None
 
 }
 
+```
+
+* **Error Response:**
+
+* **Code:** 401 # UNAUTHORIZED <br />
+
+**Content:**
+
+```json
+
+{
+
+"message": "Unauthorized"
+
+}
+
+```
+
+* **Notes:**
+
+None
+
+</details>
+
+<a name="get-maps"></a>**Get Maps**
+
+----
+
+Returns json data with user maps card object.
+
+<details>
+
+* **URL**
+
+/api/maps/
+
+* **Method:**
+
+`GET`
+
+* **Headers:**
+
+`'Authorization': 'Bearer ${accessToken}'`
+
+* **URL Params**
+
+None
+
+* **Query Params**
+
+None
+
+* **Data Params**
+
+None
+
+
+* **Success Response:**
+
+* **Code:** 200 OK <br />
+
+**Content:**
+
+```json
+
+{
+
+  "1": {
+
+    "isUnlock": true,
+
+    "stars": 0
+
+  },
+
+  "2": {
+
+    "isUnlock": true,
+
+    "stars": 3
+
+  },
+
+  "3": {
+
+    "isUnlock": false,
+
+    "stars": 0
+
+  }
+
+}
+```
+
+* **Error Response:**
+
+* **Code:** 401 # UNAUTHORIZED <br />
+
+**Content:**
+
+```json
+
+{
+
+"message": "Unauthorized"
+
+}
+
+```
+
+* **Code:** 404 NOT FOUND <br />
+
+**Content:**
+
+```json
+
+{
+
+"message": "Maps for user ${userId} not found."
+
+}
+```
+
+* **Notes:**
+
+None
+
+</details>
+
+
+
+<a name="update-maps"></a>**Update Maps**
+
+----
+
+Returns json data with user maps card object.
+
+<details>
+
+* **URL**
+
+/api/maps/
+
+* **Method:**
+
+`PUT`
+
+* **Headers:**
+
+`'Authorization': 'Bearer ${accessToken}'`
+
+* **URL Params**
+
+None
+
+* **Query Params**
+
+None
+
+* **Data Params**
+
+None
+
+
+* **Success Response:**
+
+* **Code:** 204 OK <br />
+
+**Content:**
+
+```json
+
+{}
 ```
 
 * **Error Response:**
