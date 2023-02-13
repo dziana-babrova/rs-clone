@@ -22,7 +22,6 @@ export const pulseSettings = {
 };
 
 export const ballText = {
-  text: 'Ready!',
   style: {
     font: '15px monospace',
   },

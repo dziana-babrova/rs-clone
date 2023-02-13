@@ -1,5 +1,8 @@
+import LANGUAGE, { Language } from 'const/Language';
 import START_SCENE from 'const/StartSceneConst';
+import TextureKeys from 'const/TextureKeys';
 import Phaser from 'phaser';
+import store from 'state/store';
 import { Move } from 'types/types';
 import IconButton from './IconButton';
 import TextButton from './TextButton';
@@ -15,7 +18,7 @@ export default class StartSceneBtns extends Phaser.GameObjects.Group {
 
   btnWinners!: IconButton;
 
-  btnSound!: IconButton;
+  btnMusic!: IconButton;
 
   constructor(scene: Phaser.Scene) {
     super(scene);
@@ -28,6 +31,7 @@ export default class StartSceneBtns extends Phaser.GameObjects.Group {
         x: centerX - START_SCENE.moveX,
         y: START_SCENE.btnStartSingleGame.y,
       },
+      LANGUAGE.startScene.singleGame[store.getState().app.lang],
       START_SCENE.btnStartSingleGame,
     );
 
@@ -37,6 +41,7 @@ export default class StartSceneBtns extends Phaser.GameObjects.Group {
         x: centerX + START_SCENE.moveX,
         y: START_SCENE.btnStartOnlineGame.y,
       },
+      LANGUAGE.startScene.onlineGame[store.getState().app.lang],
       START_SCENE.btnStartOnlineGame,
     );
 
@@ -77,9 +82,9 @@ export default class StartSceneBtns extends Phaser.GameObjects.Group {
       START_SCENE.btnSettings.btnSettingsParams,
     );
 
-    this.btnSound = new IconButton(
+    this.btnMusic = new IconButton(
       this.scene,
-      'sound-off',
+      store.getState().app.music ? TextureKeys.MusicOn : TextureKeys.MusicOff,
       {
         x: centerX
           + START_SCENE.btnSettings.btnSettingsParams.width
@@ -96,7 +101,7 @@ export default class StartSceneBtns extends Phaser.GameObjects.Group {
       ...this.btnLevels.getChildren(),
       ...this.btnLandscape.getChildren(),
       ...this.btnWinners.getChildren(),
-      ...this.btnSound.getChildren(),
+      ...this.btnMusic.getChildren(),
     ].forEach((obj) => {
       this.add(obj, true);
     });
@@ -153,7 +158,7 @@ export default class StartSceneBtns extends Phaser.GameObjects.Group {
           ...this.btnLevels.getChildren(),
           ...this.btnLandscape.getChildren(),
           ...this.btnWinners.getChildren(),
-          ...this.btnSound.getChildren()],
+          ...this.btnMusic.getChildren()],
         ease: 'Back', // 'Linear', 'Cubic', 'Elastic', 'Bounce', 'Back'
         scale: 1,
         duration: 1000,
@@ -161,5 +166,10 @@ export default class StartSceneBtns extends Phaser.GameObjects.Group {
         onComplete: animationResolve,
       });
     });
+  }
+
+  public updateText(lang: Language): void {
+    this.btnStartSingleGame.setText(LANGUAGE.startScene.singleGame[lang]);
+    this.btnStartOnlineGame.setText(LANGUAGE.startScene.onlineGame[lang]);
   }
 }
