@@ -6,6 +6,7 @@ import Trajectory from 'components/Trajectory';
 import StarsGroup from './StarsGroup';
 import Map from './Map';
 import Flag from './Flag';
+import Cup from './golf-course/Cup';
 
 export default class ElementsManager extends Phaser.GameObjects.Container {
   mapService: MapService;
@@ -19,6 +20,8 @@ export default class ElementsManager extends Phaser.GameObjects.Container {
   trajectory!: Trajectory;
 
   flag!: Flag;
+
+  cup!: Cup;
 
   constructor(scene: Scene, level: number, tileSize: number) {
     super(scene);
@@ -38,6 +41,7 @@ export default class ElementsManager extends Phaser.GameObjects.Container {
       ElementTypeKeys.Hole,
       ElementTypeKeys.HoleWithCoin,
       ElementTypeKeys.Flag,
+      ElementTypeKeys.Cup,
     );
     const starsConfig = this.mapService.getFilteredElements(
       ElementTypeKeys.Star,
@@ -47,6 +51,7 @@ export default class ElementsManager extends Phaser.GameObjects.Container {
       ElementTypeKeys.Ball,
     );
     const flagConfig = this.mapService.getFilteredElements(ElementTypeKeys.Flag)[0];
+    const cupConfig = this.mapService.getFilteredElements(ElementTypeKeys.Cup)[0];
 
     this.map = new Map(this.scene, groundConfig, leftSlopeConfig, rightSlopeConfig, holeConfig);
     await this.map.animate();
@@ -56,5 +61,6 @@ export default class ElementsManager extends Phaser.GameObjects.Container {
     this.trajectory = new Trajectory(this.scene);
     this.flag = new Flag(this.scene, flagConfig.x, flagConfig.y);
     await this.flag.animate();
+    this.cup = new Cup(this.scene, cupConfig);
   }
 }

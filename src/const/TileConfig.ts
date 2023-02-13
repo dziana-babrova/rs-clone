@@ -29,6 +29,10 @@ const config: TilesConfig = {
     type: 'hole',
     texture: 'hole-black.png',
   },
+  '*': {
+    type: 'cup',
+    texture: 'hole-black.png',
+  },
   '^': {
     type: 'coin-in-hole',
     texture: 'hole-black.png',
@@ -47,6 +51,10 @@ const config: TilesConfig = {
   },
   '+': {
     type: 'flag',
+    texture: 'hole-center.png',
+  },
+  '~': {
+    type: 'hole',
     texture: 'hole-center.png',
   },
   '!': {
