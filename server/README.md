@@ -18,19 +18,19 @@
 
  **Auth**
 
-- [Sign Up](https://github.com/dziana-babrova/rs-clone/serveri#sing-up)
+- [Sign Up](https://github.com/dziana-babrova/rs-clone/server#sing-up)
 
-- [Sign In](https://github.com/dziana-babrova/rs-clone/serveri#sing-in)
+- [Sign In](https://github.com/dziana-babrova/rs-clone/server#sing-in)
 
-- [Sign Out](https://github.com/dziana-babrova/rs-clone/serveri#sing-out)
+- [Sign Out](https://github.com/dziana-babrova/rs-clone/server#sing-out)
 
-- [Refresh](https://github.com/dziana-babrova/rs-clone/serveri#refresh)
+- [Refresh](https://github.com/dziana-babrova/rs-clone/server#refresh)
 
  **Maps**
 
-- [Get Maps](https://github.com/dziana-babrova/rs-clone/serveri#get-maps)
+- [Get Maps](https://github.com/dziana-babrova/rs-clone/server#get-maps)
 
-- [Update Maps](https://github.com/dziana-babrova/rs-clone/serveri#update-maps)
+- [Update Maps](https://github.com/dziana-babrova/rs-clone/server#update-maps)
 
 
 
