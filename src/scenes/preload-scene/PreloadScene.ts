@@ -5,6 +5,9 @@ import TextureKeys from 'const/TextureKeys';
 import START_SCENE from 'const/StartSceneConst';
 import PRELOAD_SCENE from 'const/PreloadSceneConsts';
 import Phaser from 'phaser';
+import store from 'state/store';
+import { axiosCheckAuth } from 'state/features/UserSlice';
+import LocalStorageService from 'services/LocalStorageService';
 import ProgressAssets from './components/ProgressAssets';
 import ProgressBar from './components/ProgressBar';
 import ProgressBox from './components/ProgressBox';
@@ -34,6 +37,9 @@ export default class PreloadScene extends Phaser.Scene {
   }
 
   public preload(): void {
+    if (LocalStorageService.getAccessToken()) {
+      store.dispatch(axiosCheckAuth());
+    }
     this.load.image('logo', '../assets/logo.png');
     this.load.image('eng', '../assets/eng.png');
     this.load.image('ru', '../assets/ru.png');

@@ -2,6 +2,7 @@ import Colors from 'const/Colors';
 import SceneKeys from 'const/SceneKeys';
 import START_SCENE from 'const/StartSceneConst';
 import { setLang, setMusic } from 'state/features/AppSlice';
+import { axiosSignIn, axiosSignUp } from 'state/features/UserSlice';
 import store from 'state/store';
 import { Language } from 'types/types';
 import Landscape from './components/Landscape';
@@ -40,7 +41,7 @@ export default class StartScene extends Phaser.Scene {
   }
 
   public preload(): void {
-    store.subscribe(() => console.log(store.getState()));
+    store.subscribe(() => { console.log(store.getState()); });
   }
 
   public async create(): Promise<void> {
@@ -108,7 +109,10 @@ export default class StartScene extends Phaser.Scene {
     store.dispatch(setLang(this.lang));
   }
 
-  private signInHandler(): void {}
+  private signInHandler(): void {
+    store.dispatch(axiosSignUp({ email: 'asdsad@asd.sa', username: 'tester', password: 'asdasdasd123' }));
+    store.dispatch(axiosSignIn({ email: 'asdsad@asd.sa', password: 'asdasdasd123' }));
+  }
 
   private async showLevels(): Promise<void> {
     await Promise.all([
