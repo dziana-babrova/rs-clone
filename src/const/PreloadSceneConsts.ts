@@ -35,6 +35,29 @@ const PRELOAD_SCENE = {
     bottomLeft: 0xffff00,
     bottomRight: 0xffff00,
   },
+
+  fireworksTexture: {
+    data: ['123...'],
+    palette: {
+      0: '#fff2',
+      1: '#fff4',
+      2: '#fff8',
+      3: '#ffff',
+      4: '#ffff',
+      5: '#ffff',
+      6: '#ffff',
+      7: '#ffff',
+      8: '#ffff',
+      9: '#ffff',
+      A: '#ffff',
+      B: '#ffff',
+      C: '#ffff',
+      D: '#ffff',
+      E: '#ffff',
+      F: '#ffff',
+    },
+    pixelWidth: 6,
+  },
 };
 
 export default PRELOAD_SCENE;

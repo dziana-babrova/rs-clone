@@ -44,6 +44,8 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.atlas(TextureKeys.Platforms, platfrom, texture);
     this.load.atlas(TextureKeys.Flag, '../assets/flag.png', '../assets/flag.json');
 
+    this.textures.generate(TextureKeys.Fireworks, PRELOAD_SCENE.fireworksTexture);
+
     this.load.audio('music', '../assets/music.mp3');
 
     Object.values(START_SCENE.btnSettings.type).forEach((btn) => {

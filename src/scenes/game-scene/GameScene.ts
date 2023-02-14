@@ -6,6 +6,7 @@ import HitHandler from 'handlers/HitHandler';
 import { IComponent, IComponentManager } from 'types/types';
 import NextLevelButton from './components/NextLevelButton';
 import ElementsManager from './components/ElementsManager';
+import Fireworks from './components/fireworks/Fireworks';
 
 export default class GameScene extends Phaser.Scene implements IComponentManager {
   components: IComponent[] = [];
@@ -54,6 +55,10 @@ export default class GameScene extends Phaser.Scene implements IComponentManager
     await this.collectStar(this.elementsManager.ball, this.elementsManager.stars.getChildren());
     await this.detectWin(this.elementsManager.ball, this.elementsManager.cup);
     this.events.on(EventNames.Win, this.elementsManager.ball.deactivate, this.elementsManager.ball);
+    this.events.on(EventNames.Win, () => {
+      const fireworks = new Fireworks();
+      fireworks.create(this, this.elementsManager.cup.x, this.elementsManager.cup.y);
+    });
   }
 
   private collectStar(
