@@ -1,11 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import {
-  IAppState, Language, Maps, User,
-} from 'types/types';
+import { Language } from 'const/Language';
+import { IAppState, Language, Maps } from 'types/types';
 
 const initialState: IAppState = {
-  user: null,
-  maps: null,
+  maps: {},
   lang: Language.Eng,
   music: true,
   sound: true,
@@ -16,9 +14,6 @@ const appSlice = createSlice({
   name: 'app',
   initialState,
   reducers: {
-    setUser: (state, action: PayloadAction<User>) => {
-      state.user = action.payload;
-    },
     setMaps: (state, action: PayloadAction<Maps>) => {
       state.maps = action.payload;
     },
@@ -36,7 +31,7 @@ const appSlice = createSlice({
 /* eslint-enable no-param-reassign */
 
 export const {
-  setUser, setMaps, setLang, setMusic, setSound,
+  setMaps, setLang, setMusic, setSound,
 } = appSlice.actions;
 
 export default appSlice.reducer;

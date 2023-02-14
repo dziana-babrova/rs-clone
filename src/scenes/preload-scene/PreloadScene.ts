@@ -6,6 +6,12 @@ import AnimationKeys from 'const/AnimationKeys';
 import START_SCENE from 'const/StartSceneConst';
 import PRELOAD_SCENE from 'const/PreloadSceneConsts';
 import Phaser from 'phaser';
+import LocalStorageService from 'services/LocalStorageService';
+import LocalStorageKeys from 'const/LocalStorageKeys';
+import { setLang, setMusic, setSound } from 'state/features/AppSlice';
+import store from 'state/store';
+import { Language } from 'const/Language';
+import { axiosCheckAuth } from 'state/features/UserSlice';
 import ProgressAssets from './components/ProgressAssets';
 import ProgressBar from './components/ProgressBar';
 import ProgressBox from './components/ProgressBox';
@@ -28,6 +34,8 @@ export default class PreloadScene extends Phaser.Scene {
   }
 
   public init(): void {
+    this.setStoreFromLocalStorage();
+
     this.createLoader();
     this.load.on('progress', this.trackProgress.bind(this));
     this.load.on('fileprogress', this.trackFileProgress.bind(this));
@@ -35,11 +43,14 @@ export default class PreloadScene extends Phaser.Scene {
   }
 
   public preload(): void {
-    this.load.image('logo', '../assets/logo.png');
-    this.load.image('eng', '../assets/eng.png');
-    this.load.image('ru', '../assets/ru.png');
-    this.load.image('close', '../assets/close.svg');
-    this.load.image('ball', '../assets/Golf-Ball-big.png');
+    if (LocalStorageService.getAccessToken()) {
+      store.dispatch(axiosCheckAuth());
+    }
+    this.load.image(TextureKeys.Logo, '../assets/logo.png');
+    this.load.image(TextureKeys.eng, '../assets/eng.png');
+    this.load.image(TextureKeys.ru, '../assets/ru.png');
+    this.load.image(TextureKeys.Close, '../assets/close.svg');
+    this.load.image(TextureKeys.Ball, '../assets/Golf-Ball-big.png');
 
     this.load.atlas(TextureKeys.Platforms, platfrom, texture);
     this.load.atlas(TextureKeys.Flag, '../assets/flag.png', '../assets/flag.json');
@@ -49,9 +60,9 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.audio('music', '../assets/music.mp3');
 
     Object.values(START_SCENE.btnSettings.type).forEach((btn) => {
-      if (btn === 'sound') {
-        this.load.image(`${btn}-on`, `../assets/${btn}-on.svg`);
-        this.load.image(`${btn}-off`, `../assets/${btn}-off.svg`);
+      if (btn === 'music') {
+        this.load.image(TextureKeys.MusicOn, `../assets/${btn}-on.svg`);
+        this.load.image(TextureKeys.MusicOff, `../assets/${btn}-off.svg`);
       } else {
         this.load.image(btn, `../assets/${btn}.svg`);
       }
@@ -97,5 +108,15 @@ export default class PreloadScene extends Phaser.Scene {
     this.progressText = new ProgressText(this, PRELOAD_SCENE.mainText);
     this.progressPercentText = new ProgressPercentText(this, PRELOAD_SCENE.secondaryText);
     this.progressAssets = new ProgressAssets(this, PRELOAD_SCENE.secondaryText);
+  }
+
+  private setStoreFromLocalStorage(): void {
+    const lsLang: Language | null = LocalStorageService.getItem(LocalStorageKeys.lang);
+    const lsMusic: boolean | null = LocalStorageService.getItem(LocalStorageKeys.music);
+    console.log('lsMusic: ', lsMusic);
+    const lsSound: boolean | null = LocalStorageService.getItem(LocalStorageKeys.sound);
+    if (lsLang !== null) store.dispatch(setLang(lsLang));
+    if (lsMusic !== null) store.dispatch(setMusic(lsMusic));
+    if (lsSound !== null) store.dispatch(setSound(lsSound));
   }
 }

@@ -1,20 +1,23 @@
 import START_SCENE from 'const/StartSceneConst';
+import TextureKeys from 'const/TextureKeys';
 import Phaser from 'phaser';
 import { Move } from 'types/types';
 
 export default class SettingsScreen extends Phaser.GameObjects.Group {
   btnClose: Phaser.GameObjects.Image;
 
-  constructor(scene: Phaser.Scene, title: string) {
+  title: Phaser.GameObjects.Text;
+
+  constructor(scene: Phaser.Scene, text: string) {
     super(scene);
 
     const { centerX } = scene.cameras.main;
 
-    const text = new Phaser.GameObjects.Text(
+    this.title = new Phaser.GameObjects.Text(
       scene,
       centerX - START_SCENE.settingsScreen.moveX,
       START_SCENE.settingsScreen.title.y,
-      title,
+      text,
       {
         fontFamily: 'Montserrat',
         fontSize: `${START_SCENE.settingsScreen.title.textSize}px`,
@@ -27,7 +30,7 @@ export default class SettingsScreen extends Phaser.GameObjects.Group {
       scene,
       centerX + START_SCENE.settingsScreen.line.width / 2 - START_SCENE.settingsScreen.moveX,
       START_SCENE.settingsScreen.title.y,
-      'close',
+      TextureKeys.Close,
     );
 
     const line = new Phaser.GameObjects.Rectangle(
@@ -41,10 +44,10 @@ export default class SettingsScreen extends Phaser.GameObjects.Group {
 
     this.btnClose.setOrigin(1, 0);
     line.setOrigin(0.5, 0);
-    text.setOrigin(0.5, 0);
+    this.title.setOrigin(0.5, 0);
 
     this.add(line, true);
-    this.add(text, true);
+    this.add(this.title, true);
     this.add(this.btnClose, true);
 
     this.btnClose.setInteractive({
