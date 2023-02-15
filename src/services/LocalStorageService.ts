@@ -16,6 +16,7 @@ export default class LocalStorageService {
       console.error('Wrong format of data');
       return null;
     }
+  }
 
   static setAccessToken(token: string) {
     localStorage.setItem(LocalStorageKeys.accessToken, token);
