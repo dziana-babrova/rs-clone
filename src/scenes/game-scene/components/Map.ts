@@ -1,7 +1,7 @@
 import { Scene } from 'phaser';
 import TweenAnimationBuilder from 'utils/TweenAnimationBuilder';
 import GAME_SCENE_ANIMATION from 'const/GameSceneAnimationConsts';
-import { LevelElements } from 'types/types';
+import { LevelElements, Position } from 'types/types';
 import TunnelGroup from './golf-course/HoleGroup';
 import TilesGroup from './golf-course/PlatformGroup';
 import SlopeLeftGroup from './golf-course/SlopeLeftGroup';
@@ -18,7 +18,6 @@ export default class Map extends Phaser.GameObjects.Container {
     holeConfig: LevelElements[],
   ) {
     super(scene);
-
     this.tweenAnimationBuilder = new TweenAnimationBuilder();
     this.build(groundConfig, leftSlopeConfig, rightSlopeConfig, holeConfig);
   }

@@ -6,6 +6,7 @@ import StartScene from 'scenes/start-scene/StartScene';
 import GameScene from 'scenes/game-scene/GameScene';
 
 import './styles/style.scss';
+import MultiPlayerScene from 'scenes/multiplayer-scene/MultiPlayerScene';
 
 const pluginConfig = {
   plugin: PhaserMatterCollisionPlugin,
@@ -23,6 +24,7 @@ const config: Types.Core.GameConfig = {
     PreloadScene,
     StartScene,
     GameScene,
+    MultiPlayerScene,
   ],
   scale: {
     mode: Phaser.Scale.FIT,

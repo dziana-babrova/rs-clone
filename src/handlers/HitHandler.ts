@@ -34,6 +34,7 @@ export default class HitHandler {
   }
 
   update() {
+    // сheck ifActive - return
     if (!this.ball.isStopped) return;
     if (this.controls === Controls.Mouse) {
       this.setAngleAndDistance(this.scene.game.input.mousePointer);
@@ -45,12 +46,14 @@ export default class HitHandler {
 
   private initEvents() {
     this.scene.input.on('pointerdown', (event: PointerEvent, targets: unknown[]) => {
+       // сheck ifActive - return
       if (targets.length) return;
       if (!this.ball.isStopped || this.isHit || this.controls === Controls.Keyboard) { return; }
       this.controls = Controls.Mouse;
       this.startAim({ x: event.x, y: event.y });
     });
     this.scene.input.on('pointerup', (event: PointerEvent) => {
+       // сheck ifActive - return
       if (!this.isHit || this.controls !== Controls.Mouse) return;
       this.setAngleAndDistance({ x: event.x, y: event.y });
       this.hit();
