@@ -17,6 +17,8 @@ enum Colors {
   FireworksYellow = '#E6ED0F',
   FireworksGreen = '#3DA925',
   FireworksPurple = '#EE04E7',
+  NextLevelPopupBackground = '#fefee4',
+  NextLevelPopupBorder = '#d78d43',
 }
 
 export enum ColorsNumber {
@@ -38,6 +40,8 @@ export enum ColorsNumber {
   FireworksYellow = 0xe6ed0f,
   FireworksGreen = 0x3da925,
   FireworksPurple = 0xee04e7,
+  NextLevelPopupBorder = 0xfefee4,
+  NextLevelPopupBackground = 0xd78d43,
 }
 
 export default Colors;

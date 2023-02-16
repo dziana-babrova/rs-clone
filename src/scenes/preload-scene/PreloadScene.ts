@@ -3,7 +3,7 @@ import texture from 'assets/platforms.json';
 import SceneKeys from 'const/SceneKeys';
 import TextureKeys from 'const/TextureKeys';
 import AnimationKeys from 'const/AnimationKeys';
-import START_SCENE from 'const/StartSceneConst';
+// import START_SCENE from 'const/StartSceneConst';
 import PRELOAD_SCENE from 'const/PreloadSceneConsts';
 import Phaser from 'phaser';
 import LocalStorageService from 'services/LocalStorageService';
@@ -46,10 +46,10 @@ export default class PreloadScene extends Phaser.Scene {
     if (LocalStorageService.getAccessToken()) {
       store.dispatch(axiosCheckAuth());
     }
-    this.load.image(TextureKeys.Logo, '../assets/logo.png');
-    this.load.image(TextureKeys.eng, '../assets/eng.png');
-    this.load.image(TextureKeys.ru, '../assets/ru.png');
-    this.load.image(TextureKeys.Close, '../assets/close.svg');
+    // this.load.image(TextureKeys.Logo, '../assets/logo.png');
+    // this.load.image(TextureKeys.eng, '../assets/eng.png');
+    // this.load.image(TextureKeys.ru, '../assets/ru.png');
+    // this.load.image(TextureKeys.Close, '../assets/close.svg');
     this.load.image(TextureKeys.Ball, '../assets/Golf-Ball-big.png');
 
     this.load.atlas(TextureKeys.Platforms, platfrom, texture);
@@ -57,16 +57,16 @@ export default class PreloadScene extends Phaser.Scene {
 
     this.textures.generate(TextureKeys.Fireworks, PRELOAD_SCENE.fireworksTexture);
 
-    this.load.audio('music', '../assets/music.mp3');
+    // this.load.audio('music', '../assets/music.mp3');
 
-    Object.values(START_SCENE.btnSettings.type).forEach((btn) => {
-      if (btn === 'music') {
-        this.load.image(TextureKeys.MusicOn, `../assets/${btn}-on.svg`);
-        this.load.image(TextureKeys.MusicOff, `../assets/${btn}-off.svg`);
-      } else {
-        this.load.image(btn, `../assets/${btn}.svg`);
-      }
-    });
+    // Object.values(START_SCENE.btnSettings.type).forEach((btn) => {
+    //   if (btn === 'music') {
+    //     this.load.image(TextureKeys.MusicOn, `../assets/${btn}-on.svg`);
+    //     this.load.image(TextureKeys.MusicOff, `../assets/${btn}-off.svg`);
+    //   } else {
+    //     this.load.image(btn, `../assets/${btn}.svg`);
+    //   }
+    // });
   }
 
   public create(): void {
@@ -74,15 +74,15 @@ export default class PreloadScene extends Phaser.Scene {
       key: AnimationKeys.Wave,
       frames: this.anims.generateFrameNames(TextureKeys.Flag, {
         prefix: '',
-        start: 4,
-        end: 46,
+        start: 1,
+        end: 16,
         suffix: '.png',
       }),
       repeat: -1,
       frameRate: 10,
     });
 
-    this.scene.start(SceneKeys.Start);
+    this.scene.start(SceneKeys.Game);
   }
 
   private trackProgress(value: number): void {

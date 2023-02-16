@@ -22,6 +22,11 @@ const GAME_SCENE_ANIMATION = {
     ease: 'Back',
     duration: 1000,
   },
+
+  popupAnimation: {
+    ease: 'Sinusoidal',
+    duration: 2000,
+  },
 };
 
 export default GAME_SCENE_ANIMATION;
