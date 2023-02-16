@@ -1,13 +1,13 @@
 const MULTIPLAYER_ANIMATION = {
   hideAnimation: {
-    y: 0,
+    y: 3000,
     ease: 'Quad',
-    duration: 1000,
+    duration: 500,
   },
   showAnimation: {
-    y: 500,
+    y: 0,
     ease: 'Quad',
-    duration: 1000,
+    duration: 500,
   },
 
 };

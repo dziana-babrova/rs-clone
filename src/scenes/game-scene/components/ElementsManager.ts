@@ -40,15 +40,16 @@ export default class ElementsManager extends Phaser.GameObjects.Container {
     const starsConfig = this.mapService.mapElements.filter(
       (el) => el.type === ElementTypeKeys.Star || el.type === ElementTypeKeys.HoleWithCoin,
     );
-    const ballConfig = this.mapService.mapElements.filter(
-      (el) => el.type === ElementTypeKeys.Ball,
-    );
+    const ballConfig = this.mapService.mapElements.filter((el) => el.type === ElementTypeKeys.Ball);
 
     this.map = new Map(this.scene, groundConfig, leftSlopeConfig, rightSlopeConfig, holeConfig);
     await this.map.animate();
     this.stars = new StarsGroup(this.scene, starsConfig);
     await this.stars.scale();
-    this.ball = new Ball(this.scene, ballConfig);
+    this.ball = new Ball(this.scene, {
+      x: ballConfig[0].x,
+      y: ballConfig[0].y - 200,
+    });
     this.trajectory = new Trajectory(this.scene);
   }
 }

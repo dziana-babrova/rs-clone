@@ -50,9 +50,10 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.image(TextureKeys.ru, '../assets/ru.png');
     this.load.image(TextureKeys.Close, '../assets/close.svg');
     this.load.image(TextureKeys.Ball, '../assets/Golf-Ball-big.png');
-
+    
     this.load.atlas(TextureKeys.Platforms, platfrom, texture);
-
+    
+    this.load.image('progress-bar', '../assets/progress-bar.png');
     this.load.audio('music', '../assets/music.mp3');
 
     Object.values(START_SCENE.btnSettings.type).forEach((btn) => {

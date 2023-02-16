@@ -38,8 +38,11 @@ export default class Map extends Phaser.GameObjects.Container {
     const rightSlopeElements = rightSlope.getChildren();
     const holeElements = hole.getChildren();
 
+    this.scene.matter.add.gameObject(this, {
+      isStatic: true,
+    });
     this.add([...groundElements, ...leftSlopeElements, ...rightSlopeElements, ...holeElements]);
-    this.y = 10000;
+    this.y = 3000;
     this.scene.add.existing(this);
   }
 

@@ -28,4 +28,14 @@ export default class CalculateService {
       ? Math.min(velocity, ballSettings.MAX_SPEED)
       : Math.max(velocity, -ballSettings.MAX_SPEED);
   }
+
+  static calculateVelocityByAngleInDegreesAndPower(
+    angle: number,
+    power: number,
+  ): { velocityX: number; velocityY: number } {
+    return {
+      velocityX: Math.cos(angle * Math.PI / 180) * power * 40,
+      velocityY: Math.sin(angle * Math.PI / 180) * power * 40,
+    };
+  }
 }

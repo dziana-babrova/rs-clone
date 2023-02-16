@@ -5,44 +5,48 @@ import Ball from 'components/Ball';
 import Trajectory from 'components/Trajectory';
 import MultiplayerService from 'services/MultiplayerService';
 import Map from 'scenes/game-scene/components/Map';
-import { multiPlayerMap, targets } from 'const/Multiplayer';
-import { Level, Position } from 'types/types';
+import { multiPlayerMap, position1, position2, targets } from 'const/Multiplayer';
+import { IComponentManager, Level, Position } from 'types/types';
 import { Template } from 'webpack';
 import TweenAnimationBuilder from 'utils/TweenAnimationBuilder';
 import MULTIPLAYER_ANIMATION from 'const/MultiplayerAnimation';
+import { Body } from 'matter';
+import Player from './Player';
 
 export default class MultiplayerManager extends Phaser.GameObjects.Container {
+
+  scene: Scene;
+
   mapService: MultiplayerService;
 
   map!: Map;
 
   target!: Map;
 
-  ball!: Ball;
-
-  trajectory!: Trajectory;
   animationBuilder: TweenAnimationBuilder;
+
+  player1!: Player;
+  player2!: Player;
 
   constructor(scene: Scene, tileSize: number) {
     super(scene);
     this.mapService = new MultiplayerService(tileSize);
     this.animationBuilder = new TweenAnimationBuilder();
+    this.scene = scene;
+    this.initEvents();
   }
 
   async createMap() {
     this.map = this.createTemplate(multiPlayerMap);
     await this.map.animate();
-    // this.ball = new Ball(this.scene, ballConfig);
-    // this.trajectory = new Trajectory(this.scene);
   }
 
   async switchTarget(target: number) {
     if (this.target) {
       await this.hideTarget();
+      this.target.each((el: Phaser.Physics.Matter.Sprite) => el.destroy());
     }
     this.target = this.createTemplate(targets[target]);
-    this.target.x = this.scene.cameras.main.centerX - this.target.getBounds().width / 2;
-    this.target.y = 0;
     await this.showTarget();
   }
 
@@ -65,18 +69,51 @@ export default class MultiplayerManager extends Phaser.GameObjects.Container {
       groundConfig,
       leftSlopeConfig,
       rightSlopeConfig,
-      holeConfig
+      holeConfig,
     );
     return template;
   }
 
-  private hideTarget() {
+  async hideTarget() {
     const { y, ease, duration } = MULTIPLAYER_ANIMATION.hideAnimation;
-    this.animationBuilder.moveY(this.scene, this.target, y, ease, duration);
+    await this.animationBuilder.moveY(this.scene, this.target, y, ease, duration);
   }
 
-  private showTarget() {
+  async showTarget() {
     const { y, ease, duration } = MULTIPLAYER_ANIMATION.showAnimation;
-    this.animationBuilder.moveY(this.scene, this.target, y, ease, duration);
+    await this.animationBuilder.moveY(this.scene, this.target, y, ease, duration);
   }
+
+  createPlayers(){
+    this.player1 = new Player(this.scene, { x: position1.x, y: position1.y }, false);
+    this.player2 = new Player(this.scene, { x: position2.x, y: position2.y }, true);
+  }
+
+  initEvents(){
+    this.scene.input.keyboard.on('keydown-SPACE', this.handlePlayer1Click.bind(this));
+    this.scene.input.keyboard.on('keydown-UP', this.handlePlayer2Click.bind(this));
+  }
+
+  handlePlayer1Click(){
+    if (!this.player1.isAvailable) return;
+    if (!this.player1.isHit) {
+      this.player1.fixAngle();
+      this.player1.showPower();
+    } else {
+      this.player1.fixPower();
+      this.player1.hit();
+    }
+  }
+
+  handlePlayer2Click(){
+    if (!this.player2.isAvailable) return;
+    if (!this.player2.isHit) {
+      this.player2.fixAngle();
+      this.player2.showPower();
+    } else {
+      this.player2.fixPower();
+      this.player2.hit();
+    }
+  }
+
 }
