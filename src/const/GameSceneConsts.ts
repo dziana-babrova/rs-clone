@@ -42,6 +42,14 @@ const GAME_SCENE = {
       color: '#ffffff',
       align: 'center',
     },
+
+    star: {
+      paddingX: 20,
+      paddingY: 160,
+      innerRadius: 45,
+      outerRadius: 75,
+      points: 5,
+    },
   },
 };
 

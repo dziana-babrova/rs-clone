@@ -1,6 +1,8 @@
 // This is a temporary class
 
+import { ColorsNumber } from 'const/Colors';
 import PopupCanvasGroup from './PopupCanvas';
+import StarTemplateGroup from './Star';
 
 export default class NextLevelButton extends Phaser.GameObjects.Text {
   constructor(scene: Phaser.Scene, level: number, stars: number, nextLevelHandler: () => void) {
@@ -19,7 +21,8 @@ export default class NextLevelButton extends Phaser.GameObjects.Text {
 
   async create() {
     const canvas = new PopupCanvasGroup(this.scene);
-    // canvas.setY(-10000);
     await canvas.show();
+    const starsTemplate = new StarTemplateGroup(this.scene, ColorsNumber.starTemplate);
+    await starsTemplate.show();
   }
 }
