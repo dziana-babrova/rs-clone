@@ -15,7 +15,7 @@ const GAME_SCENE = {
 
     canvasFill: {
       width: 600,
-      height: 400,
+      height: 300,
       radius: 10,
       lineColor: 0x000000,
       lineWidth: 5,
@@ -23,7 +23,7 @@ const GAME_SCENE = {
 
     canvasStroke: {
       width: 616,
-      height: 416,
+      height: 316,
       radius: 10,
       lineColor: 0x000000,
       lineWidth: 5,
@@ -44,11 +44,23 @@ const GAME_SCENE = {
     },
 
     star: {
-      paddingX: 20,
+      initialY: -1000,
+      indexCenterX: 2.7,
+      paddingX: 30,
       paddingY: 160,
       innerRadius: 45,
       outerRadius: 75,
       points: 5,
+      lineWidth: 2,
+      alpha: 1,
+    },
+
+    button: {
+      lineWidth: 2,
+      initialPaddingX: 300,
+      finalPaddingX: 130,
+      Y: 470,
+      radius: 70,
     },
   },
 };

@@ -17,7 +17,7 @@ export default class PopupCanvasGroup extends Phaser.GameObjects.Container {
 
   constructor(scene: Scene) {
     super(scene);
-    this.point = (this.scene.scale.height - GAME_SCENE.nextLevelPopup.canvasFill.height) / 2;
+    this.point = (this.scene.scale.height - GAME_SCENE.nextLevelPopup.canvasFill.height) / 2 - 100;
     this.tweenAnimationBuilder = new TweenAnimationBuilder();
 
     this.createCanvas();
@@ -27,17 +27,18 @@ export default class PopupCanvasGroup extends Phaser.GameObjects.Container {
     this.scene.add.existing(this);
   }
 
-  createCanvas() {
+  private createCanvas(): void {
     const xFill = (this.scene.scale.width - GAME_SCENE.nextLevelPopup.canvasFill.width) / 2;
     const xStroke = (this.scene.scale.width - GAME_SCENE.nextLevelPopup.canvasStroke.width) / 2;
-    const yStroke = (this.scene.scale.height - GAME_SCENE.nextLevelPopup.canvasStroke.height) / 2;
+    const yStroke = (this.scene.scale.height - GAME_SCENE.nextLevelPopup.canvasStroke.height)
+      / 2 - 100;
 
     const graphicsStroke = this.scene.add.graphics();
     graphicsStroke.lineStyle(
       GAME_SCENE.nextLevelPopup.canvasStroke.lineWidth,
       GAME_SCENE.nextLevelPopup.canvasStroke.lineColor,
     );
-    graphicsStroke.fillStyle(ColorsNumber.NextLevelPopupBackground);
+    graphicsStroke.fillStyle(ColorsNumber.NextLevelPopupBorder);
     graphicsStroke.strokeRoundedRect(
       xStroke,
       yStroke,
@@ -59,7 +60,7 @@ export default class PopupCanvasGroup extends Phaser.GameObjects.Container {
       GAME_SCENE.nextLevelPopup.canvasFill.lineWidth,
       GAME_SCENE.nextLevelPopup.canvasFill.lineColor,
     );
-    graphicsFill.fillStyle(ColorsNumber.NextLevelPopupBorder);
+    graphicsFill.fillStyle(ColorsNumber.NextLevelPopupBackground);
     graphicsFill.strokeRoundedRect(
       xFill,
       this.point,
@@ -80,7 +81,7 @@ export default class PopupCanvasGroup extends Phaser.GameObjects.Container {
     this.add(graphicsFill);
   }
 
-  createLabel() {
+  private createLabel(): void {
     const x = (this.scene.scale.width - GAME_SCENE.nextLevelPopup.labelFill.width) / 2;
     const y = this.point - GAME_SCENE.nextLevelPopup.labelFill.height / 2;
 
@@ -89,7 +90,7 @@ export default class PopupCanvasGroup extends Phaser.GameObjects.Container {
       GAME_SCENE.nextLevelPopup.labelFill.lineWidth,
       GAME_SCENE.nextLevelPopup.labelFill.lineColor,
     );
-    graphics.fillStyle(ColorsNumber.NextLevelPopupBackground);
+    graphics.fillStyle(ColorsNumber.NextLevelPopupBorder);
     graphics.strokeRoundedRect(
       x,
       y,
@@ -119,7 +120,7 @@ export default class PopupCanvasGroup extends Phaser.GameObjects.Container {
     this.add(helloWorld);
   }
 
-  async show(): Promise<void> {
+  public async show(): Promise<void> {
     await this.tweenAnimationBuilder.moveY(
       this.scene,
       this,

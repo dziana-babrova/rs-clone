@@ -36,9 +36,6 @@ export default class GameScene extends Phaser.Scene implements IComponentManager
   async create() {
     this.cameras.main.fadeIn();
     this.elementsManager = new ElementsManager(this, this.level, 41);
-    // const popup = new NextLevelButton(this, this.level, this.starsCount, this.switchLevel);
-    // await popup.create();
-
     await this.elementsManager.create();
 
     this.addComponents(this.elementsManager.trajectory, this.elementsManager.ball);
@@ -65,8 +62,8 @@ export default class GameScene extends Phaser.Scene implements IComponentManager
 
   private displayWinPopup() {
     this.time.delayedCall(2000, async () => {
-      const popup = new NextLevelButton(this, this.level, this.starsCount, this.switchLevel);
-      await popup.create();
+      const popup = new NextLevelButton(this);
+      await popup.create(this.starsCount, this.switchLevel);
       popup.on('pointerup', this.switchLevel.bind(this));
     });
   }
@@ -111,14 +108,14 @@ export default class GameScene extends Phaser.Scene implements IComponentManager
     args.forEach((el) => this.components.push(el));
   }
 
-  switchLevel() {
+  switchLevel(nextLevel: boolean) {
     this.cameras.main.fadeOut();
     this.starsCount = 0;
     this.destroySprites();
     this.time.addEvent({
       delay: 2000,
       callback: () => {
-        this.scene.restart({ level: (this.level += 1) });
+        this.scene.restart({ level: (this.level += Number(nextLevel)) });
       },
     });
   }

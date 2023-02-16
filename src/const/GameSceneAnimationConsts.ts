@@ -27,6 +27,16 @@ const GAME_SCENE_ANIMATION = {
     ease: 'Sinusoidal',
     duration: 2000,
   },
+
+  starAnimation: {
+    ease: 'Exponential',
+    duration: 500,
+  },
+
+  nextLevelpopupButtonsAnimation: {
+    ease: 'Quad',
+    duration: 1000,
+  },
 };
 
 export default GAME_SCENE_ANIMATION;
