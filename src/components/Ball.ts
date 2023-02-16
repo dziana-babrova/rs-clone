@@ -8,8 +8,6 @@ import Pulse from './Pulse';
 export default class Ball extends Phaser.Physics.Matter.Sprite implements IComponent {
   scene: Scene;
 
-  tweenAnimationBuilder: TweenAnimationBuilder;
-
   public isStopped = false;
 
   private pulse: Pulse;
@@ -19,7 +17,6 @@ export default class Ball extends Phaser.Physics.Matter.Sprite implements ICompo
   constructor(scene: Scene, position: Position) {
     super(scene.matter.world, position.x, position.y, 'ball');
     this.scene = scene;
-    this.tweenAnimationBuilder = new TweenAnimationBuilder();
 
     this.setBallBody();
     this.scene.add.existing(this);
@@ -64,5 +61,12 @@ export default class Ball extends Phaser.Physics.Matter.Sprite implements ICompo
 
   hitBall(velocityX: number, velocityY: number) {
     this.setVelocity(velocityX, velocityY);
+  }
+
+  public deactivate(): void {
+    this.pulse.destroy();
+    this.text.destroy();
+    this.isStopped = false;
+    this.update = () => { };
   }
 }

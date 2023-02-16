@@ -7,6 +7,8 @@ enum TextureKeys {
   MusicOff = 'music-off',
   eng = 'eng',
   ru = 'ru',
+  Flag = 'flag',
+  Fireworks = 'fireworks',
 }
 
 export default TextureKeys;

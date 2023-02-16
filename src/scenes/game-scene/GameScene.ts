@@ -1,10 +1,12 @@
 import PhaserMatterCollisionPlugin from 'phaser-matter-collision-plugin';
 import SceneKeys from 'const/SceneKeys';
 import Phaser from 'phaser';
+import EventNames from 'types/events';
 import HitHandler from 'handlers/HitHandler';
 import { IComponent, IComponentManager } from 'types/types';
 import NextLevelButton from './components/NextLevelButton';
 import ElementsManager from './components/ElementsManager';
+import Fireworks from './components/Fireworks';
 
 export default class GameScene extends Phaser.Scene implements IComponentManager {
   components: IComponent[] = [];
@@ -43,10 +45,26 @@ export default class GameScene extends Phaser.Scene implements IComponentManager
       this.elementsManager.trajectory,
     );
 
-    this.nextLevelButton = new NextLevelButton(this);
-    this.nextLevelButton.on('pointerup', this.switchLevel.bind(this));
     this.matter.world.setBounds();
+    await this.initEvents();
+  }
+
+  private async initEvents() {
     await this.collectStar(this.elementsManager.ball, this.elementsManager.stars.getChildren());
+    await this.detectWin(this.elementsManager.ball, this.elementsManager.cup);
+    this.events.on(EventNames.Win, this.elementsManager.ball.deactivate, this.elementsManager.ball);
+    this.events.on(EventNames.Win, () => {
+      const fireworks = new Fireworks();
+      fireworks.create(this, this.elementsManager.cup.x, this.elementsManager.cup.y);
+    });
+    this.events.on(EventNames.Win, this.displayWinPopup.bind(this));
+  }
+
+  private displayWinPopup() {
+    this.time.delayedCall(2000, () => {
+      const popup = new NextLevelButton(this, this.level, this.starsCount, this.switchLevel);
+      popup.on('pointerup', this.switchLevel.bind(this));
+    });
   }
 
   private collectStar(
@@ -60,6 +78,22 @@ export default class GameScene extends Phaser.Scene implements IComponentManager
         callback: ({ gameObjectB }) => {
           gameObjectB?.destroy();
           this.starsCount += 1;
+        },
+      });
+      resolve();
+    });
+  }
+
+  private detectWin(
+    objectA: Phaser.GameObjects.GameObject,
+    objectB: Phaser.GameObjects.GameObject,
+  ): Promise<void> {
+    return new Promise<void>((resolve) => {
+      this.matterCollision.addOnCollideStart({
+        objectA,
+        objectB,
+        callback: () => {
+          this.events.emit(EventNames.Win);
         },
       });
       resolve();

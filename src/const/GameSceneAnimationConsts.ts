@@ -17,6 +17,11 @@ const GAME_SCENE_ANIMATION = {
     scale: 1.2,
     duration: 200,
   },
+
+  flagAnimation: {
+    ease: 'Back',
+    duration: 1000,
+  },
 };
 
 export default GAME_SCENE_ANIMATION;

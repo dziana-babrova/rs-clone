@@ -15,6 +15,8 @@ export default class HitHandler {
 
   private isHit: boolean = false;
 
+  private isActive: boolean = true;
+
   private startPosition: Position = { x: 0, y: 0 };
 
   private angle: number = ballSettings.DEFAULT_ANGLE;
