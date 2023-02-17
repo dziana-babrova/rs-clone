@@ -5,7 +5,7 @@ import Map from 'scenes/game-scene/components/Map';
 import { multiPlayerMap, targets } from 'const/levels/MultiplayerLevels';
 import { Level } from 'types/types';
 import TweenAnimationBuilder from 'utils/TweenAnimationBuilder';
-import { animations, position1, position2 } from 'const/scenes/MultiplayerSceneConsts';
+import { animations, firstPlayerPosition, secondPlayerPosition } from 'const/scenes/MultiplayerSceneConsts';
 import Cup from 'scenes/game-scene/components/golf-course/Cup';
 import Flag from 'scenes/game-scene/components/Flag';
 import PhaserMatterCollisionPlugin from 'phaser-matter-collision-plugin';
@@ -96,8 +96,18 @@ export default class MultiplayerManager extends Phaser.GameObjects.Container {
   }
 
   createPlayers() {
-    this.player1 = new Player(this.scene, { x: position1.x, y: position1.y }, false, 1);
-    this.player2 = new Player(this.scene, { x: position2.x, y: position2.y }, true, 2);
+    this.player1 = new Player(
+      this.scene,
+      { x: firstPlayerPosition.x, y: firstPlayerPosition.y },
+      false,
+      1,
+    );
+    this.player2 = new Player(
+      this.scene,
+      { x: secondPlayerPosition.x, y: secondPlayerPosition.y },
+      true,
+      2,
+    );
     this.initCollisions(this.player1.currentBall!, this.player1);
     this.initCollisions(this.player2.currentBall!, this.player2);
     this.initEvents();

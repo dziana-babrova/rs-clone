@@ -3,9 +3,9 @@ import Phaser, { Scene } from 'phaser';
 import { Position } from '../../../types/types';
 
 export default class ScorePanel extends Phaser.GameObjects.Container {
-  text1: Phaser.GameObjects.Text;
+  firstPlayerScore: Phaser.GameObjects.Text;
 
-  text2!: Phaser.GameObjects.Text;
+  secondPlayerScore: Phaser.GameObjects.Text;
 
   constructor(scene: Scene, position: Position) {
     super(scene, position.x, position.y);
@@ -15,16 +15,16 @@ export default class ScorePanel extends Phaser.GameObjects.Container {
     this.createPanel(color1, { x: -width - padding / 2, y: 0 });
     this.createPanel(color2, { x: padding / 2, y: 0 });
 
-    this.text1 = this.scene.add.text(-(width + padding) / 2, height / 2, '0', {
+    this.firstPlayerScore = this.scene.add.text(-(width + padding) / 2, height / 2, '0', {
       font: '24px Arial',
     });
-    this.text2 = this.scene.add.text((width + padding) / 2, height / 2, '0', {
+    this.secondPlayerScore = this.scene.add.text((width + padding) / 2, height / 2, '0', {
       font: '24px Arial',
     });
-    this.add(this.text1);
-    this.add(this.text2);
-    this.text1.setOrigin(0.5);
-    this.text2.setOrigin(0.5);
+    this.add(this.firstPlayerScore);
+    this.add(this.secondPlayerScore);
+    this.firstPlayerScore.setOrigin(0.5);
+    this.secondPlayerScore.setOrigin(0.5);
     scene.add.existing(this);
   }
 
@@ -42,10 +42,10 @@ export default class ScorePanel extends Phaser.GameObjects.Container {
   }
 
   changeText1(text: string) {
-    this.text1.text = text;
+    this.firstPlayerScore.text = text;
   }
 
   changeText2(text: string) {
-    this.text2.text = text;
+    this.secondPlayerScore.text = text;
   }
 }

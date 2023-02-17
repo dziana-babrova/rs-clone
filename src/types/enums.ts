@@ -88,6 +88,8 @@ export enum ColorsNumber {
   Star = 0xe7e702,
   StarPulse = 0x693849,
   Stroke = 0x000000,
+  Green = 0x00ff00,
+  Orange = 0xff9600,
 }
 
 export enum Controls {

@@ -16,9 +16,6 @@ export default class MultiplayerTrajectory extends GameObjects.Container {
     const {
       radius, color, distance, padding, alpha,
     } = trajectoryProps;
-    this.width = 300;
-    this.height = 50;
-    // Create circles
     for (let i = 0; i < 10; i += 1) {
       const circle = scene.add.circle(padding + i * distance, 0, radius, color);
       circle.setAlpha(alpha);

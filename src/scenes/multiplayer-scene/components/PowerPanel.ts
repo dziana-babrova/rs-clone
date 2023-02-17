@@ -1,5 +1,6 @@
 import { powerIndicatorProps } from 'const/scenes/MultiplayerSceneConsts';
 import { Scene } from 'phaser';
+import { ColorsNumber } from 'types/enums';
 import { Position, RectangleObjectProps } from 'types/types';
 
 export default class PowerPanel extends Phaser.GameObjects.Container {
@@ -49,8 +50,8 @@ export default class PowerPanel extends Phaser.GameObjects.Container {
 
   animate() {
     this.setAlpha(1);
-    const green = Phaser.Display.Color.ValueToColor(0x00ff00);
-    const red = Phaser.Display.Color.ValueToColor(0xff9600);
+    const green = Phaser.Display.Color.ValueToColor(ColorsNumber.Green);
+    const orange = Phaser.Display.Color.ValueToColor(ColorsNumber.Orange);
     this.tween = this.scene.tweens.addCounter({
       from: 0,
       to: 100,
@@ -59,7 +60,12 @@ export default class PowerPanel extends Phaser.GameObjects.Container {
       yoyo: true,
       onUpdate: (tween) => {
         const value = tween.getValue();
-        const colorObject = Phaser.Display.Color.Interpolate.ColorWithColor(green, red, 100, value);
+        const colorObject = Phaser.Display.Color.Interpolate.ColorWithColor(
+          green,
+          orange,
+          100,
+          value,
+        );
         const color = Phaser.Display.Color.GetColor(colorObject.r, colorObject.g, colorObject.b);
         this.indicator.setFillStyle(color);
         this.indicator.width = (powerIndicatorProps.width / 100) * value;

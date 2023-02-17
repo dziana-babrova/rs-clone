@@ -1,5 +1,5 @@
-export const position1 = { x: 50, y: 546 };
-export const position2 = { x: 1316, y: 546 };
+export const firstPlayerPosition = { x: 50, y: 546 };
+export const secondPlayerPosition = { x: 1316, y: 546 };
 
 export const scoreBlockSettings = {
   width: 100,
