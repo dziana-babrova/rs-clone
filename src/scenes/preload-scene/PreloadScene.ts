@@ -6,7 +6,9 @@ import PRELOAD_SCENE from 'const/scenes/PreloadSceneConsts';
 import Phaser from 'phaser';
 import LocalStorageService from 'services/LocalStorageService';
 import { LocalStorageKeys } from 'const/AppConstants';
-import { setLang, setMusic, setSound } from 'state/features/AppSlice';
+import {
+  axiosGetMaps, setLang, setMusic, setSound,
+} from 'state/features/AppSlice';
 import store from 'state/store';
 import { Language } from 'const/Language';
 import { axiosCheckAuth } from 'state/features/UserSlice';
@@ -42,7 +44,11 @@ export default class PreloadScene extends Phaser.Scene {
 
   public preload(): void {
     if (LocalStorageService.getAccessToken()) {
-      store.dispatch(axiosCheckAuth());
+      store.dispatch(axiosCheckAuth()).then(() => {
+        if (store.getState().user.isAuth) {
+          store.dispatch(axiosGetMaps());
+        }
+      });
     }
     this.load.image(TextureKeys.Logo, '../assets/logo.png');
     this.load.image(TextureKeys.eng, '../assets/eng.png');

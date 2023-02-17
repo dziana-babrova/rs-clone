@@ -13,7 +13,6 @@ class MapsService {
 
   async updateMaps(userId: Schema.Types.ObjectId, maps: MapsType) {
     const dbMaps = await Maps.findOne({ user: userId });
-    console.log(dbMaps);
     if (dbMaps) {
       dbMaps.maps = maps;
       await dbMaps.save();

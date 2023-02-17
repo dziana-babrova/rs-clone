@@ -1,4 +1,5 @@
-import { LevelElements, Level } from 'types/types';
+import { LevelElements, Level, Maps } from 'types/types';
+import { Levels } from 'const/levels/Levels';
 import config from 'const/TileConfig';
 import { ElementTypeKeys } from 'types/enums';
 import { Scene } from 'phaser';
@@ -56,5 +57,16 @@ export default class MapService {
       ElementTypeKeys.Cup,
     );
     return new Map(scene, groundConfig, leftSlopeConfig, rightSlopeConfig, holeConfig);
+  }
+
+  static getDefaultMapsObject(): Maps {
+    const result: Maps = {};
+    Levels.forEach((_, index) => {
+      result[index] = {
+        isUnlock: index === 0,
+        start: 0,
+      };
+    });
+    return result;
   }
 }

@@ -641,7 +641,39 @@ None
 
 * **Data Params**
 
-None
+```json
+
+{
+  "maps":
+  {
+
+  "1": {
+
+    "isUnlock": true,
+
+    "stars": 0
+
+  },
+
+  "2": {
+
+    "isUnlock": true,
+
+    "stars": 3
+
+  },
+
+  "3": {
+
+    "isUnlock": false,
+
+    "stars": 0
+
+  }
+
+  }
+}
+```
 
 
 * **Success Response:**

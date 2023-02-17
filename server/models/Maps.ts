@@ -1,6 +1,6 @@
 import { Schema, model } from 'mongoose';
 
-export type MapsType = { [key: string]: MapDescription };
+export type MapsType = { [key: number]: MapDescription };
 
 export type MapDescription = {
   isUnlock: boolean,
