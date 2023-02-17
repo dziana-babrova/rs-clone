@@ -1,4 +1,4 @@
-import LocalStorageKeys from 'const/LocalStorageKeys';
+import { LocalStorageKeys } from "const/AppConstants";
 
 export default class LocalStorageService {
   static setItem<T>(key: string, item: T): void {

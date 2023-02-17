@@ -1,5 +1,5 @@
 import START_SCENE from 'const/StartSceneConst';
-import TextureKeys from 'const/TextureKeys';
+import { TextureKeys } from 'types/enums';
 import { GameObjects } from 'phaser';
 import store from 'state/store';
 

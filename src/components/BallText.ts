@@ -1,4 +1,4 @@
-import { ballText } from 'const/constants';
+import { ballText } from 'const/GameSceneConsts'; 
 import LANGUAGE from 'const/Language';
 import { GameObjects, Scene } from 'phaser';
 import store from 'state/store';

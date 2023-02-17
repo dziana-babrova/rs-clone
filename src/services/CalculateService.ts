@@ -1,4 +1,4 @@
-import { ballSettings } from 'const/constants';
+import { ballSettings } from 'const/GameSceneConsts'; 
 import { Position } from 'types/types';
 
 export default class CalculateService {

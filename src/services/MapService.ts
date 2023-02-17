@@ -1,6 +1,6 @@
 import { LevelElements, Level } from 'types/types';
 import config from 'const/TileConfig';
-import { Levels } from 'const/levels';
+import { Levels } from 'const/Levels';
 
 export default class MapService {
   public mapElements: LevelElements[];

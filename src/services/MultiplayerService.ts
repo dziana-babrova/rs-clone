@@ -1,6 +1,6 @@
 import { LevelElements, Level } from 'types/types';
 import config from 'const/TileConfig';
-import { multiPlayerMap } from 'const/Multiplayer';
+import { multiPlayerMap } from 'const/MultiplayerLevels';
 
 export default class MultiplayerService {
 
@@ -28,4 +28,16 @@ export default class MultiplayerService {
     });
     return levelElements;
   }
+
+
+  public getFilteredElements(elements: LevelElements[], ...types: string[]): LevelElements[] {
+    const result: LevelElements[] = [];
+    types.forEach((type) => {
+      result.push(...elements.filter((el) => el.type === type));
+    });
+    return result;
+  }
+  
+  
+
 }

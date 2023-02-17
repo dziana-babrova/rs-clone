@@ -1,11 +1,13 @@
 import Ball from 'components/Ball';
+import { playerProps, powerIndicatorProps } from 'const/MutiplayerSceneConsts';
 import { Scene } from 'phaser';
 import CalculateService from 'services/CalculateService';
-import { IComponent, IComponentManager, Position } from 'types/types';
+import { Position } from 'types/types';
 import MultiplayerTrajectory from './MultiplayerTrajectory';
 import PowerPanel from './PowerPanel';
 
 export default class Player {
+  id: number;
   isReverse: boolean;
   position: Position;
   scene: Scene;
@@ -15,47 +17,51 @@ export default class Player {
   powerPanel: PowerPanel;
   isAvailable = true;
   isHit = false;
+  score = 0;
 
-  constructor(scene: Scene, position: Position, isReverse: boolean) {
+  constructor(scene: Scene, position: Position, isReverse: boolean, id: number) {
     this.scene = scene;
     this.position = position;
     this.balls = scene.add.group();
     this.currentBall = new Ball(this.scene, { x: position.x, y: position.y - 30 });
+    this.balls.add(this.currentBall);
     if (isReverse) {
-      this.currentBall.setTint(0x00ffff);
+      this.currentBall.setTint(playerProps.secondBallColor);
     }
     this.trajectory = new MultiplayerTrajectory(scene, position, isReverse);
     this.powerPanel = new PowerPanel(this.scene, position, isReverse);
     this.isReverse = isReverse;
+    this.id = id;
   }
 
   addBall(position: Position) {
-    setTimeout(() => {
-      const ball = new Ball(this.scene, { x: position.x, y: position.y - 30 });
-      this.balls.add(ball);
-      this.currentBall = ball;
-      if (this.isReverse) {
-        this.currentBall.setTint(0xFF00000);
-      }
-      this.isAvailable = true;
-      this.trajectory.resume();
-    }, 1000);
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        const ball = new Ball(this.scene, { x: position.x, y: position.y - 30 });
+        this.currentBall = ball;
+        if (this.isReverse) {
+          this.currentBall.setTint(playerProps.secondBallColor);
+        }
+        this.isAvailable = true;
+        this.trajectory.resume();
+        resolve(null);
+      }, 1000);
+    });
   }
 
-  hit() {
+  async hit() {
+    this.balls.add(this.currentBall!);
     const angle = this.trajectory.angle;
-    const power = this.powerPanel.indicator.width / 200;
-    console.log(-Math.abs(angle));
+    const power = this.powerPanel.indicator.width / powerIndicatorProps.width;
     const { velocityX, velocityY } = CalculateService.calculateVelocityByAngleInDegreesAndPower(
       -Math.abs(angle),
       power,
     );
-    console.log(velocityX, velocityY);
     this.currentBall?.hitBall(this.isReverse ? -velocityX : velocityX, velocityY);
     this.currentBall = null;
     this.isHit = false;
     this.isAvailable = false;
-    this.addBall(this.position);
+    await this.addBall(this.position);
   }
 
   fixAngle() {

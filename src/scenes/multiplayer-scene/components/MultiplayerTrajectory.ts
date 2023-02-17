@@ -1,4 +1,5 @@
-import { trajectorySettings } from 'const/constants';
+import { trajectorySettings } from 'const/GameSceneConsts';
+import { trajectoryProps } from 'const/MutiplayerSceneConsts';
 import { GameObjects, Scene } from 'phaser';
 import { Position } from 'types/types';
 
@@ -6,36 +7,35 @@ export default class MultiplayerTrajectory extends GameObjects.Container {
   scene: Scene;
   isReverse: boolean;
   tween!: Phaser.Tweens.Tween;
-  
 
   constructor(scene: Scene, position: Position, isReverse: boolean) {
     super(scene, position.x, position.y);
     this.scene = scene;
     this.isReverse = isReverse;
-    const { RADIUS, COLOR } = trajectorySettings;
+    const { radius, color, distance, padding, alpha } = trajectoryProps;
     this.width = 300;
     this.height = 50;
     // Create circles
     for (let i = 0; i < 10; i += 1) {
-      const circle = scene.add.circle(20 + i * 15, 0, RADIUS, COLOR);
-      circle.setAlpha(0.8);
+      const circle = scene.add.circle(padding + i * distance, 0, radius, color);
+      circle.setAlpha(alpha);
       this.add(circle);
     }
     scene.add.existing(this);
     this.animate();
-    if(isReverse){
+    if (isReverse) {
       this.scaleX = -1;
     }
   }
 
-  animate(){
+  animate() {
     this.tween = this.scene.tweens.add({
       targets: this,
       angle: this.isReverse ? 90 : -90,
       yoyo: true,
-      duration: 1000,
+      duration: trajectoryProps.duration,
       repeat: -1,
-    })
+    });
   }
 
   stop() {
@@ -45,5 +45,4 @@ export default class MultiplayerTrajectory extends GameObjects.Container {
   resume() {
     this.tween.resume();
   }
-
 }

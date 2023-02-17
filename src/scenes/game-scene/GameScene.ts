@@ -1,5 +1,5 @@
 import PhaserMatterCollisionPlugin from 'phaser-matter-collision-plugin';
-import SceneKeys from 'const/SceneKeys';
+import { SceneKeys } from 'types/enums';
 import Phaser from 'phaser';
 import EventNames from 'types/events';
 import HitHandler from 'handlers/HitHandler';

@@ -1,4 +1,4 @@
-const GAME_SCENE_ANIMATION = {
+export const GAME_SCENE_ANIMATION = {
   moveYAnimation: {
     y: 0,
     ease: 'Quad',
@@ -24,4 +24,16 @@ const GAME_SCENE_ANIMATION = {
   },
 };
 
-export default GAME_SCENE_ANIMATION;
+export const MULTIPLAYER_ANIMATION = {
+  hideAnimation: {
+    y: 3000,
+    ease: 'Quad',
+    duration: 500,
+  },
+  showAnimation: {
+    y: 0,
+    ease: 'Quad',
+    duration: 500,
+  },
+
+};

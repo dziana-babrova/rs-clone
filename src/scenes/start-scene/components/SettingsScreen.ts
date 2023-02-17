@@ -1,5 +1,5 @@
 import START_SCENE from 'const/StartSceneConst';
-import TextureKeys from 'const/TextureKeys';
+import { TextureKeys } from 'types/enums';
 import Phaser from 'phaser';
 import { Move } from 'types/types';
 

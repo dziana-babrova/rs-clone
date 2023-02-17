@@ -1,33 +1,26 @@
-import { position1 } from 'const/Multiplayer';
-import SceneKeys from 'const/SceneKeys';
+import { SceneKeys } from 'types/enums';
+import PhaserMatterCollisionPlugin from 'phaser-matter-collision-plugin';
 import { IComponent, IComponentManager } from 'types/types';
 import MultiplayerManager from './components/MultiplayerManager';
 import Player from './components/Player';
 
-export default class MultiPlayerScene extends Phaser.Scene implements IComponentManager {
-  components: IComponent[] = [];
+export default class MultiPlayerScene extends Phaser.Scene {
   elementsManager!: MultiplayerManager;
+  matterCollision!: PhaserMatterCollisionPlugin;
+
 
   constructor() {
     super(SceneKeys.MultiPlayer);
   }
 
   async create() {
-    this.elementsManager = new MultiplayerManager(this, 41);
+    this.elementsManager = new MultiplayerManager(this, 41, this.matterCollision);
     await this.elementsManager.createMap();
-    this.elementsManager.createPlayers();
     await this.elementsManager.switchTarget(0);
-    // const button = this.add.text(0, 0, 'NEXT LEVEL');
-    // button.setInteractive(async () => {
-    //   await this.elementsManager.switchTarget(1);
-    // });
+    this.elementsManager.createPlayers();
   }
 
   update() {
-    this.components.forEach(el => el.update());
   }
 
-  addComponents(...args: IComponent[]) {
-    args.forEach((el) => this.components.push(el));
-  }
 }

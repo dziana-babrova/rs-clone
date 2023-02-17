@@ -1,23 +1,28 @@
-import PRELOAD_SCENE from "const/PreloadSceneConsts";
-import { GameObjects, Scene } from "phaser";
-import { Position } from "types/types";
-import PowerWrapper from "./PowerWrapper";
+import { powerIndicatorProps } from 'const/MutiplayerSceneConsts';
+import PRELOAD_SCENE from 'const/PreloadSceneConsts';
+import { GameObjects, Scene } from 'phaser';
+import { Position, RectangleObjectProps } from 'types/types';
 
 export default class PowerPanel extends Phaser.GameObjects.Container {
-
-  scene: Scene;  
-  wrapper!: PowerWrapper;
+  scene: Scene;
+  wrapper!: Phaser.GameObjects.Graphics;
   indicator: Phaser.GameObjects.Rectangle;
   tween!: Phaser.Tweens.Tween;
   isReverse: boolean;
-  
+
   constructor(scene: Phaser.Scene, position: Position, isReverse: boolean) {
     super(scene, position.x, position.y + 50);
-    this.scene= scene;
-    this.indicator = scene.add.rectangle(1, 1, 0, 20, 0x00FF00);
+    this.scene = scene;
+    const { width, height } = powerIndicatorProps;
+    this.indicator = scene.add.rectangle(1, 1, 0, height, 0x00ff00);
     this.indicator.setOrigin(0);
-    this.wrapper = new PowerWrapper(scene, {
-      color: 0xFFFFFF, alpha: 1, x: 0, y: 0, width: 202, height: 22,
+    this.wrapper = this.createWrapper({
+      color: 0xffffff,
+      alpha: 1,
+      x: 0,
+      y: 0,
+      width: width + 2,
+      height: height + 2,
     });
     this.add(this.wrapper);
     this.add(this.indicator);
@@ -28,35 +33,37 @@ export default class PowerPanel extends Phaser.GameObjects.Container {
       this.scaleX = -1;
     }
   }
-  
-  animate(){
+
+  private createWrapper(props: RectangleObjectProps) {
+    const { color, alpha, x, y, width, height } = props;
+    const wrapper = this.scene.add.graphics();
+    wrapper.fillStyle(color, alpha);
+    wrapper.fillRoundedRect(x, y, width, height, 1);
+    return wrapper;
+  }
+
+  animate() {
     this.setAlpha(1);
-    const green = Phaser.Display.Color.ValueToColor(0x00FF00);
-    const red = Phaser.Display.Color.ValueToColor(0xFF9600);
+    const green = Phaser.Display.Color.ValueToColor(0x00ff00);
+    const red = Phaser.Display.Color.ValueToColor(0xff9600);
     this.tween = this.scene.tweens.addCounter({
       from: 0,
       to: 100,
-       duration: 1000,
-       repeat: -1,
-       yoyo: true, 
-       onUpdate: (tween) => {
+      duration: powerIndicatorProps.duration,
+      repeat: -1,
+      yoyo: true,
+      onUpdate: (tween) => {
         const value = tween.getValue();
-        const colorObject = Phaser.Display.Color.Interpolate.ColorWithColor(
-          green,
-          red,
-          100,
-          value
-        );
+        const colorObject = Phaser.Display.Color.Interpolate.ColorWithColor(green, red, 100, value);
         const color = Phaser.Display.Color.GetColor(colorObject.r, colorObject.g, colorObject.b);
         this.indicator.setFillStyle(color);
-        this.indicator.width = 2 * value;
-       }
-    })
+        this.indicator.width = (powerIndicatorProps.width / 100) * value;
+      },
+    });
   }
 
-  stop(){
+  stop() {
     this.tween.remove();
-    setTimeout(() => this.setAlpha(0), 300);
+    setTimeout(() => this.setAlpha(0), powerIndicatorProps.stopTimeout);
   }
-
 }

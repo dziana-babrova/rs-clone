@@ -1,5 +1,5 @@
 import { Scene } from 'phaser';
-import ElementTypeKeys from 'const/ElementTypeKeys';
+import { ElementTypeKeys } from 'types/enums';
 import MapService from 'services/MapService';
 import Ball from 'components/Ball';
 import Trajectory from 'components/Trajectory';

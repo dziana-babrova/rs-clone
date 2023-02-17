@@ -1,13 +1,13 @@
 import platfrom from 'assets/platforms.png';
 import texture from 'assets/platforms.json';
-import SceneKeys from 'const/SceneKeys';
-import TextureKeys from 'const/TextureKeys';
-import AnimationKeys from 'const/AnimationKeys';
+import { SceneKeys } from 'types/enums';
+import { TextureKeys } from 'types/enums';
+import { AnimationKeys } from 'types/enums';;
 import START_SCENE from 'const/StartSceneConst';
 import PRELOAD_SCENE from 'const/PreloadSceneConsts';
 import Phaser from 'phaser';
 import LocalStorageService from 'services/LocalStorageService';
-import LocalStorageKeys from 'const/LocalStorageKeys';
+import { LocalStorageKeys } from 'const/AppConstants';
 import { setLang, setMusic, setSound } from 'state/features/AppSlice';
 import store from 'state/store';
 import { Language } from 'const/Language';

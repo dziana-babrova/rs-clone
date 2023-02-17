@@ -1,6 +1,6 @@
 import { Scene } from 'phaser';
 import TweenAnimationBuilder from 'utils/TweenAnimationBuilder';
-import GAME_SCENE_ANIMATION from 'const/GameSceneAnimationConsts';
+import { GAME_SCENE_ANIMATION } from 'const/Animations';
 import { LevelElements, Position } from 'types/types';
 import TunnelGroup from './golf-course/HoleGroup';
 import TilesGroup from './golf-course/PlatformGroup';
