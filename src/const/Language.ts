@@ -35,6 +35,34 @@ const LANGUAGE = {
       ru: 'Правильный формат',
     },
     errors: {
+      emptyError: {
+        email: {
+          eng: 'Email should not be empty',
+          ru: 'Электронная почта не должна быть пустой',
+        },
+        password: {
+          eng: 'Password should not be empty',
+          ru: 'Пароль не должен быть пустым',
+        },
+        username: {
+          eng: 'Username should not be empty',
+          ru: 'Имя не должен быть пустым',
+        },
+      },
+      lengthError: {
+        email: {
+          eng: 'Email length must be at least 3 characters',
+          ru: 'Длина почты должна быть не менее 3 символов',
+        },
+        password: {
+          eng: 'Password length must be at least 6 characters',
+          ru: 'Длина пароля должна быть не менее 6 символов',
+        },
+        username: {
+          eng: 'Username length must be at least 3 characters',
+          ru: 'Длина имени должна быть не менее 3 символов',
+        },
+      },
       notFoundError: {
         eng: 'User with this email was not found',
         ru: 'Пользователь с таким адресом не найден',
@@ -49,31 +77,11 @@ const LANGUAGE = {
       },
       emailPattern: {
         eng: 'Email must match the pattern',
-        ru: 'Электронная почта должна соответствовать шаблону',
-      },
-      emailEmpty: {
-        eng: 'Email should not be empty',
-        ru: 'Электронная почта не должна быть пустой',
-      },
-      usernameLength: {
-        eng: 'Username length must be more than 3 characters',
-        ru: 'Длина имени должна быть более 3 символов',
-      },
-      usernameEmpty: {
-        eng: 'Username should not be empty',
-        ru: 'Имя не должен быть пустым',
-      },
-      passwordEmpty: {
-        eng: 'Password should not be empty',
-        ru: 'Пароль не должен быть пустым',
+        ru: 'Почта должна соответствовать шаблону',
       },
       passwordString: {
         eng: 'Password should be string',
         ru: 'Пароль должен быть строкой',
-      },
-      passwordLength: {
-        eng: 'Password length must be more than 6 characters',
-        ru: 'Длина пароля должна быть больше 6 символов',
       },
     },
     email: {
@@ -92,8 +100,8 @@ const LANGUAGE = {
         ru: 'Введите имя',
       },
       hint: {
-        eng: 'Length must be more than 3 characters',
-        ru: 'Длина должна быть больше 3 символов',
+        eng: 'Length must be at least 3 characters',
+        ru: 'Длина должна быть не менее 3 символов',
       },
     },
     password: {
@@ -102,8 +110,8 @@ const LANGUAGE = {
         ru: 'Введите пароль',
       },
       hint: {
-        eng: 'Length must be more than 6 characters',
-        ru: 'Длина должна быть больше 6 символов',
+        eng: 'Length must be at least 6 characters',
+        ru: 'Длина должна быть не менее 6 символов',
       },
     },
   },

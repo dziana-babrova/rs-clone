@@ -4,7 +4,7 @@ import Phaser from 'phaser';
 import { axiosSignIn, axiosSignUp } from 'state/features/UserSlice';
 import store from 'state/store';
 import { FormInputsKeys, FormType, Move } from 'types/enums';
-import { FormInput, ServerValidationError } from 'types/types';
+import { ClientValidationError, FormInput, ValidationErrorType } from 'types/types';
 import ElementsFactory from 'utils/ElementGenerator';
 
 export default class SignInPopup extends Phaser.GameObjects.DOMElement {
@@ -148,41 +148,112 @@ export default class SignInPopup extends Phaser.GameObjects.DOMElement {
     const email = this.form[FormInputsKeys.Email].value;
     const password = this.form[FormInputsKeys.Password].value;
 
-    let response;
-    if (this.formType === FormType.SignIn) {
-      response = await store.dispatch(axiosSignIn({ email, password }));
-    } else {
-      const username = this.form[FormInputsKeys.Username].value;
-      response = await store.dispatch(axiosSignUp({ email, username, password }));
-    }
+    const valid = this.formType === FormType.SignIn
+      ? this.checkFormValues(FormInputsKeys.Email, FormInputsKeys.Password)
+      : this.checkFormValues(
+        FormInputsKeys.Email,
+        FormInputsKeys.Password,
+        FormInputsKeys.Username,
+      );
 
-    if ('error' in response) {
-      const msg = response.payload?.message;
-      const errors = response.payload?.errors;
-      switch (true) {
-        case msg?.includes('Validation error'): {
-          if (errors) {
-            this.showErrors(errors);
+    if (valid) {
+      let response;
+      if (this.formType === FormType.SignIn) {
+        response = await store.dispatch(axiosSignIn({ email, password }));
+      } else {
+        const username = this.form[FormInputsKeys.Username].value;
+        response = await store.dispatch(axiosSignUp({ email, username, password }));
+      }
+
+      if ('error' in response) {
+        const msg = response.payload?.message;
+        const errors = response.payload?.errors;
+        if (msg) this.handleErrors(msg, errors);
+      } else {
+        this.hide();
+        this.onClosePopup(true);
+      }
+    }
+  }
+
+  private checkFormValues(...arr: FormInputsKeys[]): boolean {
+    const errors: ClientValidationError[] = [];
+    const validArr = arr.map((key) => {
+      const value = this.form[key].value.trim();
+
+      if (value.length === 0) {
+        errors.push({
+          param: key,
+          msg: 'should not be empty',
+        });
+        return false;
+      }
+      switch (key) {
+        case FormInputsKeys.Email: {
+          const regex = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+$/;
+          const found = value.match(regex);
+          if (found === null) {
+            errors.push({
+              param: FormInputsKeys.Email,
+              msg: 'Email must match the pattern',
+            });
+            return false;
           }
           break;
         }
-        case msg?.includes('Wrong password'): {
-          this.showPasswordError();
+        case FormInputsKeys.Password: {
+          if (value.length < 6) {
+            errors.push({
+              param: FormInputsKeys.Password,
+              msg: 'Password length must be at least 6 characters',
+            });
+            return false;
+          }
           break;
         }
-        case msg?.includes('not found'): {
-          this.showNotFoundError();
-          break;
-        }
-        case msg?.includes('User with this email already exists'): {
-          this.showExistError();
+        case FormInputsKeys.Username: {
+          if (value.length < 3) {
+            errors.push({
+              param: FormInputsKeys.Password,
+              msg: 'Username length must be at least 3 characters',
+            });
+            return false;
+          }
           break;
         }
         default:
       }
-    } else {
-      this.hide();
-      this.onClosePopup(true);
+      return true;
+    });
+
+    if (errors.length !== 0) {
+      this.handleErrors('Validation error', errors);
+    }
+
+    return validArr.every((item) => item);
+  }
+
+  private handleErrors<T extends ValidationErrorType>(msg: string, errors: T[] | undefined): void {
+    switch (true) {
+      case msg.includes('Validation error'): {
+        if (errors) {
+          this.showErrors(errors);
+        }
+        break;
+      }
+      case msg.includes('Wrong password'): {
+        this.showPasswordError();
+        break;
+      }
+      case msg.includes('not found'): {
+        this.showNotFoundError();
+        break;
+      }
+      case msg.includes('User with this email already exists'): {
+        this.showExistError();
+        break;
+      }
+      default:
     }
   }
 
@@ -204,7 +275,7 @@ export default class SignInPopup extends Phaser.GameObjects.DOMElement {
     this.addErrorClass(FormInputsKeys.Password);
   }
 
-  private showErrors(errors: ServerValidationError[]): void {
+  private showErrors<T extends ValidationErrorType>(errors: T[]): void {
     const { lang } = store.getState().app;
     const errorsText = LANGUAGE.signInForm.errors;
 
@@ -220,32 +291,20 @@ export default class SignInPopup extends Phaser.GameObjects.DOMElement {
       let value = '';
 
       switch (true) {
-        case msg.includes('Email should not be empty'): {
-          value = errorsText.emailEmpty[lang];
+        case msg.includes('should not be empty'): {
+          value = errorsText.emptyError[key][lang];
+          break;
+        }
+        case msg.includes('length must be at least'): {
+          value = errorsText.lengthError[key][lang];
           break;
         }
         case msg.includes('Email must match the pattern'): {
           value = errorsText.emailPattern[lang];
           break;
         }
-        case msg.includes('Username should not be empty'): {
-          value = errorsText.usernameEmpty[lang];
-          break;
-        }
-        case msg.includes('Username length must be more than 3 characters'): {
-          value = errorsText.usernameLength[lang];
-          break;
-        }
-        case msg.includes('Password should not be empty'): {
-          value = errorsText.passwordEmpty[lang];
-          break;
-        }
         case msg.includes('Password should be string'): {
           value = errorsText.passwordString[lang];
-          break;
-        }
-        case msg.includes('Password length must be more than 6 characters'): {
-          value = errorsText.passwordLength[lang];
           break;
         }
         default:

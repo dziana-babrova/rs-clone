@@ -135,22 +135,23 @@ export default class StartScene extends Phaser.Scene {
   }
 
   private async signInHandler(): Promise<void> {
+    this.input.enabled = false;
     if (store.getState().user.isAuth) {
       await store.dispatch(axiosSignOut());
       this.signIn.updateBtnText();
+      this.input.enabled = true;
     } else {
-      this.input.enabled = false;
       this.signInPopup.renderPopup();
       this.signInPopup.show();
     }
   }
 
   private onClosePopup(isUbdateSignInText = false): void {
-    this.input.enabled = true;
-
     if (isUbdateSignInText) {
       this.signIn.updateBtnText();
     }
+
+    this.input.enabled = true;
   }
 
   private async showLevels(): Promise<void> {

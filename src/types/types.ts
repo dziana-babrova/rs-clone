@@ -130,3 +130,7 @@ export type FormInput = {
   name: FormInputsKeys;
   type: string;
 };
+
+export type ClientValidationError = Pick<ServerValidationError, 'param' | 'msg'>;
+
+export type ValidationErrorType = ServerValidationError | ClientValidationError;
