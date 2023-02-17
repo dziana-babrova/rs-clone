@@ -1,6 +1,6 @@
 const key = 'rsCloneMiniGolf';
 
-const LocalStorageKeys = {
+export const LocalStorageKeys = {
   lang: `${key}Lang`,
   music: `${key}Music`,
   sound: `${key}Sound`,
@@ -8,4 +8,6 @@ const LocalStorageKeys = {
   accessToken: `${key}-access-token`,
 };
 
-export default LocalStorageKeys;
+export const SERVER_PROPS = {
+  URL: 'http://localhost:3000/api',
+};

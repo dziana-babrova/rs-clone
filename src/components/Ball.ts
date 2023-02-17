@@ -1,6 +1,6 @@
-import { ballSettings } from 'const/constants';
+import { ballSettings } from 'const/scenes/GameSceneConsts';
 import { Scene } from 'phaser';
-import { IComponent, LevelElements } from 'types/types';
+import { IComponent, Position } from 'types/types';
 import BallText from './BallText';
 import Pulse from './Pulse';
 
@@ -13,8 +13,8 @@ export default class Ball extends Phaser.Physics.Matter.Sprite implements ICompo
 
   private text: BallText;
 
-  constructor(scene: Scene, tile: LevelElements[]) {
-    super(scene.matter.world, tile[0].x, tile[0].y - 200, 'ball');
+  constructor(scene: Scene, position: Position) {
+    super(scene.matter.world, position.x, position.y, 'ball');
     this.scene = scene;
 
     this.setBallBody();

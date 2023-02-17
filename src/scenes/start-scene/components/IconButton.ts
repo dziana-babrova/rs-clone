@@ -1,4 +1,4 @@
-import { ColorsNumber } from 'const/Colors';
+import { ColorsNumber } from 'types/enums';
 import Phaser from 'phaser';
 import { IconButtonParams, Position } from 'types/types';
 

@@ -1,5 +1,5 @@
 import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
-import SERVER_PROPS from 'const/Server';
+import { SERVER_PROPS } from 'const/AppConstants';
 import LocalStorageService from 'services/LocalStorageService';
 import { AuthResponse } from 'types/types';
 

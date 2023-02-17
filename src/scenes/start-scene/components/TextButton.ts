@@ -1,4 +1,4 @@
-import Colors from 'const/Colors';
+import { Colors } from 'types/enums';
 import Phaser from 'phaser';
 import { TextButtonParams } from 'types/types';
 

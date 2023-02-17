@@ -1,4 +1,42 @@
-enum Colors {
+export enum AnimationKeys {
+  Wave = 'flag-wave',
+}
+
+export enum ElementTypeKeys {
+  Tile = 'tile',
+  RightSlope = 'slope-right',
+  LeftSlope = 'slope-left',
+  Hole = 'hole',
+  HoleWithCoin = 'coin-in-hole',
+  Star = 'star',
+  Ball = 'ball',
+  Flag = 'flag',
+  Cup = 'cup',
+}
+
+export enum SceneKeys {
+  Preloader = 'preload-scene',
+  Start = 'start-scene',
+  Game = 'game-scene',
+  MultiPlayer = 'multiplayer-scene',
+}
+
+export enum TextureKeys {
+  Platforms = 'platforms',
+  Ball = 'ball',
+  Logo = 'logo',
+  Close = 'close',
+  MusicOn = 'music-on',
+  MusicOff = 'music-off',
+  eng = 'eng',
+  ru = 'ru',
+  Flag = 'flag',
+  Fireworks = 'fireworks',
+  Restart = 'restart',
+  Next = 'next',
+}
+
+export enum Colors {
   Primary = '#ffffff',
   Secondary = '#000000',
   Text = '#ffffff',
@@ -50,6 +88,16 @@ export enum ColorsNumber {
   Star = 0xe7e702,
   StarPulse = 0x693849,
   Stroke = 0x000000,
+  Green = 0x00ff00,
+  Orange = 0xff9600,
 }
 
-export default Colors;
+export enum Controls {
+  Mouse,
+  Keyboard,
+}
+
+export enum Move {
+  Show,
+  Hide,
+}

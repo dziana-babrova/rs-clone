@@ -1,8 +1,6 @@
-import Colors from 'const/Colors';
+import { Colors, SceneKeys, TextureKeys } from 'types/enums';
 import LANGUAGE, { Language, NEXT_LANG } from 'const/Language';
-import LocalStorageKeys from 'const/LocalStorageKeys';
-import SceneKeys from 'const/SceneKeys';
-import TextureKeys from 'const/TextureKeys';
+import { LocalStorageKeys } from 'const/AppConstants';
 import LocalStorageService from 'services/LocalStorageService';
 import { setLang, setMusic } from 'state/features/AppSlice';
 import { axiosSignIn, axiosSignUp } from 'state/features/UserSlice';
@@ -176,7 +174,10 @@ export default class StartScene extends Phaser.Scene {
     this.scene.start(SceneKeys.Game);
   }
 
-  private startOnlineGame(): void {}
+  private startOnlineGame(): void {
+    this.removeStartScreenObjects();
+    this.scene.start(SceneKeys.MultiPlayer);
+  }
 
   private removeStartScreenObjects(): void {
     this.logoGroup.destroy();

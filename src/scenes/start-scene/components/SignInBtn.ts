@@ -1,5 +1,5 @@
 import LANGUAGE from 'const/Language';
-import START_SCENE from 'const/StartSceneConst';
+import START_SCENE from 'const/scenes/StartSceneConst';
 import Phaser from 'phaser';
 import store from 'state/store';
 import TextButton from './TextButton';

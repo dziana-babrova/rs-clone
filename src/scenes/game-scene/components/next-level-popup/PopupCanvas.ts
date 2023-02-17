@@ -1,10 +1,9 @@
 import { Scene } from 'phaser';
-import { ColorsNumber } from 'const/Colors';
-import GAME_SCENE from 'const/GameSceneConsts';
+import { ColorsNumber } from 'types/enums';
+import { GAME_SCENE, GAME_SCENE_ANIMATION } from 'const/scenes/GameSceneConsts';
 import LANGUAGE from 'const/Language';
 import TweenAnimationBuilder from 'utils/TweenAnimationBuilder';
 import store from 'state/store';
-import GAME_SCENE_ANIMATION from 'const/GameSceneAnimationConsts';
 
 export default class PopupCanvasGroup extends Phaser.GameObjects.Container {
   tweenAnimationBuilder: TweenAnimationBuilder;
