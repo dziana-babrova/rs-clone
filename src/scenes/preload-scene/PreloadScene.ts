@@ -66,6 +66,7 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.audio(SoundsKeys.Click, '../assets/music/click.mp3');
     this.load.audio(SoundsKeys.Star, '../assets/music/star.mp3');
     this.load.audio(SoundsKeys.ResultStar, '../assets/music/result-star.mp3');
+    this.load.audio(SoundsKeys.GameOver, '../assets/music/game-over.mp3');
 
     Object.values(START_SCENE.btnSettings.type).forEach((btn) => {
       if (btn === 'music') {

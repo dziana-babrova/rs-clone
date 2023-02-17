@@ -109,4 +109,5 @@ export enum SoundsKeys {
   Click = 'click-sound',
   Star = 'star-sound',
   ResultStar = 'result-star-sound',
+  GameOver = 'game-over-sound',
 }

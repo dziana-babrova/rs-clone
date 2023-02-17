@@ -44,4 +44,10 @@ export default class SoundService {
       loop: false,
     }).play();
   }
+  static gameOverSound(scene: Scene) {
+    scene.sound.add(SoundsKeys.GameOver, {
+      volume: 1,
+      loop: false,
+    }).play();
+  }
 }
