@@ -30,4 +30,18 @@ export default class MapsController {
       return next(e);
     }
   }
+
+  async createMaps(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { user } = req as RequestWithUser;
+      if (!user) {
+        throw ApiError.UnauthorizedError();
+      }
+      const { maps } = req.body;
+      await MapsService.createMaps(user.id, maps);
+      return res.status(201).end();
+    } catch (e) {
+      return next(e);
+    }
+  }
 }

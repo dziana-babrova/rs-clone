@@ -13,7 +13,7 @@ const api = axios.create({
 });
 
 api.interceptors.request.use((config) => {
-  config.headers.Authorization = `Bearer ${localStorage.getItem('golf-token')}`;
+  config.headers.Authorization = `Bearer ${LocalStorageService.getAccessToken()}`;
   return config;
 });
 
