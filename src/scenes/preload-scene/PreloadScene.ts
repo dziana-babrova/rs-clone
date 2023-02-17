@@ -1,12 +1,11 @@
 import platfrom from 'assets/platforms.png';
 import texture from 'assets/platforms.json';
-import SceneKeys from 'const/SceneKeys';
-import TextureKeys from 'const/TextureKeys';
-import START_SCENE from 'const/StartSceneConst';
-import PRELOAD_SCENE from 'const/PreloadSceneConsts';
+import { SceneKeys, TextureKeys, AnimationKeys } from 'types/enums';
+import START_SCENE from 'const/scenes/StartSceneConst';
+import PRELOAD_SCENE from 'const/scenes/PreloadSceneConsts';
 import Phaser from 'phaser';
 import LocalStorageService from 'services/LocalStorageService';
-import LocalStorageKeys from 'const/LocalStorageKeys';
+import { LocalStorageKeys } from 'const/AppConstants';
 import { setLang, setMusic, setSound } from 'state/features/AppSlice';
 import store from 'state/store';
 import { Language } from 'const/Language';
@@ -49,9 +48,14 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.image(TextureKeys.eng, '../assets/eng.png');
     this.load.image(TextureKeys.ru, '../assets/ru.png');
     this.load.image(TextureKeys.Close, '../assets/close.svg');
+    this.load.image(TextureKeys.Next, '../assets/next.svg');
+    this.load.image(TextureKeys.Restart, '../assets/restart.svg');
     this.load.image(TextureKeys.Ball, '../assets/Golf-Ball-big.png');
 
     this.load.atlas(TextureKeys.Platforms, platfrom, texture);
+    this.load.atlas(TextureKeys.Flag, '../assets/flag.png', '../assets/flag.json');
+
+    this.textures.generate(TextureKeys.Fireworks, PRELOAD_SCENE.fireworksTexture);
 
     this.load.audio('music', '../assets/music.mp3');
 
@@ -66,7 +70,18 @@ export default class PreloadScene extends Phaser.Scene {
   }
 
   public create(): void {
-    this.add.text(this.scale.width / 2, this.scale.height / 2, 'Loaded').setOrigin(0.5, 0.5);
+    this.anims.create({
+      key: AnimationKeys.Wave,
+      frames: this.anims.generateFrameNames(TextureKeys.Flag, {
+        prefix: '',
+        start: 1,
+        end: 16,
+        suffix: '.png',
+      }),
+      repeat: -1,
+      frameRate: 10,
+    });
+
     this.scene.start(SceneKeys.Start);
   }
 

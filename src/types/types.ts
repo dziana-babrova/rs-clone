@@ -1,5 +1,5 @@
-import Colors, { ColorsNumber } from 'const/Colors';
 import { Language } from 'const/Language';
+import { ColorsNumber, Colors } from './enums';
 
 export type TextObjectProps = {
   x: number;
@@ -42,11 +42,6 @@ export interface IComponentManager {
   addComponents: (...args: IComponent[]) => void;
 }
 
-export enum Controls {
-  Mouse,
-  Keyboard,
-}
-
 export type TextButtonParams = {
   width: number;
   textSize: number;
@@ -61,11 +56,6 @@ export type IconButtonParams = {
   bgColor: ColorsNumber;
   hoverBgColor: ColorsNumber;
 };
-
-export enum Move {
-  Show,
-  Hide,
-}
 
 export type Level = string[];
 

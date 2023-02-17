@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 import { LevelElements } from 'types/types';
-import TextureKeys from 'const/TextureKeys';
+import { TextureKeys } from 'types/enums';
 
 export default class TunnelGroup extends Phaser.GameObjects.Group {
   constructor(scene: Phaser.Scene, tiles: LevelElements[]) {

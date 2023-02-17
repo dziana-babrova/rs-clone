@@ -44,7 +44,7 @@ export default class AuthController {
       const { refreshToken } = req.cookies;
       await UserService.signOut(refreshToken);
       res.clearCookie('refreshToken');
-      return res.status(200);
+      return res.status(200).end();
     } catch (e) {
       next(e);
     }

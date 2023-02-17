@@ -1,12 +1,13 @@
 import Ball from 'components/Ball';
 import Trajectory from 'components/Trajectory';
-import { ballSettings } from 'const/constants';
+import { ballSettings } from 'const/scenes/GameSceneConsts';
 import { Scene } from 'phaser';
 import CalculateService from 'services/CalculateService';
+import { Controls } from 'types/enums';
 import EventNames from 'types/events';
-import { Controls, Position } from 'types/types';
+import { Position } from 'types/types';
 
-export default class HitHandler {
+export default class HitManager {
   scene: Scene;
 
   private ball: Ball;
@@ -14,6 +15,8 @@ export default class HitHandler {
   private trajectory: Trajectory;
 
   private isHit: boolean = false;
+
+  private isActive: boolean = true;
 
   private startPosition: Position = { x: 0, y: 0 };
 
@@ -34,6 +37,7 @@ export default class HitHandler {
   }
 
   update() {
+    // сheck ifActive - return
     if (!this.ball.isStopped) return;
     if (this.controls === Controls.Mouse) {
       this.setAngleAndDistance(this.scene.game.input.mousePointer);
@@ -45,12 +49,14 @@ export default class HitHandler {
 
   private initEvents() {
     this.scene.input.on('pointerdown', (event: PointerEvent, targets: unknown[]) => {
+      // сheck ifActive - return
       if (targets.length) return;
       if (!this.ball.isStopped || this.isHit || this.controls === Controls.Keyboard) { return; }
       this.controls = Controls.Mouse;
       this.startAim({ x: event.x, y: event.y });
     });
     this.scene.input.on('pointerup', (event: PointerEvent) => {
+      // сheck ifActive - return
       if (!this.isHit || this.controls !== Controls.Mouse) return;
       this.setAngleAndDistance({ x: event.x, y: event.y });
       this.hit();

@@ -1,4 +1,4 @@
-import TextureKeys from 'const/TextureKeys';
+import { TextureKeys } from 'types/enums';
 import Phaser from 'phaser';
 import { LevelElements } from 'types/types';
 

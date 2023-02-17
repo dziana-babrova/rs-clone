@@ -161,7 +161,7 @@ const LANGUAGE = {
       ru: 'Уровень',
     },
     win: {
-      eng: 'Level complited!',
+      eng: 'Level completed!',
       ru: 'Уровень пройден!',
     },
   },

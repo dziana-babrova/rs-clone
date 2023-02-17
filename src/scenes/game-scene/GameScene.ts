@@ -1,15 +1,17 @@
 import PhaserMatterCollisionPlugin from 'phaser-matter-collision-plugin';
-import SceneKeys from 'const/SceneKeys';
+import { SceneKeys } from 'types/enums';
 import Phaser from 'phaser';
-import HitHandler from 'handlers/HitHandler';
+import EventNames from 'types/events';
+import HitManager from 'managers/HitManager';
 import { IComponent, IComponentManager } from 'types/types';
-import NextLevelButton from './components/NextLevelButton';
+import NextLevelButton from './components/next-level-popup/NextLevelButton';
 import ElementsManager from './components/ElementsManager';
+import Fireworks from './components/Fireworks';
 
 export default class GameScene extends Phaser.Scene implements IComponentManager {
   components: IComponent[] = [];
 
-  public hitHandler!: HitHandler;
+  public hitHandler!: HitManager;
 
   elementsManager!: ElementsManager;
 
@@ -37,32 +39,59 @@ export default class GameScene extends Phaser.Scene implements IComponentManager
     await this.elementsManager.create();
 
     this.addComponents(this.elementsManager.trajectory, this.elementsManager.ball);
-    this.hitHandler = new HitHandler(
+    this.hitHandler = new HitManager(
       this,
       this.elementsManager.ball,
       this.elementsManager.trajectory,
     );
 
-    this.nextLevelButton = new NextLevelButton(this);
-    this.nextLevelButton.on('pointerup', this.switchLevel.bind(this));
     this.matter.world.setBounds();
-    await this.collectStar(this.elementsManager.ball, this.elementsManager.stars.getChildren());
+    this.initEvents();
+  }
+
+  private async initEvents() {
+    this.collectStar(this.elementsManager.ball, this.elementsManager.stars.getChildren());
+    this.detectWin(this.elementsManager.ball, this.elementsManager.cup);
+    this.events.on(EventNames.Win, this.elementsManager.ball.deactivate, this.elementsManager.ball);
+    this.events.on(EventNames.Win, () => {
+      const fireworks = new Fireworks();
+      fireworks.create(this, this.elementsManager.cup.x, this.elementsManager.cup.y);
+    });
+    this.events.on(EventNames.Win, this.displayWinPopup.bind(this));
+  }
+
+  private displayWinPopup() {
+    this.time.delayedCall(2000, async () => {
+      const popup = new NextLevelButton(this);
+      await popup.create(this.starsCount, this.switchLevel);
+      popup.on('pointerup', this.switchLevel.bind(this));
+    });
   }
 
   private collectStar(
     objectA: Phaser.GameObjects.GameObject,
     objectB: Phaser.GameObjects.GameObject[],
-  ): Promise<void> {
-    return new Promise<void>((resolve) => {
-      this.matterCollision.addOnCollideStart({
-        objectA,
-        objectB,
-        callback: ({ gameObjectB }) => {
-          gameObjectB?.destroy();
-          this.starsCount += 1;
-        },
-      });
-      resolve();
+  ) {
+    this.matterCollision.addOnCollideStart({
+      objectA,
+      objectB,
+      callback: ({ gameObjectB }) => {
+        gameObjectB?.destroy();
+        this.starsCount += 1;
+      },
+    });
+  }
+
+  private detectWin(
+    objectA: Phaser.GameObjects.GameObject,
+    objectB: Phaser.GameObjects.GameObject,
+  ) {
+    this.matterCollision.addOnCollideStart({
+      objectA,
+      objectB,
+      callback: () => {
+        this.events.emit(EventNames.Win);
+      },
     });
   }
 
@@ -79,14 +108,14 @@ export default class GameScene extends Phaser.Scene implements IComponentManager
     args.forEach((el) => this.components.push(el));
   }
 
-  switchLevel() {
+  switchLevel(nextLevel: boolean) {
     this.cameras.main.fadeOut();
-    this.destroySprites();
     this.starsCount = 0;
+    this.destroySprites();
     this.time.addEvent({
       delay: 2000,
       callback: () => {
-        this.scene.restart({ level: (this.level += 1) });
+        this.scene.restart({ level: (this.level += Number(nextLevel)) });
       },
     });
   }

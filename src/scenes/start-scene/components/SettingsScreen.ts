@@ -1,7 +1,6 @@
-import START_SCENE from 'const/StartSceneConst';
-import TextureKeys from 'const/TextureKeys';
+import START_SCENE from 'const/scenes/StartSceneConst';
+import { TextureKeys, Move } from 'types/enums';
 import Phaser from 'phaser';
-import { Move } from 'types/types';
 
 export default class SettingsScreen extends Phaser.GameObjects.Group {
   btnClose: Phaser.GameObjects.Image;
