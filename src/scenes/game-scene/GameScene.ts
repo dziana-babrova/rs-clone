@@ -4,6 +4,7 @@ import Phaser from 'phaser';
 import EventNames from 'types/events';
 import HitManager from 'managers/HitManager';
 import { IComponent, IComponentManager } from 'types/types';
+import SoundService from 'services/SoundService';
 import NextLevelButton from './components/next-level-popup/NextLevelButton';
 import ElementsManager from './components/ElementsManager';
 import Fireworks from './components/Fireworks';
@@ -78,6 +79,7 @@ export default class GameScene extends Phaser.Scene implements IComponentManager
       callback: ({ gameObjectB }) => {
         gameObjectB?.destroy();
         this.starsCount += 1;
+        SoundService.starSound(this);
       },
     });
   }

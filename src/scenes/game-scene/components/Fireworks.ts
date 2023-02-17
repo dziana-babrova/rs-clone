@@ -1,6 +1,7 @@
 import { ColorsNumber, TextureKeys } from 'types/enums';
 import { GAME_SCENE } from 'const/scenes/GameSceneConsts';
 import { Scene } from 'phaser';
+import SoundService from 'services/SoundService';
 
 export default class Fireworks {
   tints: number[] = [
@@ -33,6 +34,7 @@ export default class Fireworks {
     emitter1.explode(20, x * Phaser.Math.FloatBetween(0.95, 1.05), y - 100);
     emitter2.explode(20, x * Phaser.Math.FloatBetween(0.95, 1.05), y - 50);
     emitter3.explode(20, x * Phaser.Math.FloatBetween(0.95, 1.05), y);
+    SoundService.fireworksSound(scene);
   }
 
   private updateEmitter(
