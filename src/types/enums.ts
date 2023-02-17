@@ -101,3 +101,12 @@ export enum Move {
   Show,
   Hide,
 }
+
+export enum SoundsKeys {
+  Hit = 'hit-sound',
+  Firework = 'fireworks-sound',
+  Ready = 'ready-sound',
+  Click = 'click-sound',
+  Star = 'star-sound',
+  ResultStar = 'result-star-sound',
+}

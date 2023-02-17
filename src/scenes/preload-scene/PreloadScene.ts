@@ -1,6 +1,8 @@
 import platfrom from 'assets/platforms.png';
 import texture from 'assets/platforms.json';
-import { SceneKeys, TextureKeys, AnimationKeys } from 'types/enums';
+import {
+  SceneKeys, TextureKeys, AnimationKeys, SoundsKeys,
+} from 'types/enums';
 import START_SCENE from 'const/scenes/StartSceneConst';
 import PRELOAD_SCENE from 'const/scenes/PreloadSceneConsts';
 import Phaser from 'phaser';
@@ -58,6 +60,12 @@ export default class PreloadScene extends Phaser.Scene {
     this.textures.generate(TextureKeys.Fireworks, PRELOAD_SCENE.fireworksTexture);
 
     this.load.audio('music', '../assets/music.mp3');
+    this.load.audio(SoundsKeys.Hit, '../assets/music/hit.mp3');
+    this.load.audio(SoundsKeys.Firework, '../assets/music/firework.mp3');
+    this.load.audio(SoundsKeys.Ready, '../assets/music/ready.mp3');
+    this.load.audio(SoundsKeys.Click, '../assets/music/click.mp3');
+    this.load.audio(SoundsKeys.Star, '../assets/music/star.mp3');
+    this.load.audio(SoundsKeys.ResultStar, '../assets/music/result-star.mp3');
 
     Object.values(START_SCENE.btnSettings.type).forEach((btn) => {
       if (btn === 'music') {
