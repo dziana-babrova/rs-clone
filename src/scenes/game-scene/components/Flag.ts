@@ -1,6 +1,5 @@
-import { AnimationKeys } from 'types/enums';
-import { TextureKeys } from 'types/enums';
-import { GAME_SCENE_ANIMATION } from 'const/Animations';
+import { AnimationKeys, TextureKeys } from 'types/enums';
+import { GAME_SCENE_ANIMATION } from 'const/scenes/GameSceneConsts';
 import { Scene } from 'phaser';
 import TweenAnimationBuilder from 'utils/TweenAnimationBuilder';
 

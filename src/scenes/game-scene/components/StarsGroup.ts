@@ -2,7 +2,7 @@ import Phaser from 'phaser';
 import PhaserMatterCollisionPlugin from 'phaser-matter-collision-plugin';
 import { TextureKeys } from 'types/enums';
 import TweenAnimationBuilder from 'utils/TweenAnimationBuilder';
-import { GAME_SCENE_ANIMATION } from 'const/Animations';
+import { GAME_SCENE_ANIMATION } from 'const/scenes/GameSceneConsts';
 import { LevelElements } from 'types/types';
 
 export default class StarsGroup extends Phaser.GameObjects.Group {

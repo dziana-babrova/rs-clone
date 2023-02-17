@@ -1,8 +1,7 @@
 /* eslint-disable no-fallthrough */
 
-import { ColorsNumber } from 'const/Colors';
-import GAME_SCENE from 'const/GameSceneConsts';
-import TextureKeys from 'const/TextureKeys';
+import { ColorsNumber, TextureKeys } from 'types/enums';
+import { GAME_SCENE } from 'const/scenes/GameSceneConsts';
 import Button from './Button';
 import CollectedStarsGroup from './CollectedStarsGroup';
 import PopupCanvasGroup from './PopupCanvas';

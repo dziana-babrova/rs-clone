@@ -1,7 +1,6 @@
-import { ballSettings } from 'const/GameSceneConsts';
+import { ballSettings } from 'const/scenes/GameSceneConsts';
 import { Scene } from 'phaser';
-import { IComponent, LevelElements, Position } from 'types/types';
-import TweenAnimationBuilder from 'utils/TweenAnimationBuilder';
+import { IComponent, Position } from 'types/types';
 import BallText from './BallText';
 import Pulse from './Pulse';
 

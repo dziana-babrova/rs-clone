@@ -1,16 +1,17 @@
 import { LevelElements, Level } from 'types/types';
 import config from 'const/TileConfig';
-import { Levels } from 'const/Levels';
+import { ElementTypeKeys } from 'types/enums';
+import { Scene } from 'phaser';
+import Map from 'scenes/game-scene/components/Map';
 
 export default class MapService {
-  public mapElements: LevelElements[];
+  public tileSize: number;
 
-  constructor(currentLevel: number, tileSize: number) {
-    const map = Levels[currentLevel];
-    this.mapElements = this.createLevelConfig(map, tileSize);
+  constructor(tileSize: number) {
+    this.tileSize = tileSize;
   }
 
-  private createLevelConfig(levelScheme: Level, tileSize: number) {
+  public createLevelConfig(levelScheme: Level) {
     const levelElements: LevelElements[] = [];
     levelScheme.forEach((row, y) => {
       for (let i = 0; i < row.length; i += 1) {
@@ -19,8 +20,8 @@ export default class MapService {
         if (tile !== ' ') {
           const element = {
             ...config[tile.toString()],
-            x: x * tileSize,
-            y: y * tileSize,
+            x: x * this.tileSize,
+            y: y * this.tileSize,
           };
           levelElements.push(element);
         }
@@ -29,11 +30,31 @@ export default class MapService {
     return levelElements;
   }
 
-  public getFilteredElements(...types: string[]): LevelElements[] {
-    const elements: LevelElements[] = [];
+  public getFilteredElements(elements: LevelElements[], ...types: string[]): LevelElements[] {
+    const result: LevelElements[] = [];
     types.forEach((type) => {
-      elements.push(...this.mapElements.filter((el) => el.type === type));
+      result.push(...elements.filter((el) => el.type === type));
     });
-    return elements;
+    return result;
+  }
+
+  public createMap(scene: Scene, elements: LevelElements[]) {
+    const groundConfig = this.getFilteredElements(
+      elements,
+      ElementTypeKeys.Tile,
+    );
+    const leftSlopeConfig = this.getFilteredElements(
+      elements,
+      ElementTypeKeys.LeftSlope,
+    );
+    const rightSlopeConfig = this.getFilteredElements(elements, ElementTypeKeys.RightSlope);
+    const holeConfig = this.getFilteredElements(
+      elements,
+      ElementTypeKeys.Hole,
+      ElementTypeKeys.HoleWithCoin,
+      ElementTypeKeys.Flag,
+      ElementTypeKeys.Cup,
+    );
+    return new Map(scene, groundConfig, leftSlopeConfig, rightSlopeConfig, holeConfig);
   }
 }

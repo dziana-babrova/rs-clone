@@ -1,5 +1,4 @@
-import GAME_SCENE_ANIMATION from 'const/GameSceneAnimationConsts';
-import GAME_SCENE from 'const/GameSceneConsts';
+import { GAME_SCENE_ANIMATION, GAME_SCENE } from 'const/scenes/GameSceneConsts';
 import { Scene } from 'phaser';
 import TweenAnimationBuilder from 'utils/TweenAnimationBuilder';
 

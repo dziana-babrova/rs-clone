@@ -1,4 +1,4 @@
-import GAME_SCENE from 'const/GameSceneConsts';
+import { GAME_SCENE } from 'const/scenes/GameSceneConsts';
 import { Scene } from 'phaser';
 
 export default class StarTemplateGroup extends Phaser.GameObjects.Group {

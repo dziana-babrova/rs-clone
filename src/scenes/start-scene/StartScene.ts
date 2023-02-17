@@ -1,8 +1,6 @@
-import Colors from 'const/Colors';
+import { Colors, SceneKeys, TextureKeys } from 'types/enums';
 import LANGUAGE, { Language, NEXT_LANG } from 'const/Language';
 import { LocalStorageKeys } from 'const/AppConstants';
-import { SceneKeys } from 'types/enums';
-import { TextureKeys } from 'types/enums';
 import LocalStorageService from 'services/LocalStorageService';
 import { setLang, setMusic } from 'state/features/AppSlice';
 import { axiosSignIn, axiosSignUp } from 'state/features/UserSlice';

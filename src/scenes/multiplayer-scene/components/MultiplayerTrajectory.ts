@@ -1,18 +1,21 @@
-import { trajectorySettings } from 'const/GameSceneConsts';
-import { trajectoryProps } from 'const/MutiplayerSceneConsts';
+import { trajectoryProps } from 'const/scenes/MultiplayerSceneConsts';
 import { GameObjects, Scene } from 'phaser';
 import { Position } from 'types/types';
 
 export default class MultiplayerTrajectory extends GameObjects.Container {
   scene: Scene;
+
   isReverse: boolean;
+
   tween!: Phaser.Tweens.Tween;
 
   constructor(scene: Scene, position: Position, isReverse: boolean) {
     super(scene, position.x, position.y);
     this.scene = scene;
     this.isReverse = isReverse;
-    const { radius, color, distance, padding, alpha } = trajectoryProps;
+    const {
+      radius, color, distance, padding, alpha,
+    } = trajectoryProps;
     this.width = 300;
     this.height = 50;
     // Create circles

@@ -2,7 +2,7 @@ import PhaserMatterCollisionPlugin from 'phaser-matter-collision-plugin';
 import { SceneKeys } from 'types/enums';
 import Phaser from 'phaser';
 import EventNames from 'types/events';
-import HitHandler from 'handlers/HitHandler';
+import HitManager from 'managers/HitManager';
 import { IComponent, IComponentManager } from 'types/types';
 import NextLevelButton from './components/next-level-popup/NextLevelButton';
 import ElementsManager from './components/ElementsManager';
@@ -11,7 +11,7 @@ import Fireworks from './components/Fireworks';
 export default class GameScene extends Phaser.Scene implements IComponentManager {
   components: IComponent[] = [];
 
-  public hitHandler!: HitHandler;
+  public hitHandler!: HitManager;
 
   elementsManager!: ElementsManager;
 
@@ -39,7 +39,7 @@ export default class GameScene extends Phaser.Scene implements IComponentManager
     await this.elementsManager.create();
 
     this.addComponents(this.elementsManager.trajectory, this.elementsManager.ball);
-    this.hitHandler = new HitHandler(
+    this.hitHandler = new HitManager(
       this,
       this.elementsManager.ball,
       this.elementsManager.trajectory,

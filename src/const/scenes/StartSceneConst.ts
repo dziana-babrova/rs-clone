@@ -1,4 +1,4 @@
-import Colors, { ColorsNumber } from './Colors';
+import { Colors, ColorsNumber } from 'types/enums';
 
 const START_SCENE = {
   moveX: 1000,

@@ -1,5 +1,5 @@
 import Ball from 'components/Ball';
-import { playerProps, powerIndicatorProps } from 'const/MutiplayerSceneConsts';
+import { playerProps, powerIndicatorProps } from 'const/scenes/MultiplayerSceneConsts';
 import { Scene } from 'phaser';
 import CalculateService from 'services/CalculateService';
 import { Position } from 'types/types';
@@ -8,15 +8,25 @@ import PowerPanel from './PowerPanel';
 
 export default class Player {
   id: number;
+
   isReverse: boolean;
+
   position: Position;
+
   scene: Scene;
+
   balls: Phaser.GameObjects.Group;
+
   currentBall: Ball | null;
+
   trajectory: MultiplayerTrajectory;
+
   powerPanel: PowerPanel;
+
   isAvailable = true;
+
   isHit = false;
+
   score = 0;
 
   constructor(scene: Scene, position: Position, isReverse: boolean, id: number) {
@@ -24,7 +34,6 @@ export default class Player {
     this.position = position;
     this.balls = scene.add.group();
     this.currentBall = new Ball(this.scene, { x: position.x, y: position.y - 30 });
-    this.balls.add(this.currentBall);
     if (isReverse) {
       this.currentBall.setTint(playerProps.secondBallColor);
     }
@@ -51,7 +60,7 @@ export default class Player {
 
   async hit() {
     this.balls.add(this.currentBall!);
-    const angle = this.trajectory.angle;
+    const { angle } = this.trajectory;
     const power = this.powerPanel.indicator.width / powerIndicatorProps.width;
     const { velocityX, velocityY } = CalculateService.calculateVelocityByAngleInDegreesAndPower(
       -Math.abs(angle),

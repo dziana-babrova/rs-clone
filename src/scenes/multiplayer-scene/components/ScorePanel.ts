@@ -1,14 +1,17 @@
-import { scoreBlockSettings } from 'const/MutiplayerSceneConsts';
+import { scoreBlockSettings } from 'const/scenes/MultiplayerSceneConsts';
 import Phaser, { Scene } from 'phaser';
 import { Position } from '../../../types/types';
 
 export default class ScorePanel extends Phaser.GameObjects.Container {
   text1: Phaser.GameObjects.Text;
+
   text2!: Phaser.GameObjects.Text;
 
   constructor(scene: Scene, position: Position) {
     super(scene, position.x, position.y);
-    const { color1, color2, width, height, padding } = scoreBlockSettings;
+    const {
+      color1, color2, width, height, padding,
+    } = scoreBlockSettings;
     this.createPanel(color1, { x: -width - padding / 2, y: 0 });
     this.createPanel(color2, { x: padding / 2, y: 0 });
 
@@ -41,6 +44,7 @@ export default class ScorePanel extends Phaser.GameObjects.Container {
   changeText1(text: string) {
     this.text1.text = text;
   }
+
   changeText2(text: string) {
     this.text2.text = text;
   }

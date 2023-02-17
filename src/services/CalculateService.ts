@@ -1,4 +1,4 @@
-import { ballSettings } from 'const/GameSceneConsts'; 
+import { ballSettings } from 'const/scenes/GameSceneConsts';
 import { Position } from 'types/types';
 
 export default class CalculateService {
@@ -34,8 +34,8 @@ export default class CalculateService {
     power: number,
   ): { velocityX: number; velocityY: number } {
     return {
-      velocityX: Math.cos(angle * Math.PI / 180) * power * 40,
-      velocityY: Math.sin(angle * Math.PI / 180) * power * 40,
+      velocityX: Math.cos((angle * Math.PI) / 180) * power * 40,
+      velocityY: Math.sin((angle * Math.PI) / 180) * power * 40,
     };
   }
 }

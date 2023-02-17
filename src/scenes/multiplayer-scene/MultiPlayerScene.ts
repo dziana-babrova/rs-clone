@@ -1,13 +1,11 @@
 import { SceneKeys } from 'types/enums';
 import PhaserMatterCollisionPlugin from 'phaser-matter-collision-plugin';
-import { IComponent, IComponentManager } from 'types/types';
-import MultiplayerManager from './components/MultiplayerManager';
-import Player from './components/Player';
+import MultiplayerManager from '../../managers/MultiplayerManager';
 
 export default class MultiPlayerScene extends Phaser.Scene {
   elementsManager!: MultiplayerManager;
-  matterCollision!: PhaserMatterCollisionPlugin;
 
+  matterCollision!: PhaserMatterCollisionPlugin;
 
   constructor() {
     super(SceneKeys.MultiPlayer);
@@ -22,5 +20,4 @@ export default class MultiPlayerScene extends Phaser.Scene {
 
   update() {
   }
-
 }

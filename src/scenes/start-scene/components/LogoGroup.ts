@@ -1,5 +1,5 @@
 import LANGUAGE, { Language } from 'const/Language';
-import START_SCENE from 'const/StartSceneConst';
+import START_SCENE from 'const/scenes/StartSceneConst';
 import { TextureKeys } from 'types/enums';
 import Phaser from 'phaser';
 import store from 'state/store';

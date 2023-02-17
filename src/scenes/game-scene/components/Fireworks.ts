@@ -1,6 +1,5 @@
-import { ColorsNumber } from 'const/Colors';
-import { GAME_SCENE } from 'const/GameSceneConsts';
-import { TextureKeys } from 'types/enums';
+import { ColorsNumber, TextureKeys } from 'types/enums';
+import { GAME_SCENE } from 'const/scenes/GameSceneConsts';
 import { Scene } from 'phaser';
 
 export default class Fireworks {
@@ -17,8 +16,7 @@ export default class Fireworks {
       ...GAME_SCENE.fireworks,
       rotate: { onEmit: this.updateParticleRotation, onUpdate: this.updateParticleRotation },
       scaleX: {
-        onUpdate: (p: Phaser.GameObjects.Particles.Particle) =>
-          Phaser.Math.Easing.Cubic.Out(1 - p.lifeT),
+        onUpdate: (p: Phaser.GameObjects.Particles.Particle) => Phaser.Math.Easing.Cubic.Out(1 - p.lifeT),
       },
     };
 

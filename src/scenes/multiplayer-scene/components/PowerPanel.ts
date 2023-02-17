@@ -1,13 +1,16 @@
-import { powerIndicatorProps } from 'const/MutiplayerSceneConsts';
-import PRELOAD_SCENE from 'const/PreloadSceneConsts';
-import { GameObjects, Scene } from 'phaser';
+import { powerIndicatorProps } from 'const/scenes/MultiplayerSceneConsts';
+import { Scene } from 'phaser';
 import { Position, RectangleObjectProps } from 'types/types';
 
 export default class PowerPanel extends Phaser.GameObjects.Container {
   scene: Scene;
+
   wrapper!: Phaser.GameObjects.Graphics;
+
   indicator: Phaser.GameObjects.Rectangle;
+
   tween!: Phaser.Tweens.Tween;
+
   isReverse: boolean;
 
   constructor(scene: Phaser.Scene, position: Position, isReverse: boolean) {
@@ -35,7 +38,9 @@ export default class PowerPanel extends Phaser.GameObjects.Container {
   }
 
   private createWrapper(props: RectangleObjectProps) {
-    const { color, alpha, x, y, width, height } = props;
+    const {
+      color, alpha, x, y, width, height,
+    } = props;
     const wrapper = this.scene.add.graphics();
     wrapper.fillStyle(color, alpha);
     wrapper.fillRoundedRect(x, y, width, height, 1);

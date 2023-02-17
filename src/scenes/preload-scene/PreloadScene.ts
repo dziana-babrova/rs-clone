@@ -1,10 +1,8 @@
 import platfrom from 'assets/platforms.png';
 import texture from 'assets/platforms.json';
-import { SceneKeys } from 'types/enums';
-import { TextureKeys } from 'types/enums';
-import { AnimationKeys } from 'types/enums';;
-import START_SCENE from 'const/StartSceneConst';
-import PRELOAD_SCENE from 'const/PreloadSceneConsts';
+import { SceneKeys, TextureKeys, AnimationKeys } from 'types/enums';
+import START_SCENE from 'const/scenes/StartSceneConst';
+import PRELOAD_SCENE from 'const/scenes/PreloadSceneConsts';
 import Phaser from 'phaser';
 import LocalStorageService from 'services/LocalStorageService';
 import { LocalStorageKeys } from 'const/AppConstants';
@@ -53,7 +51,7 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.image(TextureKeys.Next, '../assets/next.svg');
     this.load.image(TextureKeys.Restart, '../assets/restart.svg');
     this.load.image(TextureKeys.Ball, '../assets/Golf-Ball-big.png');
-    
+
     this.load.atlas(TextureKeys.Platforms, platfrom, texture);
     this.load.atlas(TextureKeys.Flag, '../assets/flag.png', '../assets/flag.json');
 
