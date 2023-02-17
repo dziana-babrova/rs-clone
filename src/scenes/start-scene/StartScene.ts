@@ -1,17 +1,18 @@
 import Colors from 'const/Colors';
-import LANGUAGE, { Language, NEXT_LANG } from 'const/Language';
+import { Language, NEXT_LANG } from 'const/Language';
 import LocalStorageKeys from 'const/LocalStorageKeys';
 import SceneKeys from 'const/SceneKeys';
 import TextureKeys from 'const/TextureKeys';
 import LocalStorageService from 'services/LocalStorageService';
 import { setLang, setMusic } from 'state/features/AppSlice';
-import { axiosSignIn, axiosSignUp } from 'state/features/UserSlice';
+import { axiosSignOut } from 'state/features/UserSlice';
 import store from 'state/store';
 import Landscape from './components/Landscape';
 import LangBtn from './components/LangBtn';
 import Levels from './components/Levels';
 import LogoGroup from './components/LogoGroup';
 import SignInBtn from './components/SignInBtn';
+import SignInPopup from './components/SignInPopup';
 import StartSceneBtns from './components/StartSceneBtns';
 import Winners from './components/Winners';
 
@@ -28,6 +29,8 @@ export default class StartScene extends Phaser.Scene {
 
   signIn!: SignInBtn;
 
+  signInPopup!: SignInPopup;
+
   levels!: Levels;
 
   landscape!: Landscape;
@@ -43,13 +46,21 @@ export default class StartScene extends Phaser.Scene {
   }
 
   public preload(): void {
-    store.subscribe(() => { console.log(store.getState()); });
+    // store.subscribe(() => { console.log(store.getState()); });
   }
 
   public async create(): Promise<void> {
+    const { user } = store.getState();
+
+    if (user.isAuth) {
+      this.signIn = new SignInBtn(this, user.user.username);
+    } else {
+      this.signIn = new SignInBtn(this);
+    }
+
     this.logoGroup = new LogoGroup(this);
     this.startSceneBtns = new StartSceneBtns(this);
-    this.signIn = new SignInBtn(this);
+    this.signInPopup = new SignInPopup(this);
     this.langBtn = new LangBtn(this);
 
     await Promise.all([
@@ -81,6 +92,7 @@ export default class StartScene extends Phaser.Scene {
     this.startSceneBtns.btnStartOnlineGame.on('pointerdown', this.startOnlineGame.bind(this));
 
     this.signIn.on('pointerdown', this.signInHandler.bind(this));
+    this.signInPopup.onClosePopup = this.onClosePopup.bind(this);
 
     this.startSceneBtns.btnLevels.background.on('pointerdown', this.showLevels.bind(this));
     this.startSceneBtns.btnLandscape.background.on('pointerdown', this.showLandscape.bind(this));
@@ -116,7 +128,7 @@ export default class StartScene extends Phaser.Scene {
   }
 
   private updateText(): void {
-    this.signIn.setText(LANGUAGE.startScene.signIn[this.lang]);
+    this.signIn.updateBtnText();
     this.startSceneBtns.updateText(this.lang);
     this.logoGroup.updateText(this.lang);
     this.levels.updateText(this.lang);
@@ -124,9 +136,23 @@ export default class StartScene extends Phaser.Scene {
     this.winners.updateText(this.lang);
   }
 
-  private signInHandler(): void {
-    store.dispatch(axiosSignUp({ email: 'asdsad@asd.sa', username: 'tester', password: 'asdasdasd123' }));
-    store.dispatch(axiosSignIn({ email: 'asdsad@asd.sa', password: 'asdasdasd123' }));
+  private async signInHandler(): Promise<void> {
+    if (store.getState().user.isAuth) {
+      await store.dispatch(axiosSignOut());
+      this.signIn.updateBtnText();
+    } else {
+      this.input.enabled = false;
+      this.signInPopup.renderPopup();
+      this.signInPopup.show();
+    }
+  }
+
+  private onClosePopup(isUbdateSignInText = false): void {
+    this.input.enabled = true;
+
+    if (isUbdateSignInText) {
+      this.signIn.updateBtnText();
+    }
   }
 
   private async showLevels(): Promise<void> {
@@ -182,6 +208,7 @@ export default class StartScene extends Phaser.Scene {
     this.logoGroup.destroy();
     this.startSceneBtns.destroy();
     this.signIn.destroy();
+    this.signInPopup.destroy();
     this.langBtn.destroy();
     this.levels.destroy();
     this.winners.destroy();

@@ -6,6 +6,7 @@ import StartScene from 'scenes/start-scene/StartScene';
 import GameScene from 'scenes/game-scene/GameScene';
 
 import './styles/style.scss';
+import './styles/var.scss';
 
 const pluginConfig = {
   plugin: PhaserMatterCollisionPlugin,
@@ -26,6 +27,10 @@ const config: Types.Core.GameConfig = {
   ],
   scale: {
     mode: Phaser.Scale.FIT,
+  },
+  dom: {
+    createContainer: true,
+    // behindCanvas: false,
   },
   physics: {
     default: 'matter',

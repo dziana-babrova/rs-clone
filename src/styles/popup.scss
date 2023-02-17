@@ -1,0 +1,49 @@
+.popup {
+  cursor: default;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  max-width: 460px;
+  margin: auto;
+  padding: 42px;
+  border-radius: 20px;
+  background-color: $color-primary;
+
+  &__message-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    font-size: 1.2rem;
+  }
+
+  &__change {
+    color: $color-link;
+    @include transition(color);
+
+    &:hover {
+      color: $color-link-dark;
+    }
+  }
+
+  &__close {
+    position: absolute;
+    right: 6px;
+    top: 6px;
+    color: $color-grey-light;
+    width: 32px;
+    height: 32px;
+    background-color: transparent;
+    border: none;
+
+    @include mobile {
+      width: 26px;
+      height: 26px;
+    }
+
+    &:hover {
+      color: $color-link;
+    }
+  }
+}

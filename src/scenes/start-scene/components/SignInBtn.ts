@@ -5,7 +5,9 @@ import store from 'state/store';
 import TextButton from './TextButton';
 
 export default class SignInBtn extends TextButton {
-  constructor(scene: Phaser.Scene) {
+  constructor(scene: Phaser.Scene, username = '') {
+    const text = username || LANGUAGE.startScene.signIn[store.getState().app.lang];
+
     super(
       scene,
       {
@@ -14,14 +16,30 @@ export default class SignInBtn extends TextButton {
           - START_SCENE.btnSignIn.y,
         y: START_SCENE.btnSignIn.y,
       },
-      LANGUAGE.startScene.signIn[store.getState().app.lang],
+      text,
       START_SCENE.btnSignIn,
     );
 
     this.setScale(0);
-    this.setInteractive({
-      useHandCursor: true,
-    });
+
+    this.on('pointerover', this.showExit.bind(this));
+    this.on('pointerout', this.hideExit.bind(this));
+  }
+
+  showExit() {
+    if (store.getState().user.isAuth) {
+      this.setText(LANGUAGE.startScene.logout[store.getState().app.lang]);
+    }
+  }
+
+  hideExit() {
+    if (store.getState().user.isAuth) this.setText(store.getState().user.user.username);
+  }
+
+  public updateBtnText(): void {
+    if (!store.getState().user.isAuth) {
+      this.setText(LANGUAGE.startScene.signIn[store.getState().app.lang]);
+    }
   }
 
   public show(): Promise<void> {
