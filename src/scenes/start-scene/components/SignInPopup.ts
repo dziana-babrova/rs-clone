@@ -1,9 +1,10 @@
-import FORM_INPUTS, { FormInput, FormInputsKeys, FormType } from 'const/FormInputs';
 import LANGUAGE from 'const/Language';
+import START_SCENE from 'const/scenes/StartSceneConst';
 import Phaser from 'phaser';
 import { axiosSignIn, axiosSignUp } from 'state/features/UserSlice';
 import store from 'state/store';
-import { Move, ServerValidationError } from 'types/types';
+import { FormInputsKeys, FormType, Move } from 'types/enums';
+import { FormInput, ServerValidationError } from 'types/types';
 import ElementsFactory from 'utils/ElementGenerator';
 
 export default class SignInPopup extends Phaser.GameObjects.DOMElement {
@@ -47,7 +48,7 @@ export default class SignInPopup extends Phaser.GameObjects.DOMElement {
 
     this.form = ElementsFactory.createFormElement('popup__form form');
 
-    const inputElems = FORM_INPUTS.map((item) => this.createInputElem(item));
+    const inputElems = START_SCENE.formInputs.map((item) => this.createInputElem(item));
 
     this.btnSubmit = ElementsFactory.createButton(
       'btn form__submit',

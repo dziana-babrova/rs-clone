@@ -101,3 +101,14 @@ export enum Move {
   Show,
   Hide,
 }
+
+export enum FormInputsKeys {
+  Email = 'email',
+  Username = 'username',
+  Password = 'password',
+}
+
+export enum FormType {
+  SignIn = 'signIn',
+  SignUp = 'signUp',
+}

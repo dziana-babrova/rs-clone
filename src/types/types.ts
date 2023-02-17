@@ -1,5 +1,5 @@
 import { Language } from 'const/Language';
-import { ColorsNumber, Colors } from './enums';
+import { ColorsNumber, Colors, FormInputsKeys } from './enums';
 
 export type TextObjectProps = {
   x: number;
@@ -124,4 +124,9 @@ export type ServerValidationError = {
   msg: string;
   param: string;
   location: string;
+};
+
+export type FormInput = {
+  name: FormInputsKeys;
+  type: string;
 };

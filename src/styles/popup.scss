@@ -5,11 +5,13 @@
   left: 50%;
   transform: translate(-50%, -50%);
   width: 100%;
-  max-width: 460px;
+  max-width: 520px;
   margin: auto;
-  padding: 42px;
-  border-radius: 20px;
-  background-color: $color-primary;
+  padding: 40px;
+  border-radius: 18px;
+  background-color: $color-popup-background;
+  border: 8px solid $color-popup-border;
+
 
   &__message-wrapper {
     display: flex;
