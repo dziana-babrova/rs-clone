@@ -60,13 +60,10 @@ export default class MapService {
   }
 
   static getDefaultMapsObject(): Maps {
-    const result: Maps = {};
-    Levels.forEach((_, index) => {
-      result[index] = {
-        isUnlock: index === 0,
-        start: 0,
-      };
-    });
-    return result;
+    return Levels.map((el, index) => ({
+      id: index,
+      isUnlock: index === 0,
+      stars: 0,
+    }));
   }
 }

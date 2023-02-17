@@ -8,7 +8,7 @@ import MapService from 'services/MapService';
 import { AxiosErrorResponse, IAppState, Maps } from 'types/types';
 
 const initialState: IAppState = {
-  maps: {},
+  maps: [],
   lang: Language.Eng,
   music: true,
   sound: true,
@@ -34,6 +34,18 @@ Maps,
 >('app/axiosUpdateMaps', async (payload: Maps, { rejectWithValue }) => {
   try {
     await MapsApiService.updateMaps(payload);
+    return null;
+  } catch (e: unknown) {
+    return rejectWithValue((e as AxiosError<AxiosErrorResponse>).response?.data);
+  }
+});
+export const axiosCreateMaps = createAsyncThunk<
+null,
+Maps,
+{ rejectValue: AxiosErrorResponse | undefined }
+>('app/axiosCreateMaps', async (payload: Maps, { rejectWithValue }) => {
+  try {
+    await MapsApiService.createMaps(payload);
     return null;
   } catch (e: unknown) {
     return rejectWithValue((e as AxiosError<AxiosErrorResponse>).response?.data);
@@ -67,6 +79,10 @@ const appSlice = createSlice({
         state.maps = MapService.getDefaultMapsObject();
       })
       .addCase(axiosUpdateMaps.rejected, (state, action) => {
+        // There we will call the method that will show errors on forms.
+        console.log('Not saved', action.error);
+      })
+      .addCase(axiosCreateMaps.rejected, (state, action) => {
         // There we will call the method that will show errors on forms.
         console.log('Not saved', action.error);
       });

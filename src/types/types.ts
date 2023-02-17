@@ -104,9 +104,7 @@ export type LoginData = {
   password: string;
 };
 
-export type Maps = {
-  [key: number]: MapDescription
-};
+export type Maps = MapDescription[];
 
 export type AuthResponse = {
   accessToken: string;
@@ -127,6 +125,7 @@ export type ServerValidationError = {
 };
 
 export type MapDescription = {
+  id: number,
   isUnlock: boolean,
-  start: number
+  stars: number
 };

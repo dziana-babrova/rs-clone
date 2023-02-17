@@ -2,9 +2,10 @@ import { Colors, SceneKeys, TextureKeys } from 'types/enums';
 import LANGUAGE, { Language, NEXT_LANG } from 'const/Language';
 import { LocalStorageKeys } from 'const/AppConstants';
 import LocalStorageService from 'services/LocalStorageService';
-import { setLang, setMusic } from 'state/features/AppSlice';
+import { axiosCreateMaps, setLang, setMusic } from 'state/features/AppSlice';
 import { axiosSignIn, axiosSignUp } from 'state/features/UserSlice';
 import store from 'state/store';
+import MapService from 'services/MapService';
 import Landscape from './components/Landscape';
 import LangBtn from './components/LangBtn';
 import Levels from './components/Levels';
@@ -128,6 +129,7 @@ export default class StartScene extends Phaser.Scene {
   }
 
   private async showLevels(): Promise<void> {
+    store.dispatch(axiosCreateMaps(MapService.getDefaultMapsObject()));
     await Promise.all([
       this.startSceneBtns.hide(),
       this.levels.show(),
