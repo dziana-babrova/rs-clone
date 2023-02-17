@@ -17,6 +17,12 @@ enum Colors {
   FireworksYellow = '#E6ED0F',
   FireworksGreen = '#3DA925',
   FireworksPurple = '#EE04E7',
+  NextLevelPopupBackground = '#d78d43',
+  NextLevelPopupBorder = '#fefee4',
+  StarTemplate = '#dbdbdb',
+  Star = '#e7e702',
+  StarPulse = '#693849',
+  Stroke = '#000000',
 }
 
 export enum ColorsNumber {
@@ -38,6 +44,12 @@ export enum ColorsNumber {
   FireworksYellow = 0xe6ed0f,
   FireworksGreen = 0x3da925,
   FireworksPurple = 0xee04e7,
+  NextLevelPopupBorder = 0xd78d43,
+  NextLevelPopupBackground = 0xfefee4,
+  StarTemplate = 0xdbdbdb,
+  Star = 0xe7e702,
+  StarPulse = 0x693849,
+  Stroke = 0x000000,
 }
 
 export default Colors;

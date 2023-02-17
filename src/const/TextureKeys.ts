@@ -9,6 +9,8 @@ enum TextureKeys {
   ru = 'ru',
   Flag = 'flag',
   Fireworks = 'fireworks',
+  Restart = 'restart',
+  Next = 'next',
 }
 
 export default TextureKeys;

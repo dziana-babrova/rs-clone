@@ -50,6 +50,8 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.image(TextureKeys.eng, '../assets/eng.png');
     this.load.image(TextureKeys.ru, '../assets/ru.png');
     this.load.image(TextureKeys.Close, '../assets/close.svg');
+    this.load.image(TextureKeys.Next, '../assets/next.svg');
+    this.load.image(TextureKeys.Restart, '../assets/restart.svg');
     this.load.image(TextureKeys.Ball, '../assets/Golf-Ball-big.png');
 
     this.load.atlas(TextureKeys.Platforms, platfrom, texture);
@@ -74,8 +76,8 @@ export default class PreloadScene extends Phaser.Scene {
       key: AnimationKeys.Wave,
       frames: this.anims.generateFrameNames(TextureKeys.Flag, {
         prefix: '',
-        start: 4,
-        end: 46,
+        start: 1,
+        end: 16,
         suffix: '.png',
       }),
       repeat: -1,
