@@ -2,6 +2,7 @@ import { ballText } from 'const/scenes/GameSceneConsts';
 import LANGUAGE from 'const/Language';
 import { GameObjects, Scene } from 'phaser';
 import store from 'state/store';
+import SoundService from 'services/SoundService';
 
 export default class BallText extends GameObjects.Text {
   scene: Scene;
@@ -25,6 +26,7 @@ export default class BallText extends GameObjects.Text {
       duration: ballText.duration,
       ease: 'Sine.easeInOut',
       delay: 100,
+      onStart: () => SoundService.readySound(this.scene),
       onComplete: this.stop.bind(this),
     });
   }

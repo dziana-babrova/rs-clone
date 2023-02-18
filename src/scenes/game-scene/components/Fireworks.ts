@@ -1,6 +1,7 @@
 import { ColorsNumber, TextureKeys } from 'types/enums';
 import { GAME_SCENE } from 'const/scenes/GameSceneConsts';
-import { Scene } from 'phaser';
+import { GameObjects, Scene } from 'phaser';
+import SoundService from 'services/SoundService';
 
 export default class Fireworks {
   tints: number[] = [
@@ -16,10 +17,8 @@ export default class Fireworks {
       ...GAME_SCENE.fireworks,
       rotate: { onEmit: this.updateParticleRotation, onUpdate: this.updateParticleRotation },
       scaleX: {
-        onUpdate:
-          (
-            particle: Phaser.GameObjects.Particles.Particle,
-          ) => Phaser.Math.Easing.Cubic.Out(1 - particle.lifeT),
+        onUpdate: (particle: GameObjects.Particles.Particle) =>
+          Phaser.Math.Easing.Cubic.Out(1 - particle.lifeT),
       },
     };
 
@@ -36,6 +35,7 @@ export default class Fireworks {
     emitter1.explode(20, x * Phaser.Math.FloatBetween(0.95, 1.05), y - 100);
     emitter2.explode(20, x * Phaser.Math.FloatBetween(0.95, 1.05), y - 50);
     emitter3.explode(20, x * Phaser.Math.FloatBetween(0.95, 1.05), y);
+    SoundService.fireworksSound(scene);
   }
 
   private updateEmitter(
@@ -46,7 +46,7 @@ export default class Fireworks {
     emitter.setPosition(x, y).setTint(Phaser.Utils.Array.GetRandom(this.tints));
   }
 
-  private updateParticleRotation(p: Phaser.GameObjects.Particles.Particle): number {
-    return Phaser.Math.RadToDeg(Math.atan2(p.velocityY, p.velocityX));
+  private updateParticleRotation(particle: Phaser.GameObjects.Particles.Particle): number {
+    return Phaser.Math.RadToDeg(Math.atan2(particle.velocityY, particle.velocityX));
   }
 }

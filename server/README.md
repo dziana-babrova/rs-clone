@@ -32,6 +32,8 @@
 
 - [Update Maps](https://github.com/dziana-babrova/rs-clone/server#update-maps)
 
+- [Create Maps](https://github.com/dziana-babrova/rs-clone/server#create-maps)
+
 
 
 <a name="sign-up"></a>**Sign Up**
@@ -546,8 +548,10 @@ None
 ```json
 
 {
+  "maps": [
 
-  "1": {
+  {
+    "id": 1,
 
     "isUnlock": true,
 
@@ -555,7 +559,8 @@ None
 
   },
 
-  "2": {
+  {
+    "id": 2,
 
     "isUnlock": true,
 
@@ -563,7 +568,8 @@ None
 
   },
 
-  "3": {
+  {
+    "id": 3,
 
     "isUnlock": false,
 
@@ -571,6 +577,7 @@ None
 
   }
 
+  ]
 }
 ```
 
@@ -615,7 +622,7 @@ None
 
 ----
 
-Returns json data with user maps card object.
+Update maps instance.
 
 <details>
 
@@ -641,7 +648,41 @@ None
 
 * **Data Params**
 
-None
+```json
+
+{
+  "maps": [
+
+  {
+    "id": 1,
+
+    "isUnlock": true,
+
+    "stars": 0
+
+  },
+
+  {
+    "id": 2,
+
+    "isUnlock": true,
+
+    "stars": 3
+
+  },
+
+  {
+    "id": 3,
+
+    "isUnlock": false,
+
+    "stars": 0
+
+  }
+
+  ]
+}
+```
 
 
 * **Success Response:**
@@ -676,4 +717,119 @@ None
 None
 
 </details>
+
+<a name="update-maps"></a>**Create Maps**
+
+----
+
+Create maps instance.
+
+<details>
+
+* **URL**
+
+/api/maps/
+
+* **Method:**
+
+`CREATE`
+
+* **Headers:**
+
+`'Authorization': 'Bearer ${accessToken}'`
+
+* **URL Params**
+
+None
+
+* **Query Params**
+
+None
+
+* **Data Params**
+
+```json
+
+{
+  "maps": [
+
+  {
+    "id": 1,
+
+    "isUnlock": true,
+
+    "stars": 0
+
+  },
+
+  {
+    "id": 2,
+
+    "isUnlock": true,
+
+    "stars": 3
+
+  },
+
+  {
+    "id": 3,
+
+    "isUnlock": false,
+
+    "stars": 0
+
+  }
+
+  ]
+}
+```
+
+
+* **Success Response:**
+
+* **Code:** 201 CREATED <br />
+
+**Content:**
+
+```json
+
+{}
+```
+
+* **Error Response:**
+
+* **Code:** 401 # UNAUTHORIZED <br />
+
+**Content:**
+
+```json
+
+{
+
+"message": "Unauthorized"
+
+}
+
+```
+
+* **Code:** 400 # BAD REQUEST <br />
+
+**Content:**
+
+```json
+
+{
+
+"message": "Maps for this user already exists."
+
+}
+
+```
+
+* **Notes:**
+
+None
+
+</details>
+
 

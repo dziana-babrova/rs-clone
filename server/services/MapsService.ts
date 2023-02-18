@@ -1,6 +1,6 @@
 import { Schema } from 'mongoose';
 import ApiError from '../errors/ApiError';
-import Maps, { MapsType } from '../models/Maps';
+import Maps, { MapDescription } from '../models/Maps';
 
 class MapsService {
   async findMaps(userId: Schema.Types.ObjectId) {
@@ -11,15 +11,23 @@ class MapsService {
     return dbMaps.maps;
   }
 
-  async updateMaps(userId: Schema.Types.ObjectId, maps: MapsType) {
+  async updateMaps(userId: Schema.Types.ObjectId, maps: MapDescription[]) {
     const dbMaps = await Maps.findOne({ user: userId });
-    console.log(dbMaps);
     if (dbMaps) {
       dbMaps.maps = maps;
       await dbMaps.save();
       return;
     }
     await Maps.create({ user: userId, maps });
+  }
+
+  async createMaps(userId: Schema.Types.ObjectId, maps: MapDescription[]) {
+    const potentialMaps = await Maps.findOne({ user: userId });
+    if (potentialMaps) {
+      throw ApiError.BadRequest('Maps for this user already exists.');
+    }
+    const mapsObj = new Maps({ user: userId, maps });
+    await mapsObj.save();
   }
 }
 

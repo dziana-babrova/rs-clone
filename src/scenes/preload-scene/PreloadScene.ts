@@ -1,12 +1,16 @@
 import platfrom from 'assets/platforms.png';
 import texture from 'assets/platforms.json';
-import { SceneKeys, TextureKeys, AnimationKeys } from 'types/enums';
+import {
+  SceneKeys, TextureKeys, AnimationKeys, SoundsKeys,
+} from 'types/enums';
 import START_SCENE from 'const/scenes/StartSceneConst';
 import PRELOAD_SCENE from 'const/scenes/PreloadSceneConsts';
 import Phaser from 'phaser';
 import LocalStorageService from 'services/LocalStorageService';
 import { LocalStorageKeys } from 'const/AppConstants';
-import { setLang, setMusic, setSound } from 'state/features/AppSlice';
+import {
+  axiosGetMaps, setLang, setMusic, setSound,
+} from 'state/features/AppSlice';
 import store from 'state/store';
 import { Language } from 'const/Language';
 import { axiosCheckAuth } from 'state/features/UserSlice';
@@ -42,7 +46,11 @@ export default class PreloadScene extends Phaser.Scene {
 
   public preload(): void {
     if (LocalStorageService.getAccessToken()) {
-      store.dispatch(axiosCheckAuth());
+      store.dispatch(axiosCheckAuth()).then(() => {
+        if (store.getState().user.isAuth) {
+          store.dispatch(axiosGetMaps());
+        }
+      });
     }
     this.load.image(TextureKeys.Logo, '../assets/logo.png');
     this.load.image(TextureKeys.eng, '../assets/eng.png');
@@ -60,6 +68,13 @@ export default class PreloadScene extends Phaser.Scene {
     this.textures.generate(TextureKeys.Fireworks, PRELOAD_SCENE.fireworksTexture);
 
     this.load.audio('music', '../assets/music.mp3');
+    this.load.audio(SoundsKeys.Hit, '../assets/music/hit.mp3');
+    this.load.audio(SoundsKeys.Firework, '../assets/music/firework.mp3');
+    this.load.audio(SoundsKeys.Ready, '../assets/music/ready.mp3');
+    this.load.audio(SoundsKeys.Click, '../assets/music/click.mp3');
+    this.load.audio(SoundsKeys.Star, '../assets/music/star.mp3');
+    this.load.audio(SoundsKeys.ResultStar, '../assets/music/result-star.mp3');
+    this.load.audio(SoundsKeys.GameOver, '../assets/music/game-over.mp3');
 
     Object.values(START_SCENE.btnSettings.type).forEach((btn) => {
       if (btn === 'music') {
@@ -114,7 +129,6 @@ export default class PreloadScene extends Phaser.Scene {
   private setStoreFromLocalStorage(): void {
     const lsLang: Language | null = LocalStorageService.getItem(LocalStorageKeys.lang);
     const lsMusic: boolean | null = LocalStorageService.getItem(LocalStorageKeys.music);
-    console.log('lsMusic: ', lsMusic);
     const lsSound: boolean | null = LocalStorageService.getItem(LocalStorageKeys.sound);
     if (lsLang !== null) store.dispatch(setLang(lsLang));
     if (lsMusic !== null) store.dispatch(setMusic(lsMusic));

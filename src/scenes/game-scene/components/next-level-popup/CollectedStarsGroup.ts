@@ -1,5 +1,6 @@
 import { GAME_SCENE_ANIMATION, GAME_SCENE } from 'const/scenes/GameSceneConsts';
 import { Scene } from 'phaser';
+import SoundService from 'services/SoundService';
 import TweenAnimationBuilder from 'utils/TweenAnimationBuilder';
 import StarTemplateGroup from './StarTemplateGroup';
 
@@ -35,6 +36,7 @@ export default class CollectedStarsGroup extends StarTemplateGroup {
       GAME_SCENE_ANIMATION.starAnimation.ease,
       GAME_SCENE_ANIMATION.starAnimation.duration,
     );
+    SoundService.resultStarSound(this.scene);
   }
 
   async pulse(index: number): Promise<void> {

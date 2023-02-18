@@ -1,4 +1,4 @@
-import { Colors, ColorsNumber } from 'types/enums';
+import { Colors, ColorsNumber, FormInputsKeys } from 'types/enums';
 
 const START_SCENE = {
   moveX: 1000,
@@ -35,7 +35,7 @@ const START_SCENE = {
     hoverBgColor: Colors.PinkDark,
     y: 370,
   },
-  btnSignIn: {
+  btnAuth: {
     width: 200,
     textSize: 32,
     textColor: Colors.Text,
@@ -84,6 +84,20 @@ const START_SCENE = {
   levels: {
 
   },
+  formInputs: [
+    {
+      name: FormInputsKeys.Email,
+      type: 'email',
+    },
+    {
+      name: FormInputsKeys.Username,
+      type: 'text',
+    },
+    {
+      name: FormInputsKeys.Password,
+      type: 'password',
+    },
+  ],
 };
 
 export default START_SCENE;

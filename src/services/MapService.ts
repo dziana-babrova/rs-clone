@@ -57,4 +57,12 @@ export default class MapService {
     );
     return new Map(scene, groundConfig, leftSlopeConfig, rightSlopeConfig, holeConfig);
   }
+
+  static getDefaultMapsObject(): Maps {
+    return Levels.map((el, index) => ({
+      id: index,
+      isUnlock: index === 0,
+      stars: 0,
+    }));
+  }
 }

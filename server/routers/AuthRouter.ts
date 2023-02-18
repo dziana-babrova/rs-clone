@@ -15,14 +15,14 @@ authRouter.post('/signup', [
     .notEmpty().withMessage('Username should not be empty')
     .bail()
     .isLength({ min: 3 })
-    .withMessage('Username length must be more than 3 characters'),
+    .withMessage('Username length must be at least 3 characters'),
   check('password')
     .notEmpty().withMessage('Password should not be empty').bail()
     .isString()
     .withMessage('Password should be string')
     .bail()
     .isLength({ min: 6 })
-    .withMessage('Password length must be more than 6 characters'),
+    .withMessage('Password length must be at least 6 characters'),
 ], controller.signUp);
 authRouter.post('/signin', [
   check('email').trim()
@@ -36,7 +36,7 @@ authRouter.post('/signin', [
     .withMessage('Password should be string')
     .bail()
     .isLength({ min: 6 })
-    .withMessage('Password length must be more than 6 characters'),
+    .withMessage('Password length must be at least 6 characters'),
 ], controller.signIn);
 authRouter.get('/signout', [
   cookie('refreshToken', 'RefreshToken cookie required.').notEmpty(),

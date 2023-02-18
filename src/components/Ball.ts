@@ -1,5 +1,6 @@
 import { ballSettings } from 'const/scenes/GameSceneConsts';
 import { Scene } from 'phaser';
+import SoundService from 'services/SoundService';
 import { IComponent, Position } from 'types/types';
 import EventNames from 'types/events';
 import BallText from './BallText';
@@ -61,6 +62,7 @@ export default class Ball extends Phaser.Physics.Matter.Sprite implements ICompo
 
   hitBall(velocityX: number, velocityY: number) {
     this.setVelocity(velocityX, velocityY);
+    SoundService.hitSound(this.scene);
   }
 
   public checkBallPosition(isGameOver: boolean): void {
