@@ -1,8 +1,11 @@
 import Ball from 'components/Ball';
+import Character from 'components/Character';
+import { characters } from 'const/Characters';
 import { playerProps, powerIndicatorProps } from 'const/scenes/MultiplayerSceneConsts';
 import { Scene } from 'phaser';
 import CalculateService from 'services/CalculateService';
 import { Position } from 'types/types';
+import { runInThisContext } from 'vm';
 import MultiplayerTrajectory from './MultiplayerTrajectory';
 import PowerPanel from './PowerPanel';
 
@@ -29,14 +32,20 @@ export default class Player {
 
   score = 0;
 
+  character: Character;
+
   constructor(scene: Scene, position: Position, isReverse: boolean, id: number) {
     this.scene = scene;
     this.position = position;
     this.balls = scene.add.group();
+    this.character = new Character(scene, position, characters[id === 1 ? 0 : 1]);
+    this.character.setDepth(50);
     this.currentBall = new Ball(this.scene, { x: position.x, y: position.y - 30 });
     if (isReverse) {
       this.currentBall.setTint(playerProps.secondBallColor);
+      this.character.scaleX = -this.character.scaleX;
     }
+    this.currentBall.setDepth(100);
     this.trajectory = new MultiplayerTrajectory(scene, position, isReverse);
     this.powerPanel = new PowerPanel(this.scene, position, isReverse);
     this.isReverse = isReverse;
@@ -48,6 +57,7 @@ export default class Player {
       setTimeout(() => {
         const ball = new Ball(this.scene, { x: position.x, y: position.y - 30 });
         this.currentBall = ball;
+        ball.setDepth(100);
         if (this.isReverse) {
           this.currentBall.setTint(playerProps.secondBallColor);
         }
@@ -66,6 +76,7 @@ export default class Player {
       -Math.abs(angle),
       power,
     );
+    this.character.hit();
     this.currentBall?.hitBall(this.isReverse ? -velocityX : velocityX, velocityY);
     this.currentBall = null;
     this.isHit = false;
@@ -76,6 +87,7 @@ export default class Player {
   fixAngle() {
     this.trajectory.stop();
     this.isHit = true;
+    this.character.prepare();
   }
 
   showPower() {

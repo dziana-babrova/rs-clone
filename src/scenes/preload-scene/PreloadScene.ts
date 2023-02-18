@@ -82,6 +82,10 @@ export default class PreloadScene extends Phaser.Scene {
         this.load.image(btn, `../assets/${btn}.svg`);
       }
     });
+
+    this.load.atlas('player1', 'assets/players/player1/player1.png', 'assets/players/player1/player1.json');
+    this.load.atlas('player2', 'assets/players/player2/player2.png', 'assets/players/player2/player2.json');
+
   }
 
   public create(): void {
