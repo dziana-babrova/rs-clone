@@ -125,7 +125,14 @@ export type ServerValidationError = {
 };
 
 export type MapDescription = {
-  id: number,
-  isUnlock: boolean,
-  stars: number
+  id: number;
+  isUnlock: boolean;
+  stars: number;
 };
+
+export type Winner = {
+  username: string;
+  stars: number;
+};
+
+export type WinnersResponse = Winner[];
