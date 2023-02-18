@@ -7,6 +7,7 @@ import { IComponent, IComponentManager } from 'types/types';
 import NextLevelButton from './components/next-level-popup/NextLevelButton';
 import ElementsManager from './components/ElementsManager';
 import Fireworks from './components/Fireworks';
+import DestroyedBall from './components/DestroyedBall';
 
 export default class GameScene extends Phaser.Scene implements IComponentManager {
   components: IComponent[] = [];
@@ -32,7 +33,7 @@ export default class GameScene extends Phaser.Scene implements IComponentManager
   }
 
   init(props: { level?: number }) {
-    const { level = 0 } = props;
+    const { level = 8 } = props;
     this.level = level;
   }
 
@@ -107,14 +108,22 @@ export default class GameScene extends Phaser.Scene implements IComponentManager
       objectB,
       callback: () => {
         this.events.emit(EventNames.GameOver);
+        const ball = new DestroyedBall();
+        ball.create(this, this.elementsManager.ball.x, this.elementsManager.ball.y);
+        this.elementsManager.ball.destroy();
       },
     });
   }
 
-  private handleGameOver() {
+  private handleGameOver(): void {
     this.isGameOver = true;
-    this.cameras.main.shake(300, 0.025);
-    this.switchLevel(false);
+    this.cameras.main.shake(300, 0.015);
+    this.time.addEvent({
+      delay: 2000,
+      callback: () => {
+        this.switchLevel(false);
+      },
+    });
   }
 
   update() {

@@ -36,6 +36,7 @@ export enum TextureKeys {
   Restart = 'restart',
   Next = 'next',
   Saw = 'saw',
+  MiniBall = 'mini-ball',
 }
 
 export enum Colors {
