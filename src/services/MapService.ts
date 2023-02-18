@@ -1,4 +1,4 @@
-import { LevelElements, Level } from 'types/types';
+import { LevelElements } from 'types/types';
 import config from 'const/TileConfig';
 import { ElementTypeKeys } from 'types/enums';
 import { Scene } from 'phaser';
@@ -11,7 +11,7 @@ export default class MapService {
     this.tileSize = tileSize;
   }
 
-  public createLevelConfig(levelScheme: Level) {
+  public createLevelConfig(levelScheme: string[]) {
     const levelElements: LevelElements[] = [];
     levelScheme.forEach((row, y) => {
       for (let i = 0; i < row.length; i += 1) {

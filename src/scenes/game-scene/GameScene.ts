@@ -19,12 +19,15 @@ export default class GameScene extends Phaser.Scene implements IComponentManager
 
   starsCount: number;
 
+  isGameOver: boolean;
+
   nextLevelButton!: NextLevelButton;
 
   matterCollision!: PhaserMatterCollisionPlugin;
 
   constructor() {
     super(SceneKeys.Game);
+    this.isGameOver = false;
     this.starsCount = 0;
   }
 
@@ -45,26 +48,26 @@ export default class GameScene extends Phaser.Scene implements IComponentManager
       this.elementsManager.trajectory,
     );
 
-    this.matter.world.setBounds();
     this.initEvents();
   }
 
   private async initEvents() {
     this.collectStar(this.elementsManager.ball, this.elementsManager.stars.getChildren());
     this.detectWin(this.elementsManager.ball, this.elementsManager.cup);
+    this.collideWithSaw(this.elementsManager.ball, this.elementsManager.saws.getChildren());
     this.events.on(EventNames.Win, this.elementsManager.ball.deactivate, this.elementsManager.ball);
     this.events.on(EventNames.Win, () => {
       const fireworks = new Fireworks();
       fireworks.create(this, this.elementsManager.cup.x, this.elementsManager.cup.y);
     });
     this.events.on(EventNames.Win, this.displayWinPopup.bind(this));
+    this.events.on(EventNames.GameOver, this.handleGameOver.bind(this));
   }
 
   private displayWinPopup() {
     this.time.delayedCall(2000, async () => {
       const popup = new NextLevelButton(this);
       await popup.create(this.starsCount, this.switchLevel);
-      popup.on('pointerup', this.switchLevel.bind(this));
     });
   }
 
@@ -95,10 +98,31 @@ export default class GameScene extends Phaser.Scene implements IComponentManager
     });
   }
 
+  private collideWithSaw(
+    objectA: Phaser.GameObjects.GameObject,
+    objectB: Phaser.GameObjects.GameObject[],
+  ) {
+    this.matterCollision.addOnCollideStart({
+      objectA,
+      objectB,
+      callback: () => {
+        this.events.emit(EventNames.GameOver);
+      },
+    });
+  }
+
+  private handleGameOver() {
+    this.isGameOver = true;
+    this.cameras.main.shake(300, 0.025);
+    this.switchLevel(false);
+  }
+
   update() {
     try {
       this.components.forEach((el) => el.update());
       this.hitHandler.update();
+      this.elementsManager.ball.checkBallPosition(this.isGameOver);
+      this.elementsManager.saws.update();
     } catch (e) {
       console.log();
     }
@@ -111,10 +135,14 @@ export default class GameScene extends Phaser.Scene implements IComponentManager
   switchLevel(nextLevel: boolean) {
     this.cameras.main.fadeOut();
     this.starsCount = 0;
+    this.isGameOver = false;
     this.destroySprites();
     this.time.addEvent({
       delay: 2000,
       callback: () => {
+        this.events.removeAllListeners(EventNames.Win);
+        this.events.removeAllListeners('pointerup');
+        this.events.removeAllListeners('pointerdown');
         this.scene.restart({ level: (this.level += Number(nextLevel)) });
       },
     });
