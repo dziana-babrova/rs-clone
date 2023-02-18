@@ -15,6 +15,7 @@ export default class BallText extends GameObjects.Text {
     this.scene.add.existing(this);
     this.alpha = 0;
     this.setOrigin(0.5, 0.5);
+    this.setDepth(100);
   }
 
   show() {
