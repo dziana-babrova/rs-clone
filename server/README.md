@@ -34,6 +34,10 @@
 
 - [Create Maps](https://github.com/dziana-babrova/rs-clone/server#create-maps)
 
+ **Winners**
+
+- [Get Maps](https://github.com/dziana-babrova/rs-clone/server#get-winners)
+
 
 
 <a name="sign-up"></a>**Sign Up**
@@ -732,7 +736,7 @@ Create maps instance.
 
 * **Method:**
 
-`CREATE`
+`POST`
 
 * **Headers:**
 
@@ -821,6 +825,112 @@ None
 {
 
 "message": "Maps for this user already exists."
+
+}
+
+```
+
+* **Notes:**
+
+None
+
+</details>
+
+<a name="get-winners"></a>**Get Winners**
+
+----
+
+Return winners.
+
+<details>
+
+* **URL**
+
+/api/winners/
+
+* **Method:**
+
+`GET`
+
+* **Headers:**
+
+None
+
+* **URL Params**
+
+None
+
+* **Query Params**
+
+None
+
+* **Data Params**
+
+None
+
+* **Success Response:**
+
+* **Code:** 200 OK <br />
+
+**Content:**
+
+```json
+
+[
+    {
+        "username": "tester",
+        "stars": 15
+    },
+    {
+        "username": "tester",
+        "stars": 15
+    },
+    {
+        "username": "tester",
+        "stars": 15
+    },
+    {
+        "username": "tester",
+        "stars": 15
+    },
+    {
+        "username": "tester",
+        "stars": 10
+    },
+    {
+        "username": "tester",
+        "stars": 10
+    },
+    {
+        "username": "tester",
+        "stars": 10
+    },
+    {
+        "username": "tester",
+        "stars": 10
+    },
+    {
+        "username": "tester",
+        "stars": 10
+    },
+    {
+        "username": "tester",
+        "stars": 10
+    }
+]
+```
+
+* **Error Response:**
+
+* **Code:** 404 # NOT FOUND <br />
+
+**Content:**
+
+```json
+
+{
+
+"message": "Winners is empty."
 
 }
 
