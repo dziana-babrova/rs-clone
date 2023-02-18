@@ -34,7 +34,7 @@ export default class GameScene extends Phaser.Scene implements IComponentManager
   }
 
   init(props: { level?: number }) {
-    const { level = 8 } = props;
+    const { level = 0 } = props;
     this.level = level;
   }
 
@@ -119,7 +119,8 @@ export default class GameScene extends Phaser.Scene implements IComponentManager
 
   private handleGameOver(): void {
     this.isGameOver = true;
-    this.cameras.main.shake(300, 0.015);
+    this.cameras.main.shake(1000, 0.015);
+    SoundService.gameOverSound(this);
     this.time.addEvent({
       delay: 2000,
       callback: () => {

@@ -1,7 +1,8 @@
-import { LevelElements } from 'types/types';
+import { LevelElements, Maps } from 'types/types';
 import config from 'const/TileConfig';
 import { ElementTypeKeys } from 'types/enums';
 import { Scene } from 'phaser';
+import { Levels } from 'const/levels/Levels';
 import Map from 'scenes/game-scene/components/Map';
 
 export default class MapService {
@@ -59,7 +60,7 @@ export default class MapService {
   }
 
   static getDefaultMapsObject(): Maps {
-    return Levels.map((el, index) => ({
+    return Levels.map((_el, index) => ({
       id: index,
       isUnlock: index === 0,
       stars: 0,
