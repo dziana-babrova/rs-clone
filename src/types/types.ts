@@ -1,5 +1,5 @@
 import { Language } from 'const/Language';
-import { ColorsNumber, Colors } from './enums';
+import { ColorsNumber, Colors, FormInputsKeys } from './enums';
 
 export type TextObjectProps = {
   x: number;
@@ -124,6 +124,14 @@ export type ServerValidationError = {
   location: string;
 };
 
+export type FormInput = {
+  name: FormInputsKeys;
+  type: string;
+};
+
+export type ClientValidationError = Pick<ServerValidationError, 'param' | 'msg'>;
+
+export type ValidationErrorType = ServerValidationError | ClientValidationError;
 export type MapDescription = {
   id: number,
   isUnlock: boolean,

@@ -102,6 +102,17 @@ export enum Move {
   Hide,
 }
 
+export enum FormInputsKeys {
+  Email = 'email',
+  Username = 'username',
+  Password = 'password',
+}
+
+export enum FormType {
+  SignIn = 'signIn',
+  SignUp = 'signUp',
+}
+
 export enum SoundsKeys {
   Hit = 'hit-sound',
   Firework = 'fireworks-sound',
