@@ -9,10 +9,10 @@ import Landscape from './components/Landscape';
 import LangBtn from './components/LangBtn';
 import Levels from './components/Levels';
 import LogoGroup from './components/LogoGroup';
-import SignInBtn from './components/SignInBtn';
-import SignInPopup from './components/SignInPopup';
 import StartSceneBtns from './components/StartSceneBtns';
 import Winners from './components/Winners';
+import AuthBtn from './components/AuthBtn';
+import AuthPopup from './components/AuthPopup';
 
 export default class StartScene extends Phaser.Scene {
   lang: Language = Language.Eng;
@@ -25,9 +25,9 @@ export default class StartScene extends Phaser.Scene {
 
   langBtn!: LangBtn;
 
-  signIn!: SignInBtn;
+  authBtn!: AuthBtn;
 
-  signInPopup!: SignInPopup;
+  authPopup!: AuthPopup;
 
   levels!: Levels;
 
@@ -44,26 +44,25 @@ export default class StartScene extends Phaser.Scene {
   }
 
   public preload(): void {
-    // store.subscribe(() => { console.log(store.getState()); });
   }
 
   public async create(): Promise<void> {
     const { user } = store.getState();
 
     if (user.isAuth) {
-      this.signIn = new SignInBtn(this, user.user.username);
+      this.authBtn = new AuthBtn(this, user.user.username);
     } else {
-      this.signIn = new SignInBtn(this);
+      this.authBtn = new AuthBtn(this);
     }
 
     this.logoGroup = new LogoGroup(this);
     this.startSceneBtns = new StartSceneBtns(this);
-    this.signInPopup = new SignInPopup(this);
+    this.authPopup = new AuthPopup(this);
     this.langBtn = new LangBtn(this);
 
     await Promise.all([
       this.logoGroup.show(),
-      this.signIn.show(),
+      this.authBtn.show(),
       this.langBtn.show(),
       this.startSceneBtns.showSingleGameBtn(),
       this.startSceneBtns.showOnlineGameBtn(),
@@ -89,8 +88,8 @@ export default class StartScene extends Phaser.Scene {
     this.startSceneBtns.btnStartSingleGame.on('pointerdown', this.startSingleGame.bind(this));
     this.startSceneBtns.btnStartOnlineGame.on('pointerdown', this.startOnlineGame.bind(this));
 
-    this.signIn.on('pointerdown', this.signInHandler.bind(this));
-    this.signInPopup.onClosePopup = this.onClosePopup.bind(this);
+    this.authBtn.on('pointerdown', this.authBtnHandler.bind(this));
+    this.authPopup.onClosePopup = this.onClosePopup.bind(this);
 
     this.startSceneBtns.btnLevels.background.on('pointerdown', this.showLevels.bind(this));
     this.startSceneBtns.btnLandscape.background.on('pointerdown', this.showLandscape.bind(this));
@@ -126,7 +125,7 @@ export default class StartScene extends Phaser.Scene {
   }
 
   private updateText(): void {
-    this.signIn.updateBtnText();
+    this.authBtn.updateBtnText();
     this.startSceneBtns.updateText(this.lang);
     this.logoGroup.updateText(this.lang);
     this.levels.updateText(this.lang);
@@ -134,21 +133,21 @@ export default class StartScene extends Phaser.Scene {
     this.winners.updateText(this.lang);
   }
 
-  private async signInHandler(): Promise<void> {
+  private async authBtnHandler(): Promise<void> {
     this.input.enabled = false;
     if (store.getState().user.isAuth) {
       await store.dispatch(axiosSignOut());
-      this.signIn.updateBtnText();
+      this.authBtn.updateBtnText();
       this.input.enabled = true;
     } else {
-      this.signInPopup.renderPopup();
-      this.signInPopup.show();
+      this.authPopup.renderPopup();
+      this.authPopup.show();
     }
   }
 
-  private onClosePopup(isUbdateSignInText = false): void {
-    if (isUbdateSignInText) {
-      this.signIn.updateBtnText();
+  private onClosePopup(isUbdateAuthBtnText = false): void {
+    if (isUbdateAuthBtnText) {
+      this.authBtn.updateBtnText();
     }
 
     this.input.enabled = true;
@@ -209,8 +208,8 @@ export default class StartScene extends Phaser.Scene {
   private removeStartScreenObjects(): void {
     this.logoGroup.destroy();
     this.startSceneBtns.destroy();
-    this.signIn.destroy();
-    this.signInPopup.destroy();
+    this.authBtn.destroy();
+    this.authPopup.destroy();
     this.langBtn.destroy();
     this.levels.destroy();
     this.winners.destroy();

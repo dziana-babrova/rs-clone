@@ -35,7 +35,7 @@ const START_SCENE = {
     hoverBgColor: Colors.PinkDark,
     y: 370,
   },
-  btnSignIn: {
+  btnAuth: {
     width: 200,
     textSize: 32,
     textColor: Colors.Text,

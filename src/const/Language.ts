@@ -9,7 +9,7 @@ export const NEXT_LANG = {
 };
 
 const LANGUAGE = {
-  signInForm: {
+  authPopup: {
     signIn: {
       submitBtn: {
         eng: 'Sign In',

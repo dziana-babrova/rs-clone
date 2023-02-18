@@ -4,7 +4,7 @@ import Phaser from 'phaser';
 import store from 'state/store';
 import TextButton from './TextButton';
 
-export default class SignInBtn extends TextButton {
+export default class AuthBtn extends TextButton {
   constructor(scene: Phaser.Scene, username = '') {
     const text = username || LANGUAGE.startScene.signIn[store.getState().app.lang];
 
@@ -12,12 +12,12 @@ export default class SignInBtn extends TextButton {
       scene,
       {
         x: scene.cameras.main.width
-          - START_SCENE.btnSignIn.width / 2
-          - START_SCENE.btnSignIn.y,
-        y: START_SCENE.btnSignIn.y,
+          - START_SCENE.btnAuth.width / 2
+          - START_SCENE.btnAuth.y,
+        y: START_SCENE.btnAuth.y,
       },
       text,
-      START_SCENE.btnSignIn,
+      START_SCENE.btnAuth,
     );
 
     this.setScale(0);

@@ -7,7 +7,7 @@ import { FormInputsKeys, FormType, Move } from 'types/enums';
 import { ClientValidationError, FormInput, ValidationErrorType } from 'types/types';
 import ElementsFactory from 'utils/ElementGenerator';
 
-export default class SignInPopup extends Phaser.GameObjects.DOMElement {
+export default class AuthPopup extends Phaser.GameObjects.DOMElement {
   form!: HTMLFormElement;
 
   usernameLabel!: HTMLLabelElement;
@@ -22,7 +22,7 @@ export default class SignInPopup extends Phaser.GameObjects.DOMElement {
 
   formType: FormType = FormType.SignIn;
 
-  onClosePopup!: (isUbdateSignInText?: boolean) => void;
+  onClosePopup!: (isUbdateAuthBtnText?: boolean) => void;
 
   constructor(scene: Phaser.Scene) {
     super(
@@ -52,7 +52,7 @@ export default class SignInPopup extends Phaser.GameObjects.DOMElement {
 
     this.btnSubmit = ElementsFactory.createButton(
       'btn form__submit',
-      LANGUAGE.signInForm[this.formType].submitBtn[store.getState().app.lang],
+      LANGUAGE.authPopup[this.formType].submitBtn[store.getState().app.lang],
     );
     this.btnSubmit.type = 'submit';
 
@@ -66,13 +66,13 @@ export default class SignInPopup extends Phaser.GameObjects.DOMElement {
     this.message = ElementsFactory.createBaseElementWithText(
       'h',
       'popup_message',
-      LANGUAGE.signInForm[this.formType].message[store.getState().app.lang],
+      LANGUAGE.authPopup[this.formType].message[store.getState().app.lang],
     );
 
     this.btnChangeForm = ElementsFactory.createButton(
       'btn popup__change',
       LANGUAGE
-        .signInForm[this.formType === FormType.SignIn ? FormType.SignUp : FormType.SignUp]
+        .authPopup[this.formType === FormType.SignIn ? FormType.SignUp : FormType.SignUp]
         .submitBtn[store.getState().app.lang],
     );
 
@@ -104,7 +104,7 @@ export default class SignInPopup extends Phaser.GameObjects.DOMElement {
       'form__input',
       item.type,
       item.name,
-      LANGUAGE.signInForm[item.name].placeholder[store.getState().app.lang],
+      LANGUAGE.authPopup[item.name].placeholder[store.getState().app.lang],
     );
 
     if (item.name === FormInputsKeys.Username) this.usernameLabel = label;
@@ -112,7 +112,7 @@ export default class SignInPopup extends Phaser.GameObjects.DOMElement {
     const output = ElementsFactory.createOutputElement(
       'form__hint',
       `${item.name}Hint`,
-      LANGUAGE.signInForm[item.name].hint[store.getState().app.lang],
+      LANGUAGE.authPopup[item.name].hint[store.getState().app.lang],
     );
 
     label.append(input, output);
@@ -124,7 +124,7 @@ export default class SignInPopup extends Phaser.GameObjects.DOMElement {
     this.on('click', this.handleClick);
   }
 
-  private handleClick(e: Event) {
+  private handleClick(e: Event): void {
     e.preventDefault();
     const target = e.target as HTMLElement;
 
@@ -144,7 +144,7 @@ export default class SignInPopup extends Phaser.GameObjects.DOMElement {
     }
   }
 
-  private async handleSubmitForm() {
+  private async handleSubmitForm(): Promise<void> {
     const email = this.form[FormInputsKeys.Email].value;
     const password = this.form[FormInputsKeys.Password].value;
 
@@ -259,25 +259,25 @@ export default class SignInPopup extends Phaser.GameObjects.DOMElement {
 
   private showNotFoundError(): void {
     this.updateHints();
-    this.form[`${FormInputsKeys.Email}Hint`].value = LANGUAGE.signInForm.errors.notFoundError[store.getState().app.lang];
+    this.form[`${FormInputsKeys.Email}Hint`].value = LANGUAGE.authPopup.errors.notFoundError[store.getState().app.lang];
     this.addErrorClass(FormInputsKeys.Email);
   }
 
   private showExistError(): void {
     this.updateHints();
-    this.form[`${FormInputsKeys.Email}Hint`].value = LANGUAGE.signInForm.errors.existError[store.getState().app.lang];
+    this.form[`${FormInputsKeys.Email}Hint`].value = LANGUAGE.authPopup.errors.existError[store.getState().app.lang];
     this.addErrorClass(FormInputsKeys.Email);
   }
 
   private showPasswordError() {
     this.updateHints();
-    this.form[`${FormInputsKeys.Password}Hint`].value = LANGUAGE.signInForm.errors.passwordError[store.getState().app.lang];
+    this.form[`${FormInputsKeys.Password}Hint`].value = LANGUAGE.authPopup.errors.passwordError[store.getState().app.lang];
     this.addErrorClass(FormInputsKeys.Password);
   }
 
   private showErrors<T extends ValidationErrorType>(errors: T[]): void {
     const { lang } = store.getState().app;
-    const errorsText = LANGUAGE.signInForm.errors;
+    const errorsText = LANGUAGE.authPopup.errors;
 
     this.updateHints();
 
@@ -331,7 +331,7 @@ export default class SignInPopup extends Phaser.GameObjects.DOMElement {
       FormInputsKeys.Password,
       FormInputsKeys.Username,
     ].forEach((key) => {
-      this.form[`${key}Hint`].value = LANGUAGE.signInForm.valid[store.getState().app.lang];
+      this.form[`${key}Hint`].value = LANGUAGE.authPopup.valid[store.getState().app.lang];
       this.addValidClass(key);
     });
   }
@@ -347,13 +347,13 @@ export default class SignInPopup extends Phaser.GameObjects.DOMElement {
       this.form[FormInputsKeys.Password].autocomplete = 'new-password';
     }
     this.message.textContent = LANGUAGE
-      .signInForm[this.formType]
+      .authPopup[this.formType]
       .message[store.getState().app.lang];
     this.btnChangeForm.textContent = LANGUAGE
-      .signInForm[this.formType === FormType.SignIn ? FormType.SignUp : FormType.SignIn]
+      .authPopup[this.formType === FormType.SignIn ? FormType.SignUp : FormType.SignIn]
       .submitBtn[store.getState().app.lang];
     this.btnSubmit.textContent = LANGUAGE
-      .signInForm[this.formType]
+      .authPopup[this.formType]
       .submitBtn[store.getState().app.lang];
   }
 
