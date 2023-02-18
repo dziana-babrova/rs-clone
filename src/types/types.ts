@@ -104,9 +104,7 @@ export type LoginData = {
   password: string;
 };
 
-export type Maps = {
-  [key: string]: number;
-};
+export type Maps = MapDescription[];
 
 export type AuthResponse = {
   accessToken: string;
@@ -134,3 +132,8 @@ export type FormInput = {
 export type ClientValidationError = Pick<ServerValidationError, 'param' | 'msg'>;
 
 export type ValidationErrorType = ServerValidationError | ClientValidationError;
+export type MapDescription = {
+  id: number,
+  isUnlock: boolean,
+  stars: number
+};
