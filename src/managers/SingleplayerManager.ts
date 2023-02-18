@@ -1,7 +1,7 @@
 import Ball from 'components/Ball';
 import Character from 'components/Character';
 import Trajectory from 'components/Trajectory';
-import { characters } from 'const/Characters';
+import characters from 'const/Characters';
 import { ballSettings } from 'const/scenes/GameSceneConsts';
 import { Scene } from 'phaser';
 import CalculateService from 'services/CalculateService';
@@ -9,7 +9,7 @@ import { Controls } from 'types/enums';
 import EventNames from 'types/events';
 import { Position } from 'types/types';
 
-export default class HitManager {
+export default class SingleplayerManager {
   scene: Scene;
 
   private ball: Ball;
@@ -37,11 +37,11 @@ export default class HitManager {
     this.trajectory = trajectory;
     this.ball = ball;
     this.cursors = this.scene.input.keyboard.createCursorKeys();
-    this.character = new Character(scene, {x: -1000, y: -1000}, characters[0]);
+    this.character = new Character(scene, { x: -1000, y: -1000 }, characters[0]);
     this.ball.setDepth(100);
     this.character.setDepth(50).setAlpha(0);
     this.scene.events.on(EventNames.BallStop, this.showCharacter, this);
-    console.log(this.scene);
+    this.scene.events.on(EventNames.ChangeTrajectory, this.changeCharacterScale, this);
     this.initEvents();
   }
 
@@ -114,6 +114,7 @@ export default class HitManager {
     if (!this.isHit) {
       this.startPosition = position;
       this.isHit = true;
+      this.character.prepare();
     }
     this.scene.events.emit(
       EventNames.DragStart,
@@ -138,12 +139,13 @@ export default class HitManager {
 
   private hit() {
     if (!this.isHit) return;
+    this.character.hit();
     const { velocityX, velocityY } = CalculateService.calculateVelocityByAngleAndDistance(
       this.angle,
       this.distance,
     );
     this.ball.hitBall(velocityX, velocityY);
-    this.character.hide();
+    if (Math.abs(velocityX) > 0.01 || Math.abs(velocityY) > 0.01) this.character.hide();
     this.scene.events.emit(EventNames.BallHit);
     this.setDefaultState();
   }
@@ -155,9 +157,16 @@ export default class HitManager {
     this.distance = ballSettings.DEFAULT_DISTANCE;
   }
 
-  private showCharacter(){
-    console.log(this.ball.x, this.ball.y);
+  private showCharacter() {
     this.character.setCharacterPosition({ x: this.ball.x, y: this.ball.y });
     this.character.show();
+  }
+
+  private changeCharacterScale(isPositive: boolean) {
+    if (isPositive) {
+      this.character.scaleX = Math.abs(this.character.scaleX);
+    } else {
+      this.character.scaleX = -Math.abs(this.character.scaleX);
+    }
   }
 }

@@ -1,11 +1,10 @@
 import Ball from 'components/Ball';
 import Character from 'components/Character';
-import { characters } from 'const/Characters';
+import characters from 'const/Characters';
 import { playerProps, powerIndicatorProps } from 'const/scenes/MultiplayerSceneConsts';
 import { Scene } from 'phaser';
 import CalculateService from 'services/CalculateService';
 import { Position } from 'types/types';
-import { runInThisContext } from 'vm';
 import MultiplayerTrajectory from './MultiplayerTrajectory';
 import PowerPanel from './PowerPanel';
 

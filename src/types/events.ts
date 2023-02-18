@@ -3,6 +3,7 @@ enum EventNames {
   BallHit = 'ballDragEnd',
   BallMove = 'ballMove',
   BallStop = 'ballStop',
+  ChangeTrajectory = 'changeTrajectory',
   Win = 'win',
 }
 

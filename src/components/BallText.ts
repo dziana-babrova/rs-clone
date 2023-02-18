@@ -25,7 +25,7 @@ export default class BallText extends GameObjects.Text {
       scale: 1.5,
       duration: ballText.duration,
       ease: 'Sine.easeInOut',
-      delay: 100,
+      delay: 300,
       onStart: () => SoundService.readySound(this.scene),
       onComplete: this.stop.bind(this),
     });

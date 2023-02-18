@@ -14,18 +14,18 @@ export default class Character extends GameObjects.Sprite {
     this.on('animationcomplete', this.setDefaultPosition.bind(this));
   }
 
-  setCharacterPosition(position: Position){
+  setCharacterPosition(position: Position) {
     this.x = position.x;
     this.y = position.y - this.height / 4 - this.character.correction;
   }
 
   setDefaultPosition() {
-    if (this.anims.currentAnim.key == this.character.animations.hit.name) {
+    if (this.anims.currentAnim.key === this.character.animations.hit.name) {
       this.anims.play(this.character.animations.back.name);
     }
   }
 
-  createAnimations() {
+  private createAnimations() {
     this.anims.create({
       key: this.character.animations.prepare.name,
       frames: this.anims.generateFrameNames(this.character.texture, {
@@ -64,6 +64,7 @@ export default class Character extends GameObjects.Sprite {
   prepare() {
     this.anims.play(this.character.animations.prepare.name);
   }
+
   hit() {
     this.anims.play(this.character.animations.hit.name);
   }

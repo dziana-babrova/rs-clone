@@ -1,6 +1,6 @@
-import { CharacterSettings } from "types/types";
+import { CharacterSettings } from 'types/types';
 
-export const characters: CharacterSettings[] = [
+const characters: CharacterSettings[] = [
   {
     texture: 'player1',
     basicFrame: 'player1/prepare/1.png',
@@ -72,3 +72,5 @@ export const characters: CharacterSettings[] = [
     },
   },
 ];
+
+export default characters;
