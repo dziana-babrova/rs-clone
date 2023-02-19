@@ -133,9 +133,9 @@ export type ClientValidationError = Pick<ServerValidationError, 'param' | 'msg'>
 
 export type ValidationErrorType = ServerValidationError | ClientValidationError;
 export type MapDescription = {
-  id: number,
-  isUnlock: boolean,
-  stars: number
+  id: number;
+  isUnlock: boolean;
+  stars: number;
 };
 
 export type CharacterSettings = {
@@ -161,3 +161,10 @@ export type AnimationDescription = {
   zeroPad: number;
   frameRate: number;
 };
+
+export type Winner = {
+  username: string;
+  stars: number;
+};
+
+export type WinnersResponse = Winner[];

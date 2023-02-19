@@ -26,7 +26,8 @@ class MapsService {
     if (potentialMaps) {
       throw ApiError.BadRequest('Maps for this user already exists.');
     }
-    const mapsObj = new Maps({ user: userId, maps });
+    const stars = maps.reduce((acc, el) => acc + el.stars, 0);
+    const mapsObj = new Maps({ user: userId, maps, stars });
     await mapsObj.save();
   }
 }

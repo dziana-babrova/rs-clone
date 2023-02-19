@@ -6,6 +6,7 @@ import * as dotenv from 'dotenv';
 import errorMiddleware from './middleware/error-middleware';
 import authRouter from './routers/AuthRouter';
 import mapsRouter from './routers/MapsRouter';
+import winnersRouter from './routers/WinnersRouter';
 
 dotenv.config();
 
@@ -21,6 +22,7 @@ app.use(cors({
 }));
 app.use('/api/auth', authRouter);
 app.use('/api/maps', mapsRouter);
+app.use('/api/winners', winnersRouter);
 app.use(errorMiddleware);
 
 async function start() {
