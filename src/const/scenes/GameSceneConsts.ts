@@ -63,6 +63,21 @@ export const GAME_SCENE = {
       radius: 70,
     },
   },
+
+  background: {
+    sun: {
+      moveX: 0.3,
+      moveY: 0.1,
+      initialY: 200,
+      initialX: 0,
+    },
+
+    cloud: {
+      MinMoveX: 0.4,
+      MaxMoveX: 0.5,
+      moveY: 0,
+    },
+  },
 };
 
 export const GAME_SCENE_ANIMATION = {

@@ -1,5 +1,7 @@
 import { Language } from 'const/Language';
-import { ColorsNumber, Colors, FormInputsKeys } from './enums';
+import {
+  ColorsNumber, Colors, FormInputsKeys, BackgroundKeys,
+} from './enums';
 
 export type TextObjectProps = {
   x: number;
@@ -91,6 +93,7 @@ export interface IAppState {
   lang: Language;
   music: boolean;
   sound: boolean;
+  background: BackgroundKeys;
 }
 
 export type User = {

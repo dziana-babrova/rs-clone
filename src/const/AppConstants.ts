@@ -4,6 +4,7 @@ export const LocalStorageKeys = {
   lang: `${key}Lang`,
   music: `${key}Music`,
   sound: `${key}Sound`,
+  background: `${key}Background`,
   levels: `${key}Levels`,
   accessToken: `${key}-access-token`,
 };

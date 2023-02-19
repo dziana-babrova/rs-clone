@@ -20,12 +20,7 @@ const config: Types.Core.GameConfig = {
   width: gameConfig.screenWidth,
   height: gameConfig.screenHeight,
   backgroundColor: gameConfig.backgroundColor,
-  scene: [
-    PreloadScene,
-    StartScene,
-    GameScene,
-    MultiPlayerScene,
-  ],
+  scene: [PreloadScene, StartScene, GameScene, MultiPlayerScene],
   scale: {
     mode: Phaser.Scale.FIT,
   },
@@ -38,12 +33,11 @@ const config: Types.Core.GameConfig = {
     matter: {
       debug: false,
       gravity: true,
+      'plugins.wrap': true,
     },
   },
   plugins: {
-    scene: [
-      pluginConfig,
-    ],
+    scene: [pluginConfig],
   },
 };
 

@@ -1,0 +1,183 @@
+{
+  "frames": {
+    "mountains.png": {
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 1277,
+        "h": 641
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 77,
+        "y": 127,
+        "w": 1277,
+        "h": 641
+      },
+      "sourceSize": {
+        "w": 1366,
+        "h": 768
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "bgTrees.png": {
+      "frame": {
+        "x": 1277,
+        "y": 0,
+        "w": 770,
+        "h": 714
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 424,
+        "y": 54,
+        "w": 770,
+        "h": 714
+      },
+      "sourceSize": {
+        "w": 1366,
+        "h": 768
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "stars.png": {
+      "frame": {
+        "x": 0,
+        "y": 641,
+        "w": 1197,
+        "h": 480
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 91,
+        "y": 58,
+        "w": 1197,
+        "h": 480
+      },
+      "sourceSize": {
+        "w": 1366,
+        "h": 768
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "cloud1.png": {
+      "frame": {
+        "x": 1197,
+        "y": 714,
+        "w": 211,
+        "h": 113
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 211,
+        "h": 113
+      },
+      "sourceSize": {
+        "w": 211,
+        "h": 113
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "cloud2.png": {
+      "frame": {
+        "x": 1408,
+        "y": 714,
+        "w": 166,
+        "h": 95
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 166,
+        "h": 95
+      },
+      "sourceSize": {
+        "w": 166,
+        "h": 95
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "sun.png": {
+      "frame": {
+        "x": 1574,
+        "y": 714,
+        "w": 128,
+        "h": 128
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      },
+      "sourceSize": {
+        "w": 128,
+        "h": 128
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "moon.png": {
+      "frame": {
+        "x": 1408,
+        "y": 809,
+        "w": 120,
+        "h": 120
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 120,
+        "h": 120
+      },
+      "sourceSize": {
+        "w": 120,
+        "h": 120
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    }
+  },
+  "meta": {
+    "app": "http://free-tex-packer.com",
+    "version": "0.6.7",
+    "image": "background.png",
+    "format": "RGBA8888",
+    "size": {
+      "w": 2047,
+      "h": 1121
+    },
+    "scale": 1
+  }
+}

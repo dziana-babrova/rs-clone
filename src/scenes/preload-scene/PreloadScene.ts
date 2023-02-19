@@ -1,7 +1,7 @@
 import platfrom from 'assets/platforms.png';
 import texture from 'assets/platforms.json';
 import {
-  SceneKeys, TextureKeys, AnimationKeys, SoundsKeys,
+  SceneKeys, TextureKeys, AnimationKeys, SoundsKeys, BackgroundKeys,
 } from 'types/enums';
 import START_SCENE from 'const/scenes/StartSceneConst';
 import PRELOAD_SCENE from 'const/scenes/PreloadSceneConsts';
@@ -9,7 +9,7 @@ import Phaser from 'phaser';
 import LocalStorageService from 'services/LocalStorageService';
 import { LocalStorageKeys } from 'const/AppConstants';
 import {
-  axiosGetMaps, setLang, setMusic, setSound,
+  axiosGetMaps, setBackground, setLang, setMusic, setSound,
 } from 'state/features/AppSlice';
 import store from 'state/store';
 import { Language } from 'const/Language';
@@ -62,6 +62,11 @@ export default class PreloadScene extends Phaser.Scene {
 
     this.load.atlas(TextureKeys.Platforms, platfrom, texture);
     this.load.atlas(TextureKeys.Flag, '../assets/flag.png', '../assets/flag.json');
+    this.load.atlas(
+      TextureKeys.Background,
+      '../assets/background.png',
+      '../assets/background.json',
+    );
 
     this.textures.generate(TextureKeys.Fireworks, PRELOAD_SCENE.fireworksTexture);
 
@@ -129,8 +134,12 @@ export default class PreloadScene extends Phaser.Scene {
     const lsLang: Language | null = LocalStorageService.getItem(LocalStorageKeys.lang);
     const lsMusic: boolean | null = LocalStorageService.getItem(LocalStorageKeys.music);
     const lsSound: boolean | null = LocalStorageService.getItem(LocalStorageKeys.sound);
+    const lsBackground: BackgroundKeys | null = LocalStorageService.getItem(
+      LocalStorageKeys.background,
+    );
     if (lsLang !== null) store.dispatch(setLang(lsLang));
     if (lsMusic !== null) store.dispatch(setMusic(lsMusic));
     if (lsSound !== null) store.dispatch(setSound(lsSound));
+    if (lsBackground !== null) store.dispatch(setBackground(lsBackground));
   }
 }
