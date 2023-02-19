@@ -3,6 +3,7 @@ import { Scene } from 'phaser';
 import SoundService from 'services/SoundService';
 import EventNames from 'types/events';
 import { IComponent, Position } from 'types/types';
+import EventNames from 'types/events';
 import BallText from './BallText';
 import Pulse from './Pulse';
 
@@ -67,10 +68,21 @@ export default class Ball extends Phaser.Physics.Matter.Sprite implements ICompo
     SoundService.hitSound(this.scene);
   }
 
+  public checkBallPosition(isGameOver: boolean): void {
+    if (
+      !isGameOver
+      && (this.x < 0
+        || this.x > this.scene.scale.width
+        || this.y > this.scene.scale.height)
+    ) {
+      this.scene.events.emit(EventNames.GameOver);
+    }
+  }
+
   public deactivate(): void {
     this.pulse.destroy();
     this.text.destroy();
     this.isStopped = false;
-    this.update = () => { };
+    this.update = () => {};
   }
 }

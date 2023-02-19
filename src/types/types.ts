@@ -57,7 +57,20 @@ export type IconButtonParams = {
   hoverBgColor: ColorsNumber;
 };
 
-export type Level = string[];
+export type Level = {
+  map: string[],
+  saw?: Saw,
+};
+
+export type Saw = {
+  type: SawType;
+  directionX: number;
+  directionY: number;
+  angle: number;
+  distance: number;
+};
+
+export type SawType = 'rotate' | 'move' | '';
 
 export type TileProps = {
   type: string;

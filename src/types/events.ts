@@ -5,6 +5,7 @@ enum EventNames {
   BallStop = 'ballStop',
   ChangeTrajectory = 'changeTrajectory',
   Win = 'win',
+  GameOver = 'game-over',
 }
 
 export default EventNames;
