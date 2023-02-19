@@ -33,7 +33,6 @@ const config: Types.Core.GameConfig = {
     matter: {
       debug: true,
       gravity: true,
-      'plugins.wrap': true,
     },
   },
   plugins: {
