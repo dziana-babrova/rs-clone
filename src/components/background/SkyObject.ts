@@ -1,12 +1,8 @@
 import { Scene } from 'phaser';
 
-export default class SkyObject extends Phaser.Physics.Matter.Sprite {
+export default class SkyObject extends Phaser.GameObjects.Sprite {
   constructor(scene: Scene, x: number, minY: number, texture: string, frame: string, maxY: number) {
-    super(scene.matter.world, x, minY, texture, frame, {
-      isSensor: true,
-      ignoreGravity: true,
-      isStatic: true,
-    });
+    super(scene, x, minY, texture, frame);
     this.setX(this.x - this.width / 2);
     const randomY = this.getRandomY(minY, maxY);
     this.setY(randomY);

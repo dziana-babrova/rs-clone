@@ -22,6 +22,7 @@ export default class PopupCanvasGroup extends Phaser.GameObjects.Container {
     this.createCanvas();
     this.createLabel();
 
+    this.setDepth(200);
     this.setY(GAME_SCENE.nextLevelPopup.y);
     this.scene.add.existing(this);
   }

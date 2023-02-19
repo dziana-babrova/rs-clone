@@ -38,7 +38,7 @@ export default class GameScene extends Phaser.Scene implements IComponentManager
   }
 
   init(props: { level?: number }) {
-    const { level = 0 } = props;
+    const { level = 15 } = props;
     this.level = level;
     this.background = new Background(this, store.getState().app.background);
   }
