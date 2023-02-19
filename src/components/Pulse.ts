@@ -11,6 +11,7 @@ export default class Pulse extends GameObjects.Arc {
     this.scene = scene;
     scene.add.existing(this);
     this.setStrokeStyle(3, pulseSettings.color);
+    this.setDepth(100);
   }
 
   pulse() {

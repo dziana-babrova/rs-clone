@@ -26,6 +26,7 @@ export default class MultiplayerTrajectory extends GameObjects.Container {
     if (isReverse) {
       this.scaleX = -1;
     }
+    this.setDepth(90);
   }
 
   animate() {
