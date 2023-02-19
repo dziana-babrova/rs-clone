@@ -15,6 +15,7 @@ export default class BallText extends GameObjects.Text {
     this.scene.add.existing(this);
     this.alpha = 0;
     this.setOrigin(0.5, 0.5);
+    this.setDepth(100);
   }
 
   show() {
@@ -25,7 +26,7 @@ export default class BallText extends GameObjects.Text {
       scale: 1.5,
       duration: ballText.duration,
       ease: 'Sine.easeInOut',
-      delay: 100,
+      delay: 300,
       onStart: () => SoundService.readySound(this.scene),
       onComplete: this.stop.bind(this),
     });

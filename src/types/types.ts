@@ -138,6 +138,30 @@ export type MapDescription = {
   stars: number;
 };
 
+export type CharacterSettings = {
+  texture: string;
+  basicFrame: string;
+  scale: number;
+  correction: number;
+  animations: CharacterAnimation;
+};
+
+export type CharacterAnimation = {
+  prepare: AnimationDescription;
+  hit: AnimationDescription;
+  back: AnimationDescription;
+};
+
+export type AnimationDescription = {
+  name: string;
+  prefix: string;
+  postfix: string;
+  start: number;
+  end: number;
+  zeroPad: number;
+  frameRate: number;
+};
+
 export type Winner = {
   username: string;
   stars: number;

@@ -2,7 +2,7 @@ import PhaserMatterCollisionPlugin from 'phaser-matter-collision-plugin';
 import { SceneKeys } from 'types/enums';
 import Phaser from 'phaser';
 import EventNames from 'types/events';
-import HitManager from 'managers/HitManager';
+import SingleplayerManager from 'managers/SingleplayerManager';
 import { IComponent, IComponentManager } from 'types/types';
 import SoundService from 'services/SoundService';
 import NextLevelButton from './components/next-level-popup/NextLevelButton';
@@ -12,7 +12,7 @@ import Fireworks from './components/Fireworks';
 export default class GameScene extends Phaser.Scene implements IComponentManager {
   components: IComponent[] = [];
 
-  public hitHandler!: HitManager;
+  public manager!: SingleplayerManager;
 
   elementsManager!: ElementsManager;
 
@@ -40,7 +40,7 @@ export default class GameScene extends Phaser.Scene implements IComponentManager
     await this.elementsManager.create();
 
     this.addComponents(this.elementsManager.trajectory, this.elementsManager.ball);
-    this.hitHandler = new HitManager(
+    this.manager = new SingleplayerManager(
       this,
       this.elementsManager.ball,
       this.elementsManager.trajectory,
@@ -100,7 +100,7 @@ export default class GameScene extends Phaser.Scene implements IComponentManager
   update() {
     try {
       this.components.forEach((el) => el.update());
-      this.hitHandler.update();
+      this.manager.update();
     } catch (e) {
       console.log();
     }
@@ -117,6 +117,7 @@ export default class GameScene extends Phaser.Scene implements IComponentManager
     this.time.addEvent({
       delay: 2000,
       callback: () => {
+        this.events.removeListener(EventNames.BallStop);
         this.scene.restart({ level: (this.level += Number(nextLevel)) });
       },
     });

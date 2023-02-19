@@ -1,6 +1,7 @@
 import { ballSettings } from 'const/scenes/GameSceneConsts';
 import { Scene } from 'phaser';
 import SoundService from 'services/SoundService';
+import EventNames from 'types/events';
 import { IComponent, Position } from 'types/types';
 import BallText from './BallText';
 import Pulse from './Pulse';
@@ -17,7 +18,6 @@ export default class Ball extends Phaser.Physics.Matter.Sprite implements ICompo
   constructor(scene: Scene, position: Position) {
     super(scene.matter.world, position.x, position.y, 'ball');
     this.scene = scene;
-
     this.setBallBody();
     this.scene.add.existing(this);
     this.pulse = new Pulse(scene);
@@ -42,6 +42,9 @@ export default class Ball extends Phaser.Physics.Matter.Sprite implements ICompo
     if (this.isStopped !== isStopped) {
       this.isStopped = isStopped;
       this.updateCircle();
+      setTimeout(() => {
+        if (this.isStopped) this.scene.events.emit(EventNames.BallStop);
+      }, 200);
     }
   }
 
