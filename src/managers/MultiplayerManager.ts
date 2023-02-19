@@ -71,7 +71,7 @@ export default class MultiplayerManager extends Phaser.GameObjects.Container {
   }
 
   async createTemplate(level: Level) {
-    const mapElements = this.mapService.createLevelConfig(level);
+    const mapElements = this.mapService.createLevelConfig(level.map);
     const template = this.mapService.createMap(this.scene, mapElements);
     const flagConfig = this.mapService.getFilteredElements(mapElements, ElementTypeKeys.Flag);
     const cupConfig = this.mapService.getFilteredElements(mapElements, ElementTypeKeys.Cup);

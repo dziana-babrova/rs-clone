@@ -59,6 +59,8 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.image(TextureKeys.Next, '../assets/next.svg');
     this.load.image(TextureKeys.Restart, '../assets/restart.svg');
     this.load.image(TextureKeys.Ball, '../assets/Golf-Ball-big.png');
+    this.load.image(TextureKeys.MiniBall, '../assets/mini-ball.png');
+    this.load.image(TextureKeys.Saw, '../assets/saw.png');
 
     this.load.atlas(TextureKeys.Platforms, platfrom, texture);
     this.load.atlas(TextureKeys.Flag, '../assets/flag.png', '../assets/flag.json');
@@ -87,13 +89,15 @@ export default class PreloadScene extends Phaser.Scene {
         this.load.image(btn, `../assets/${btn}.svg`);
       }
     });
+
+    this.load.atlas('player1', 'assets/players/player1/player1.png', 'assets/players/player1/player1.json');
+    this.load.atlas('player2', 'assets/players/player2/player2.png', 'assets/players/player2/player2.json');
   }
 
   public create(): void {
     this.anims.create({
       key: AnimationKeys.Wave,
       frames: this.anims.generateFrameNames(TextureKeys.Flag, {
-        prefix: '',
         start: 1,
         end: 16,
         suffix: '.png',

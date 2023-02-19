@@ -17,7 +17,8 @@ export default class Fireworks {
       ...GAME_SCENE.fireworks,
       rotate: { onEmit: this.updateParticleRotation, onUpdate: this.updateParticleRotation },
       scaleX: {
-        onUpdate: (p: GameObjects.Particles.Particle) => Phaser.Math.Easing.Cubic.Out(1 - p.lifeT),
+        onUpdate: (particle: GameObjects.Particles.Particle) =>
+          Phaser.Math.Easing.Cubic.Out(1 - particle.lifeT),
       },
     };
 
@@ -45,7 +46,7 @@ export default class Fireworks {
     emitter.setPosition(x, y).setTint(Phaser.Utils.Array.GetRandom(this.tints));
   }
 
-  private updateParticleRotation(p: Phaser.GameObjects.Particles.Particle): number {
-    return Phaser.Math.RadToDeg(Math.atan2(p.velocityY, p.velocityX));
+  private updateParticleRotation(particle: Phaser.GameObjects.Particles.Particle): number {
+    return Phaser.Math.RadToDeg(Math.atan2(particle.velocityY, particle.velocityX));
   }
 }

@@ -81,6 +81,10 @@ const config: TilesConfig = {
     type: 'star',
     texture: 'star.png',
   },
+  '#': {
+    type: 'saw',
+    texture: 'saw',
+  },
 };
 
 export default config;

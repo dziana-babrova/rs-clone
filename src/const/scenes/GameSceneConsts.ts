@@ -10,6 +10,15 @@ export const GAME_SCENE = {
     speed: { min: 128, max: 256 },
   },
 
+  destroyedBall: {
+    alpha: { start: 1, end: 0, ease: 'Cubic.easeIn' },
+    blendMode: 'ADD',
+    gravityY: 500,
+    lifespan: 3000,
+    quantity: 200,
+    speed: { min: 300, max: 350 },
+  },
+
   nextLevelPopup: {
     y: -3000,
 
