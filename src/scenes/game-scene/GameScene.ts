@@ -38,7 +38,7 @@ export default class GameScene extends Phaser.Scene implements IComponentManager
   }
 
   init(props: { level?: number }) {
-    const { level = 0 } = props;
+    const { level = 15 } = props;
     this.level = level;
     this.background = new Background(this, store.getState().app.background);
   }
@@ -82,6 +82,7 @@ export default class GameScene extends Phaser.Scene implements IComponentManager
     objectA: Phaser.GameObjects.GameObject,
     objectB: Phaser.GameObjects.GameObject[],
   ) {
+    console.log(objectA, objectB);
     this.matterCollision.addOnCollideStart({
       objectA,
       objectB,

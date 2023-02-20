@@ -47,6 +47,7 @@ export default class Player {
     this.currentBall.setDepth(100);
     this.trajectory = new MultiplayerTrajectory(scene, position, isReverse);
     this.powerPanel = new PowerPanel(this.scene, position, isReverse);
+    this.powerPanel.setDepth(105);
     this.isReverse = isReverse;
     this.id = id;
   }

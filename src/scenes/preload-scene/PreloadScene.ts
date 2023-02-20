@@ -69,6 +69,9 @@ export default class PreloadScene extends Phaser.Scene {
       '../assets/background.png',
       '../assets/background.json',
     );
+    this.load.atlas(TextureKeys.Water, '../assets/water.png', '../assets/water.json');
+
+    this.load.json('star', '../assets/star.json');
 
     this.textures.generate(TextureKeys.Fireworks, PRELOAD_SCENE.fireworksTexture);
 

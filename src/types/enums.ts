@@ -13,6 +13,7 @@ export enum ElementTypeKeys {
   Flag = 'flag',
   Cup = 'cup',
   Saw = 'saw',
+  Water = 'water',
 }
 
 export enum SceneKeys {
@@ -38,6 +39,7 @@ export enum TextureKeys {
   Saw = 'saw',
   MiniBall = 'mini-ball',
   Background = 'background',
+  Water = 'water',
 }
 
 export enum Colors {
