@@ -20,6 +20,7 @@ export default class StarTemplateGroup extends Phaser.GameObjects.Group {
       color,
       alpha,
     );
+    star.setDepth(202);
     const star2 = new Phaser.GameObjects.Star(
       this.scene,
       this.scene.scale.width / 2,
@@ -30,6 +31,7 @@ export default class StarTemplateGroup extends Phaser.GameObjects.Group {
       color,
       alpha,
     );
+    star2.setDepth(202);
     const star3 = new Phaser.GameObjects.Star(
       this.scene,
       this.scene.scale.width / 2 + GAME_SCENE.nextLevelPopup.star.paddingY,
@@ -41,6 +43,7 @@ export default class StarTemplateGroup extends Phaser.GameObjects.Group {
       color,
       alpha,
     );
+    star3.setDepth(202);
     this.add(star, true);
     this.add(star2, true);
     this.add(star3, true);

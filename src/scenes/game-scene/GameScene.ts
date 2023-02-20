@@ -1,5 +1,6 @@
 import PhaserMatterCollisionPlugin from 'phaser-matter-collision-plugin';
 import { SceneKeys } from 'types/enums';
+import store from 'state/store';
 import Phaser from 'phaser';
 import EventNames from 'types/events';
 import SingleplayerManager from 'managers/SingleplayerManager';
@@ -9,6 +10,7 @@ import NextLevelButton from './components/next-level-popup/NextLevelButton';
 import ElementsManager from './components/ElementsManager';
 import Fireworks from './components/Fireworks';
 import DestroyedBall from './components/DestroyedBall';
+import Background from '../../components/background/Background';
 
 export default class GameScene extends Phaser.Scene implements IComponentManager {
   components: IComponent[] = [];
@@ -16,6 +18,8 @@ export default class GameScene extends Phaser.Scene implements IComponentManager
   public manager!: SingleplayerManager;
 
   elementsManager!: ElementsManager;
+
+  background!: Background;
 
   level!: number;
 
@@ -36,6 +40,7 @@ export default class GameScene extends Phaser.Scene implements IComponentManager
   init(props: { level?: number }) {
     const { level = 0 } = props;
     this.level = level;
+    this.background = new Background(this, store.getState().app.background);
   }
 
   async create() {
@@ -131,6 +136,7 @@ export default class GameScene extends Phaser.Scene implements IComponentManager
 
   update() {
     try {
+      this.background.update();
       this.components.forEach((el) => el.update());
       this.manager.update();
       this.elementsManager.ball.checkBallPosition(this.isGameOver);

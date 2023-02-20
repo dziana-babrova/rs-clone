@@ -37,6 +37,7 @@ export enum TextureKeys {
   Next = 'next',
   Saw = 'saw',
   MiniBall = 'mini-ball',
+  Background = 'background',
 }
 
 export enum Colors {
@@ -64,6 +65,10 @@ export enum Colors {
   Star = '#e7e702',
   StarPulse = '#693849',
   Stroke = '#000000',
+  BackgroundDay = '#46B4E1',
+  BackgroundNight = '#18445C',
+  BackgroundMountains = '#5691B2',
+  BackgroundPalms = '#F0D99C',
 }
 
 export enum ColorsNumber {
@@ -124,4 +129,21 @@ export enum SoundsKeys {
   Star = 'star-sound',
   ResultStar = 'result-star-sound',
   GameOver = 'game-over-sound',
+}
+
+export enum BackgroundKeys {
+  Daytime = 'daytime',
+  Night = 'night',
+  Mountains = 'mountains',
+  Palms = 'palms',
+}
+
+export enum BackgroundFrames {
+  Stars = 'stars.png',
+  Mountains = 'mountains.png',
+  Palms = 'bgTrees.png',
+  Sun = 'sun.png',
+  Moon = 'moon.png',
+  BigCloud = 'cloud1.png',
+  SmallCloud = 'cloud2.png',
 }

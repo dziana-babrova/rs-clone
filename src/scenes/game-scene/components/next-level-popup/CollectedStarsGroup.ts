@@ -18,6 +18,7 @@ export default class CollectedStarsGroup extends StarTemplateGroup {
     super(scene, color, alpha);
     this.tweenAnimationBuilder = new TweenAnimationBuilder();
     this.starsY = [];
+    this.setDepth(202);
 
     this.getChildren().forEach((star) => {
       if (star instanceof Phaser.GameObjects.Star) {

@@ -1,4 +1,6 @@
 import { SceneKeys } from 'types/enums';
+import store from 'state/store';
+import Background from 'components/background/Background';
 import PhaserMatterCollisionPlugin from 'phaser-matter-collision-plugin';
 import MultiplayerManager from '../../managers/MultiplayerManager';
 
@@ -7,8 +9,14 @@ export default class MultiPlayerScene extends Phaser.Scene {
 
   matterCollision!: PhaserMatterCollisionPlugin;
 
+  background!: Background;
+
   constructor() {
     super(SceneKeys.MultiPlayer);
+  }
+
+  init() {
+    this.background = new Background(this, store.getState().app.background);
   }
 
   async create() {
@@ -19,5 +27,6 @@ export default class MultiPlayerScene extends Phaser.Scene {
   }
 
   update() {
+    this.background.update();
   }
 }

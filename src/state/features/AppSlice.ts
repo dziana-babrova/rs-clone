@@ -5,6 +5,7 @@ import { Language } from 'const/Language';
 import LocalStorageService from 'services/LocalStorageService';
 import MapsApiService from 'services/MapsApiService';
 import MapService from 'services/MapService';
+import { BackgroundKeys } from 'types/enums';
 import { AxiosErrorResponse, IAppState, Maps } from 'types/types';
 
 const initialState: IAppState = {
@@ -12,6 +13,7 @@ const initialState: IAppState = {
   lang: Language.Eng,
   music: true,
   sound: true,
+  background: BackgroundKeys.Daytime,
 };
 
 export const axiosGetMaps = createAsyncThunk<
@@ -69,6 +71,9 @@ const appSlice = createSlice({
     setSound: (state, action: PayloadAction<boolean>) => {
       state.sound = action.payload;
     },
+    setBackground: (state, action: PayloadAction<BackgroundKeys>) => {
+      state.background = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -91,7 +96,7 @@ const appSlice = createSlice({
 /* eslint-enable no-param-reassign */
 
 export const {
-  setMaps, setLang, setMusic, setSound,
+  setMaps, setLang, setMusic, setSound, setBackground,
 } = appSlice.actions;
 
 export default appSlice.reducer;
