@@ -17,8 +17,9 @@ export default class Fireworks {
       ...GAME_SCENE.fireworks,
       rotate: { onEmit: this.updateParticleRotation, onUpdate: this.updateParticleRotation },
       scaleX: {
-        onUpdate: (particle: GameObjects.Particles.Particle) =>
-          Phaser.Math.Easing.Cubic.Out(1 - particle.lifeT),
+        onUpdate: (
+          particle: GameObjects.Particles.Particle,
+        ) => Phaser.Math.Easing.Cubic.Out(1 - particle.lifeT),
       },
     };
 

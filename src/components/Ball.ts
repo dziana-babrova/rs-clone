@@ -3,7 +3,6 @@ import { Scene } from 'phaser';
 import SoundService from 'services/SoundService';
 import EventNames from 'types/events';
 import { IComponent, Position } from 'types/types';
-import EventNames from 'types/events';
 import BallText from './BallText';
 import Pulse from './Pulse';
 

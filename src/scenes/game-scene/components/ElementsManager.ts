@@ -10,6 +10,7 @@ import Map from './Map';
 import Flag from './Flag';
 import Cup from './golf-course/Cup';
 import SawGroup from './SawGroup';
+import HoleBar from './golf-course/HoleBar';
 
 export default class ElementsManager extends Phaser.GameObjects.Container {
   mapService: MapService;
@@ -66,5 +67,7 @@ export default class ElementsManager extends Phaser.GameObjects.Container {
     await this.flag.animate();
     this.cup = new Cup(this.scene, cupConfig);
     this.saws = new SawGroup(this.scene, sawConfig, Levels[this.level]);
+    const bar = new HoleBar(this.scene, flagConfig);
+    bar.setDepth(300);
   }
 }

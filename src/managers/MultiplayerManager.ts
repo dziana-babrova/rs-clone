@@ -9,6 +9,7 @@ import { animations, firstPlayerPosition, secondPlayerPosition } from 'const/sce
 import Cup from 'scenes/game-scene/components/golf-course/Cup';
 import Flag from 'scenes/game-scene/components/Flag';
 import PhaserMatterCollisionPlugin from 'phaser-matter-collision-plugin';
+import HoleBar from 'scenes/game-scene/components/golf-course/HoleBar';
 import MapService from 'services/MapService';
 import ScorePanel from '../scenes/multiplayer-scene/components/ScorePanel';
 import Player from '../scenes/multiplayer-scene/components/Player';
@@ -25,6 +26,8 @@ export default class MultiplayerManager extends Phaser.GameObjects.Container {
   cup!: Cup | null;
 
   flag!: Flag;
+
+  bar!: HoleBar;
 
   animationBuilder: TweenAnimationBuilder;
 
@@ -56,11 +59,16 @@ export default class MultiplayerManager extends Phaser.GameObjects.Container {
 
   async switchTarget(target = 0) {
     if (this.target) {
+      this.bar.destroy();
       await this.hideTarget();
       this.target.each((el: Phaser.Physics.Matter.Sprite) => el.destroy());
     }
     this.target = await this.createTemplate(targets[target]);
     await this.showTarget();
+    this.bar = new HoleBar(this.scene, {
+      x: this.flag.x - 20, y: this.flag.y + 45, texture: 'hole-grass.png', type: ElementTypeKeys.Flag,
+    });
+    this.bar.setDepth(300);
     if (target > 0) {
       this.player1.currentBall?.setDepth(100);
       this.player2.currentBall?.setDepth(100);
