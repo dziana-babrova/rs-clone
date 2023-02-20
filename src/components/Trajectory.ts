@@ -25,6 +25,7 @@ export default class Trajectory extends GameObjects.Group implements IComponent 
     for (let i = 0; i < NUM_OF_POINTS; i += 1) {
       const circle = scene.add.circle(-100, -100, RADIUS, COLOR);
       circle.setAlpha((NUM_OF_POINTS - (i - 2)) / NUM_OF_POINTS);
+      circle.setDepth(110);
       this.add(circle);
     }
     // Add event listeners

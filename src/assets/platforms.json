@@ -1,9 +1,33 @@
 {
   "frames": {
-    "hole-black-right.png": {
+    "hole-grass.png": {
       "frame": {
         "x": 2,
         "y": 2,
+        "w": 50,
+        "h": 10
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 50,
+        "h": 10
+      },
+      "sourceSize": {
+        "w": 50,
+        "h": 10
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "bottom.png": {
+      "frame": {
+        "x": 2,
+        "y": 16,
         "w": 41,
         "h": 41
       },
@@ -24,9 +48,9 @@
         "y": 0.5
       }
     },
-    "bottom.png": {
+    "connector-left-bootom.png": {
       "frame": {
-        "x": 47,
+        "x": 56,
         "y": 2,
         "w": 41,
         "h": 41
@@ -51,7 +75,7 @@
     "connector-right-bottom.png": {
       "frame": {
         "x": 2,
-        "y": 47,
+        "y": 61,
         "w": 41,
         "h": 41
       },
@@ -73,6 +97,30 @@
       }
     },
     "ground.png": {
+      "frame": {
+        "x": 101,
+        "y": 2,
+        "w": 41,
+        "h": 41
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 41,
+        "h": 41
+      },
+      "sourceSize": {
+        "w": 41,
+        "h": 41
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "hole-black-bottom.png": {
       "frame": {
         "x": 47,
         "y": 47,
@@ -96,34 +144,10 @@
         "y": 0.5
       }
     },
-    "hole-black-bottom.png": {
-      "frame": {
-        "x": 92,
-        "y": 2,
-        "w": 41,
-        "h": 41
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 41,
-        "h": 41
-      },
-      "sourceSize": {
-        "w": 41,
-        "h": 41
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
     "hole-black-left-bottom.png": {
       "frame": {
-        "x": 92,
-        "y": 47,
+        "x": 2,
+        "y": 106,
         "w": 41,
         "h": 41
       },
@@ -146,8 +170,8 @@
     },
     "hole-black-left.png": {
       "frame": {
-        "x": 2,
-        "y": 92,
+        "x": 146,
+        "y": 2,
         "w": 41,
         "h": 41
       },
@@ -192,10 +216,10 @@
         "y": 0.5
       }
     },
-    "connector-left-bootom.png": {
+    "hole-black-right.png": {
       "frame": {
         "x": 92,
-        "y": 92,
+        "y": 47,
         "w": 41,
         "h": 41
       },
@@ -218,8 +242,8 @@
     },
     "hole-black.png": {
       "frame": {
-        "x": 137,
-        "y": 2,
+        "x": 2,
+        "y": 151,
         "w": 41,
         "h": 41
       },
@@ -242,8 +266,8 @@
     },
     "hole-center.png": {
       "frame": {
-        "x": 137,
-        "y": 47,
+        "x": 191,
+        "y": 2,
         "w": 41,
         "h": 41
       },
@@ -265,54 +289,6 @@
       }
     },
     "hole-end-left.png": {
-      "frame": {
-        "x": 137,
-        "y": 92,
-        "w": 41,
-        "h": 41
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 41,
-        "h": 41
-      },
-      "sourceSize": {
-        "w": 41,
-        "h": 41
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    "hole-end-right.png": {
-      "frame": {
-        "x": 2,
-        "y": 137,
-        "w": 41,
-        "h": 41
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 41,
-        "h": 41
-      },
-      "sourceSize": {
-        "w": 41,
-        "h": 41
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    "left.png": {
       "frame": {
         "x": 47,
         "y": 137,
@@ -336,10 +312,58 @@
         "y": 0.5
       }
     },
-    "right.png": {
+    "hole-end-right.png": {
       "frame": {
         "x": 92,
-        "y": 137,
+        "y": 92,
+        "w": 41,
+        "h": 41
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 41,
+        "h": 41
+      },
+      "sourceSize": {
+        "w": 41,
+        "h": 41
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "left.png": {
+      "frame": {
+        "x": 137,
+        "y": 47,
+        "w": 41,
+        "h": 41
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 41,
+        "h": 41
+      },
+      "sourceSize": {
+        "w": 41,
+        "h": 41
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "right.png": {
+      "frame": {
+        "x": 2,
+        "y": 196,
         "w": 41,
         "h": 41
       },
@@ -362,8 +386,8 @@
     },
     "star.png": {
       "frame": {
-        "x": 137,
-        "y": 137,
+        "x": 236,
+        "y": 2,
         "w": 41,
         "h": 40
       },
@@ -383,6 +407,54 @@
         "x": 0.5,
         "y": 0.5
       }
+    },
+    "water-top.png": {
+      "frame": {
+        "x": 47,
+        "y": 182,
+        "w": 41,
+        "h": 41
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 41,
+        "h": 41
+      },
+      "sourceSize": {
+        "w": 41,
+        "h": 41
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "water.png": {
+      "frame": {
+        "x": 92,
+        "y": 137,
+        "w": 41,
+        "h": 41
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 41,
+        "h": 41
+      },
+      "sourceSize": {
+        "w": 41,
+        "h": 41
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
     }
   },
   "meta": {
@@ -391,8 +463,8 @@
     "image": "platforms.png",
     "format": "RGBA8888",
     "size": {
-      "w": 180,
-      "h": 180
+      "w": 279,
+      "h": 239
     },
     "scale": 1
   }

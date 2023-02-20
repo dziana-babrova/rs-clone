@@ -15,7 +15,7 @@ export default class SlopeRightGroup extends Phaser.GameObjects.Group {
   }
 
   public create(x: number, y: number, texture: string): void {
-    const tile = this.scene.matter.add.sprite(x - 6.5, y + 15, texture);
+    const tile = this.scene.matter.add.sprite(x - 6.5, y + 22.5, texture);
     tile.setTexture(TextureKeys.Platforms, texture);
     tile.setBody(
       {
