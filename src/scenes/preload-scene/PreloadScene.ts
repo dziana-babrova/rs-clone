@@ -72,7 +72,7 @@ export default class PreloadScene extends Phaser.Scene {
 
     this.textures.generate(TextureKeys.Fireworks, PRELOAD_SCENE.fireworksTexture);
 
-    this.load.audio('music', '../assets/music.mp3');
+    this.load.audio(SoundsKeys.Music, '../assets/music.mp3');
     this.load.audio(SoundsKeys.Hit, '../assets/music/hit.mp3');
     this.load.audio(SoundsKeys.Firework, '../assets/music/firework.mp3');
     this.load.audio(SoundsKeys.Ready, '../assets/music/ready.mp3');
