@@ -6,6 +6,7 @@ import EventNames from 'types/events';
 import SingleplayerManager from 'managers/SingleplayerManager';
 import { IComponent, IComponentManager } from 'types/types';
 import SoundService from 'services/SoundService';
+import { Levels } from 'const/levels/Levels';
 import NextLevelButton from './components/next-level-popup/NextLevelButton';
 import ElementsManager from './components/ElementsManager';
 import Fireworks from './components/Fireworks';
@@ -45,7 +46,7 @@ export default class GameScene extends Phaser.Scene implements IComponentManager
 
   async create() {
     this.cameras.main.fadeIn();
-    this.elementsManager = new ElementsManager(this, this.level, 41);
+    this.elementsManager = new ElementsManager(this, Levels[this.level], 41);
     await this.elementsManager.create();
 
     this.addComponents(this.elementsManager.trajectory, this.elementsManager.ball);
