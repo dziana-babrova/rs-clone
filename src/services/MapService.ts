@@ -56,7 +56,8 @@ export default class MapService {
       ElementTypeKeys.Flag,
       ElementTypeKeys.Cup,
     );
-    return new Map(scene, groundConfig, leftSlopeConfig, rightSlopeConfig, holeConfig);
+    const waterConfig = this.getFilteredElements(elements, ElementTypeKeys.Water);
+    return new Map(scene, groundConfig, leftSlopeConfig, rightSlopeConfig, holeConfig, waterConfig);
   }
 
   static getDefaultMapsObject(): Maps {

@@ -82,6 +82,7 @@ export default class GameScene extends Phaser.Scene implements IComponentManager
     objectA: Phaser.GameObjects.GameObject,
     objectB: Phaser.GameObjects.GameObject[],
   ) {
+    console.log(objectA, objectB);
     this.matterCollision.addOnCollideStart({
       objectA,
       objectB,
