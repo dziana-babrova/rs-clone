@@ -131,6 +131,7 @@ export enum SoundsKeys {
   Star = 'star-sound',
   ResultStar = 'result-star-sound',
   GameOver = 'game-over-sound',
+  Music = 'music',
 }
 
 export enum BackgroundKeys {
