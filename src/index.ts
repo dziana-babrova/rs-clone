@@ -7,6 +7,7 @@ import GameScene from 'scenes/game-scene/GameScene';
 import MultiPlayerScene from 'scenes/multiplayer-scene/MultiPlayerScene';
 
 import './styles/style.scss';
+import OnlineScene from 'scenes/online-scene/OnlineScene';
 
 const pluginConfig = {
   plugin: PhaserMatterCollisionPlugin,
@@ -20,7 +21,7 @@ const config: Types.Core.GameConfig = {
   width: gameConfig.screenWidth,
   height: gameConfig.screenHeight,
   backgroundColor: gameConfig.backgroundColor,
-  scene: [PreloadScene, StartScene, GameScene, MultiPlayerScene],
+  scene: [PreloadScene, StartScene, GameScene, MultiPlayerScene, OnlineScene],
   scale: {
     mode: Phaser.Scale.FIT,
   },
@@ -31,7 +32,6 @@ const config: Types.Core.GameConfig = {
   physics: {
     default: 'matter',
     matter: {
-      debug: false,
       gravity: true,
     },
   },

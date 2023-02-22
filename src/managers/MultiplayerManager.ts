@@ -52,8 +52,8 @@ export default class MultiplayerManager extends Phaser.GameObjects.Container {
     this.score = new ScorePanel(scene, { x: scene.cameras.main.centerX - 25, y: 0 });
   }
 
-  async createMap() {
-    this.map = await this.createTemplate(multiPlayerMap);
+  async createMap(map?: Level) {
+    this.map = await this.createTemplate(map || multiPlayerMap);
     await this.map.animate();
   }
 

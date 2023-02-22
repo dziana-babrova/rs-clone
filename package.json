@@ -74,6 +74,7 @@
         "last 3 iOS versions"
     ],
     "dependencies": {
+        "@geckos.io/phaser-on-nodejs": "^1.2.8",
         "@reduxjs/toolkit": "^1.9.2",
         "@types/axios": "^0.14.0",
         "axios": "^1.3.2",
@@ -86,6 +87,8 @@
         "jsonwebtoken": "^9.0.0",
         "mongoose": "^6.9.1",
         "phaser": "^3.55.2",
-        "phaser-matter-collision-plugin": "^1.0.0"
+        "phaser-matter-collision-plugin": "^1.0.0",
+        "socket.io": "^4.6.0",
+        "socket.io-client": "^4.6.0"
     }
 }

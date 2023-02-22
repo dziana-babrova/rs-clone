@@ -20,6 +20,7 @@ export enum SceneKeys {
   Start = 'start-scene',
   Game = 'game-scene',
   MultiPlayer = 'multiplayer-scene',
+  Online = 'online-scene',
 }
 
 export enum TextureKeys {

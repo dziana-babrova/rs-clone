@@ -13,12 +13,10 @@ export default class TilesGroup extends Phaser.GameObjects.Group {
   }
 
   public create(x: number, y: number, texture: string): void {
-    const tile = this.scene.matter.add.sprite(x, y, texture);
-
-    tile.setTexture(TextureKeys.Platforms, texture);
+    const tile = this.scene.matter.add.sprite(x, y, '');
     const bodyHeight = this.setBodyHeight(tile, texture);
     const bodyWidth = this.setBodyWidth(tile, texture);
-    tile.setBody({ width: bodyWidth, height: bodyHeight }, { isStatic: true, density: 1000 });
+    tile.setBody({ width: bodyWidth, height: bodyHeight }, { isStatic: true });
     this.add(tile);
   }
 
@@ -31,13 +29,13 @@ export default class TilesGroup extends Phaser.GameObjects.Group {
       || texture === 'hole-end-left.png'
     ) {
       tile.setY(tile.y + 7.5);
-      return tile.height - 15;
+      return 41 - 15;
     // eslint-disable-next-line no-else-return
     } else if (texture === 'hole-black-bottom.png') {
-      return tile.height - 15;
+      return 41 - 15;
     }
 
-    return tile.height;
+    return 41;
   }
 
   private setBodyWidth(tile: Phaser.Physics.Matter.Sprite, texture: string): number {
@@ -49,9 +47,9 @@ export default class TilesGroup extends Phaser.GameObjects.Group {
       || texture === 'hole-black-left.png'
       || texture === 'hole-black-left-bottom.png'
     ) {
-      return tile.width - 5;
+      return 36;
     }
 
-    return tile.width;
+    return 41;
   }
 }
