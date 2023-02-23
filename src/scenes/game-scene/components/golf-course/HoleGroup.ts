@@ -1,10 +1,9 @@
 import Phaser from 'phaser';
 import { LevelElements } from 'types/types';
 import { TextureKeys } from 'types/enums';
+import { textures } from 'const/TileConfig';
 
 export default class TunnelGroup extends Phaser.GameObjects.Group {
-  bar!: Phaser.GameObjects.Sprite;
-
   constructor(scene: Phaser.Scene, tiles: LevelElements[]) {
     super(scene);
 
@@ -18,7 +17,7 @@ export default class TunnelGroup extends Phaser.GameObjects.Group {
     tile.setTexture(TextureKeys.Platforms, texture);
     tile.setBody({ width: tile.width, height: tile.height }, { isSensor: true, isStatic: true });
     this.add(tile);
-    if (texture === 'hole-center.png') {
+    if (texture === textures.holeCenter) {
       tile.setY(tile.y + 7.5);
     }
   }

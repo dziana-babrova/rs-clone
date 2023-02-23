@@ -1,90 +1,123 @@
 import { TilesConfig } from 'types/types';
 
+const textures = {
+  bottom: 'bottom.png',
+  holeBlackLeftBottom: 'hole-black-left-bottom.png',
+  holeBlackRightBottom: 'hole-black-right-bottom.png',
+  holeBlackBottom: 'hole-black-bottom.png',
+  holeBlackRight: 'hole-black-right.png',
+  holeBlackLeft: 'hole-black-left.png',
+  holeBlack: 'hole-black.png',
+  ground: 'ground.png',
+  holeEndLeft: 'hole-end-left.png',
+  holeEndRight: 'hole-end-right.png',
+  holeCenter: 'hole-center.png',
+  connectorLeftBottom: 'connector-left-bootom.png',
+  connectorRightBottom: 'connector-right-bottom.png',
+  left: 'left.png',
+  right: 'right.png',
+  goal: 'goal',
+  saw: 'saw',
+  star: 'star.png',
+  waterTop: 'water-top.png',
+  water: 'water.png',
+  bar: 'hole-grass.png',
+};
+
 const config: TilesConfig = {
   '.': {
     type: 'tile',
-    texture: 'bottom.png',
+    texture: textures.bottom,
   },
   '<': {
     type: 'tile',
-    texture: 'hole-black-left-bottom.png',
+    texture: textures.holeBlackLeftBottom,
   },
   '>': {
     type: 'tile',
-    texture: 'hole-black-right-bottom.png',
+    texture: textures.holeBlackRightBottom,
   },
   '-': {
     type: 'tile',
-    texture: 'hole-black-bottom.png',
+    texture: textures.holeBlackBottom,
   },
   '[': {
     type: 'tile',
-    texture: 'hole-black-left.png',
+    texture: textures.holeBlackLeft,
   },
   ']': {
     type: 'tile',
-    texture: 'hole-black-right.png',
+    texture: textures.holeBlackRight,
   },
   '|': {
     type: 'hole',
-    texture: 'hole-black.png',
+    texture: textures.holeBlack,
   },
   '*': {
     type: 'cup',
-    texture: 'hole-black.png',
+    texture: textures.holeBlack,
   },
   '^': {
     type: 'coin-in-hole',
-    texture: 'hole-black.png',
+    texture: textures.holeBlack,
   },
   T: {
     type: 'tile',
-    texture: 'ground.png',
+    texture: textures.ground,
   },
   '{': {
     type: 'tile',
-    texture: 'hole-end-left.png',
+    texture: textures.holeEndLeft,
   },
   '}': {
     type: 'tile',
-    texture: 'hole-end-right.png',
+    texture: textures.holeEndRight,
   },
   '+': {
     type: 'flag',
-    texture: 'hole-center.png',
+    texture: textures.holeCenter,
   },
   '~': {
     type: 'hole',
-    texture: 'hole-center.png',
+    texture: textures.holeCenter,
   },
   '!': {
     type: 'tile',
-    texture: 'connector-left-bootom.png',
+    texture: textures.connectorLeftBottom,
   },
   '/': {
     type: 'slope-left',
-    texture: 'left.png',
+    texture: textures.left,
   },
   '?': {
     type: 'tile',
-    texture: 'connector-right-bottom.png',
+    texture: textures.connectorRightBottom,
   },
   '\\': {
     type: 'slope-right',
-    texture: 'right.png',
+    texture: textures.right,
   },
   B: {
     type: 'ball',
-    texture: 'goal',
+    texture: textures.goal,
   },
   O: {
     type: 'star',
-    texture: 'star.png',
+    texture: textures.star,
   },
   '#': {
     type: 'saw',
-    texture: 'saw',
+    texture: textures.saw,
+  },
+  W: {
+    type: 'water',
+    texture: textures.waterTop,
+  },
+  w: {
+    type: 'water',
+    texture: textures.water,
   },
 };
 
 export default config;
+export { textures };

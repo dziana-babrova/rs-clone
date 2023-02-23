@@ -1,5 +1,5 @@
 import PhaserMatterCollisionPlugin from 'phaser-matter-collision-plugin';
-import { SceneKeys } from 'types/enums';
+import { SceneKeys, SoundsKeys } from 'types/enums';
 import store from 'state/store';
 import Phaser from 'phaser';
 import EventNames from 'types/events';
@@ -83,13 +83,14 @@ export default class GameScene extends Phaser.Scene implements IComponentManager
     objectA: Phaser.GameObjects.GameObject,
     objectB: Phaser.GameObjects.GameObject[],
   ) {
+    console.log(objectA, objectB);
     this.matterCollision.addOnCollideStart({
       objectA,
       objectB,
       callback: ({ gameObjectB }) => {
         gameObjectB?.destroy();
         this.starsCount += 1;
-        SoundService.starSound(this);
+        SoundService.playSound(this, SoundsKeys.Star);
       },
     });
   }
@@ -126,7 +127,7 @@ export default class GameScene extends Phaser.Scene implements IComponentManager
   private handleGameOver(): void {
     this.isGameOver = true;
     this.cameras.main.shake(1000, 0.015);
-    SoundService.gameOverSound(this);
+    SoundService.playSound(this, SoundsKeys.GameOver);
     this.time.addEvent({
       delay: 2000,
       callback: () => {

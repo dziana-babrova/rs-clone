@@ -107,7 +107,7 @@ export default class PopupCanvasGroup extends Phaser.GameObjects.Container {
       GAME_SCENE.nextLevelPopup.labelFill.radius,
     );
 
-    const helloWorld = this.scene.add
+    const text = this.scene.add
       .text(
         this.scene.scale.width / 2,
         y + (GAME_SCENE.nextLevelPopup.labelFill.height / 2),
@@ -117,7 +117,8 @@ export default class PopupCanvasGroup extends Phaser.GameObjects.Container {
       .setOrigin(0.5);
 
     this.add(graphics);
-    this.add(helloWorld);
+    this.add(text);
+    text.setDepth(200);
   }
 
   public async show(): Promise<void> {

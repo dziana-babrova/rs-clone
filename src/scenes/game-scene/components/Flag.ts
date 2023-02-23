@@ -9,7 +9,7 @@ export default class Flag extends Phaser.GameObjects.Sprite {
   targetY: number;
 
   constructor(scene: Scene, x: number, y: number) {
-    super(scene, x + 20, y, TextureKeys.Flag, TextureKeys.Flag);
+    super(scene, x + 20, y, TextureKeys.Flag);
     this.targetY = y;
     this.tweenAnimationBuilder = new TweenAnimationBuilder();
 
