@@ -20,7 +20,7 @@ export default class PopupCanvasGroup extends Phaser.GameObjects.Container {
   constructor(scene: Scene, title: string, size: Size, isCloseBtn: boolean) {
     super(scene);
     this.size = size;
-    this.point = (this.scene.cameras.main.height - this.size.height) / 2;
+    this.point = (this.scene.cameras.main.height - this.size.height) / 2 - this.size.shift;
     this.tweenAnimationBuilder = new TweenAnimationBuilder();
 
     this.createCanvas();
@@ -53,7 +53,7 @@ export default class PopupCanvasGroup extends Phaser.GameObjects.Container {
     const xFill = (this.scene.scale.width - this.size.width) / 2;
     const xStroke = (this.scene.scale.width - (this.size.width + POPUP.canvasStroke.padding)) / 2;
     const yStroke = (this.scene.scale.height - (this.size.height + POPUP.canvasStroke.padding))
-      / 2;
+      / 2 - this.size.shift;
 
     const graphicsStroke = this.scene.add.graphics();
     graphicsStroke.lineStyle(

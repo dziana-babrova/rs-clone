@@ -6,14 +6,23 @@ const POPUP = {
     levels: {
       width: 1200,
       height: 400,
+      shift: 0,
     },
     winners: {
       width: 600,
       height: 600,
+      shift: 0,
     },
     landscape: {
       width: 900,
       height: 300,
+      shift: 0,
+    },
+
+    nextLevel: {
+      width: 600,
+      height: 300,
+      shift: 100,
     },
   },
 
