@@ -1,18 +1,19 @@
-import { Colors, SceneKeys, TextureKeys } from 'types/enums';
 import { Language, NEXT_LANG } from 'const/Language';
-import { LocalStorageKeys } from 'const/AppConstants';
-import LocalStorageService from 'services/LocalStorageService';
-import { axiosSignOut } from 'state/features/UserSlice';
-import { axiosCreateMaps, setLang, setMusic } from 'state/features/AppSlice';
+import Levels from 'components/popups/Levels';
+import Landscape from 'components/popups/Landscape';
+import Winners from 'components/popups/Winners';
+import {
+  Colors, SceneKeys, SettinsPopupKeys, TextureKeys,
+} from 'types/enums';
 import store from 'state/store';
-import MapService from 'services/MapService';
-import Landscape from './components/Landscape';
-import LangBtn from './components/LangBtn';
-import Levels from './components/Levels';
+import LocalStorageService from 'services/LocalStorageService';
+import { LocalStorageKeys } from 'const/AppConstants';
+import { setLang, setMusic } from 'state/features/AppSlice';
+import { axiosSignOut } from 'state/features/UserSlice';
 import LogoGroup from './components/LogoGroup';
-import StartSceneBtns from './components/StartSceneBtns';
-import Winners from './components/Winners';
+import LangBtn from './components/LangBtn';
 import AuthBtn from './components/AuthBtn';
+import StartSceneBtns from './components/StartSceneBtns';
 import AuthPopup from './components/AuthPopup';
 
 export default class StartScene extends Phaser.Scene {
@@ -30,11 +31,7 @@ export default class StartScene extends Phaser.Scene {
 
   authPopup!: AuthPopup;
 
-  levels!: Levels;
-
-  landscape!: Landscape;
-
-  winners!: Winners;
+  settingsPopup!: Levels | Landscape | Winners;
 
   constructor() {
     super(SceneKeys.Start);
@@ -77,10 +74,6 @@ export default class StartScene extends Phaser.Scene {
 
     if (store.getState().app.music) this.music.play();
 
-    this.levels = new Levels(this);
-    this.landscape = new Landscape(this);
-    this.winners = new Winners(this);
-
     this.initEvents();
   }
 
@@ -92,15 +85,29 @@ export default class StartScene extends Phaser.Scene {
     this.authBtn.on('pointerdown', this.authBtnHandler.bind(this));
     this.authPopup.onClosePopup = this.onClosePopup.bind(this);
 
-    this.startSceneBtns.btnLevels.background.on('pointerdown', this.showLevels.bind(this));
-    this.startSceneBtns.btnLandscape.background.on('pointerdown', this.showLandscape.bind(this));
-    this.startSceneBtns.btnWinners.background.on('pointerdown', this.showWinners.bind(this));
+    this.startSceneBtns.btnLevels.background.on('pointerdown', this.createSettingsPopup.bind(this, SettinsPopupKeys.Levels));
+    this.startSceneBtns.btnLandscape.background.on('pointerdown', this.createSettingsPopup.bind(this, SettinsPopupKeys.Landscape));
+    this.startSceneBtns.btnWinners.background.on('pointerdown', this.createSettingsPopup.bind(this, SettinsPopupKeys.Winners));
 
     this.startSceneBtns.btnMusic.background.on('pointerdown', this.turnOnOffSound.bind(this));
+  }
 
-    this.levels.btnClose.on('pointerdown', this.hideLevels.bind(this));
-    this.landscape.btnClose.on('pointerdown', this.hideLandscape.bind(this));
-    this.winners.btnClose.on('pointerdown', this.hideWinners.bind(this));
+  private createSettingsPopup(type: SettinsPopupKeys): void {
+    switch (type) {
+      case SettinsPopupKeys.Levels: {
+        this.settingsPopup = new Levels(this);
+        break;
+      }
+      case SettinsPopupKeys.Landscape: {
+        this.settingsPopup = new Landscape(this);
+        break;
+      }
+      case SettinsPopupKeys.Winners: {
+        this.settingsPopup = new Winners(this);
+        break;
+      }
+      default:
+    }
   }
 
   private turnOnOffSound(): void {
@@ -129,9 +136,6 @@ export default class StartScene extends Phaser.Scene {
     this.authBtn.updateBtnText();
     this.startSceneBtns.updateText(this.lang);
     this.logoGroup.updateText(this.lang);
-    this.levels.updateText(this.lang);
-    this.landscape.updateText(this.lang);
-    this.winners.updateText(this.lang);
   }
 
   private async authBtnHandler(): Promise<void> {
@@ -154,51 +158,13 @@ export default class StartScene extends Phaser.Scene {
     this.input.enabled = true;
   }
 
-  private async showLevels(): Promise<void> {
-    store.dispatch(axiosCreateMaps(MapService.getDefaultMapsObject()));
-    await Promise.all([
-      this.startSceneBtns.hide(),
-      this.levels.show(),
-    ]);
-  }
-
-  private async hideLevels(): Promise<void> {
-    await Promise.all([
-      this.startSceneBtns.show(),
-      this.levels.hide(),
-    ]);
-  }
-
-  private async showLandscape(): Promise<void> {
-    await Promise.all([
-      this.startSceneBtns.hide(),
-      this.landscape.show(),
-    ]);
-  }
-
-  private async hideLandscape(): Promise<void> {
-    await Promise.all([
-      this.startSceneBtns.show(),
-      this.landscape.hide(),
-    ]);
-  }
-
-  private async showWinners(): Promise<void> {
-    await Promise.all([
-      this.startSceneBtns.hide(),
-      this.winners.show(),
-    ]);
-  }
-
-  private async hideWinners() : Promise<void> {
-    await Promise.all([
-      this.startSceneBtns.show(),
-      this.winners.hide(),
-    ]);
-  }
-
-  private startSingleGame(): void {
+  private startSingleGame(level?: number): void {
     this.removeStartScreenObjects();
+    if (level) {
+      this.scene.start(SceneKeys.Game, { level });
+      return;
+    }
+
     this.scene.start(SceneKeys.Game);
   }
 
@@ -213,8 +179,5 @@ export default class StartScene extends Phaser.Scene {
     this.authBtn.destroy();
     this.authPopup.destroy();
     this.langBtn.destroy();
-    this.levels.destroy();
-    this.winners.destroy();
-    this.landscape.destroy();
   }
 }

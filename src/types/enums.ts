@@ -34,6 +34,11 @@ export enum TextureKeys {
   Fireworks = 'fireworks',
   Restart = 'restart',
   Next = 'next',
+  LevelEmpty = 'LevelEmpty',
+  LevelOneStar = 'LevelOneStar',
+  LevelTwoStars = 'LevelTwoStars',
+  LevelThreeStars = 'LevelThreeStars',
+  LevelLock = 'LevelLock',
 }
 
 export enum Colors {
@@ -121,4 +126,10 @@ export enum SoundsKeys {
   Star = 'star-sound',
   ResultStar = 'result-star-sound',
   GameOver = 'game-over-sound',
+}
+
+export enum SettinsPopupKeys {
+  Levels = 'levels',
+  Landscape = 'landscape',
+  Winners = 'winners',
 }

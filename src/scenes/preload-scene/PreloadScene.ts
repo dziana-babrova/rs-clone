@@ -19,6 +19,7 @@ import ProgressBar from './components/ProgressBar';
 import ProgressBox from './components/ProgressBox';
 import ProgressPercentText from './components/ProgressPercentText';
 import ProgressText from './components/ProgressText';
+import MapsService from '../../../server/services/MapsService';
 
 export default class PreloadScene extends Phaser.Scene {
   progressBar!: ProgressBar;
@@ -49,8 +50,12 @@ export default class PreloadScene extends Phaser.Scene {
       store.dispatch(axiosCheckAuth()).then(() => {
         if (store.getState().user.isAuth) {
           store.dispatch(axiosGetMaps());
+        } else {
+          MapsService.getMapsFromLS();
         }
       });
+    } else {
+      MapsService.getMapsFromLS();
     }
     this.load.image(TextureKeys.Logo, '../assets/logo.png');
     this.load.image(TextureKeys.eng, '../assets/eng.png');
@@ -59,6 +64,11 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.image(TextureKeys.Next, '../assets/next.svg');
     this.load.image(TextureKeys.Restart, '../assets/restart.svg');
     this.load.image(TextureKeys.Ball, '../assets/Golf-Ball-big.png');
+    this.load.image(TextureKeys.LevelEmpty, '../assets/levelEmpty.svg');
+    this.load.image(TextureKeys.LevelOneStar, '../assets/level1.svg');
+    this.load.image(TextureKeys.LevelTwoStars, '../assets/level2.svg');
+    this.load.image(TextureKeys.LevelThreeStars, '../assets/leve3.svg');
+    this.load.image(TextureKeys.LevelLock, '../assets/levelLock.svg');
 
     this.load.atlas(TextureKeys.Platforms, platfrom, texture);
     this.load.atlas(TextureKeys.Flag, '../assets/flag.png', '../assets/flag.json');

@@ -1,4 +1,9 @@
+import { LocalStorageKeys } from 'const/AppConstants';
 import { Schema } from 'mongoose';
+import LocalStorageService from 'services/LocalStorageService';
+import { setMaps } from 'state/features/AppSlice';
+import store from 'state/store';
+import { Maps } from 'types/types';
 import ApiError from '../errors/ApiError';
 import Maps, { MapDescription } from '../models/Maps';
 
@@ -28,6 +33,15 @@ class MapsService {
     }
     const mapsObj = new Maps({ user: userId, maps });
     await mapsObj.save();
+  }
+
+  static getMapsFromLS() {
+    const maps: Maps | null = LocalStorageService.getItem(LocalStorageKeys.maps);
+    if (maps === null) {
+      console.log();
+    } else {
+      store.dispatch(setMaps(maps));
+    }
   }
 }
 
