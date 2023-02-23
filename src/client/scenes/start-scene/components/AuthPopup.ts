@@ -1,13 +1,13 @@
 import LANGUAGE, { Language } from 'client/const/Language';
-import START_SCENE from 'client/const/scenes/StartSceneConst';
 import Phaser from 'phaser';
 import MapService from 'client/services/MapService';
 import { axiosCreateMaps, axiosGetMaps } from 'client/state/features/AppSlice';
 import { axiosSignIn, axiosSignUp } from 'client/state/features/UserSlice';
 import store from 'client/state/store';
-import { FormInputsKeys, FormType, Move } from 'common/types/enums';
-import { ClientValidationError, FormInput, ValidationErrorType } from 'common/types/types';
+import { AuthFormInputsKeys, FormType, Move } from 'common/types/enums';
+import { AuthFormInput, ClientValidationError, ValidationErrorType } from 'common/types/types';
 import ElementsFactory from 'client/utils/ElementGenerator';
+import { START_SCENE } from 'client/const/scenes/StartSceneConst';
 
 export default class AuthPopup extends Phaser.GameObjects.DOMElement {
   form!: HTMLFormElement;
@@ -50,7 +50,7 @@ export default class AuthPopup extends Phaser.GameObjects.DOMElement {
 
     this.form = ElementsFactory.createFormElement('popup__form form');
 
-    const inputElems = START_SCENE.formInputs.map((item) => this.createInputElem(item));
+    const inputElems = START_SCENE.formInputs.auth.map((item) => this.createInputElem(item));
 
     this.btnSubmit = ElementsFactory.createButton(
       'btn form__submit',
@@ -67,7 +67,7 @@ export default class AuthPopup extends Phaser.GameObjects.DOMElement {
 
     this.message = ElementsFactory.createBaseElementWithText(
       'h',
-      'popup_message',
+      'popup__message',
       LANGUAGE.authPopup[this.formType].message[store.getState().app.lang as Language],
     );
 
@@ -88,14 +88,14 @@ export default class AuthPopup extends Phaser.GameObjects.DOMElement {
     this.form.append(...inputElems, this.btnSubmit);
     popup.append(this.form, messageWrapper, this.btnClose);
 
-    this.form[FormInputsKeys.Email].autocomplete = 'username';
-    this.form[FormInputsKeys.Password].autocomplete = 'current-password';
+    this.form[AuthFormInputsKeys.Email].autocomplete = 'username';
+    this.form[AuthFormInputsKeys.Password].autocomplete = 'current-password';
     this.usernameLabel.style.display = 'none';
 
     this.node.append(popup);
   }
 
-  private createInputElem(item: FormInput): HTMLLabelElement {
+  private createInputElem(item: AuthFormInput): HTMLLabelElement {
     const label = ElementsFactory.createLabelElement(
       'form__label',
       item.name,
@@ -109,7 +109,7 @@ export default class AuthPopup extends Phaser.GameObjects.DOMElement {
       LANGUAGE.authPopup[item.name].placeholder[store.getState().app.lang as Language],
     );
 
-    if (item.name === FormInputsKeys.Username) this.usernameLabel = label;
+    if (item.name === AuthFormInputsKeys.Username) this.usernameLabel = label;
 
     const output = ElementsFactory.createOutputElement(
       'form__hint',
@@ -147,15 +147,15 @@ export default class AuthPopup extends Phaser.GameObjects.DOMElement {
   }
 
   private async handleSubmitForm(): Promise<void> {
-    const email = this.form[FormInputsKeys.Email].value;
-    const password = this.form[FormInputsKeys.Password].value;
+    const email = this.form[AuthFormInputsKeys.Email].value;
+    const password = this.form[AuthFormInputsKeys.Password].value;
 
     const valid = this.formType === FormType.SignIn
-      ? this.checkFormValues(FormInputsKeys.Email, FormInputsKeys.Password)
+      ? this.checkFormValues(AuthFormInputsKeys.Email, AuthFormInputsKeys.Password)
       : this.checkFormValues(
-        FormInputsKeys.Email,
-        FormInputsKeys.Password,
-        FormInputsKeys.Username,
+        AuthFormInputsKeys.Email,
+        AuthFormInputsKeys.Password,
+        AuthFormInputsKeys.Username,
       );
 
     if (valid) {
@@ -169,7 +169,7 @@ export default class AuthPopup extends Phaser.GameObjects.DOMElement {
           }
         }
       } else {
-        const username = this.form[FormInputsKeys.Username].value;
+        const username = this.form[AuthFormInputsKeys.Username].value;
         response = await store.dispatch(axiosSignUp({ email, username, password }));
         if (store.getState().user.isAuth) {
           await store.dispatch(axiosCreateMaps(MapService.getDefaultMapsObject()));
@@ -187,7 +187,7 @@ export default class AuthPopup extends Phaser.GameObjects.DOMElement {
     }
   }
 
-  private checkFormValues(...arr: FormInputsKeys[]): boolean {
+  private checkFormValues(...arr: AuthFormInputsKeys[]): boolean {
     const errors: ClientValidationError[] = [];
     const validArr = arr.map((key) => {
       const value = this.form[key].value.trim();
@@ -200,32 +200,32 @@ export default class AuthPopup extends Phaser.GameObjects.DOMElement {
         return false;
       }
       switch (key) {
-        case FormInputsKeys.Email: {
+        case AuthFormInputsKeys.Email: {
           const regex = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+$/;
           const found = value.match(regex);
           if (found === null) {
             errors.push({
-              param: FormInputsKeys.Email,
+              param: AuthFormInputsKeys.Email,
               msg: 'Email must match the pattern',
             });
             return false;
           }
           break;
         }
-        case FormInputsKeys.Password: {
+        case AuthFormInputsKeys.Password: {
           if (value.length < 6) {
             errors.push({
-              param: FormInputsKeys.Password,
+              param: AuthFormInputsKeys.Password,
               msg: 'Password length must be at least 6 characters',
             });
             return false;
           }
           break;
         }
-        case FormInputsKeys.Username: {
+        case AuthFormInputsKeys.Username: {
           if (value.length < 3) {
             errors.push({
-              param: FormInputsKeys.Password,
+              param: AuthFormInputsKeys.Password,
               msg: 'Username length must be at least 3 characters',
             });
             return false;
@@ -270,20 +270,20 @@ export default class AuthPopup extends Phaser.GameObjects.DOMElement {
 
   private showNotFoundError(): void {
     this.updateHints();
-    this.form[`${FormInputsKeys.Email}Hint`].value = LANGUAGE.authPopup.errors.notFoundError[store.getState().app.lang as Language];
-    this.addErrorClass(FormInputsKeys.Email);
+    this.form[`${AuthFormInputsKeys.Email}Hint`].value = LANGUAGE.authPopup.errors.notFoundError[store.getState().app.lang as Language];
+    this.addErrorClass(AuthFormInputsKeys.Email);
   }
 
   private showExistError(): void {
     this.updateHints();
-    this.form[`${FormInputsKeys.Email}Hint`].value = LANGUAGE.authPopup.errors.existError[store.getState().app.lang as Language];
-    this.addErrorClass(FormInputsKeys.Email);
+    this.form[`${AuthFormInputsKeys.Email}Hint`].value = LANGUAGE.authPopup.errors.existError[store.getState().app.lang as Language];
+    this.addErrorClass(AuthFormInputsKeys.Email);
   }
 
   private showPasswordError() {
     this.updateHints();
-    this.form[`${FormInputsKeys.Password}Hint`].value = LANGUAGE.authPopup.errors.passwordError[store.getState().app.lang as Language];
-    this.addErrorClass(FormInputsKeys.Password);
+    this.form[`${AuthFormInputsKeys.Password}Hint`].value = LANGUAGE.authPopup.errors.passwordError[store.getState().app.lang as Language];
+    this.addErrorClass(AuthFormInputsKeys.Password);
   }
 
   private showErrors<T extends ValidationErrorType>(errors: T[]): void {
@@ -295,9 +295,9 @@ export default class AuthPopup extends Phaser.GameObjects.DOMElement {
     errors.forEach((error) => {
       const { msg, param } = error;
 
-      let key = FormInputsKeys.Username;
-      if (param === 'password') key = FormInputsKeys.Password;
-      if (param === 'email') key = FormInputsKeys.Email;
+      let key = AuthFormInputsKeys.Username;
+      if (param === 'password') key = AuthFormInputsKeys.Password;
+      if (param === 'email') key = AuthFormInputsKeys.Email;
 
       let value = '';
 
@@ -326,21 +326,21 @@ export default class AuthPopup extends Phaser.GameObjects.DOMElement {
     });
   }
 
-  private addErrorClass(key: FormInputsKeys): void {
+  private addErrorClass(key: AuthFormInputsKeys): void {
     this.form[`${key}Hint`].classList.add('form__hint_error');
     this.form[`${key}Hint`].classList.remove('form__hint_valid');
   }
 
-  private addValidClass(key: FormInputsKeys): void {
+  private addValidClass(key: AuthFormInputsKeys): void {
     this.form[`${key}Hint`].classList.remove('form__hint_error');
     this.form[`${key}Hint`].classList.add('form__hint_valid');
   }
 
   private updateHints(): void {
     [
-      FormInputsKeys.Email,
-      FormInputsKeys.Password,
-      FormInputsKeys.Username,
+      AuthFormInputsKeys.Email,
+      AuthFormInputsKeys.Password,
+      AuthFormInputsKeys.Username,
     ].forEach((key) => {
       this.form[`${key}Hint`].value = LANGUAGE.authPopup.valid[store.getState().app.lang as Language];
       this.addValidClass(key);
@@ -351,11 +351,11 @@ export default class AuthPopup extends Phaser.GameObjects.DOMElement {
     if (this.formType === FormType.SignIn) {
       this.formType = FormType.SignUp;
       this.usernameLabel.style.display = '';
-      this.form[FormInputsKeys.Password].autocomplete = 'current-password';
+      this.form[AuthFormInputsKeys.Password].autocomplete = 'current-password';
     } else {
       this.formType = FormType.SignIn;
       this.usernameLabel.style.display = 'none';
-      this.form[FormInputsKeys.Password].autocomplete = 'new-password';
+      this.form[AuthFormInputsKeys.Password].autocomplete = 'new-password';
     }
     this.message.textContent = LANGUAGE
       .authPopup[this.formType]

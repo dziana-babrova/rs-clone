@@ -62,6 +62,23 @@ export default class TweenAnimationBuilder {
     });
   }
 
+  public async scaleToOrigin(
+    scene: Phaser.Scene,
+    target: Phaser.GameObjects.GameObject | Phaser.GameObjects.GameObject[],
+    ease: string,
+    duration: number,
+  ) {
+    return new Promise((animationResolve) => {
+      scene.tweens.add({
+        targets: target,
+        scale: 1,
+        ease,
+        duration,
+        onComplete: animationResolve,
+      });
+    });
+  }
+
   public async moveX(
     scene: Phaser.Scene,
     target:

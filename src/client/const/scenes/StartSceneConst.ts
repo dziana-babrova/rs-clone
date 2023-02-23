@@ -1,6 +1,10 @@
-import { Colors, ColorsNumber, FormInputsKeys } from 'common/types/enums';
+import {
+  Colors, ColorsNumber, AuthFormInputsKeys, RoomFormInputsKeys,
+} from 'common/types/enums';
 
-const START_SCENE = {
+export const START_SCENE = {
+  x: -1000,
+  y: -500,
   moveX: 1000,
   moveY: 500,
   logoGroup: {
@@ -19,6 +23,14 @@ const START_SCENE = {
       color: Colors.Text,
     },
   },
+  btnBase: {
+    width: 400,
+    textSize: 40,
+    textColor: Colors.Text,
+    bgColor: Colors.Pink,
+    hoverBgColor: Colors.PinkDark,
+    y: 275,
+  },
   btnStartSingleGame: {
     width: 400,
     textSize: 40,
@@ -26,6 +38,14 @@ const START_SCENE = {
     bgColor: Colors.Pink,
     hoverBgColor: Colors.PinkDark,
     y: 275,
+  },
+  btnStartTwoPlayersGame: {
+    width: 400,
+    textSize: 40,
+    textColor: Colors.Text,
+    bgColor: Colors.Pink,
+    hoverBgColor: Colors.PinkDark,
+    y: 370,
   },
   btnStartOnlineGame: {
     width: 400,
@@ -35,6 +55,15 @@ const START_SCENE = {
     hoverBgColor: Colors.PinkDark,
     y: 370,
   },
+  btnStartLocalGame: {
+    width: 400,
+    textSize: 40,
+    textColor: Colors.Text,
+    bgColor: Colors.Pink,
+    hoverBgColor: Colors.PinkDark,
+    y: 275,
+  },
+
   btnAuth: {
     width: 200,
     textSize: 32,
@@ -52,6 +81,7 @@ const START_SCENE = {
       landscape: 'landscape',
       winners: 'winners',
       music: 'music',
+      back: 'back',
     },
     y: 520,
     halfGap: 15,
@@ -84,20 +114,43 @@ const START_SCENE = {
   levels: {
 
   },
-  formInputs: [
-    {
-      name: FormInputsKeys.Email,
-      type: 'email',
-    },
-    {
-      name: FormInputsKeys.Username,
-      type: 'text',
-    },
-    {
-      name: FormInputsKeys.Password,
-      type: 'password',
-    },
-  ],
+  formInputs: {
+    auth: [
+      {
+        name: AuthFormInputsKeys.Email,
+        type: 'email',
+      },
+      {
+        name: AuthFormInputsKeys.Username,
+        type: 'text',
+      },
+      {
+        name: AuthFormInputsKeys.Password,
+        type: 'password',
+      },
+    ],
+    room: [
+      {
+        name: RoomFormInputsKeys.Room,
+        type: 'text',
+      },
+    ],
+  },
 };
 
-export default START_SCENE;
+export const START_SCENE_ANIMATION = {
+  moveYAnimation: {
+    ease: 'Back',
+    duration: 1000,
+  },
+
+  moveXAnimation: {
+    ease: 'Back',
+    duration: 1000,
+  },
+
+  scaleToOrigin: {
+    ease: 'Back',
+    duration: 200,
+  },
+};

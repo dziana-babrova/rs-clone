@@ -10,13 +10,18 @@
 
   &__input {
     width: 100%;
-  font-weight: 400;
-  font-size: 1.6rem;
-  padding: 0 10px;
-  border: 1px solid $color-secondary;
-  border-radius: 0;
-  height: 36px;
-  color: $color-grey;
+    font-weight: 400;
+    font-size: 1.6rem;
+    padding: 0 10px;
+    border: 1px solid $color-secondary;
+    border-radius: 0;
+    height: 36px;
+    color: $color-grey;
+
+    &_room {
+      font-size: 1.8rem;
+      height: 52px;
+    }
 
   @include mobile {
     font-size: 1.4rem;

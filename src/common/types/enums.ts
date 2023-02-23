@@ -118,10 +118,14 @@ export enum Move {
   Hide,
 }
 
-export enum FormInputsKeys {
+export enum AuthFormInputsKeys {
   Email = 'email',
   Username = 'username',
   Password = 'password',
+}
+
+export enum RoomFormInputsKeys {
+  Room = 'room',
 }
 
 export enum FormType {
@@ -161,4 +165,9 @@ export enum SettinsPopupKeys {
   Levels = 'levels',
   Landscape = 'landscape',
   Winners = 'winners',
+}
+
+export enum RoomPopupFormBtns {
+  createRoom = 'createRoom',
+  getInRoom = 'getInRoom',
 }

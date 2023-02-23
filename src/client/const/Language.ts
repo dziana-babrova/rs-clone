@@ -115,6 +115,68 @@ const LANGUAGE = {
       },
     },
   },
+  roomPopup: {
+    createRoom: {
+      eng: 'Create Room',
+      ru: 'Создать комнату',
+    },
+    getInRoom: {
+      eng: 'Get in Room',
+      ru: 'Войти в комнату',
+    },
+    message: {
+      eng: 'Enter a name and create a room or enter an existing room by name',
+      ru: 'Введите название и создайте комнату или войдите в существующую комнату по имени',
+    },
+    valid: {
+      eng: 'Valid format',
+      ru: 'Правильный формат',
+    },
+    errors: {
+      emptyError: {
+        room: {
+          eng: 'Name should not be empty',
+          ru: 'Название не должно быть пустым',
+        },
+      },
+      lengthError: {
+        room: {
+          eng: 'Name length must be at least 6 characters',
+          ru: 'Длина названия должна быть не менее 6 символов',
+        },
+      },
+      notFoundError: {
+        eng: 'User with this email was not found',
+        ru: 'Пользователь с таким адресом не найден',
+      },
+      passwordError: {
+        eng: 'Wrong password',
+        ru: 'Неправильный пароль',
+      },
+      existError: {
+        eng: 'User with this email already exists',
+        ru: 'Пользователь с таким адресом уже существует',
+      },
+      emailPattern: {
+        eng: 'Email must match the pattern',
+        ru: 'Почта должна соответствовать шаблону',
+      },
+      passwordString: {
+        eng: 'Password should be string',
+        ru: 'Пароль должен быть строкой',
+      },
+    },
+    room: {
+      placeholder: {
+        eng: 'Input room name',
+        ru: 'Введите название комнаты',
+      },
+      hint: {
+        eng: 'Length must be at least 6 characters',
+        ru: 'Длина должна быть не менее 6 символов',
+      },
+    },
+  },
   preloadScene: {
     title: {
       eng: 'Loading...',
@@ -134,9 +196,17 @@ const LANGUAGE = {
       eng: 'Single Player',
       ru: 'Oдиночная игра',
     },
+    twoPlayersGame: {
+      eng: 'Two Players',
+      ru: 'Игра для двоих',
+    },
     onlineGame: {
       eng: 'Online Game',
-      ru: 'Онлайн игра',
+      ru: 'Играть онлайн',
+    },
+    localGame: {
+      eng: 'Local Game',
+      ru: 'Играть локально',
     },
     signIn: {
       eng: 'Sign In',
