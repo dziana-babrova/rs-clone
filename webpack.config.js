@@ -8,7 +8,7 @@ const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 
 const baseConfig = {
-  entry: path.resolve(__dirname, './src/index'),
+  entry: path.resolve(__dirname, './src/client/index'),
   target: 'web',
   mode: 'development',
   module: {
@@ -58,7 +58,7 @@ const baseConfig = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, './src/index.html'),
+      template: path.resolve(__dirname, './src/client/index.html'),
       filename: 'index.html',
     }),
     new CleanWebpackPlugin(),
@@ -66,7 +66,7 @@ const baseConfig = {
     new MiniCssExtractPlugin({}),
     new CopyPlugin({
       patterns: [
-        { from: 'src/assets', to: 'assets' },
+        { from: 'src/client/assets', to: 'assets' },
       ],
     }),
   ],

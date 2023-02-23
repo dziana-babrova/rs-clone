@@ -8,7 +8,7 @@
         "build": "webpack --config ./webpack.config.js --env mode=prod",
         "lint": "eslint . --ext .ts",
         "test": "jest",
-        "dev-server": "nodemon ./server/index.ts",
+        "dev-server": "nodemon ./src/server/index.ts",
         "start-server": "node ./build-server/index.js",
         "build-server": "npm run clean && tsc --project ./tsconfig.server.json",
         "clean": "node node_modules/rimraf/bin lib"
