@@ -1,6 +1,8 @@
 import LANGUAGE from 'const/Language';
 import START_SCENE from 'const/scenes/StartSceneConst';
 import Phaser from 'phaser';
+import MapService from 'services/MapService';
+import { axiosCreateMaps, axiosGetMaps } from 'state/features/AppSlice';
 import { axiosSignIn, axiosSignUp } from 'state/features/UserSlice';
 import store from 'state/store';
 import { FormInputsKeys, FormType, Move } from 'types/enums';
@@ -160,9 +162,18 @@ export default class AuthPopup extends Phaser.GameObjects.DOMElement {
       let response;
       if (this.formType === FormType.SignIn) {
         response = await store.dispatch(axiosSignIn({ email, password }));
+        if (store.getState().user.isAuth) {
+          const responseMaps = await store.dispatch(axiosGetMaps());
+          if ('error' in responseMaps) {
+            await store.dispatch(axiosCreateMaps(MapService.getDefaultMapsObject()));
+          }
+        }
       } else {
         const username = this.form[FormInputsKeys.Username].value;
         response = await store.dispatch(axiosSignUp({ email, username, password }));
+        if (store.getState().user.isAuth) {
+          await store.dispatch(axiosCreateMaps(MapService.getDefaultMapsObject()));
+        }
       }
 
       if ('error' in response) {
