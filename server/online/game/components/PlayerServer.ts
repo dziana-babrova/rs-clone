@@ -7,7 +7,6 @@ export default class PlayerServer {
   id: 1 | 2;
   socketId: string;
   position: Position;
-  currentBall!: Ball;
   idReverse: boolean;
   score = 0;
 

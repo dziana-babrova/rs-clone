@@ -19,7 +19,6 @@ export default class BallServer extends Phaser.Physics.Matter.Sprite {
     this.id = id;
     this.setBallBody();
     this.scene.add.existing(this);
-    this.body.gameObject.label = 'ball';
   }
 
   private setBallBody(): void {
@@ -34,16 +33,12 @@ export default class BallServer extends Phaser.Physics.Matter.Sprite {
     this.setMass(props.mass);
   }
 
-  update(...args: any[]): void {
-    this.checkBallPosition();
-  }
-
   hitBall(velocityX: number, velocityY: number) {
     this.setVelocity(velocityX, velocityY);
   }
 
   public checkBallPosition(): void {
-    if (this.x < 0 || this.x > this.scene.scale.width || this.y > this.scene.scale.height) {
+    if (this.x < -100 || this.x > this.scene.scale.width + 100 || this.y > this.scene.scale.height + 100) {
       this.scene.events.emit('destroy-ball', this);
     }
   }

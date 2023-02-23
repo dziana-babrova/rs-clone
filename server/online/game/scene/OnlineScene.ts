@@ -23,10 +23,9 @@ export default class OnlineScene extends Scene {
   
   create() {
     this.matterCollision = new PhaserMatterCollisionPlugin(this, this.plugins, 'matterCollision');
-    this.elementsManager = new GameManager(this, 41, this.matterCollision, this.server, this.room);
+    this.elementsManager = new GameManager(this, 41, this.server, this.room);
     this.elementsManager.createMap();
-    this.elementsManager.switchTarget(0);    
-    // this.server.emit('error-message', 'Hello from server');
+    this.elementsManager.switchTarget(0);
   }
 
   update() {

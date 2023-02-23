@@ -1,6 +1,5 @@
 import Phaser from 'phaser';
-import { LevelElements } from 'types/types';
-import { TextureKeys } from 'types/enums';
+import { LevelElements } from '../../../types/types';
 
 export default class TunnelGroup extends Phaser.GameObjects.Group {
   bar!: Phaser.GameObjects.Sprite;

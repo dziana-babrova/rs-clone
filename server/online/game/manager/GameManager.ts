@@ -1,24 +1,24 @@
-import { GameObjects, Scene } from 'phaser';
+import { Scene } from 'phaser';
 import PhaserMatterCollisionPlugin from 'phaser-matter-collision-plugin';
 import { Server } from 'socket.io';
 import { ElementTypeKeys, Level } from '../../types/types';
 import BallServer from '../components/BallServer';
 import Cup from '../components/golf-course/Cup';
 import Map from '../components/Map';
-import PlayerServer from '../components/PlayerServer';
 import { multiPlayerMap, targets } from '../const/MultiplayerLevels';
 import { firstPlayerPosition, secondPlayerPosition } from '../const/PlayersPositions';
+import ServerEventsService from '../services/ServerEventsService';
 import ServerMapService from '../services/ServerMapService';
 
 export default class GameManager {
   scene!: Scene;
   mapService!: ServerMapService;
+  socketService: ServerEventsService;
   map!: Map;
   target!: Map;
   player1ball!: BallServer;
   player2ball!: BallServer;
   balls: BallServer[] = [];
-  matterCollision!: PhaserMatterCollisionPlugin;
   isAvailable = false;
   cup!: Cup | null;
   currentTarget = 0;
@@ -30,24 +30,14 @@ export default class GameManager {
   player1IsActive = false;
   player2IsActive = false;
 
-  constructor(
-    scene: Scene,
-    tileSize: number,
-    matterCollision: PhaserMatterCollisionPlugin,
-    server: Server,
-    room: string,
-  ) {
+  constructor(scene: Scene, tileSize: number, server: Server, room: string) {
     this.scene = scene;
-    this.matterCollision = matterCollision;
     this.mapService = new ServerMapService(tileSize);
+    this.socketService = new ServerEventsService(server, room);
     this.server = server;
     this.room = room;
     this.scene.game.events.on('ball-kick', this.handleKick.bind(this));
-    this.scene.events.on('destroy-ball', (ball: BallServer) => {
-      const candidate = this.balls.find((el) => el.id === ball.id);
-      this.balls = this.balls.filter((el) => el !== candidate);
-      candidate?.destroy();
-    });
+    this.scene.events.on('destroy-ball', this.destroyBall.bind(this));
   }
 
   async createMap() {
@@ -59,8 +49,9 @@ export default class GameManager {
       this.target.each((el: Phaser.Physics.Matter.Sprite) => el.destroy());
     }
     this.target = this.createTemplate(targets[target]);
-    this.server.to(this.room).emit('switch-target', targets[target]);
+    this.socketService.emitSwitchTarget(targets[target]);
     this.getStartBalls();
+    this.isAvailable = true;
   }
 
   createTemplate(level: Level) {
@@ -79,7 +70,7 @@ export default class GameManager {
     this.initCollisions(this.player1ball);
     this.initCollisions(this.player2ball);
     this.balls.push(this.player1ball, this.player2ball);
-    this.server.to(this.room).emit('create-start-balls', this.serializeBalls());
+    this.socketService.emitCreateBall(this.serializeBalls());
     this.player1IsActive = true;
     this.player2IsActive = true;
     this.sendPlayersStatus();
@@ -94,7 +85,7 @@ export default class GameManager {
   /* eslint-disable  no-param-reassign */
   /* eslint-disable  no-plusplus */
   handleWin(ball: BallServer) {
-    // if (!this.isAvailable) return;
+    if (!this.isAvailable) return;
     this.isAvailable = false;
     if (ball.player === 1) {
       this.score1 += 1;
@@ -104,7 +95,9 @@ export default class GameManager {
     }
     if (this.score1 >= 5 || this.score2 >= 5) {
       this.isAvailable = false;
+      this.socketService.emitGameOver({ score1: this.score1, score2: this.score2 });
     } else {
+      this.socketService.emitPlayersScore({ score1: this.score1, score2: this.score2 });
       this.destroyElements();
       this.switchTarget(++this.currentTarget);
     }
@@ -120,7 +113,7 @@ export default class GameManager {
     const { cup } = this;
     this.cup = null;
     cup?.destroy();
-    this.server.to(this.room).emit('clear-field');
+    this.socketService.emitClearField();
   }
 
   serializeBalls() {
@@ -167,10 +160,16 @@ export default class GameManager {
   }
 
   sendPlayersStatus() {
-    this.server.to(this.room).emit('change-players-status', {
+    this.socketService.emitPlayersStatus({
       player1: this.player1IsActive,
       player2: this.player2IsActive,
     });
+  }
+
+  destroyBall(ball: BallServer) {
+    const candidate = this.balls.find((el) => el.id === ball.id);
+    this.balls = this.balls.filter((el) => el !== candidate);
+    candidate?.destroy();
   }
 
   delay(ms: number) {

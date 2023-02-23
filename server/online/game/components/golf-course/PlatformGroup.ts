@@ -1,7 +1,5 @@
-/* eslint-disable no-param-reassign */
-import { TextureKeys } from 'types/enums';
 import Phaser from 'phaser';
-import { LevelElements } from 'types/types';
+import { LevelElements } from '../../../types/types';
 
 export default class TilesGroup extends Phaser.GameObjects.Group {
   constructor(scene: Phaser.Scene, tiles: LevelElements[]) {

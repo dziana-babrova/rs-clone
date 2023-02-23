@@ -4,12 +4,6 @@ import PhaserMatterCollisionPlugin from "phaser-matter-collision-plugin";
 import OnlineScene from "./scene/OnlineScene";
 import PreloadScene from './scene/PreloadScene';
 
-const pluginConfig = {
-  plugin: PhaserMatterCollisionPlugin,
-  key: 'matterCollision' as 'matterCollision',
-  mapping: 'matterCollision' as 'matterCollision',
-};
-
 const config: Types.Core.GameConfig = {
   type: HEADLESS,
   parent: 'app',
@@ -29,9 +23,6 @@ const config: Types.Core.GameConfig = {
       debug: true,
       gravity: true,
     },
-  },
-  plugins: {
-    scene: [pluginConfig],
   },
 };
 

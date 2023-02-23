@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { LevelElements } from 'types/types';
+import { LevelElements } from '../../../types/types';
 
 export default class SlopeRightGroup extends Phaser.GameObjects.Group {
   scene: Phaser.Scene;

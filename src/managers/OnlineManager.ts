@@ -2,28 +2,21 @@ import { Scene } from 'phaser';
 import { ElementTypeKeys } from 'types/enums';
 import Ball from 'components/Ball';
 import Map from 'scenes/game-scene/components/Map';
-import { multiPlayerMap, targets } from 'const/levels/MultiplayerLevels';
+import { multiPlayerMap } from 'const/levels/MultiplayerLevels';
 import { Level } from 'types/types';
 import TweenAnimationBuilder from 'utils/TweenAnimationBuilder';
-import {
-  animations,
-  firstPlayerPosition,
-  playerProps,
-  powerIndicatorProps,
-  secondPlayerPosition,
-} from 'const/scenes/MultiplayerSceneConsts';
+import { animations, playerProps, powerIndicatorProps } from 'const/scenes/MultiplayerSceneConsts';
 import Cup from 'scenes/game-scene/components/golf-course/Cup';
 import Flag from 'scenes/game-scene/components/Flag';
-import PhaserMatterCollisionPlugin from 'phaser-matter-collision-plugin';
 import HoleBar from 'scenes/game-scene/components/golf-course/HoleBar';
 import MapService from 'services/MapService';
 import ScorePanel from '../scenes/multiplayer-scene/components/ScorePanel';
 import Player from '../scenes/multiplayer-scene/components/Player';
 import PlayerServer from '../../server/online/game/components/PlayerServer';
 import PlayerEnemy from 'scenes/multiplayer-scene/components/PlayerEnemy';
-import e from 'express';
 import { Socket } from 'socket.io-client';
 import CalculateService from 'services/CalculateService';
+import SocketService from 'services/SocketService';
 
 export default class OnlineManager extends Phaser.GameObjects.Container {
   socket: Socket;
@@ -31,7 +24,7 @@ export default class OnlineManager extends Phaser.GameObjects.Container {
 
   mapService: MapService;
 
-  map!: Map;
+  socketService: SocketService;
 
   target!: Map;
 
@@ -55,9 +48,10 @@ export default class OnlineManager extends Phaser.GameObjects.Container {
 
   balls: { [key: string]: Ball } = {};
 
-  constructor(scene: Scene, tileSize: number, socket: Socket) {
+  constructor(scene: Scene, tileSize: number, socket: Socket, socketService: SocketService) {
     super(scene);
     this.socket = socket;
+    this.socketService = socketService;
     this.mapService = new MapService(tileSize);
     this.animationBuilder = new TweenAnimationBuilder();
     this.scene = scene;
@@ -66,8 +60,8 @@ export default class OnlineManager extends Phaser.GameObjects.Container {
   }
 
   async createMap(map?: Level) {
-    this.map = await this.createTemplate(map || multiPlayerMap);
-    await this.map.animate();
+    const mapTemplate = await this.createTemplate(map || multiPlayerMap);
+    await mapTemplate.animate();
   }
 
   async switchTarget(target: Level) {
@@ -115,7 +109,6 @@ export default class OnlineManager extends Phaser.GameObjects.Container {
 
   updatePlayers(players: PlayerServer[]) {
     players.forEach((el) => {
-      console.log(el.socketId, this.socket.id);
       if (el.socketId === this.socket.id && !this.currentPlayer) {
         this.currentPlayer = new Player(
           this.scene,
@@ -221,15 +214,18 @@ export default class OnlineManager extends Phaser.GameObjects.Container {
         -Math.abs(angle),
         power,
       );
-      this.socket.emit('hit-ball', { velocityX, velocityY, player: this.currentPlayer.id });
+      this.socketService.emitHitBall(velocityX, velocityY, this.currentPlayer.id);
       this.currentPlayer.isAvailable = false;
       this.currentPlayer.isHit = false;
     }
   }
 
   // ToDo Add winner popup
-  showWinPopup(player: Player) {
-    console.log(`WIN${player.id}`);
+  showWinPopup(score: { score1: number; score2: number }) {
+    let text;
+    if (score.score1 >= 5) text = 'First player win!';
+    if (score.score2 >= 5) text = 'Second player win!';
+    console.log(text);
   }
 
   clearField() {
@@ -237,12 +233,17 @@ export default class OnlineManager extends Phaser.GameObjects.Container {
     const { cup } = this;
     this.cup = null;
     cup?.destroy();
-    Object.values(this.balls).forEach(el => el.destroy());
+    Object.values(this.balls).forEach((el) => el.destroy());
     this.balls = {};
   }
 
-  updateStatus(status: {player1: boolean, player2: boolean}){
+  updateStatus(status: { player1: boolean; player2: boolean }) {
     this.currentPlayer.isAvailable = this.currentPlayer.id === 1 ? status.player1 : status.player2;
     if (this.currentPlayer.isAvailable) this.currentPlayer.trajectory.resume();
+  }
+
+  updateScore(score: { score1: number; score2: number }) {
+    this.score.changeText1(String(score.score1));
+    this.score.changeText2(String(score.score2));
   }
 }
