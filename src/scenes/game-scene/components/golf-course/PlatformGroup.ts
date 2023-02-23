@@ -2,6 +2,7 @@
 import { TextureKeys } from 'types/enums';
 import Phaser from 'phaser';
 import { LevelElements } from 'types/types';
+import { textures } from 'const/TileConfig';
 
 export default class TilesGroup extends Phaser.GameObjects.Group {
   constructor(scene: Phaser.Scene, tiles: LevelElements[]) {
@@ -18,22 +19,22 @@ export default class TilesGroup extends Phaser.GameObjects.Group {
     tile.setTexture(TextureKeys.Platforms, texture);
     const bodyHeight = this.setBodyHeight(tile, texture);
     const bodyWidth = this.setBodyWidth(tile, texture);
-    tile.setBody({ width: bodyWidth, height: bodyHeight }, { isStatic: true, density: 1000 });
+    tile.setBody({ width: bodyWidth, height: bodyHeight }, { isStatic: true, density: 100 });
     this.add(tile);
   }
 
   private setBodyHeight(tile: Phaser.Physics.Matter.Sprite, texture: string): number {
     if (
-      texture === 'ground.png'
-      || texture === 'connector-right-bottom.png'
-      || texture === 'connector-left-bootom.png'
-      || texture === 'hole-end-right.png'
-      || texture === 'hole-end-left.png'
+      texture === textures.ground
+      || texture === textures.connectorRightBottom
+      || texture === textures.connectorLeftBottom
+      || texture === textures.holeEndRight
+      || texture === textures.holeEndLeft
     ) {
       tile.setY(tile.y + 7.5);
       return tile.height - 15;
     // eslint-disable-next-line no-else-return
-    } else if (texture === 'hole-black-bottom.png') {
+    } else if (texture === textures.holeBlackBottom) {
       return tile.height - 15;
     }
 
@@ -42,12 +43,12 @@ export default class TilesGroup extends Phaser.GameObjects.Group {
 
   private setBodyWidth(tile: Phaser.Physics.Matter.Sprite, texture: string): number {
     if (
-      texture === 'hole-end-right.png'
-      || texture === 'hole-black-right.png'
-      || texture === 'hole-black-right-bottom.png'
-      || texture === 'hole-end-left.png'
-      || texture === 'hole-black-left.png'
-      || texture === 'hole-black-left-bottom.png'
+      texture === textures.holeEndRight
+      || texture === textures.holeBlackRight
+      || texture === textures.holeBlackRightBottom
+      || texture === textures.holeEndLeft
+      || texture === textures.holeBlackLeft
+      || texture === textures.holeBlackLeftBottom
     ) {
       return tile.width - 5;
     }

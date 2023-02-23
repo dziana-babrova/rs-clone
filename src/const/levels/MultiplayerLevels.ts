@@ -17,11 +17,11 @@ export const multiPlayerMap: Level = {
     '',
     '',
     'TTTT                          TTTT',
-    '....                          ....',
-    '....                          ....',
-    '....                          ....',
-    '....                          ....',
-    '....                          ....',
+    '....WWWWWWWWWWWWWWWWWWWWWWWWWW....',
+    '....wwwwwwwwwwwwwwwwwwwwwwwwww....',
+    '....wwwwwwwwwwwwwwwwwwwwwwwwww....',
+    '....wwwwwwwwwwwwwwwwwwwwwwwwww....',
+    '....wwwwwwwwwwwwwwwwwwwwwwwwww....',
   ],
 };
 
@@ -161,6 +161,7 @@ const target5 = {
     '          .............',
     '          .............',
     '          .............',
+    '          .............',
   ],
 };
 
@@ -176,6 +177,8 @@ const target6 = {
     '          !?!?!?{+}!?!?!?',
     '          ......[*]......',
     '          ......<->......',
+    '          ...............',
+    '          ...............',
     '          ...............',
     '          ...............',
     '          ...............',

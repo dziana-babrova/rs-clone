@@ -52,8 +52,9 @@ export default class MultiplayerManager extends Phaser.GameObjects.Container {
     this.score = new ScorePanel(scene, { x: scene.cameras.main.centerX - 25, y: 0 });
   }
 
-  async createMap(map?: Level) {
-    this.map = await this.createTemplate(map || multiPlayerMap);
+  async createMap() {
+    this.map = await this.createTemplate(multiPlayerMap);
+    this.map.setDepth(50);
     await this.map.animate();
   }
 
@@ -81,6 +82,7 @@ export default class MultiplayerManager extends Phaser.GameObjects.Container {
   async createTemplate(level: Level) {
     const mapElements = this.mapService.createLevelConfig(level.map);
     const template = this.mapService.createMap(this.scene, mapElements);
+    template.setDepth(40);
     const flagConfig = this.mapService.getFilteredElements(mapElements, ElementTypeKeys.Flag);
     const cupConfig = this.mapService.getFilteredElements(mapElements, ElementTypeKeys.Cup);
     if (cupConfig.length) {

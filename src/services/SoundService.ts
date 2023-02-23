@@ -1,54 +1,24 @@
 import { Scene } from 'phaser';
-import { SoundsKeys } from 'types/enums';
+import store from 'state/store';
 
 export default class SoundService {
-  static hitSound(scene: Scene) {
-    console.log('hit');
-    scene.sound.add(SoundsKeys.Hit, {
-      volume: 1,
-      loop: false,
-    }).play();
+  static playSound(scene: Scene, key: string) {
+    if (store.getState().app.sound) {
+      scene.sound.add(key, {
+        volume: 1,
+        loop: false,
+      }).play();
+    }
   }
 
-  static fireworksSound(scene: Scene) {
-    scene.sound.add(SoundsKeys.Firework, {
-      volume: 1,
-      loop: false,
-    }).play();
-  }
-
-  static readySound(scene: Scene) {
-    scene.sound.add(SoundsKeys.Ready, {
-      volume: 1,
-      loop: false,
-    }).play();
-  }
-
-  static clickSound(scene: Scene) {
-    scene.sound.add(SoundsKeys.Click, {
-      volume: 1,
-      loop: false,
-    }).play();
-  }
-
-  static starSound(scene: Scene) {
-    scene.sound.add(SoundsKeys.Star, {
-      volume: 1,
-      loop: false,
-    }).play();
-  }
-
-  static resultStarSound(scene: Scene) {
-    scene.sound.add(SoundsKeys.ResultStar, {
-      volume: 1,
-      loop: false,
-    }).play();
-  }
-
-  static gameOverSound(scene: Scene) {
-    scene.sound.add(SoundsKeys.GameOver, {
-      volume: 1,
-      loop: false,
-    }).play();
+  static playMusic(scene: Scene, key: string) {
+    if (store.getState().app.music) {
+      scene.sound.add(key, {
+        volume: 0.2,
+        loop: true,
+      }).play();
+    } else {
+      scene.sound.removeByKey(key);
+    }
   }
 }

@@ -4,20 +4,20 @@
       "frame": {
         "x": 2,
         "y": 2,
-        "w": 50,
-        "h": 10
+        "w": 59,
+        "h": 9
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 50,
-        "h": 10
+        "w": 59,
+        "h": 9
       },
       "sourceSize": {
-        "w": 50,
-        "h": 10
+        "w": 59,
+        "h": 9
       },
       "pivot": {
         "x": 0.5,
@@ -27,7 +27,7 @@
     "bottom.png": {
       "frame": {
         "x": 2,
-        "y": 16,
+        "y": 15,
         "w": 41,
         "h": 41
       },
@@ -50,7 +50,7 @@
     },
     "connector-left-bootom.png": {
       "frame": {
-        "x": 56,
+        "x": 65,
         "y": 2,
         "w": 41,
         "h": 41
@@ -75,7 +75,7 @@
     "connector-right-bottom.png": {
       "frame": {
         "x": 2,
-        "y": 61,
+        "y": 60,
         "w": 41,
         "h": 41
       },
@@ -98,7 +98,7 @@
     },
     "ground.png": {
       "frame": {
-        "x": 101,
+        "x": 110,
         "y": 2,
         "w": 41,
         "h": 41
@@ -147,7 +147,7 @@
     "hole-black-left-bottom.png": {
       "frame": {
         "x": 2,
-        "y": 106,
+        "y": 105,
         "w": 41,
         "h": 41
       },
@@ -170,7 +170,7 @@
     },
     "hole-black-left.png": {
       "frame": {
-        "x": 146,
+        "x": 155,
         "y": 2,
         "w": 41,
         "h": 41
@@ -243,7 +243,7 @@
     "hole-black.png": {
       "frame": {
         "x": 2,
-        "y": 151,
+        "y": 150,
         "w": 41,
         "h": 41
       },
@@ -266,7 +266,7 @@
     },
     "hole-center.png": {
       "frame": {
-        "x": 191,
+        "x": 200,
         "y": 2,
         "w": 41,
         "h": 41
@@ -363,7 +363,7 @@
     "right.png": {
       "frame": {
         "x": 2,
-        "y": 196,
+        "y": 195,
         "w": 41,
         "h": 41
       },
@@ -384,20 +384,20 @@
         "y": 0.5
       }
     },
-    "star.png": {
+    "water-top.png": {
       "frame": {
-        "x": 236,
+        "x": 245,
         "y": 2,
         "w": 41,
-        "h": 40
+        "h": 41
       },
       "rotated": false,
-      "trimmed": true,
+      "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
-        "y": 1,
+        "y": 0,
         "w": 41,
-        "h": 40
+        "h": 41
       },
       "sourceSize": {
         "w": 41,
@@ -408,7 +408,7 @@
         "y": 0.5
       }
     },
-    "water-top.png": {
+    "water.png": {
       "frame": {
         "x": 47,
         "y": 182,
@@ -432,20 +432,20 @@
         "y": 0.5
       }
     },
-    "water.png": {
+    "star.png": {
       "frame": {
         "x": 92,
         "y": 137,
-        "w": 41,
-        "h": 41
+        "w": 39,
+        "h": 39
       },
       "rotated": false,
-      "trimmed": false,
+      "trimmed": true,
       "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 41,
-        "h": 41
+        "x": 1,
+        "y": 1,
+        "w": 39,
+        "h": 39
       },
       "sourceSize": {
         "w": 41,
@@ -463,8 +463,8 @@
     "image": "platforms.png",
     "format": "RGBA8888",
     "size": {
-      "w": 279,
-      "h": 239
+      "w": 288,
+      "h": 238
     },
     "scale": 1
   }

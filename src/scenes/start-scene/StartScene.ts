@@ -1,10 +1,13 @@
-import { Colors, SceneKeys, TextureKeys } from 'types/enums';
+import {
+  Colors, SceneKeys, SoundsKeys, TextureKeys,
+} from 'types/enums';
 import { Language, NEXT_LANG } from 'const/Language';
 import { LocalStorageKeys } from 'const/AppConstants';
 import LocalStorageService from 'services/LocalStorageService';
 import { axiosSignOut } from 'state/features/UserSlice';
 import { axiosCreateMaps, setLang, setMusic } from 'state/features/AppSlice';
 import store from 'state/store';
+import SoundService from 'services/SoundService';
 import MapService from 'services/MapService';
 import Landscape from './components/Landscape';
 import LangBtn from './components/LangBtn';
@@ -17,8 +20,6 @@ import AuthPopup from './components/AuthPopup';
 
 export default class StartScene extends Phaser.Scene {
   lang: Language = Language.Eng;
-
-  music!: Phaser.Sound.BaseSound;
 
   logoGroup!: LogoGroup;
 
@@ -70,12 +71,7 @@ export default class StartScene extends Phaser.Scene {
       this.startSceneBtns.showBtnSettings(),
     ]);
 
-    this.music = this.sound.add('music', {
-      volume: 0.2,
-      loop: true,
-    });
-
-    if (store.getState().app.music) this.music.play();
+    SoundService.playMusic(this, SoundsKeys.Music);
 
     this.levels = new Levels(this);
     this.landscape = new Landscape(this);
@@ -104,17 +100,15 @@ export default class StartScene extends Phaser.Scene {
   }
 
   private turnOnOffSound(): void {
-    if (this.music.isPlaying) {
+    const isPlaying = store.getState().app.music;
+    store.dispatch(setMusic(!isPlaying));
+    LocalStorageService.setItem(LocalStorageKeys.music, !isPlaying);
+    SoundService.playMusic(this, SoundsKeys.Music);
+    if (isPlaying) {
       this.startSceneBtns.btnMusic.icon.setTexture(TextureKeys.MusicOff);
-      this.music.pause();
-      store.dispatch(setMusic(false));
-      LocalStorageService.setItem(LocalStorageKeys.music, false);
       return;
     }
     this.startSceneBtns.btnMusic.icon.setTexture(TextureKeys.MusicOn);
-    this.music.play();
-    store.dispatch(setMusic(true));
-    LocalStorageService.setItem(LocalStorageKeys.music, true);
   }
 
   private changeLang(): void {

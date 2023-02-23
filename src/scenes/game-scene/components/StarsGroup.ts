@@ -4,6 +4,7 @@ import { TextureKeys } from 'types/enums';
 import TweenAnimationBuilder from 'utils/TweenAnimationBuilder';
 import { GAME_SCENE_ANIMATION } from 'const/scenes/GameSceneConsts';
 import { LevelElements } from 'types/types';
+import { textures } from 'const/TileConfig';
 
 export default class StarsGroup extends Phaser.GameObjects.Group {
   tweenAnimationBuilder: TweenAnimationBuilder;
@@ -14,27 +15,28 @@ export default class StarsGroup extends Phaser.GameObjects.Group {
     super(scene);
     this.tweenAnimationBuilder = new TweenAnimationBuilder();
     tiles.forEach((tile) => {
-      this.create(tile.x, tile.y, 'star.png');
+      this.create(tile.x, tile.y, textures.star);
     });
     this.scene.add.existing(this);
+    console.log(this);
   }
 
   public create(x: number, y: number, texture: string): void {
-    const tile = this.scene.matter.add.image(x, y, texture, undefined).setScale(0);
-
-    tile.setTexture(TextureKeys.Platforms, texture);
+    const shapes = this.scene.cache.json.get('star');
+    const starBody = this.scene.matter.add.fromPhysicsEditor(x, y, shapes.star, undefined, false);
+    const tile = this.scene.matter.add
+      .sprite(x, y, TextureKeys.Platforms, texture)
+      .setScale(0);
 
     tile.setBody(
+      { width: tile.width, height: tile.height },
       {
-        width: 41,
-        height: 41,
-      },
-      {
-        isStatic: true,
+        vertices: starBody.vertices,
         isSensor: true,
+        isStatic: true,
       },
     );
-
+    tile.setTexture(TextureKeys.Platforms, texture);
     this.add(tile);
   }
 
