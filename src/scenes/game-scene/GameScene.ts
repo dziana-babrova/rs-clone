@@ -10,6 +10,7 @@ import MapService from 'services/MapService';
 import { axiosUpdateMaps, setMaps } from 'state/features/AppSlice';
 import LocalStorageService from 'services/LocalStorageService';
 import { LocalStorageKeys } from 'const/AppConstants';
+import { Levels } from 'const/levels/Levels';
 import NextLevelButton from './components/next-level-popup/NextLevelButton';
 import ElementsManager from './components/ElementsManager';
 import Fireworks from './components/Fireworks';
@@ -53,7 +54,7 @@ export default class GameScene extends Phaser.Scene implements IComponentManager
 
   async create() {
     this.cameras.main.fadeIn();
-    this.elementsManager = new ElementsManager(this, this.level, 41);
+    this.elementsManager = new ElementsManager(this, Levels[this.level], 41);
     await this.elementsManager.create();
 
     this.addComponents(this.elementsManager.trajectory, this.elementsManager.ball);

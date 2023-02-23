@@ -10,6 +10,10 @@ import LocalStorageService from 'services/LocalStorageService';
 import { LocalStorageKeys } from 'const/AppConstants';
 import { axiosSignOut } from 'state/features/UserSlice';
 import { setLang, setMusic } from 'state/features/AppSlice';
+import { axiosCreateMaps, setLang, setMusic } from 'state/features/AppSlice';
+import store from 'state/store';
+import { emptyLevel } from 'const/levels/Levels';
+import ElementsManager from 'scenes/game-scene/components/ElementsManager';
 import SoundService from 'services/SoundService';
 import LogoGroup from './components/LogoGroup';
 import LangBtn from './components/LangBtn';
@@ -56,6 +60,7 @@ export default class StartScene extends Phaser.Scene {
     this.startSceneBtns = new StartSceneBtns(this);
     this.authPopup = new AuthPopup(this);
     this.langBtn = new LangBtn(this);
+    const golfCourse = new ElementsManager(this, emptyLevel, 41);
 
     await Promise.all([
       this.logoGroup.show(),
@@ -69,6 +74,16 @@ export default class StartScene extends Phaser.Scene {
     SoundService.playMusic(this, SoundsKeys.Music);
 
     this.initEvents();
+
+    await golfCourse.create();
+    golfCourse.ball.setVelocityX(25);
+
+    this.music = this.sound.add('music', {
+      volume: 0.2,
+      loop: true,
+    });
+
+    if (store.getState().app.music) this.music.play();
   }
 
   private initEvents(): void {
