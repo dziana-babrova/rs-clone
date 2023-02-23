@@ -1,7 +1,7 @@
 import platfrom from 'assets/platforms.png';
 import texture from 'assets/platforms.json';
 import {
-  SceneKeys, TextureKeys, AnimationKeys, SoundsKeys,
+  SceneKeys, TextureKeys, AnimationKeys, SoundsKeys, BackgroundKeys,
 } from 'types/enums';
 import START_SCENE from 'const/scenes/StartSceneConst';
 import PRELOAD_SCENE from 'const/scenes/PreloadSceneConsts';
@@ -9,7 +9,7 @@ import Phaser from 'phaser';
 import LocalStorageService from 'services/LocalStorageService';
 import { LocalStorageKeys } from 'const/AppConstants';
 import {
-  axiosGetMaps, setLang, setMusic, setSound,
+  axiosGetMaps, setBackground, setLang, setMusic, setSound,
 } from 'state/features/AppSlice';
 import store from 'state/store';
 import { Language } from 'const/Language';
@@ -64,6 +64,8 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.image(TextureKeys.Next, '../assets/next.svg');
     this.load.image(TextureKeys.Restart, '../assets/restart.svg');
     this.load.image(TextureKeys.Ball, '../assets/Golf-Ball-big.png');
+    this.load.image(TextureKeys.MiniBall, '../assets/mini-ball.png');
+    this.load.image(TextureKeys.Saw, '../assets/saw.png');
     this.load.image(TextureKeys.LevelEmpty, '../assets/levelEmpty.svg');
     this.load.image(TextureKeys.LevelOneStar, '../assets/level1.svg');
     this.load.image(TextureKeys.LevelTwoStars, '../assets/level2.svg');
@@ -72,10 +74,18 @@ export default class PreloadScene extends Phaser.Scene {
 
     this.load.atlas(TextureKeys.Platforms, platfrom, texture);
     this.load.atlas(TextureKeys.Flag, '../assets/flag.png', '../assets/flag.json');
+    this.load.atlas(
+      TextureKeys.Background,
+      '../assets/background.png',
+      '../assets/background.json',
+    );
+    this.load.atlas(TextureKeys.Water, '../assets/water.png', '../assets/water.json');
+
+    this.load.json('star', '../assets/star.json');
 
     this.textures.generate(TextureKeys.Fireworks, PRELOAD_SCENE.fireworksTexture);
 
-    this.load.audio('music', '../assets/music.mp3');
+    this.load.audio(SoundsKeys.Music, '../assets/music.mp3');
     this.load.audio(SoundsKeys.Hit, '../assets/music/hit.mp3');
     this.load.audio(SoundsKeys.Firework, '../assets/music/firework.mp3');
     this.load.audio(SoundsKeys.Ready, '../assets/music/ready.mp3');
@@ -92,13 +102,15 @@ export default class PreloadScene extends Phaser.Scene {
         this.load.image(btn, `../assets/${btn}.svg`);
       }
     });
+
+    this.load.atlas('player1', 'assets/players/player1/player1.png', 'assets/players/player1/player1.json');
+    this.load.atlas('player2', 'assets/players/player2/player2.png', 'assets/players/player2/player2.json');
   }
 
   public create(): void {
     this.anims.create({
       key: AnimationKeys.Wave,
       frames: this.anims.generateFrameNames(TextureKeys.Flag, {
-        prefix: '',
         start: 1,
         end: 16,
         suffix: '.png',
@@ -139,8 +151,12 @@ export default class PreloadScene extends Phaser.Scene {
     const lsLang: Language | null = LocalStorageService.getItem(LocalStorageKeys.lang);
     const lsMusic: boolean | null = LocalStorageService.getItem(LocalStorageKeys.music);
     const lsSound: boolean | null = LocalStorageService.getItem(LocalStorageKeys.sound);
+    const lsBackground: BackgroundKeys | null = LocalStorageService.getItem(
+      LocalStorageKeys.background,
+    );
     if (lsLang !== null) store.dispatch(setLang(lsLang));
     if (lsMusic !== null) store.dispatch(setMusic(lsMusic));
     if (lsSound !== null) store.dispatch(setSound(lsSound));
+    if (lsBackground !== null) store.dispatch(setBackground(lsBackground));
   }
 }

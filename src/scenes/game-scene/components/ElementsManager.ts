@@ -9,11 +9,15 @@ import StarsGroup from './StarsGroup';
 import Map from './Map';
 import Flag from './Flag';
 import Cup from './golf-course/Cup';
+import SawGroup from './SawGroup';
+import HoleBar from './golf-course/HoleBar';
 
 export default class ElementsManager extends Phaser.GameObjects.Container {
   mapService: MapService;
 
   mapElements!: LevelElements[];
+
+  level: number;
 
   map!: Map;
 
@@ -27,10 +31,13 @@ export default class ElementsManager extends Phaser.GameObjects.Container {
 
   cup!: Cup;
 
+  saws!: SawGroup;
+
   constructor(scene: Scene, level: number, tileSize: number) {
     super(scene);
     this.mapService = new MapService(tileSize);
-    this.mapElements = this.mapService.createLevelConfig(Levels[level]);
+    this.mapElements = this.mapService.createLevelConfig(Levels[level].map);
+    this.level = level;
   }
 
   async create() {
@@ -45,6 +52,7 @@ export default class ElementsManager extends Phaser.GameObjects.Container {
       ElementTypeKeys.Flag,
     )[0];
     const cupConfig = this.mapService.getFilteredElements(this.mapElements, ElementTypeKeys.Cup)[0];
+    const sawConfig = this.mapService.getFilteredElements(this.mapElements, ElementTypeKeys.Saw);
 
     this.map = this.mapService.createMap(this.scene, this.mapElements);
     await this.map.animate();
@@ -58,5 +66,8 @@ export default class ElementsManager extends Phaser.GameObjects.Container {
     this.flag = new Flag(this.scene, flagConfig.x, flagConfig.y);
     await this.flag.animate();
     this.cup = new Cup(this.scene, cupConfig);
+    this.saws = new SawGroup(this.scene, sawConfig, Levels[this.level]);
+    const bar = new HoleBar(this.scene, flagConfig);
+    bar.setDepth(300);
   }
 }

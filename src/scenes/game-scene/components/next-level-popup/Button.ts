@@ -28,6 +28,7 @@ export default class Button extends Phaser.GameObjects.Group {
     this.add(button, true);
     this.add(icon, true);
 
+    this.setDepth(202);
     this.scene.add.existing(this);
   }
 

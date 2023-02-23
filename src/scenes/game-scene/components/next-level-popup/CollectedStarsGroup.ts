@@ -1,6 +1,7 @@
 import { GAME_SCENE_ANIMATION, GAME_SCENE } from 'const/scenes/GameSceneConsts';
 import { Scene } from 'phaser';
 import SoundService from 'services/SoundService';
+import { SoundsKeys } from 'types/enums';
 import TweenAnimationBuilder from 'utils/TweenAnimationBuilder';
 import StarTemplateGroup from './StarTemplateGroup';
 
@@ -18,6 +19,7 @@ export default class CollectedStarsGroup extends StarTemplateGroup {
     super(scene, color, alpha);
     this.tweenAnimationBuilder = new TweenAnimationBuilder();
     this.starsY = [];
+    this.setDepth(202);
 
     this.getChildren().forEach((star) => {
       if (star instanceof Phaser.GameObjects.Star) {
@@ -36,7 +38,7 @@ export default class CollectedStarsGroup extends StarTemplateGroup {
       GAME_SCENE_ANIMATION.starAnimation.ease,
       GAME_SCENE_ANIMATION.starAnimation.duration,
     );
-    SoundService.resultStarSound(this.scene);
+    SoundService.playSound(this.scene, SoundsKeys.ResultStar);
   }
 
   async pulse(index: number): Promise<void> {

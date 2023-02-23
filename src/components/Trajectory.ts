@@ -15,6 +15,8 @@ export default class Trajectory extends GameObjects.Group implements IComponent 
 
   public distance: number = 0;
 
+  private isVelocityXPositive = true;
+
   constructor(scene: Scene) {
     super(scene);
     this.scene = scene;
@@ -23,6 +25,7 @@ export default class Trajectory extends GameObjects.Group implements IComponent 
     for (let i = 0; i < NUM_OF_POINTS; i += 1) {
       const circle = scene.add.circle(-100, -100, RADIUS, COLOR);
       circle.setAlpha((NUM_OF_POINTS - (i - 2)) / NUM_OF_POINTS);
+      circle.setDepth(110);
       this.add(circle);
     }
     // Add event listeners
@@ -56,6 +59,14 @@ export default class Trajectory extends GameObjects.Group implements IComponent 
     });
   }
 
+  private checkVelocityChange(velocityX: number) {
+    const isPositive = velocityX > 0;
+    if (this.isVelocityXPositive !== isPositive) {
+      this.scene.events.emit(EventNames.ChangeTrajectory, isPositive);
+      this.isVelocityXPositive = isPositive;
+    }
+  }
+
   update() {
     if (!this.isAiming) return;
     // Get potential speed
@@ -63,6 +74,7 @@ export default class Trajectory extends GameObjects.Group implements IComponent 
       this.hitAngle,
       this.distance,
     );
+    this.checkVelocityChange(velocityX);
     // Get x and y to all points
     this.getChildren().forEach((child, id) => {
       const time = id * 3.5;

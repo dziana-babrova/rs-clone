@@ -1,8 +1,8 @@
-import { LevelElements, Level, Maps } from 'types/types';
-import { Levels } from 'const/levels/Levels';
+import { LevelElements, Maps } from 'types/types';
 import config from 'const/TileConfig';
 import { ElementTypeKeys } from 'types/enums';
 import { Scene } from 'phaser';
+import { Levels } from 'const/levels/Levels';
 import Map from 'scenes/game-scene/components/Map';
 
 export default class MapService {
@@ -12,7 +12,7 @@ export default class MapService {
     this.tileSize = tileSize;
   }
 
-  public createLevelConfig(levelScheme: Level) {
+  public createLevelConfig(levelScheme: string[]) {
     const levelElements: LevelElements[] = [];
     levelScheme.forEach((row, y) => {
       for (let i = 0; i < row.length; i += 1) {
@@ -56,11 +56,12 @@ export default class MapService {
       ElementTypeKeys.Flag,
       ElementTypeKeys.Cup,
     );
-    return new Map(scene, groundConfig, leftSlopeConfig, rightSlopeConfig, holeConfig);
+    const waterConfig = this.getFilteredElements(elements, ElementTypeKeys.Water);
+    return new Map(scene, groundConfig, leftSlopeConfig, rightSlopeConfig, holeConfig, waterConfig);
   }
 
   static getDefaultMapsObject(): Maps {
-    return Levels.map((el, index) => ({
+    return Levels.map((_el, index) => ({
       id: index,
       isUnlock: index === 0,
       stars: 0,

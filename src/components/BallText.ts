@@ -3,6 +3,7 @@ import LANGUAGE from 'const/Language';
 import { GameObjects, Scene } from 'phaser';
 import store from 'state/store';
 import SoundService from 'services/SoundService';
+import { SoundsKeys } from 'types/enums';
 
 export default class BallText extends GameObjects.Text {
   scene: Scene;
@@ -15,6 +16,7 @@ export default class BallText extends GameObjects.Text {
     this.scene.add.existing(this);
     this.alpha = 0;
     this.setOrigin(0.5, 0.5);
+    this.setDepth(100);
   }
 
   show() {
@@ -25,8 +27,8 @@ export default class BallText extends GameObjects.Text {
       scale: 1.5,
       duration: ballText.duration,
       ease: 'Sine.easeInOut',
-      delay: 100,
-      onStart: () => SoundService.readySound(this.scene),
+      delay: 300,
+      onStart: () => SoundService.playSound(this.scene, SoundsKeys.Ready),
       onComplete: this.stop.bind(this),
     });
   }

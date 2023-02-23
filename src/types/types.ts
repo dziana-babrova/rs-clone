@@ -1,5 +1,7 @@
 import { Language } from 'const/Language';
-import { ColorsNumber, Colors, FormInputsKeys } from './enums';
+import {
+  ColorsNumber, Colors, FormInputsKeys, BackgroundKeys,
+} from './enums';
 
 export type TextObjectProps = {
   x: number;
@@ -57,7 +59,20 @@ export type IconButtonParams = {
   hoverBgColor: ColorsNumber;
 };
 
-export type Level = string[];
+export type Level = {
+  map: string[],
+  saw?: Saw,
+};
+
+export type Saw = {
+  type: SawType;
+  directionX: number;
+  directionY: number;
+  angle: number;
+  distance: number;
+};
+
+export type SawType = 'rotate' | 'move' | '';
 
 export type TileProps = {
   type: string;
@@ -91,6 +106,7 @@ export interface IAppState {
   lang: Language;
   music: boolean;
   sound: boolean;
+  background: BackgroundKeys;
 }
 
 export type User = {
@@ -133,7 +149,38 @@ export type ClientValidationError = Pick<ServerValidationError, 'param' | 'msg'>
 
 export type ValidationErrorType = ServerValidationError | ClientValidationError;
 export type MapDescription = {
-  id: number,
-  isUnlock: boolean,
-  stars: number
+  id: number;
+  isUnlock: boolean;
+  stars: number;
 };
+
+export type CharacterSettings = {
+  texture: string;
+  basicFrame: string;
+  scale: number;
+  correction: number;
+  animations: CharacterAnimation;
+};
+
+export type CharacterAnimation = {
+  prepare: AnimationDescription;
+  hit: AnimationDescription;
+  back: AnimationDescription;
+};
+
+export type AnimationDescription = {
+  name: string;
+  prefix: string;
+  postfix: string;
+  start: number;
+  end: number;
+  zeroPad: number;
+  frameRate: number;
+};
+
+export type Winner = {
+  username: string;
+  stars: number;
+};
+
+export type WinnersResponse = Winner[];
