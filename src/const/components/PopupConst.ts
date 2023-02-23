@@ -38,6 +38,12 @@ const POPUP = {
     lineWidth: 5,
   },
 
+  labelText: {
+    font: '38px Montserrat',
+    color: '#ffffff',
+    align: 'center',
+  },
+
   levels: {
     labelText: {
       font: '38px Montserrat',
@@ -45,6 +51,11 @@ const POPUP = {
       align: 'center',
     },
   },
+};
+
+export const POPUP_ANIMATION = {
+  ease: 'Sinusoidal',
+  duration: 1000,
 };
 
 export default POPUP;

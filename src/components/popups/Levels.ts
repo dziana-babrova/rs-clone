@@ -38,6 +38,7 @@ export default class Levels extends SettingsPopup {
   }
 
   private chooseLevel(id: number) {
+    this.destroy();
     this.startLevel(id);
   }
 
@@ -49,7 +50,7 @@ export default class Levels extends SettingsPopup {
     const popupWidth = POPUP.canvas.levels.width;
     const popupHeight = POPUP.canvas.levels.height;
 
-    const imageTexture = this.scene.textures.get(TextureKeys.LevelNoStars).getSourceImage();
+    const imageTexture = this.scene.textures.get(TextureKeys.LevelEmpty).getSourceImage();
 
     const imageWidth = imageTexture.width;
     const imageHeight = imageTexture.height;

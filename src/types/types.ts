@@ -184,3 +184,8 @@ export type Winner = {
 };
 
 export type WinnersResponse = Winner[];
+
+export type Size = {
+  width: number,
+  height: number,
+};

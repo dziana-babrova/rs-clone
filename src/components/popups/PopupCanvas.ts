@@ -1,9 +1,8 @@
 import { Scene } from 'phaser';
 import { ColorsNumber, Move, TextureKeys } from 'types/enums';
-import { GAME_SCENE, GAME_SCENE_ANIMATION } from 'const/scenes/GameSceneConsts';
 import TweenAnimationBuilder from 'utils/TweenAnimationBuilder';
 import { Size } from 'types/types';
-import POPUP from 'const/components/PopupConst';
+import POPUP, { POPUP_ANIMATION } from 'const/components/PopupConst';
 
 export default class PopupCanvasGroup extends Phaser.GameObjects.Container {
   size: Size;
@@ -136,7 +135,7 @@ export default class PopupCanvasGroup extends Phaser.GameObjects.Container {
         this.scene.cameras.main.centerX,
         y + (POPUP.labelFill.height / 2),
         title,
-        GAME_SCENE.nextLevelPopup.labelText,
+        POPUP.labelText,
       )
       .setOrigin(0.5);
 
@@ -157,8 +156,8 @@ export default class PopupCanvasGroup extends Phaser.GameObjects.Container {
       this.scene,
       this,
       type === Move.Show ? this.point / 5 : POPUP.y,
-      GAME_SCENE_ANIMATION.popupAnimation.ease,
-      GAME_SCENE_ANIMATION.popupAnimation.duration,
+      POPUP_ANIMATION.ease,
+      POPUP_ANIMATION.duration,
     );
   }
 }

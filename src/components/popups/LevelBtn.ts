@@ -69,7 +69,7 @@ export default class LevelBtn extends GameObjects.Container {
           break;
         }
         default: {
-          texture = TextureKeys.LevelNoStars;
+          texture = TextureKeys.LevelEmpty;
         }
       }
     }

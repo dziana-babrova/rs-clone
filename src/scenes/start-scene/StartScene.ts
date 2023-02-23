@@ -9,8 +9,10 @@ import store from 'state/store';
 import LocalStorageService from 'services/LocalStorageService';
 import { LocalStorageKeys } from 'const/AppConstants';
 import { axiosSignOut } from 'state/features/UserSlice';
-import { setLang, setMusic } from 'state/features/AppSlice';
+import { setLang, setMaps, setMusic } from 'state/features/AppSlice';
 import SoundService from 'services/SoundService';
+import MapService from 'services/MapService';
+import { Maps } from 'types/types';
 import LogoGroup from './components/LogoGroup';
 import LangBtn from './components/LangBtn';
 import AuthBtn from './components/AuthBtn';
@@ -87,9 +89,14 @@ export default class StartScene extends Phaser.Scene {
   }
 
   private createSettingsPopup(type: SettinsPopupKeys): void {
+    this.handleInteractiveStartScreen(false);
     switch (type) {
       case SettinsPopupKeys.Levels: {
         this.settingsPopup = new Levels(this);
+        if (this.settingsPopup instanceof Levels) {
+          this.settingsPopup.startLevel = this.startSingleGame.bind(this);
+        }
+        this.settingsPopup.onClosePopup = this.handleInteractiveStartScreen.bind(this, true);
         break;
       }
       case SettinsPopupKeys.Landscape: {
@@ -104,10 +111,20 @@ export default class StartScene extends Phaser.Scene {
     }
   }
 
+  private handleInteractiveStartScreen(isActive: boolean): void {
+    if (isActive) {
+      this.authBtn.setInteractive();
+      this.langBtn.setInteractive();
+    } else {
+      this.authBtn.disableInteractive();
+      this.langBtn.disableInteractive();
+    }
+  }
+
   private turnOnOffSound(): void {
     const isPlaying = store.getState().app.music;
     store.dispatch(setMusic(!isPlaying));
-    LocalStorageService.setItem(LocalStorageKeys.music, !isPlaying);
+    LocalStorageService.setItem<boolean>(LocalStorageKeys.music, !isPlaying);
     SoundService.playMusic(this, SoundsKeys.Music);
     if (isPlaying) {
       this.startSceneBtns.btnMusic.icon.setTexture(TextureKeys.MusicOff);
@@ -120,7 +137,7 @@ export default class StartScene extends Phaser.Scene {
     this.lang = NEXT_LANG[store.getState().app.lang];
     this.langBtn.setTexture(TextureKeys[this.lang]);
     store.dispatch(setLang(this.lang));
-    LocalStorageService.setItem(LocalStorageKeys.lang, this.lang);
+    LocalStorageService.setItem<Language>(LocalStorageKeys.lang, this.lang);
     this.updateText();
   }
 
@@ -152,11 +169,10 @@ export default class StartScene extends Phaser.Scene {
 
   private startSingleGame(level?: number): void {
     this.removeStartScreenObjects();
-    if (level) {
+    if (typeof level === 'number') {
       this.scene.start(SceneKeys.Game, { level });
       return;
     }
-
     this.scene.start(SceneKeys.Game);
   }
 

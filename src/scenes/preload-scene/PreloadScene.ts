@@ -9,17 +9,19 @@ import Phaser from 'phaser';
 import LocalStorageService from 'services/LocalStorageService';
 import { LocalStorageKeys } from 'const/AppConstants';
 import {
-  axiosGetMaps, setBackground, setLang, setMusic, setSound,
+  axiosCreateMaps,
+  axiosGetMaps, setBackground, setLang, setMaps, setMusic, setSound,
 } from 'state/features/AppSlice';
 import store from 'state/store';
 import { Language } from 'const/Language';
 import { axiosCheckAuth } from 'state/features/UserSlice';
+import MapService from 'services/MapService';
+import { Maps } from 'types/types';
 import ProgressAssets from './components/ProgressAssets';
 import ProgressBar from './components/ProgressBar';
 import ProgressBox from './components/ProgressBox';
 import ProgressPercentText from './components/ProgressPercentText';
 import ProgressText from './components/ProgressText';
-import MapsService from '../../../server/services/MapsService';
 
 export default class PreloadScene extends Phaser.Scene {
   progressBar!: ProgressBar;
@@ -49,13 +51,17 @@ export default class PreloadScene extends Phaser.Scene {
     if (LocalStorageService.getAccessToken()) {
       store.dispatch(axiosCheckAuth()).then(() => {
         if (store.getState().user.isAuth) {
-          store.dispatch(axiosGetMaps());
+          store.dispatch(axiosGetMaps()).then((response) => {
+            if ('error' in response) {
+              store.dispatch(axiosCreateMaps(MapService.getDefaultMapsObject()));
+            }
+          });
         } else {
-          MapsService.getMapsFromLS();
+          this.getMapsFromLocalStorage();
         }
       });
     } else {
-      MapsService.getMapsFromLS();
+      this.getMapsFromLocalStorage();
     }
     this.load.image(TextureKeys.Logo, '../assets/logo.png');
     this.load.image(TextureKeys.eng, '../assets/eng.png');
@@ -69,7 +75,7 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.image(TextureKeys.LevelEmpty, '../assets/levelEmpty.svg');
     this.load.image(TextureKeys.LevelOneStar, '../assets/level1.svg');
     this.load.image(TextureKeys.LevelTwoStars, '../assets/level2.svg');
-    this.load.image(TextureKeys.LevelThreeStars, '../assets/leve3.svg');
+    this.load.image(TextureKeys.LevelThreeStars, '../assets/level3.svg');
     this.load.image(TextureKeys.LevelLock, '../assets/levelLock.svg');
 
     this.load.atlas(TextureKeys.Platforms, platfrom, texture);
@@ -158,5 +164,15 @@ export default class PreloadScene extends Phaser.Scene {
     if (lsMusic !== null) store.dispatch(setMusic(lsMusic));
     if (lsSound !== null) store.dispatch(setSound(lsSound));
     if (lsBackground !== null) store.dispatch(setBackground(lsBackground));
+  }
+
+  private getMapsFromLocalStorage() {
+    console.log('getMapsFromLocalStorage');
+    const maps: Maps | null = LocalStorageService.getItem(LocalStorageKeys.maps);
+    if (maps === null) {
+      store.dispatch(setMaps(MapService.getDefaultMapsObject()));
+    } else {
+      store.dispatch(setMaps(maps));
+    }
   }
 }

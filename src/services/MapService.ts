@@ -1,4 +1,4 @@
-import { LevelElements, Maps } from 'types/types';
+import { LevelElements, MapDescription, Maps } from 'types/types';
 import config from 'const/TileConfig';
 import { ElementTypeKeys } from 'types/enums';
 import { Scene } from 'phaser';
@@ -66,5 +66,23 @@ export default class MapService {
       isUnlock: index === 0,
       stars: 0,
     }));
+  }
+
+  static updateMapsObject(maps: Maps, index: number, stars: number): Maps {
+    const indexMap: MapDescription = {
+      id: maps[index].id,
+      isUnlock: true,
+      stars,
+    };
+
+    const nextMap: MapDescription = {
+      id: maps[index + 1].id,
+      isUnlock: true,
+      stars: maps[index + 1].stars,
+    };
+
+    const newMaps: Maps = [...maps.slice(0, index), indexMap, nextMap, ...maps.slice(index + 2)];
+
+    return newMaps;
   }
 }

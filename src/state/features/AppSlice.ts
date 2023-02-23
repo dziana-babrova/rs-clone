@@ -23,7 +23,7 @@ undefined,
 >('app/axiosGetMaps', async (_: undefined, { rejectWithValue }) => {
   try {
     const mapsResponse = await MapsApiService.getMaps();
-    LocalStorageService.setItem<Maps>(LocalStorageKeys.levels, mapsResponse.data);
+    LocalStorageService.setItem<Maps>(LocalStorageKeys.maps, mapsResponse.data);
     return mapsResponse.data;
   } catch (e: unknown) {
     return rejectWithValue((e as AxiosError<AxiosErrorResponse>).response?.data);
