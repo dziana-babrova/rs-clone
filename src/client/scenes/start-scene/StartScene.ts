@@ -1,21 +1,23 @@
 import {
-  Colors, SceneKeys, SoundsKeys, TextureKeys,
+  Colors, SceneKeys, SettinsPopupKeys as SettingsPopupKeys, SoundsKeys, TextureKeys,
 } from 'common/types/enums';
 import { Language, NEXT_LANG } from 'client/const/Language';
 import { LocalStorageKeys } from 'client/const/AppConstants';
 import LocalStorageService from 'client/services/LocalStorageService';
 import { axiosSignOut } from 'client/state/features/UserSlice';
-import { axiosCreateMaps, setLang, setMusic } from 'client/state/features/AppSlice';
+import { setLang, setMusic } from 'client/state/features/AppSlice';
 import store from 'client/state/store';
 import SoundService from 'client/services/SoundService';
-import MapService from 'client/services/MapService';
-import Landscape from './components/Landscape';
+import Landscape from 'client/components/popups/Landscape';
+import Levels from 'client/components/popups/Levels';
+import Winners from 'client/components/popups/Winners';
+import { emptyLevel } from 'client/const/levels/Levels';
 import LangBtn from './components/LangBtn';
-import Levels from './components/Levels';
 import LogoGroup from './components/LogoGroup';
 import AuthBtn from './components/AuthBtn';
 import StartSceneBtns from './components/StartSceneBtns';
 import AuthPopup from './components/AuthPopup';
+import ElementsManager from '../game-scene/components/ElementsManager';
 
 export default class StartScene extends Phaser.Scene {
   lang: Language = Language.Eng;
@@ -31,6 +33,8 @@ export default class StartScene extends Phaser.Scene {
   authPopup!: AuthPopup;
 
   settingsPopup!: Levels | Landscape | Winners;
+
+  music!: Phaser.Sound.BaseSound;
 
   constructor() {
     super(SceneKeys.Start);
@@ -90,17 +94,17 @@ export default class StartScene extends Phaser.Scene {
     this.authBtn.on('pointerdown', this.authBtnHandler.bind(this));
     this.authPopup.onClosePopup = this.onClosePopup.bind(this);
 
-    this.startSceneBtns.btnLevels.background.on('pointerdown', this.createSettingsPopup.bind(this, SettinsPopupKeys.Levels));
-    this.startSceneBtns.btnLandscape.background.on('pointerdown', this.createSettingsPopup.bind(this, SettinsPopupKeys.Landscape));
-    this.startSceneBtns.btnWinners.background.on('pointerdown', this.createSettingsPopup.bind(this, SettinsPopupKeys.Winners));
+    this.startSceneBtns.btnLevels.background.on('pointerdown', this.createSettingsPopup.bind(this, SettingsPopupKeys.Levels));
+    this.startSceneBtns.btnLandscape.background.on('pointerdown', this.createSettingsPopup.bind(this, SettingsPopupKeys.Landscape));
+    this.startSceneBtns.btnWinners.background.on('pointerdown', this.createSettingsPopup.bind(this, SettingsPopupKeys.Winners));
 
     this.startSceneBtns.btnMusic.background.on('pointerdown', this.turnOnOffSound.bind(this));
   }
 
-  private createSettingsPopup(type: SettinsPopupKeys): void {
+  private createSettingsPopup(type: SettingsPopupKeys): void {
     this.handleInteractiveStartScreen(false);
     switch (type) {
-      case SettinsPopupKeys.Levels: {
+      case SettingsPopupKeys.Levels: {
         this.settingsPopup = new Levels(this);
         if (this.settingsPopup instanceof Levels) {
           this.settingsPopup.startLevel = this.startSingleGame.bind(this);
@@ -108,11 +112,11 @@ export default class StartScene extends Phaser.Scene {
         this.settingsPopup.onClosePopup = this.handleInteractiveStartScreen.bind(this, true);
         break;
       }
-      case SettinsPopupKeys.Landscape: {
+      case SettingsPopupKeys.Landscape: {
         this.settingsPopup = new Landscape(this);
         break;
       }
-      case SettinsPopupKeys.Winners: {
+      case SettingsPopupKeys.Winners: {
         this.settingsPopup = new Winners(this);
         break;
       }

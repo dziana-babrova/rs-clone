@@ -1,8 +1,8 @@
 import { Scene } from 'phaser';
-import { ColorsNumber, Move, TextureKeys } from 'types/enums';
-import TweenAnimationBuilder from 'utils/TweenAnimationBuilder';
-import { Size } from 'types/types';
-import POPUP, { POPUP_ANIMATION } from 'const/components/PopupConst';
+import { ColorsNumber, Move, TextureKeys } from 'common/types/enums';
+import TweenAnimationBuilder from 'client/utils/TweenAnimationBuilder';
+import { Size } from 'common/types/types';
+import POPUP, { POPUP_ANIMATION } from 'client/const/components/PopupConst';
 
 export default class PopupCanvasGroup extends Phaser.GameObjects.Container {
   size: Size;

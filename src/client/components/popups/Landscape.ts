@@ -1,7 +1,7 @@
-import POPUP from 'const/components/PopupConst';
-import LANGUAGE from 'const/Language';
+import POPUP from 'client/const/components/PopupConst';
+import LANGUAGE from 'client/const/Language';
 import { Scene } from 'phaser';
-import store from 'state/store';
+import store from 'client/state/store';
 import SettingsPopup from './SettingsPopup';
 
 export default class Landscape extends SettingsPopup {

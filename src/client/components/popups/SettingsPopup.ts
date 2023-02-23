@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
-import PopupCanvasGroup from 'components/popups/PopupCanvas';
-import { Size } from 'types/types';
+import PopupCanvasGroup from 'client/components/popups/PopupCanvas';
+import { Size } from 'common/types/types';
 
 export default class SettingsPopup extends PopupCanvasGroup {
   onClosePopup!: () => void;

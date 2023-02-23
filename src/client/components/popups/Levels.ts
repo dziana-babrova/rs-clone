@@ -1,9 +1,9 @@
-import POPUP from 'const/components/PopupConst';
-import LANGUAGE from 'const/Language';
+import POPUP from 'client/const/components/PopupConst';
+import LANGUAGE from 'client/const/Language';
 import { Scene } from 'phaser';
-import store from 'state/store';
-import { TextureKeys } from 'types/enums';
-import { Position } from 'types/types';
+import store from 'client/state/store';
+import { TextureKeys } from 'common/types/enums';
+import { Position } from 'common/types/types';
 import LevelBtn from './LevelBtn';
 import SettingsPopup from './SettingsPopup';
 

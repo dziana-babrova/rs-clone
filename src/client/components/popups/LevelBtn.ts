@@ -1,7 +1,7 @@
-import POPUP from 'const/components/PopupConst';
+import POPUP from 'client/const/components/PopupConst';
 import { GameObjects, Scene } from 'phaser';
-import { TextureKeys } from 'types/enums';
-import { MapDescription, Position } from 'types/types';
+import { TextureKeys } from 'common/types/enums';
+import { MapDescription, Position } from 'common/types/types';
 
 export default class LevelBtn extends GameObjects.Container {
   id: number;

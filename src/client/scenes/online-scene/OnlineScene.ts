@@ -1,7 +1,6 @@
 import { SceneKeys } from 'common/types/enums';
 import store from 'client/state/store';
 import Background from 'client/components/background/Background';
-import PhaserMatterCollisionPlugin from 'phaser-matter-collision-plugin';
 import { Socket } from 'socket.io-client';
 import { DefaultEventsMap } from 'socket.io/dist/typed-events';
 import SocketService from 'client/services/SocketService';
@@ -9,8 +8,6 @@ import OnlineManager from 'client/managers/OnlineManager';
 
 export default class OnlineScene extends Phaser.Scene {
   elementsManager!: OnlineManager;
-
-  matterCollision!: PhaserMatterCollisionPlugin;
 
   background!: Background;
 

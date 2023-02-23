@@ -2,8 +2,8 @@
 
 import { ColorsNumber, TextureKeys } from 'common/types/enums';
 import { GAME_SCENE } from 'client/const/scenes/GameSceneConsts';
-import PopupCanvasGroup from 'components/popups/PopupCanvas';
-import POPUP from 'const/components/PopupConst';
+import PopupCanvasGroup from 'client/components/popups/PopupCanvas';
+import POPUP from 'client/const/components/PopupConst';
 import LANGUAGE from 'client/const/Language';
 import store from 'client/state/store';
 import StarTemplateGroup from './StarTemplateGroup';
