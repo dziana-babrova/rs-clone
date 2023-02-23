@@ -185,6 +185,12 @@ export type Winner = {
 
 export type WinnersResponse = Winner[];
 
+export type Size = {
+  width: number,
+  height: number,
+  shift: number,
+};
+
 export interface IPlayerInfo {
   id: 1 | 2;
   socketId: string;

@@ -22,36 +22,6 @@ export const GAME_SCENE = {
   nextLevelPopup: {
     y: -3000,
 
-    canvasFill: {
-      width: 600,
-      height: 300,
-      radius: 10,
-      lineColor: 0x000000,
-      lineWidth: 5,
-    },
-
-    canvasStroke: {
-      width: 616,
-      height: 316,
-      radius: 10,
-      lineColor: 0x000000,
-      lineWidth: 5,
-    },
-
-    labelFill: {
-      width: 400,
-      height: 60,
-      radius: 30,
-      lineColor: 0x000000,
-      lineWidth: 5,
-    },
-
-    labelText: {
-      font: '38px Montserrat',
-      color: '#ffffff',
-      align: 'center',
-    },
-
     star: {
       initialY: -1000,
       indexCenterX: 2.7,

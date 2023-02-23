@@ -2,10 +2,13 @@
 
 import { ColorsNumber, TextureKeys } from 'common/types/enums';
 import { GAME_SCENE } from 'client/const/scenes/GameSceneConsts';
-import Button from './Button';
-import CollectedStarsGroup from './CollectedStarsGroup';
-import PopupCanvasGroup from './PopupCanvas';
+import PopupCanvasGroup from 'components/popups/PopupCanvas';
+import POPUP from 'const/components/PopupConst';
+import LANGUAGE from 'client/const/Language';
+import store from 'client/state/store';
 import StarTemplateGroup from './StarTemplateGroup';
+import CollectedStarsGroup from './CollectedStarsGroup';
+import Button from './Button';
 
 export default class NextLevelButton extends Phaser.GameObjects.Container {
   constructor(scene: Phaser.Scene) {
@@ -18,7 +21,12 @@ export default class NextLevelButton extends Phaser.GameObjects.Container {
     stars: number,
     nextLevelHandler: (nextLevel: boolean) => void,
   ): Promise<void> {
-    const canvas = new PopupCanvasGroup(this.scene);
+    const canvas = new PopupCanvasGroup(
+      this.scene,
+      LANGUAGE.gameScene.win[store.getState().app.lang],
+      POPUP.canvas.nextLevel,
+      false,
+    );
     await canvas.show();
     const starsTemplate = new StarTemplateGroup(
       this.scene,

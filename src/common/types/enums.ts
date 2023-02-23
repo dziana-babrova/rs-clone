@@ -41,6 +41,11 @@ export enum TextureKeys {
   MiniBall = 'mini-ball',
   Background = 'background',
   Water = 'water',
+  LevelEmpty = 'LevelEmpty',
+  LevelOneStar = 'LevelOneStar',
+  LevelTwoStars = 'LevelTwoStars',
+  LevelThreeStars = 'LevelThreeStars',
+  LevelLock = 'LevelLock',
 }
 
 export enum Colors {
@@ -150,4 +155,10 @@ export enum BackgroundFrames {
   Moon = 'moon.png',
   BigCloud = 'cloud1.png',
   SmallCloud = 'cloud2.png',
+}
+
+export enum SettinsPopupKeys {
+  Levels = 'levels',
+  Landscape = 'landscape',
+  Winners = 'winners',
 }

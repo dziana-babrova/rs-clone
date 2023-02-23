@@ -4,8 +4,13 @@ import store from 'client/state/store';
 import Phaser from 'phaser';
 import { EventNames } from 'common/types/events';
 import SingleplayerManager from 'client/managers/SingleplayerManager';
-import { IComponent, IComponentManager } from 'common/types/types';
+import { IComponent, IComponentManager, Maps } from 'common/types/types';
 import SoundService from 'client/services/SoundService';
+import MapService from 'client/services/MapService';
+import { axiosUpdateMaps, setMaps } from 'client/state/features/AppSlice';
+import LocalStorageService from 'client/services/LocalStorageService';
+import { LocalStorageKeys } from 'client/const/AppConstants';
+import { Levels } from 'client/const/levels/Levels';
 import NextLevelButton from './components/next-level-popup/NextLevelButton';
 import ElementsManager from './components/ElementsManager';
 import Fireworks from './components/Fireworks';
@@ -38,14 +43,18 @@ export default class GameScene extends Phaser.Scene implements IComponentManager
   }
 
   init(props: { level?: number }) {
-    const { level = 0 } = props;
+    let { level = -1 } = props;
+    if (level === -1) {
+      const unlockedMaps = store.getState().app.maps.filter((map) => map.isUnlock);
+      level = unlockedMaps[unlockedMaps.length - 1]?.id || 0;
+    }
     this.level = level;
     this.background = new Background(this, store.getState().app.background);
   }
 
   async create() {
     this.cameras.main.fadeIn();
-    this.elementsManager = new ElementsManager(this, this.level, 41);
+    this.elementsManager = new ElementsManager(this, Levels[this.level], 41);
     await this.elementsManager.create();
 
     this.addComponents(this.elementsManager.trajectory, this.elementsManager.ball);
@@ -67,8 +76,23 @@ export default class GameScene extends Phaser.Scene implements IComponentManager
       const fireworks = new Fireworks();
       fireworks.create(this, this.elementsManager.cup.x, this.elementsManager.cup.y);
     });
+    this.events.on(EventNames.Win, this.updateMaps.bind(this));
     this.events.on(EventNames.Win, this.displayWinPopup.bind(this));
     this.events.on(EventNames.GameOver, this.handleGameOver.bind(this));
+  }
+
+  private async updateMaps() {
+    const { maps } = store.getState().app;
+    const index = maps.findIndex((map) => map.id === this.level);
+    if (index !== -1) {
+      const newMaps = MapService.updateMapsObject(maps, index, this.starsCount);
+      if (store.getState().user.isAuth) {
+        await store.dispatch(axiosUpdateMaps(newMaps));
+      } else {
+        store.dispatch(setMaps(newMaps));
+      }
+      LocalStorageService.setItem<Maps>(LocalStorageKeys.maps, newMaps);
+    }
   }
 
   private displayWinPopup() {
