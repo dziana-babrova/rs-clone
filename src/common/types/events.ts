@@ -22,6 +22,8 @@ export enum SocketEvents {
   PlayerHit = 'player-hit',
   ErrorMessage = 'error-message',
   RoomConnect = 'room-connect',
+  RoomCreate = 'room-create',
+  AutoConnect = 'auto-connect',
   HitBall = 'hit-ball',
 }
 

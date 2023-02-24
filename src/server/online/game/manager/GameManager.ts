@@ -63,13 +63,18 @@ export default class GameManager {
     this.map = this.createTemplate(multiPlayerMap);
   }
 
-  switchTarget(target = 0) {
+  async switchTarget(target = 0) {
     if (this.target) {
       this.target.each((el: Phaser.Physics.Matter.Sprite) => el.destroy());
     }
     this.target = this.createTemplate(targets[target]);
     this.socketService.emitSwitchTarget(targets[target]);
-    this.getStartBalls();
+    if (target === 0){
+      await this.delay(3000);
+      this.getStartBalls();
+    } else {
+      this.getStartBalls();
+    }
     this.isAvailable = true;
   }
 

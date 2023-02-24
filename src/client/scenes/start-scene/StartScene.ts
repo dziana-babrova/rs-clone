@@ -18,6 +18,10 @@ import AuthBtn from './components/AuthBtn';
 import StartSceneBtns from './components/StartSceneBtns';
 import AuthPopup from './components/AuthPopup';
 import ElementsManager from '../game-scene/components/ElementsManager';
+import SocketService from 'client/services/SocketService';
+import { Server } from 'socket.io';
+import { Socket } from 'socket.io-client';
+import { DefaultEventsMap } from 'socket.io/dist/typed-events';
 
 export default class StartScene extends Phaser.Scene {
   lang: Language = Language.Eng;
@@ -36,12 +40,17 @@ export default class StartScene extends Phaser.Scene {
 
   music!: Phaser.Sound.BaseSound;
 
+  socketService!: SocketService;
+
+  socket!: Socket<DefaultEventsMap, DefaultEventsMap>;
+
   constructor() {
     super(SceneKeys.Start);
   }
 
   public init(): void {
     this.cameras.main.setBackgroundColor(Colors.StartSceneBG);
+    this.socketService = new SocketService();
   }
 
   public preload(): void {
@@ -146,12 +155,17 @@ export default class StartScene extends Phaser.Scene {
     this.startSceneBtns.btnMusic.icon.setTexture(TextureKeys.MusicOn);
   }
 
-  private changeLang(): void {
+  async changeLang(): Promise<void> {
     this.lang = NEXT_LANG[store.getState().app.lang as Language];
     this.langBtn.setTexture(TextureKeys[this.lang]);
     store.dispatch(setLang(this.lang));
     LocalStorageService.setItem<Language>(LocalStorageKeys.lang, this.lang);
     this.updateText();
+    const socket = await this.socketService.join();
+    this.socket = socket;
+    this.socketService.createRoom('tester');
+    console.log(socket);
+    this.goToOnline();
   }
 
   private updateText(): void {
@@ -189,9 +203,13 @@ export default class StartScene extends Phaser.Scene {
     this.scene.start(SceneKeys.Game);
   }
 
-  private startOnlineGame(): void {
+  async startOnlineGame() {
     this.removeStartScreenObjects();
-    this.scene.start(SceneKeys.Online);
+    const socket = await this.socketService.join();
+    this.socket = socket;
+    this.socketService.connectToRoom('tester');
+    this.goToOnline();
+    // this.scene.start(SceneKeys.Online);
   }
 
   private removeStartScreenObjects(): void {
@@ -200,5 +218,9 @@ export default class StartScene extends Phaser.Scene {
     this.authBtn.destroy();
     this.authPopup.destroy();
     this.langBtn.destroy();
+  }
+
+  goToOnline(){
+    this.scene.start(SceneKeys.Online, this.socketService);
   }
 }

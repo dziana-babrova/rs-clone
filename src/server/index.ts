@@ -9,7 +9,7 @@ import errorMiddleware from './middleware/error-middleware';
 import authRouter from './routers/AuthRouter';
 import mapsRouter from './routers/MapsRouter';
 import winnersRouter from './routers/WinnersRouter';
-import SocketController from './online/socket/SocketController';
+import SocketController from './online/controller/SocketController';
 import State from './online/state/State';
 
 dotenv.config();

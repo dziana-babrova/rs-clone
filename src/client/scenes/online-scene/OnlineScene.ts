@@ -19,15 +19,16 @@ export default class OnlineScene extends Phaser.Scene {
     super(SceneKeys.Online);
   }
 
-  init() {
+  init(socketService: SocketService) {
     this.background = new Background(this, store.getState().app.background);
-    this.socketService = new SocketService();
+    this.socketService = socketService;
   }
 
   async create() {
-    const socket = await this.socketService.join();
-    this.socket = socket;
-    this.elementsManager = new OnlineManager(this, 41, socket, this.socketService);
+    // const socket = await this.socketService.join();
+    this.socket = this.socketService.socket;
+    console.log(this.socket);
+    this.elementsManager = new OnlineManager(this, 41, this.socket, this.socketService);
     this.socketService.mapCreate(this.elementsManager.createMap, this.elementsManager);
     this.socketService.switchTarget(this.elementsManager.switchTarget, this.elementsManager);
     this.socketService.addPlayer(this.elementsManager.updatePlayers, this.elementsManager);
@@ -39,7 +40,7 @@ export default class OnlineScene extends Phaser.Scene {
     this.socketService.changeScore(this.elementsManager.updateScore, this.elementsManager);
     this.socketService.gameOver(this.elementsManager.showWinPopup, this.elementsManager);
     this.socketService.playerHit(this.elementsManager.createPlayerAnimation, this.elementsManager);
-    this.socketService.connectToRoom('test');
+    // this.socketService.connectToRoom('test');
   }
 
   update() {

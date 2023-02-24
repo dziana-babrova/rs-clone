@@ -1,13 +1,15 @@
-import { Scene } from 'phaser';
+import { GameObjects, Scene } from 'phaser';
 import { ElementTypeKeys } from 'common/types/enums';
 import Ball from 'client/components/Ball';
 import Map from 'client/scenes/game-scene/components/Map';
 import { multiPlayerMap } from 'client/const/levels/MultiplayerLevels';
-import {
-  IPlayerInfo, Level, ScoreMessage, ServerBalls, StatusMessage,
-} from 'common/types/types';
+import { IPlayerInfo, Level, ScoreMessage, ServerBalls, StatusMessage } from 'common/types/types';
 import TweenAnimationBuilder from 'client/utils/TweenAnimationBuilder';
-import { animations, playerProps, powerIndicatorProps } from 'client/const/scenes/MultiplayerSceneConsts';
+import {
+  animations,
+  playerProps,
+  powerIndicatorProps,
+} from 'client/const/scenes/MultiplayerSceneConsts';
 import Cup from 'client/scenes/game-scene/components/golf-course/Cup';
 import Flag from 'client/scenes/game-scene/components/Flag';
 import HoleBar from 'client/scenes/game-scene/components/golf-course/HoleBar';
@@ -18,6 +20,7 @@ import CalculateService from 'client/services/CalculateService';
 import SocketService from 'client/services/SocketService';
 import Player from '../scenes/multiplayer-scene/components/Player';
 import ScorePanel from '../scenes/multiplayer-scene/components/ScorePanel';
+import Count from 'client/scenes/online-scene/components/Count';
 
 export default class OnlineManager extends Phaser.GameObjects.Container {
   socket: Socket;
@@ -49,6 +52,8 @@ export default class OnlineManager extends Phaser.GameObjects.Container {
   score: ScorePanel;
 
   balls: { [key: string]: Ball } = {};
+
+  waitingMessage: GameObjects.Text | null = null;
 
   constructor(scene: Scene, tileSize: number, socket: Socket, socketService: SocketService) {
     super(scene);
@@ -132,6 +137,12 @@ export default class OnlineManager extends Phaser.GameObjects.Container {
         );
       }
     });
+    if (players.length === 1) {
+      this.showWaitingMessage();
+    } else {
+      this.waitingMessage?.destroy();
+      this.showCount();
+    }
   }
 
   deletePlayer(players: IPlayerInfo[]) {
@@ -149,7 +160,9 @@ export default class OnlineManager extends Phaser.GameObjects.Container {
 
   deserializeBalls(balls: string) {
     const init: { [key: string]: { player: string; x: string; y: string } } = {};
-    return balls.split('#').reduce((acc, el) => {
+    const arr = balls.split('#');
+    arr.pop();
+    return arr.reduce((acc, el) => {
       const elems = el.split('%');
       const id = elems[0];
       init[id] = {
@@ -259,5 +272,25 @@ export default class OnlineManager extends Phaser.GameObjects.Container {
     } else {
       this.enemy?.character.hit();
     }
+  }
+
+  showWaitingMessage() {
+    this.waitingMessage = this.scene.add.text(
+      this.scene.cameras.main.centerX - 25,
+      this.scene.cameras.main.centerY,
+      'Waiting for second player.',
+    );
+    this.waitingMessage.setOrigin(0.5);
+  }
+
+  async showCount() {
+    const position = { x: this.scene.cameras.main.centerX - 25, y: this.scene.cameras.main.centerY };
+    const textArr = ['3', '2', '1', 'GO!'];
+    for (let i = 0; i < textArr.length; i += 1){
+      const count = new Count(this.scene, position, textArr[i]);
+      await count.animate();
+      count.destroy();
+    }
+    this.isAvailable = true;
   }
 }

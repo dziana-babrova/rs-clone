@@ -81,8 +81,16 @@ export default class SocketService {
     );
   }
 
+  createRoom(name: string) {
+    this.socket.emit(SocketEvents.RoomCreate, name);
+  }
+
   connectToRoom(name: string) {
     this.socket.emit(SocketEvents.RoomConnect, name);
+  }
+
+  autoConnect() {
+    this.socket.emit(SocketEvents.AutoConnect);
   }
 
   emitHitBall(velocityX: number, velocityY: number, player: number) {
