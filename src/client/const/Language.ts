@@ -1,7 +1,4 @@
-export enum Language {
-  Eng = 'eng',
-  Ru = 'ru',
-}
+import { Language } from 'common/types/enums';
 
 export const NEXT_LANG = {
   eng: Language.Ru,

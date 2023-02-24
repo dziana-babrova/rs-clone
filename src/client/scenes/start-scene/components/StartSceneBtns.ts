@@ -1,5 +1,5 @@
-import LANGUAGE, { Language } from 'client/const/Language';
-import { TextureKeys, Move } from 'common/types/enums';
+import LANGUAGE from 'client/const/Language';
+import { TextureKeys, Move, Language } from 'common/types/enums';
 import Phaser from 'phaser';
 import store from 'client/state/store';
 import TweenAnimationBuilder from 'client/utils/TweenAnimationBuilder';

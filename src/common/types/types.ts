@@ -1,6 +1,5 @@
-import { Language } from 'client/const/Language';
 import {
-  ColorsNumber, Colors, AuthFormInputsKeys, BackgroundKeys, RoomFormInputsKeys,
+  ColorsNumber, Colors, AuthFormInputsKeys, BackgroundKeys, RoomFormInputsKeys, Language,
 } from './enums';
 
 export type TextObjectProps = {

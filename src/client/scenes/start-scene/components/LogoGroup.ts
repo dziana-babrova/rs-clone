@@ -1,5 +1,5 @@
-import LANGUAGE, { Language } from 'client/const/Language';
-import { TextureKeys } from 'common/types/enums';
+import LANGUAGE from 'client/const/Language';
+import { Language, TextureKeys } from 'common/types/enums';
 import Phaser from 'phaser';
 import store from 'client/state/store';
 import { START_SCENE } from 'client/const/scenes/StartSceneConst';

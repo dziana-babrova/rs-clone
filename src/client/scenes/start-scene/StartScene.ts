@@ -2,7 +2,11 @@ import Landscape from 'client/components/popups/Landscape';
 import Levels from 'client/components/popups/Levels';
 import Winners from 'client/components/popups/Winners';
 import { LocalStorageKeys } from 'client/const/AppConstants';
-import { Language, NEXT_LANG } from 'client/const/Language';
+import { NEXT_LANG } from 'client/const/Language';
+import {
+  Language,
+  Colors, SceneKeys, SettingsPopupKeys, SoundsKeys, TextureKeys,
+} from 'common/types/enums';
 import { emptyLevel } from 'client/const/levels/Levels';
 import LocalStorageService from 'client/services/LocalStorageService';
 import SocketService from 'client/services/SocketService';
@@ -10,9 +14,6 @@ import SoundService from 'client/services/SoundService';
 import { setLang, setMusic } from 'client/state/features/AppSlice';
 import { axiosSignOut } from 'client/state/features/UserSlice';
 import store from 'client/state/store';
-import {
-  Colors, SceneKeys, SettingsPopupKeys, SoundsKeys, TextureKeys,
-} from 'common/types/enums';
 import { Scene } from 'phaser';
 import ElementsManager from '../game-scene/components/ElementsManager';
 import AuthBtn from './components/AuthBtn';

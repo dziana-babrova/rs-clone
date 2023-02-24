@@ -2,6 +2,7 @@ import platfrom from 'client/assets/platforms.png';
 import texture from 'client/assets/platforms.json';
 import {
   SceneKeys, TextureKeys, AnimationKeys, SoundsKeys, BackgroundKeys,
+  Language,
 } from 'common/types/enums';
 import PRELOAD_SCENE from 'client/const/scenes/PreloadSceneConsts';
 import Phaser from 'phaser';
@@ -12,7 +13,7 @@ import {
   axiosGetMaps, setBackground, setLang, setMaps, setMusic, setSound,
 } from 'client/state/features/AppSlice';
 import store from 'client/state/store';
-import { Language } from 'client/const/Language';
+
 import { axiosCheckAuth } from 'client/state/features/UserSlice';
 import MapService from 'client/services/MapService';
 import { Maps } from 'common/types/types';
