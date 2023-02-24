@@ -1,8 +1,8 @@
 import LANGUAGE, { Language } from 'client/const/Language';
-import START_SCENE from 'client/const/scenes/StartSceneConst';
 import { TextureKeys } from 'common/types/enums';
 import Phaser from 'phaser';
 import store from 'client/state/store';
+import { START_SCENE } from 'client/const/scenes/StartSceneConst';
 
 export default class LogoGroup extends Phaser.GameObjects.Group {
   subtitle!: Phaser.GameObjects.Text;
