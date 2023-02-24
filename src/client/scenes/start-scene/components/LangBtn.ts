@@ -1,7 +1,7 @@
-import START_SCENE from 'client/const/scenes/StartSceneConst';
 import { TextureKeys } from 'common/types/enums';
 import { GameObjects } from 'phaser';
 import store from 'client/state/store';
+import { START_SCENE } from 'client/const/scenes/StartSceneConst';
 
 export default class LangBtn extends GameObjects.Sprite {
   constructor(scene: Phaser.Scene) {

@@ -11,7 +11,13 @@ export default class IconButton extends Phaser.GameObjects.Group {
 
   hoverBgColor: ColorsNumber;
 
-  constructor(scene: Phaser.Scene, texture: string, coords: Position, params: IconButtonParams) {
+  constructor(
+    scene: Phaser.Scene,
+    texture: string,
+    coords: Position,
+    params: IconButtonParams,
+    scale = 1,
+  ) {
     super(scene);
 
     this.background = new Phaser.GameObjects.Rectangle(
@@ -21,16 +27,17 @@ export default class IconButton extends Phaser.GameObjects.Group {
       params.width,
       params.height,
       params.bgColor,
-    );
-    this.background.setScale(0);
+    ).setOrigin(0.5);
 
-    this.icon = new Phaser.GameObjects.Sprite(scene, coords.x, coords.y, texture);
-    this.icon.setScale(0);
+    this.icon = new Phaser.GameObjects
+      .Sprite(scene, coords.x, coords.y, texture)
+      .setOrigin(0.5);
+
+    this.background.setScale(scale);
+    this.icon.setScale(scale);
 
     this.bgColor = params.bgColor;
     this.hoverBgColor = params.hoverBgColor;
-    this.icon.setOrigin(0.5, 0.5);
-    this.background.setOrigin(0.5, 0.5);
 
     this.add(this.background, true);
     this.add(this.icon, true);
