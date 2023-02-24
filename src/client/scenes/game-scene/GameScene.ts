@@ -10,7 +10,11 @@ import MapService from 'client/services/MapService';
 import { axiosUpdateMaps, setMaps } from 'client/state/features/AppSlice';
 import LocalStorageService from 'client/services/LocalStorageService';
 import { LocalStorageKeys } from 'client/const/AppConstants';
+import WinPopup from 'client/components/popups/WinPopup';
 import { Levels } from 'client/const/levels/Levels';
+import LANGUAGE from 'client/const/Language';
+import { GAME_SCENE } from 'client/const/scenes/GameSceneConsts';
+import CalculateService from 'client/services/CalculateService';
 import NextLevelButton from './components/next-level-popup/NextLevelButton';
 import ElementsManager from './components/ElementsManager';
 import Fireworks from './components/Fireworks';
@@ -59,7 +63,7 @@ export default class GameScene extends Phaser.Scene {
     this.initEvents();
   }
 
-  private async initEvents() {
+  private async initEvents(): Promise<void> {
     this.events.on(EventNames.Win, this.elementsManager.ball.deactivate, this.elementsManager.ball);
     this.events.on(EventNames.Win, () => {
       const fireworks = new Fireworks();
@@ -70,7 +74,7 @@ export default class GameScene extends Phaser.Scene {
     this.events.on(EventNames.GameOver, this.handleGameOver.bind(this));
   }
 
-  private async updateMaps() {
+  private async updateMaps(): Promise<void> {
     const { maps } = store.getState().app;
     const index = maps.findIndex((map) => map.id === this.level);
     if (index !== -1) {
@@ -86,9 +90,37 @@ export default class GameScene extends Phaser.Scene {
 
   private displayWinPopup() {
     this.time.delayedCall(2000, async () => {
-      const popup = new NextLevelButton(this);
-      await popup.create(this.data.values.stars, this.switchLevel);
+      if (this.level < Levels.length - 1) {
+        await this.createNextLevelPopup();
+      } else {
+        await this.createWinPopup();
+      }
     });
+  }
+
+  private async createNextLevelPopup(): Promise<void> {
+    const popup = new NextLevelButton(this);
+    await popup.create(this.data.values.stars, this.switchLevel);
+  }
+
+  private async createWinPopup(): Promise<void> {
+    const allStars = CalculateService.calculateStars(store.getState().app.maps);
+    const popup = new WinPopup(
+      this,
+      allStars,
+      this.switchLevel.bind(this),
+      SceneKeys.Game,
+      LANGUAGE.popup.singleplayWinMessage[store.getState().app.lang],
+    );
+    await popup.show();
+    await Promise.all([
+      popup.restartButton.show(
+        this.scale.width / 2 - GAME_SCENE.nextLevelPopup.button.finalPaddingX,
+      ),
+      popup.backButton.show(
+        this.scale.width / 2 + GAME_SCENE.nextLevelPopup.button.finalPaddingX,
+      ),
+    ]);
   }
 
   private handleGameOver(): void {
@@ -103,7 +135,7 @@ export default class GameScene extends Phaser.Scene {
     });
   }
 
-  update() {
+  public update(): void {
     try {
       this.background.update();
       this.elementsManager.update();
@@ -113,7 +145,7 @@ export default class GameScene extends Phaser.Scene {
     }
   }
 
-  switchLevel(key: string, nextLevel?: boolean) {
+  public switchLevel(key: string, nextLevel?: boolean): void {
     this.cameras.main.fadeOut();
     this.data.values.stars = 0;
     this.data.values.isGameOver = false;

@@ -1,6 +1,8 @@
 import { Scene } from 'phaser';
 import { ElementTypeKeys, SceneKeys } from 'common/types/enums';
 import { GAME_SCENE } from 'client/const/scenes/GameSceneConsts';
+import store from 'client/state/store';
+import LANGUAGE from 'client/const/Language';
 import Ball from 'client/components/Ball';
 import Map from 'client/scenes/game-scene/components/Map';
 import { multiPlayerMap, targets } from 'client/const/levels/MultiplayerLevels';
@@ -173,7 +175,7 @@ export default class MultiplayerManager extends Phaser.GameObjects.Container {
     if (player.id === 2) {
       this.score.changeText2(this.player2.score.toString());
     }
-    if (player.score >= 1) {
+    if (player.score >= 5) {
       this.player1.isAvailable = false;
       this.player2.isAvailable = false;
       this.showWinPopup(player);
@@ -192,6 +194,7 @@ export default class MultiplayerManager extends Phaser.GameObjects.Container {
       player.id,
       this.switch.bind(this),
       SceneKeys.MultiPlayer,
+      LANGUAGE.popup.multiplayWinMessage[store.getState().app.lang],
     );
     await popup.show();
     await Promise.all([

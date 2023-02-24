@@ -15,7 +15,13 @@ export default class WinPopup extends PopupCanvasGroup {
 
   currentScene: string;
 
-  constructor(scene: Scene, win: number, restart: SwitchLevel, currentScene: string) {
+  constructor(
+    scene: Scene,
+    score: number,
+    restart: SwitchLevel,
+    currentScene: string,
+    text: string,
+  ) {
     super(
       scene,
       LANGUAGE.popup.congrats[store.getState().app.lang],
@@ -23,27 +29,26 @@ export default class WinPopup extends PopupCanvasGroup {
       false,
     );
     this.currentScene = currentScene;
-    console.log(this.currentScene);
     this.setDepth(400);
-    this.addText(win);
+    this.addText(score, text);
     this.addButtons(restart);
   }
 
-  public addText(win: number) {
-    const text = this.scene.add
-      .text(
-        this.scene.scale.width / 2,
-        this.scene.scale.height / 3,
-        `${LANGUAGE.popup.multiplayWinMessage[store.getState().app.lang]} ${win}`,
-        {
-          ...POPUP.textBold,
-        },
-      )
+  public addText(score: number, text: string): void {
+    let finalText = text.replace('{}', score.toString());
+    if (score === 1 && store.getState().app.lang === 'eng') {
+      finalText = finalText.replace(LANGUAGE.popup.starPlural.eng, LANGUAGE.popup.starSingular.eng);
+    }
+    const textElement = this.scene.add
+      .text(this.scene.scale.width / 2, this.scene.scale.height / 3, finalText, {
+        ...POPUP.textBold,
+      })
+      .setPadding({ left: 200, right: 200 })
       .setOrigin(0.5);
-    this.add(text);
+    this.add(textElement);
   }
 
-  public addButtons(restart: SwitchLevel) {
+  public addButtons(restart: SwitchLevel): void {
     this.restartButton = new Button(
       this.scene,
       -GAME_SCENE.nextLevelPopup.button.initialPaddingX,
@@ -61,7 +66,7 @@ export default class WinPopup extends PopupCanvasGroup {
       ButtonsFrames.Restart,
       restart,
       this.currentScene,
-      true,
+      false,
     );
     this.backButton.setDepth(500);
     this.restartButton.setDepth(500);
