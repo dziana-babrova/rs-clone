@@ -1,6 +1,6 @@
 import { Language } from 'client/const/Language';
 import {
-  ColorsNumber, Colors, FormInputsKeys, BackgroundKeys,
+  ColorsNumber, Colors, AuthFormInputsKeys, BackgroundKeys, RoomFormInputsKeys,
 } from './enums';
 
 export type TextObjectProps = {
@@ -139,6 +139,8 @@ export type ServerValidationError = {
   param: string;
   location: string;
 };
+
+export type FormInputsKeys = AuthFormInputsKeys | RoomFormInputsKeys;
 
 export type FormInput = {
   name: FormInputsKeys;

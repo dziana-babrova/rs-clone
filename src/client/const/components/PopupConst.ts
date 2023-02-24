@@ -1,22 +1,19 @@
 const POPUP = {
-  y: -3000,
-  moveY: 3000,
-
   canvas: {
     levels: {
       width: 1200,
       height: 400,
-      shift: 0,
+      shift: -40,
     },
     winners: {
       width: 600,
       height: 600,
-      shift: 0,
+      shift: -40,
     },
     landscape: {
       width: 900,
       height: 300,
-      shift: 0,
+      shift: -40,
     },
 
     switchLevel: {
@@ -70,7 +67,7 @@ const POPUP = {
 
 export const POPUP_ANIMATION = {
   ease: 'Sinusoidal',
-  duration: 1000,
+  duration: 500,
 };
 
 export default POPUP;

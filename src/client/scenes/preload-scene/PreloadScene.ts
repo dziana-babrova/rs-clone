@@ -3,7 +3,6 @@ import texture from 'client/assets/platforms.json';
 import {
   SceneKeys, TextureKeys, AnimationKeys, SoundsKeys, BackgroundKeys,
 } from 'common/types/enums';
-import START_SCENE from 'client/const/scenes/StartSceneConst';
 import PRELOAD_SCENE from 'client/const/scenes/PreloadSceneConsts';
 import Phaser from 'phaser';
 import LocalStorageService from 'client/services/LocalStorageService';
@@ -17,6 +16,7 @@ import { Language } from 'client/const/Language';
 import { axiosCheckAuth } from 'client/state/features/UserSlice';
 import MapService from 'client/services/MapService';
 import { Maps } from 'common/types/types';
+import { START_SCENE } from 'client/const/scenes/StartSceneConst';
 import ProgressAssets from './components/ProgressAssets';
 import ProgressBar from './components/ProgressBar';
 import ProgressBox from './components/ProgressBox';

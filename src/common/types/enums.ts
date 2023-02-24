@@ -120,15 +120,24 @@ export enum Move {
   Hide,
 }
 
-export enum FormInputsKeys {
+export enum AuthFormInputsKeys {
   Email = 'email',
   Username = 'username',
   Password = 'password',
 }
 
+export enum RoomFormInputsKeys {
+  Room = 'room',
+}
+
 export enum FormType {
   SignIn = 'signIn',
   SignUp = 'signUp',
+}
+
+export enum PopupType {
+  Auth = 'auth',
+  Room = 'room',
 }
 
 export enum SoundsKeys {
@@ -159,10 +168,15 @@ export enum BackgroundFrames {
   SmallCloud = 'cloud2.png',
 }
 
-export enum SettinsPopupKeys {
+export enum SettingsPopupKeys {
   Levels = 'levels',
   Landscape = 'landscape',
   Winners = 'winners',
+}
+
+export enum RoomPopupFormBtns {
+  createRoom = 'createRoom',
+  getInRoom = 'getInRoom',
 }
 
 export enum ButtonsFrames {

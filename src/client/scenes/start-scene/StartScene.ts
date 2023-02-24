@@ -1,30 +1,37 @@
-import {
-  Colors, SceneKeys, SettinsPopupKeys as SettingsPopupKeys, SoundsKeys, TextureKeys,
-} from 'common/types/enums';
-import { Language, NEXT_LANG } from 'client/const/Language';
-import { LocalStorageKeys } from 'client/const/AppConstants';
-import LocalStorageService from 'client/services/LocalStorageService';
-import { axiosSignOut } from 'client/state/features/UserSlice';
-import { setLang, setMusic } from 'client/state/features/AppSlice';
-import store from 'client/state/store';
-import SoundService from 'client/services/SoundService';
 import Landscape from 'client/components/popups/Landscape';
 import Levels from 'client/components/popups/Levels';
 import Winners from 'client/components/popups/Winners';
+import { LocalStorageKeys } from 'client/const/AppConstants';
+import { Language, NEXT_LANG } from 'client/const/Language';
 import { emptyLevel } from 'client/const/levels/Levels';
+import LocalStorageService from 'client/services/LocalStorageService';
+import SoundService from 'client/services/SoundService';
+import { setLang, setMusic } from 'client/state/features/AppSlice';
+import { axiosSignOut } from 'client/state/features/UserSlice';
+import store from 'client/state/store';
+import {
+  Colors, SceneKeys, SettingsPopupKeys, SoundsKeys, TextureKeys,
+} from 'common/types/enums';
+import { Scene } from 'phaser';
+import ElementsManager from '../game-scene/components/ElementsManager';
+import AuthBtn from './components/AuthBtn';
+import AuthPopup from './components/AuthPopup';
 import LangBtn from './components/LangBtn';
 import LogoGroup from './components/LogoGroup';
-import AuthBtn from './components/AuthBtn';
+import MultiplayerBtns from './components/MultiplayerBtns';
+import RoomPopup from './components/RoomPopup';
 import StartSceneBtns from './components/StartSceneBtns';
-import AuthPopup from './components/AuthPopup';
-import ElementsManager from '../game-scene/components/ElementsManager';
 
-export default class StartScene extends Phaser.Scene {
+export default class StartScene extends Scene {
   lang: Language = Language.Eng;
 
   logoGroup!: LogoGroup;
 
   startSceneBtns!: StartSceneBtns;
+
+  multiplayerBtns!: MultiplayerBtns;
+
+  roomPopup!: RoomPopup;
 
   langBtn!: LangBtn;
 
@@ -58,6 +65,8 @@ export default class StartScene extends Phaser.Scene {
 
     this.logoGroup = new LogoGroup(this);
     this.startSceneBtns = new StartSceneBtns(this);
+    this.multiplayerBtns = new MultiplayerBtns(this);
+    this.roomPopup = new RoomPopup(this);
     this.authPopup = new AuthPopup(this);
     this.langBtn = new LangBtn(this);
     const golfCourse = new ElementsManager(this, emptyLevel, 41);
@@ -67,7 +76,7 @@ export default class StartScene extends Phaser.Scene {
       this.authBtn.show(),
       this.langBtn.show(),
       this.startSceneBtns.showSingleGameBtn(),
-      this.startSceneBtns.showOnlineGameBtn(),
+      this.startSceneBtns.showTwoPlayersGameBtn(),
       this.startSceneBtns.showBtnSettings(),
     ]);
 
@@ -89,7 +98,14 @@ export default class StartScene extends Phaser.Scene {
   private initEvents(): void {
     this.langBtn.on('pointerdown', this.changeLang.bind(this));
     this.startSceneBtns.btnStartSingleGame.on('pointerdown', this.startSingleGame.bind(this));
-    this.startSceneBtns.btnStartOnlineGame.on('pointerdown', this.startOnlineGame.bind(this));
+    this.startSceneBtns.btnTwoPlayersGame.on('pointerdown', this.showMultiplayerBtns.bind(this));
+
+    this.multiplayerBtns.btnStartLocalGame.on('pointerdown', this.startLocalGame.bind(this));
+    this.multiplayerBtns.btnStartOnlineGame.on('pointerdown', this.showRoomPopup.bind(this));
+    this.multiplayerBtns.btnBack.background.on('pointerdown', this.hideMultiplayerBtns.bind(this));
+
+    this.roomPopup.onClosePopup = this.onClosePopup.bind(this);
+    this.roomPopup.onStartOnlineGame = this.startOnlineGame.bind(this);
 
     this.authBtn.on('pointerdown', this.authBtnHandler.bind(this));
     this.authPopup.onClosePopup = this.onClosePopup.bind(this);
@@ -99,6 +115,20 @@ export default class StartScene extends Phaser.Scene {
     this.startSceneBtns.btnWinners.background.on('pointerdown', this.createSettingsPopup.bind(this, SettingsPopupKeys.Winners));
 
     this.startSceneBtns.btnMusic.background.on('pointerdown', this.turnOnOffSound.bind(this));
+  }
+
+  private async showMultiplayerBtns() {
+    await Promise.all([
+      this.startSceneBtns.hide(),
+      this.multiplayerBtns.show(),
+    ]);
+  }
+
+  private async hideMultiplayerBtns() {
+    await Promise.all([
+      this.startSceneBtns.show(),
+      this.multiplayerBtns.hide(),
+    ]);
   }
 
   private createSettingsPopup(type: SettingsPopupKeys): void {
@@ -157,6 +187,7 @@ export default class StartScene extends Phaser.Scene {
   private updateText(): void {
     this.authBtn.updateBtnText();
     this.startSceneBtns.updateText(this.lang);
+    this.multiplayerBtns.updateText(this.lang);
     this.logoGroup.updateText(this.lang);
   }
 
@@ -172,8 +203,8 @@ export default class StartScene extends Phaser.Scene {
     }
   }
 
-  private onClosePopup(isUbdateAuthBtnText = false): void {
-    if (isUbdateAuthBtnText) {
+  private onClosePopup(isUpdateAuthBtnText = false): void {
+    if (isUpdateAuthBtnText) {
       this.authBtn.updateBtnText();
     }
 
@@ -189,14 +220,26 @@ export default class StartScene extends Phaser.Scene {
     this.scene.start(SceneKeys.Game);
   }
 
-  private startOnlineGame(): void {
+  private startLocalGame(): void {
     this.removeStartScreenObjects();
     this.scene.start(SceneKeys.MultiPlayer);
+  }
+
+  private showRoomPopup(): void {
+    this.input.enabled = false;
+    this.roomPopup.renderPopup();
+    this.roomPopup.show();
+  }
+
+  private startOnlineGame(): void {
+    console.log('startOnlineGame');
+    // this.scene.start(SceneKeys.MultiPlayer);
   }
 
   private removeStartScreenObjects(): void {
     this.logoGroup.destroy();
     this.startSceneBtns.destroy();
+    this.multiplayerBtns.destroy();
     this.authBtn.destroy();
     this.authPopup.destroy();
     this.langBtn.destroy();

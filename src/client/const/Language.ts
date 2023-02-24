@@ -9,30 +9,88 @@ export const NEXT_LANG = {
 };
 
 const LANGUAGE = {
-  authPopup: {
-    signIn: {
-      submitBtn: {
-        eng: 'Sign In',
-        ru: 'Войти',
+  popup: {
+    auth: {
+      signIn: {
+        submitBtn: {
+          eng: 'Sign In',
+          ru: 'Войти',
+        },
+        message: {
+          eng: 'Do not have an account?',
+          ru: 'У вас нет аккаунта?',
+        },
       },
-      message: {
-        eng: 'Do not have an account?',
-        ru: 'У вас нет аккаунта?',
+      signUp: {
+        submitBtn: {
+          eng: 'Sign Up',
+          ru: 'Зарегистрироваться',
+        },
+        message: {
+          eng: 'Do you already have an account?',
+          ru: 'У вас уже есть аккаунт?',
+        },
       },
     },
-    signUp: {
-      submitBtn: {
-        eng: 'Sign Up',
-        ru: 'Зарегистрироваться',
+    room: {
+      createRoom: {
+        eng: 'Create Room',
+        ru: 'Создать комнату',
+      },
+      getInRoom: {
+        eng: 'Get in Room',
+        ru: 'Войти в комнату',
+      },
+      randomRoom: {
+        eng: 'Get in Random Room',
+        ru: 'Cлучайная комната',
       },
       message: {
-        eng: 'Do you already have an account?',
-        ru: 'У вас уже есть аккаунт?',
+        eng: 'Enter a name and create a room or enter an existing room by name',
+        ru: 'Введите название и создайте комнату или войдите в существующую комнату по имени',
       },
     },
-    valid: {
-      eng: 'Valid format',
-      ru: 'Правильный формат',
+    popupInputs: {
+      email: {
+        placeholder: {
+          eng: 'Input e-mail',
+          ru: 'Введите e-mail',
+        },
+        hint: {
+          eng: 'Should match the format: mail@example.com',
+          ru: 'Формат: mail@example.com',
+        },
+      },
+      username: {
+        placeholder: {
+          eng: 'Input nickname',
+          ru: 'Введите имя',
+        },
+        hint: {
+          eng: 'Length must be at least 3 characters',
+          ru: 'Длина должна быть не менее 3 символов',
+        },
+      },
+      password: {
+        placeholder: {
+          eng: 'Input password',
+          ru: 'Введите пароль',
+        },
+        hint: {
+          eng: 'Length must be at least 6 characters',
+          ru: 'Длина должна быть не менее 6 символов',
+        },
+      },
+      room: {
+        placeholder: {
+          eng: 'Input room name',
+          ru: 'Введите название комнаты',
+        },
+        hint: {
+          eng: 'Length must be at least 6 characters',
+          ru: 'Длина должна быть не менее 6 символов',
+        },
+      },
     },
     errors: {
       emptyError: {
@@ -48,6 +106,10 @@ const LANGUAGE = {
           eng: 'Username should not be empty',
           ru: 'Имя не должен быть пустым',
         },
+        room: {
+          eng: 'Name should not be empty',
+          ru: 'Название не должно быть пустым',
+        },
       },
       lengthError: {
         email: {
@@ -61,6 +123,10 @@ const LANGUAGE = {
         username: {
           eng: 'Username length must be at least 3 characters',
           ru: 'Длина имени должна быть не менее 3 символов',
+        },
+        room: {
+          eng: 'Name length must be at least 6 characters',
+          ru: 'Длина названия должна быть не менее 6 символов',
         },
       },
       notFoundError: {
@@ -84,35 +150,9 @@ const LANGUAGE = {
         ru: 'Пароль должен быть строкой',
       },
     },
-    email: {
-      placeholder: {
-        eng: 'Input e-mail',
-        ru: 'Введите e-mail',
-      },
-      hint: {
-        eng: 'Should match the format: mail@example.com',
-        ru: 'Формат: mail@example.com',
-      },
-    },
-    username: {
-      placeholder: {
-        eng: 'Input nickname',
-        ru: 'Введите имя',
-      },
-      hint: {
-        eng: 'Length must be at least 3 characters',
-        ru: 'Длина должна быть не менее 3 символов',
-      },
-    },
-    password: {
-      placeholder: {
-        eng: 'Input password',
-        ru: 'Введите пароль',
-      },
-      hint: {
-        eng: 'Length must be at least 6 characters',
-        ru: 'Длина должна быть не менее 6 символов',
-      },
+    valid: {
+      eng: 'Valid format',
+      ru: 'Правильный формат',
     },
   },
   preloadScene: {
@@ -134,9 +174,17 @@ const LANGUAGE = {
       eng: 'Single Player',
       ru: 'Oдиночная игра',
     },
+    twoPlayersGame: {
+      eng: 'Two Players',
+      ru: 'Игра для двоих',
+    },
     onlineGame: {
       eng: 'Online Game',
-      ru: 'Онлайн игра',
+      ru: 'Играть онлайн',
+    },
+    localGame: {
+      eng: 'Local Game',
+      ru: 'Играть локально',
     },
     signIn: {
       eng: 'Sign In',

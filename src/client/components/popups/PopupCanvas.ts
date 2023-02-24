@@ -30,7 +30,7 @@ export default class PopupCanvasGroup extends Phaser.GameObjects.Container {
       this.createCloseBtn(size);
     }
 
-    this.setY(POPUP.y);
+    this.setY(-scene.cameras.main.height);
     this.scene.add.existing(this);
   }
 
@@ -155,7 +155,7 @@ export default class PopupCanvasGroup extends Phaser.GameObjects.Container {
     await this.tweenAnimationBuilder.moveY(
       this.scene,
       this,
-      type === Move.Show ? this.point / 5 : POPUP.y,
+      type === Move.Show ? 0 : this.scene.cameras.main.height,
       POPUP_ANIMATION.ease,
       POPUP_ANIMATION.duration,
     );
