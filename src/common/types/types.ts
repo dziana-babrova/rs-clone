@@ -197,11 +197,12 @@ export interface IPlayerInfo {
   id: 1 | 2;
   socketId: string;
   position: Position;
-  idReverse: boolean;
+  isReverse: boolean;
   score: number;
 }
 
 export type StatusMessage = { player1: boolean; player2: boolean };
+
 export type ScoreMessage = { score1: number; score2: number };
 
-export type ServerBalls = { [key: string]: { player: string; x: string; y: string } };
+export type ServerBalls = { [key: string]: { player: string; x: number; y: number } };

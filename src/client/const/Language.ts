@@ -154,6 +154,24 @@ const LANGUAGE = {
       eng: 'Valid format',
       ru: 'Правильный формат',
     },
+    socketErrors: {
+      alreadyExists: {
+        eng: 'Room with this name already exists',
+        ru: 'Комната с таким именем уже существует',
+      },
+      notExists: {
+        eng: 'Room with this name does not exist',
+        ru: 'Комната с таким именем не существует',
+      },
+      isFull: {
+        eng: 'Room is full',
+        ru: 'Комната уже заполнена',
+      },
+      somethingWrong: {
+        eng: 'Something went wrong you are alone in the room',
+        ru: 'Что-то пошло не так, вы один в комнате',
+      },
+    },
   },
   preloadScene: {
     title: {
@@ -219,6 +237,12 @@ const LANGUAGE = {
     win: {
       eng: 'Level completed!',
       ru: 'Уровень пройден!',
+    },
+  },
+  multiplayerScene: {
+    waitMessage: {
+      eng: 'Waiting for second player...',
+      ru: 'Ожидаем второго игрока...',
     },
   },
 };

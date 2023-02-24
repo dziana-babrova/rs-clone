@@ -3,43 +3,37 @@ import { ElementTypeKeys } from 'common/types/enums';
 import Ball from 'client/components/Ball';
 import Map from 'client/scenes/game-scene/components/Map';
 import { multiPlayerMap } from 'client/const/levels/MultiplayerLevels';
-import { IPlayerInfo, Level, ScoreMessage, ServerBalls, StatusMessage } from 'common/types/types';
-import TweenAnimationBuilder from 'client/utils/TweenAnimationBuilder';
 import {
-  animations,
-  playerProps,
-  powerIndicatorProps,
-} from 'client/const/scenes/MultiplayerSceneConsts';
-import Cup from 'client/scenes/game-scene/components/golf-course/Cup';
+  IPlayerInfo, Level, ScoreMessage, StatusMessage,
+} from 'common/types/types';
+import { countStrings, waitMessageStyle } from 'client/const/scenes/MultiplayerSceneConsts';
 import Flag from 'client/scenes/game-scene/components/Flag';
 import HoleBar from 'client/scenes/game-scene/components/golf-course/HoleBar';
 import MapService from 'client/services/MapService';
 import PlayerEnemy from 'client/scenes/multiplayer-scene/components/PlayerEnemy';
 import { Socket } from 'socket.io-client';
-import CalculateService from 'client/services/CalculateService';
 import SocketService from 'client/services/SocketService';
-import Player from '../scenes/multiplayer-scene/components/Player';
-import ScorePanel from '../scenes/multiplayer-scene/components/ScorePanel';
 import Count from 'client/scenes/online-scene/components/Count';
+import LANGUAGE from 'client/const/Language';
+import store from 'client/state/store';
+import OnlineSceneService from 'client/services/OnlineSceneService';
+import ScorePanel from '../scenes/multiplayer-scene/components/ScorePanel';
+import Player from '../scenes/multiplayer-scene/components/Player';
 
 export default class OnlineManager extends Phaser.GameObjects.Container {
   socket: Socket;
-
-  scene: Scene;
 
   mapService: MapService;
 
   socketService: SocketService;
 
-  target!: Map;
+  onlineService: OnlineSceneService;
 
-  cup!: Cup | null;
+  target!: Map;
 
   flag!: Flag;
 
   bar!: HoleBar;
-
-  animationBuilder: TweenAnimationBuilder;
 
   enemy!: PlayerEnemy | null;
 
@@ -60,26 +54,30 @@ export default class OnlineManager extends Phaser.GameObjects.Container {
     this.socket = socket;
     this.socketService = socketService;
     this.mapService = new MapService(tileSize);
-    this.animationBuilder = new TweenAnimationBuilder();
     this.scene = scene;
     this.score = new ScorePanel(scene, { x: scene.cameras.main.centerX - 25, y: 0 });
+    this.onlineService = new OnlineSceneService(this.scene);
     this.initEvents();
   }
 
-  async createMap(map?: Level) {
+  private initEvents(): void {
+    this.scene.input.keyboard.on('keydown-SPACE', this.handlePlayerClick.bind(this));
+  }
+
+  async createMap(map?: Level): Promise<void> {
     const mapTemplate = await this.createTemplate(map || multiPlayerMap);
     mapTemplate.setDepth(50);
     mapTemplate.y = 0;
   }
 
-  async switchTarget(target: Level) {
+  async switchTarget(target: Level): Promise<void> {
     if (this.target) {
       this.bar.destroy();
-      await this.hideTarget();
+      await this.onlineService.hideTarget(this.target);
       this.target.each((el: Phaser.Physics.Matter.Sprite) => el.destroy());
     }
     this.target = await this.createTemplate(target);
-    await this.showTarget();
+    await this.onlineService.showTarget(this.target);
     this.bar = new HoleBar(this.scene, {
       x: this.flag.x - 20,
       y: this.flag.y + 45,
@@ -90,148 +88,62 @@ export default class OnlineManager extends Phaser.GameObjects.Container {
     this.isAvailable = true;
   }
 
-  async createTemplate(level: Level) {
+  async createTemplate(level: Level): Promise<Map> {
     const mapElements = this.mapService.createLevelConfig(level.map);
     const template = this.mapService.createMap(this.scene, mapElements);
     template.setDepth(40);
     const flagConfig = this.mapService.getFilteredElements(mapElements, ElementTypeKeys.Flag);
-    const cupConfig = this.mapService.getFilteredElements(mapElements, ElementTypeKeys.Cup);
-    if (cupConfig.length) {
-      this.cup = new Cup(this.scene, cupConfig[0]);
-    }
-    if (cupConfig.length) {
+    if (flagConfig.length) {
       this.flag = new Flag(this.scene, flagConfig[0].x, flagConfig[0].y);
       await this.flag.animate();
     }
     return template;
   }
 
-  async hideTarget() {
-    const { y, ease, duration } = animations.hideAnimation;
-    await this.animationBuilder.moveY(this.scene, this.target, y, ease, duration);
-  }
-
-  async showTarget() {
-    const { y, ease, duration } = animations.showAnimation;
-    await this.animationBuilder.moveY(this.scene, this.target, y, ease, duration);
-  }
-
-  updatePlayers(players: IPlayerInfo[]) {
+  public updatePlayers(players: IPlayerInfo[]): void {
     players.forEach((el) => {
-      if (el.socketId === this.socket.id && !this.currentPlayer) {
-        this.currentPlayer = new Player(
-          this.scene,
-          { x: el.position.x, y: el.position.y },
-          el.idReverse,
-          el.id,
-        );
-        this.currentPlayer.isAvailable = false;
-        this.currentPlayer.trajectory.stop();
-        this.currentPlayer.currentBall?.destroy();
-      } else if (el.socketId !== this.socket.id) {
-        this.enemy = new PlayerEnemy(
-          this.scene,
-          { x: el.position.x, y: el.position.y },
-          el.idReverse,
-          el.id,
-        );
+      const {
+        socketId, position, isReverse, id,
+      } = el;
+      const { x, y } = position;
+      if (socketId === this.socket.id && !this.currentPlayer) {
+        this.currentPlayer = this.onlineService.createStaticPlayer({ x, y }, isReverse, id);
+      } else if (socketId !== this.socket.id) {
+        this.enemy = new PlayerEnemy(this.scene, { x, y }, isReverse, id);
       }
     });
-    if (players.length === 1) {
-      this.showWaitingMessage();
-    } else {
+    if (players.length === 1) this.showWaitingMessage();
+    if (players.length > 1) {
       this.waitingMessage?.destroy();
       this.showCount();
     }
   }
 
-  deletePlayer(players: IPlayerInfo[]) {
+  public deletePlayer(players: IPlayerInfo[]): void {
     if (!players.find((el) => el.id === this.enemy?.id)) {
       this.enemy?.character.destroy();
       this.enemy = null;
     }
   }
 
-  setStartBalls(balls: string) {
-    const serverBalls = this.deserializeBalls(balls);
-    this.balls = this.mapServerBallsToBalls(serverBalls);
+  public setStartBalls(balls: string): void {
+    const serverBalls = this.onlineService.deserializeBalls(balls);
+    this.balls = this.onlineService.mapServerBallsToBalls(serverBalls);
     this.currentPlayer.isAvailable = true;
   }
 
-  deserializeBalls(balls: string) {
-    const init: { [key: string]: { player: string; x: string; y: string } } = {};
-    const arr = balls.split('#');
-    arr.pop();
-    return arr.reduce((acc, el) => {
-      const elems = el.split('%');
-      const id = elems[0];
-      init[id] = {
-        player: elems[1],
-        x: elems[2],
-        y: elems[3],
-      };
-      return init;
-    }, init);
+  public updateBalls(balls: string): void {
+    this.onlineService.updateBalls(this.balls, balls);
   }
 
-  removeBalls() {
-    Object.values(this.balls).forEach((el) => el.destroy());
-  }
-
-  mapServerBallsToBalls(serverBalls: ServerBalls) {
-    const balls: { [key: string]: Ball } = {};
-    Object.entries(serverBalls).forEach((el) => {
-      const ball = new Ball(this.scene, { x: Number(el[1].x), y: Number(el[1].y) });
-      if (el[1].player === '2') {
-        ball.setTint(playerProps.secondBallColor);
-      }
-      ball.setDepth(100);
-      (ball.body as MatterJS.BodyType).isStatic = true;
-      (ball.body as MatterJS.BodyType).circleRadius = 0;
-      const id = el[0];
-      balls[id] = ball;
-    });
-    return balls;
-  }
-
-  updateBalls(balls: string) {
-    const serverBalls = this.deserializeBalls(balls);
-    Object.entries(serverBalls).forEach((el) => {
-      const target = this.balls[el[0]];
-      if (target) {
-        target.x = Number(el[1].x);
-        target.y = Number(el[1].y);
-      } else {
-        const ball = new Ball(this.scene, { x: Number(el[1].x), y: Number(el[1].y) });
-        if (el[1].player === '2') {
-          ball.setTint(playerProps.secondBallColor);
-        }
-        ball.setDepth(100);
-        (ball.body as MatterJS.BodyType).isStatic = true;
-        (ball.body as MatterJS.BodyType).circleRadius = 0;
-        const id = el[0];
-        this.balls[id] = ball;
-      }
-    });
-  }
-
-  initEvents() {
-    this.scene.input.keyboard.on('keydown-SPACE', this.handlePlayerClick.bind(this));
-  }
-
-  async handlePlayerClick() {
+  async handlePlayerClick(): Promise<void> {
     if (!this.currentPlayer.isAvailable) return;
     if (!this.currentPlayer.isHit) {
       this.currentPlayer.fixAngle();
       this.currentPlayer.showPower();
     } else {
       this.currentPlayer.fixPower();
-      const { angle } = this.currentPlayer.trajectory;
-      const power = this.currentPlayer.powerPanel.indicator.width / powerIndicatorProps.width;
-      const { velocityX, velocityY } = CalculateService.calculateVelocityByAngleInDegreesAndPower(
-        -Math.abs(angle),
-        power,
-      );
+      const { velocityX, velocityY } = this.onlineService.getBallVelocity(this.currentPlayer);
       this.socketService.emitHitBall(velocityX, velocityY, this.currentPlayer.id);
       this.currentPlayer.isAvailable = false;
       this.currentPlayer.isHit = false;
@@ -239,34 +151,30 @@ export default class OnlineManager extends Phaser.GameObjects.Container {
   }
 
   // ToDo Add winner popup
-  showWinPopup(score: ScoreMessage) {
-    console.log('WINNER!!!');
+  public showWinPopup(score: ScoreMessage): void {
     let text;
     if (score.score1 >= 5) text = 'First player win!';
     if (score.score2 >= 5) text = 'Second player win!';
     console.log(text);
   }
 
-  clearField() {
+  public clearField(): void {
     this.flag.destroy();
-    const { cup } = this;
-    this.cup = null;
-    cup?.destroy();
     Object.values(this.balls).forEach((el) => el.destroy());
     this.balls = {};
   }
 
-  updateStatus(status: StatusMessage) {
+  public updateStatus(status: StatusMessage): void {
     this.currentPlayer.isAvailable = this.currentPlayer.id === 1 ? status.player1 : status.player2;
     if (this.currentPlayer.isAvailable) this.currentPlayer.trajectory.resume();
   }
 
-  updateScore(score: ScoreMessage) {
-    this.score.changeText1(String(score.score1));
-    this.score.changeText2(String(score.score2));
+  public updateScore(score: ScoreMessage): void {
+    this.score.changeFirstScore(String(score.score1));
+    this.score.changeSecondScore(String(score.score2));
   }
 
-  createPlayerAnimation(player: number) {
+  public createPlayerAnimation(player: number): void {
     if (player === this.currentPlayer.id) {
       this.currentPlayer.character.hit();
     } else {
@@ -274,23 +182,28 @@ export default class OnlineManager extends Phaser.GameObjects.Container {
     }
   }
 
-  showWaitingMessage() {
+  private showWaitingMessage(): void {
     this.waitingMessage = this.scene.add.text(
       this.scene.cameras.main.centerX - 25,
       this.scene.cameras.main.centerY,
-      'Waiting for second player.',
+      LANGUAGE.multiplayerScene.waitMessage[store.getState().app.lang],
+      waitMessageStyle,
     );
     this.waitingMessage.setOrigin(0.5);
   }
 
-  async showCount() {
-    const position = { x: this.scene.cameras.main.centerX - 25, y: this.scene.cameras.main.centerY };
-    const textArr = ['3', '2', '1', 'GO!'];
-    for (let i = 0; i < textArr.length; i += 1){
-      const count = new Count(this.scene, position, textArr[i]);
+  /* eslint-disable  no-await-in-loop */
+  async showCount(): Promise<void> {
+    const position = {
+      x: this.scene.cameras.main.centerX - 25,
+      y: this.scene.cameras.main.centerY,
+    };
+    for (let i = 0; i < countStrings.length; i += 1) {
+      const count = new Count(this.scene, position, countStrings[i]);
       await count.animate();
       count.destroy();
     }
     this.isAvailable = true;
   }
+  /* eslint-enable  no-await-in-loop */
 }

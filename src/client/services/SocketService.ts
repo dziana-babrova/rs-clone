@@ -26,6 +26,10 @@ export default class SocketService {
     return this.socket;
   }
 
+  async leave() {
+    this.socket.disconnect();
+  }
+
   updateId() {
     this.id = this.socket.id;
   }
@@ -34,6 +38,10 @@ export default class SocketService {
     this.socket.on(
       SocketEvents.CreateMap,
       (data: Level) => this.events.emit(OnlineGameEvents.CreateMap, data),
+    );
+    this.socket.on(
+      SocketEvents.SuccessConnect,
+      () => this.events.emit(OnlineGameEvents.SuccessConnection),
     );
     this.socket.on(
       SocketEvents.PlayerConnected,
@@ -79,67 +87,83 @@ export default class SocketService {
       SocketEvents.ErrorMessage,
       (message: string) => console.log(message),
     );
+    this.socket.on(
+      SocketEvents.RoomConnectionError,
+      (message: string) => this.events.emit(OnlineGameEvents.RoomConnectionError, message),
+    );
   }
 
-  createRoom(name: string) {
+  public createRoom(name: string): void {
     this.socket.emit(SocketEvents.RoomCreate, name);
   }
 
-  connectToRoom(name: string) {
+  public connectToRoom(name: string): void {
     this.socket.emit(SocketEvents.RoomConnect, name);
   }
 
-  autoConnect() {
+  public autoConnect(): void {
     this.socket.emit(SocketEvents.AutoConnect);
   }
 
-  emitHitBall(velocityX: number, velocityY: number, player: number) {
+  public sceneCreated(): void {
+    this.socket.emit(SocketEvents.CreateScene);
+  }
+
+  public emitHitBall(velocityX: number, velocityY: number, player: number): void {
     this.socket.emit(SocketEvents.HitBall, { velocityX, velocityY, player });
   }
 
   /* eslint-disable  @typescript-eslint/no-explicit-any */
-  mapCreate(cb: (data: Level) => void, context?: any) {
+  public mapCreate(cb: (data: Level) => void, context?: any): void {
     this.events.on(OnlineGameEvents.CreateMap, cb, context);
   }
 
-  addPlayer(cb: (data: IPlayerInfo[]) => void, context?: any) {
+  public addPlayer(cb: (data: IPlayerInfo[]) => void, context?: any): void {
     this.events.on(OnlineGameEvents.AddPlayer, cb, context);
   }
 
-  deletePlayer(cb: (data: IPlayerInfo[]) => void, context?: any) {
+  public deletePlayer(cb: (data: IPlayerInfo[]) => void, context?: any): void {
     this.events.on(OnlineGameEvents.DeletePlayer, cb, context);
   }
 
-  switchTarget(cb: (data: Level) => void, context?: any) {
+  public switchTarget(cb: (data: Level) => void, context?: any): void {
     this.events.on(OnlineGameEvents.SwitchTarget, cb, context);
   }
 
-  createBalls(cb: (data: string) => void, context?: any) {
+  public createBalls(cb: (data: string) => void, context?: any): void {
     this.events.on(OnlineGameEvents.CreateBalls, cb, context);
   }
 
-  updateBalls(cb: (data: string) => void, context?: any) {
+  public updateBalls(cb: (data: string) => void, context?: any): void {
     this.events.on(OnlineGameEvents.UpdateBalls, cb, context);
   }
 
-  statusChange(cb: (data: StatusMessage) => void, context?: any) {
+  public statusChange(cb: (data: StatusMessage) => void, context?: any): void {
     this.events.on(OnlineGameEvents.ChangeStatus, cb, context);
   }
 
-  clearField(cb: () => void, context?: any) {
+  public clearField(cb: () => void, context?: any): void {
     this.events.on(OnlineGameEvents.ClearField, cb, context);
   }
 
-  changeScore(cb: (data: ScoreMessage) => void, context?: any) {
+  public changeScore(cb: (data: ScoreMessage) => void, context?: any): void {
     this.events.on(OnlineGameEvents.ChangeScore, cb, context);
   }
 
-  gameOver(cb: (data: ScoreMessage) => void, context?: any) {
+  public gameOver(cb: (data: ScoreMessage) => void, context?: any): void {
     this.events.on(OnlineGameEvents.GameOver, cb, context);
   }
 
-  playerHit(cb: (data: number) => void, context?: any) {
+  public playerHit(cb: (data: number) => void, context?: any): void {
     this.events.on(OnlineGameEvents.PlayerHit, cb, context);
+  }
+
+  public roomError(cb: (message: string) => void, context?: any): void {
+    this.events.on(OnlineGameEvents.RoomConnectionError, cb, context);
+  }
+
+  public successConnection(cb: () => void, context?: any): void {
+    this.events.on(OnlineGameEvents.SuccessConnection, cb, context);
   }
   /* eslint-enable  @typescript-eslint/no-explicit-any */
 }

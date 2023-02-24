@@ -1,8 +1,10 @@
 import LANGUAGE from 'client/const/Language';
 import { START_SCENE } from 'client/const/scenes/StartSceneConst';
+import SocketService from 'client/services/SocketService';
 import store from 'client/state/store';
 import ElementsFactory from 'client/utils/ElementGenerator';
 import { PopupType, RoomFormInputsKeys, RoomPopupFormBtns } from 'common/types/enums';
+import { FormInputsKeys } from 'common/types/types';
 import DOMPopup from './DOMPopup';
 
 export default class RoomPopup extends DOMPopup {
@@ -18,12 +20,16 @@ export default class RoomPopup extends DOMPopup {
 
   message!: HTMLElement;
 
+  socketService!: SocketService;
+
   onStartOnlineGame!: () => void;
 
-  constructor(scene: Phaser.Scene) {
+  constructor(scene: Phaser.Scene, socketService: SocketService) {
     super(scene, PopupType.Room);
     this.renderPopup();
     this.onSubmitPopup = this.onSubmitForm.bind(this);
+    this.socketService = socketService;
+    this.socketService.roomError(this.showRoomErrors, this);
   }
 
   public renderPopup(): void {
@@ -80,7 +86,7 @@ export default class RoomPopup extends DOMPopup {
   }
 
   private handleRandomBtn() {
-    this.onStartOnlineGame();
+    this.socketService.autoConnect();
   }
 
   private async handleSubmitForm(btnType: RoomPopupFormBtns): Promise<void> {
@@ -88,39 +94,48 @@ export default class RoomPopup extends DOMPopup {
     const valid = this.checkFormValues(RoomFormInputsKeys.Room);
 
     if (valid) {
-      console.log(value);
-      // запросить данные и при отсутствии ошибок начать онлайн игру
-      // let response;
       switch (btnType) {
         case RoomPopupFormBtns.createRoom: {
-          //   response = await store.dispatch(axiosSignIn({ email, password }));
-          //   if (store.getState().user.isAuth) {
-          //     const responseMaps = await store.dispatch(axiosGetMaps());
-          //     if ('error' in responseMaps) {
-          //       await store.dispatch(axiosCreateMaps(MapService.getDefaultMapsObject()));
-          //     }
-          //   }
+          this.socketService.createRoom(value);
           break;
         }
         case RoomPopupFormBtns.getInRoom: {
-          //   const username = this.form[RoomFormInputsKeys.Username].value;
-          //   response = await store.dispatch(axiosSignUp({ email, username, password }));
-          //   if (store.getState().user.isAuth) {
-          //     await store.dispatch(axiosCreateMaps(MapService.getDefaultMapsObject()));
-          //   }
+          this.socketService.connectToRoom(value);
           break;
         }
         default:
       }
-
-      // if ('error' in response) {
-      //   const msg = response.payload?.message;
-      //   const errors = response.payload?.errors;
-      //   if (msg) this.handleErrors(msg, errors);
-      // } else {
-      //   this.onStartOnlineGame();
-      // }
-      this.onStartOnlineGame();
     }
+  }
+
+  private showRoomErrors(message: string): void {
+    const key = START_SCENE.formInputs.room[0].name as FormInputsKeys;
+    let value = '';
+    const errors = LANGUAGE.popup.socketErrors;
+    const { lang } = store.getState().app;
+    switch (true) {
+      case message.includes('already exists'): {
+        value = errors.alreadyExists[lang];
+        break;
+      }
+      case message.includes('not exist'): {
+        value = errors.notExists[lang];
+        break;
+      }
+      case message.includes('is full'): {
+        value = errors.isFull[lang];
+        break;
+      }
+      case message.includes('Something went wrong'): {
+        value = errors.somethingWrong[lang];
+        break;
+      }
+      default: {
+        value = message;
+        break;
+      }
+    }
+    this.form[`${key}Hint`].value = value;
+    this.addErrorClass(key);
   }
 }

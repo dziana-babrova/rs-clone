@@ -25,9 +25,7 @@ export default class OnlineScene extends Phaser.Scene {
   }
 
   async create() {
-    // const socket = await this.socketService.join();
     this.socket = this.socketService.socket;
-    console.log(this.socket);
     this.elementsManager = new OnlineManager(this, 41, this.socket, this.socketService);
     this.socketService.mapCreate(this.elementsManager.createMap, this.elementsManager);
     this.socketService.switchTarget(this.elementsManager.switchTarget, this.elementsManager);
@@ -40,7 +38,7 @@ export default class OnlineScene extends Phaser.Scene {
     this.socketService.changeScore(this.elementsManager.updateScore, this.elementsManager);
     this.socketService.gameOver(this.elementsManager.showWinPopup, this.elementsManager);
     this.socketService.playerHit(this.elementsManager.createPlayerAnimation, this.elementsManager);
-    // this.socketService.connectToRoom('test');
+    this.socketService.sceneCreated();
   }
 
   update() {

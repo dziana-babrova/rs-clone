@@ -33,6 +33,7 @@ export default class SocketController {
     this.socket.on(SocketEvents.RoomCreate, this.createRoom.bind(this));
     this.socket.on(SocketEvents.RoomConnect, this.connectRoom.bind(this));
     this.socket.on(SocketEvents.AutoConnect, this.autoConnect.bind(this));
+    this.socket.on(SocketEvents.CreateScene, this.sceneCreated.bind(this));
     this.socket.on(SocketEvents.HitBall, this.handleHit.bind(this));
     this.socket.on('disconnect', this.disconnectSocket.bind(this));
   }
@@ -41,17 +42,17 @@ export default class SocketController {
     try {
       const candidateRoom = this.state.rooms.find((el) => el.name === room);
       if (candidateRoom) {
-        this.socket.emit(SocketEvents.ErrorMessage, 'Room with this name already exists.');
-        console.log(`Room ${room} already exists.`)
+        this.socket.emit(SocketEvents.RoomConnectionError, 'Room with this name already exists.');
+        console.log(`Room ${room} already exists.`);
         return;
       }
       console.log('Create room - ', room);
       this.room = this.state.createRoom(room, this.socket.id, this.io);
       this.socket.join(room);
       this.roomName = room;
-      this.socket.emit(SocketEvents.CreateMap, multiPlayerMap);
-      this.sendStartState();
+      this.socket.emit(SocketEvents.SuccessConnect);
     } catch (e) {
+      console.log((e as Error).message);
       this.socket.to(this.roomName || '').emit(SocketEvents.ErrorMessage, (e as Error).message);
     }
   }
@@ -59,52 +60,67 @@ export default class SocketController {
   connectRoom(room: string) {
     try {
       const candidateRoom = this.state.rooms.find((el) => el.name === room);
-      if (!candidateRoom){
-        this.socket.emit(SocketEvents.ErrorMessage, 'Room with this name does not exist.');
+      if (!candidateRoom) {
+        this.socket.emit(SocketEvents.RoomConnectionError, 'Room with this name does not exist.');
         return;
       }
       if (candidateRoom && candidateRoom.players.length === 2) {
-        this.socket.emit(SocketEvents.ErrorMessage, 'Room is full.');
+        this.socket.emit(SocketEvents.RoomConnectionError, 'Room is full.');
         return;
       }
       if (candidateRoom && candidateRoom.players.length === 0) {
-        this.socket.emit(SocketEvents.ErrorMessage, 'Something went wrong you are alone in the room.');
+        this.socket.emit(
+          SocketEvents.RoomConnectionError,
+          'Something went wrong you are alone in the room.',
+        );
         return;
       }
       this.room = candidateRoom;
       candidateRoom.addPlayer(this.socket.id);
       this.socket.join(room);
       this.roomName = room;
-      this.socket.emit(SocketEvents.CreateMap, multiPlayerMap);
-      this.sendStartState();
-      this.room.createGame();
+      this.socket.emit(SocketEvents.SuccessConnect);
     } catch (e) {
+      console.log((e as Error).message);
       this.socket.to(this.roomName || '').emit(SocketEvents.ErrorMessage, (e as Error).message);
     }
   }
 
-  autoConnect(){
+  autoConnect() {
     try {
       this.room = this.state.connectToAutoRoom(this.socket.id, this.io);
       this.socket.join(this.room.name);
       this.roomName = this.room.name;
+      this.socket.emit(SocketEvents.SuccessConnect);
+      console.log('Connected to server room:', this.roomName);
+    } catch (e) {
+      console.log((e as Error).message);
+      this.socket.to(this.roomName || '').emit(SocketEvents.ErrorMessage, (e as Error).message);
+    }
+  }
+
+  sceneCreated() {
+    try {
       this.socket.emit(SocketEvents.CreateMap, multiPlayerMap);
       this.sendStartState();
-      if (this.room.players.length === 2){
-        this.room.createGame();
-      }
+      if (this.room.players.length === 2) this.room.createGame();
     } catch (e) {
+      console.log((e as Error).message);
       this.socket.to(this.roomName || '').emit(SocketEvents.ErrorMessage, (e as Error).message);
     }
   }
 
   disconnectSocket() {
     try {
-      if (!this.roomName) return;
+      if (!this.roomName) {
+        console.log('Disconnect without room.', this.socket.id);
+        return;
+      }
       this.state.leaveRoom(this.roomName || '', this.socket.id);
       this.io.to(this.roomName).emit(SocketEvents.PlayerDisconnected, this.room.players);
       console.log('Disconnect', this.socket.id, this.roomName);
     } catch (e) {
+      console.log((e as Error).message);
       this.socket.to(this.roomName || '').emit(SocketEvents.ErrorMessage, (e as Error).message);
     }
   }
@@ -113,6 +129,7 @@ export default class SocketController {
     try {
       this.io.to(this.roomName!).emit(SocketEvents.PlayerConnected, this.room.players);
     } catch (e) {
+      console.log((e as Error).message);
       this.socket.to(this.roomName || '').emit(SocketEvents.ErrorMessage, (e as Error).message);
     }
   }
@@ -121,6 +138,7 @@ export default class SocketController {
     try {
       this.room.game.events.emit(ServerSideEvents.HitBall, data);
     } catch (e) {
+      console.log((e as Error).message);
       this.socket.to(this.roomName || '').emit(SocketEvents.ErrorMessage, (e as Error).message);
     }
   }

@@ -1,6 +1,6 @@
-import { SocketEvents } from '../../../../common/types/events';
 import { Scene } from 'phaser';
 import { Server } from 'socket.io';
+import { SocketEvents } from '../../../../common/types/events';
 import GameManager from '../manager/GameManager';
 
 export default class OnlineScene extends Scene {

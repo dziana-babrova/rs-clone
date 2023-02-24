@@ -69,7 +69,7 @@ export default class GameManager {
     }
     this.target = this.createTemplate(targets[target]);
     this.socketService.emitSwitchTarget(targets[target]);
-    if (target === 0){
+    if (target === 0) {
       await this.delay(3000);
       this.getStartBalls();
     } else {
@@ -148,7 +148,7 @@ export default class GameManager {
     let changesString = '';
     this.balls.forEach((el) => {
       if (Math.abs(el.x - el.prevX) > 0.5 || Math.abs(el.y - el.prevY) > 0.5 || el.isNew) {
-        changesString += `${el.id}%${el.player}%${el.x}%${el.y}#`;
+        changesString += `${el.id}%${el.player}%${Math.round(el.x).toString(36)}%${Math.round(el.y).toString(36)}#`;
       }
       el.updatePosition();
     });

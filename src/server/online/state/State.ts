@@ -3,8 +3,11 @@ import Room from './Room';
 
 export default class State {
   rooms: Room[] = [];
+
   static autoRoomId = 0;
+
   static AUTO_ROOM_PREFIX = 'golf-auto-room';
+
   static currentRoom = 0;
 
   createRoom(roomName: string, id: string, server: Server) {
@@ -22,7 +25,7 @@ export default class State {
     }
   }
 
-  createAutoRoom(id: string, server: Server){
+  createAutoRoom(id: string, server: Server) {
     const roomName = State.AUTO_ROOM_PREFIX + State.autoRoomId;
     State.currentRoom = State.autoRoomId;
     State.autoRoomId += 1;
@@ -32,12 +35,13 @@ export default class State {
   }
 
   connectToAutoRoom(id: string, server: Server) {
-    const candidateRoom = this.rooms.find((el) => el.name === State.AUTO_ROOM_PREFIX + State.currentRoom);
-    if (candidateRoom?.players.length !== 1){
+    const candidateRoom = this.rooms.find(
+      (el) => el.name === State.AUTO_ROOM_PREFIX + State.currentRoom,
+    );
+    if (candidateRoom?.players.length !== 1) {
       return this.createAutoRoom(id, server);
-    } else {
-      candidateRoom.addPlayer(id);
-      return candidateRoom;
     }
+    candidateRoom.addPlayer(id);
+    return candidateRoom;
   }
 }

@@ -25,6 +25,9 @@ export enum SocketEvents {
   RoomCreate = 'room-create',
   AutoConnect = 'auto-connect',
   HitBall = 'hit-ball',
+  RoomConnectionError = 'room-error',
+  CreateScene = 'create-scene',
+  SuccessConnect = 'room-connect-success',
 }
 
 export enum OnlineGameEvents {
@@ -37,8 +40,10 @@ export enum OnlineGameEvents {
   ChangeStatus = 'status-change',
   ClearField = 'clear-field',
   ChangeScore = 'change-score',
-  GameOver = 'game-over',
+  GameOver = 'game-over-online',
   PlayerHit = 'player-hit',
+  RoomConnectionError = 'room-error',
+  SuccessConnection = 'success-connect-room',
 }
 
 export enum ServerSideEvents {
