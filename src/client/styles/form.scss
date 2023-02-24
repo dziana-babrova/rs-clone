@@ -40,30 +40,4 @@
     }
 
   }
-
-  &__submit {
-    text-transform: capitalize;
-    display: block;
-    margin: 10px auto;
-    width: 100%;
-    height: 57px;
-    font-weight: 500;
-    font-size: 2rem;
-    background-color: $color-main;
-    color: $color-primary;
-
-    &_inactive {
-      background-color: $color-grey;
-      pointer-events: none;
-    }
-
-    @include mobile {
-      height: 50px;
-      font-size: 1.6rem;
-    }
-
-    &:hover {
-      background-color: $color-main-dark;
-    }
-  }
 }

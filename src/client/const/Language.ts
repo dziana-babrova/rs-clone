@@ -41,6 +41,10 @@ const LANGUAGE = {
         eng: 'Get in Room',
         ru: 'Войти в комнату',
       },
+      randomRoom: {
+        eng: 'Get in Random Room',
+        ru: 'Cлучайная комната',
+      },
       message: {
         eng: 'Enter a name and create a room or enter an existing room by name',
         ru: 'Введите название и создайте комнату или войдите в существующую комнату по имени',

@@ -41,7 +41,7 @@ export default class AuthPopup extends DOMPopup {
     });
 
     this.btnSubmit = ElementsFactory.createButton(
-      'btn form__submit',
+      'btn btn__submit popup__submit',
       LANGUAGE.popup.auth[this.formType].submitBtn[store.getState().app.lang as Language],
     );
     this.btnSubmit.type = 'submit';
@@ -83,7 +83,7 @@ export default class AuthPopup extends DOMPopup {
       return;
     }
 
-    if (target && target.closest('.form__submit')) {
+    if (target && target.closest('.btn__submit')) {
       this.handleSubmitForm();
     }
   }
