@@ -4,7 +4,7 @@ import store from 'client/state/store';
 import Phaser from 'phaser';
 import { EventNames } from 'common/types/events';
 import SingleplayerManager from 'client/managers/SingleplayerManager';
-import { IComponent, IComponentManager, Maps } from 'common/types/types';
+import { Maps } from 'common/types/types';
 import SoundService from 'client/services/SoundService';
 import MapService from 'client/services/MapService';
 import { axiosUpdateMaps, setMaps } from 'client/state/features/AppSlice';
@@ -14,12 +14,9 @@ import { Levels } from 'client/const/levels/Levels';
 import NextLevelButton from './components/next-level-popup/NextLevelButton';
 import ElementsManager from './components/ElementsManager';
 import Fireworks from './components/Fireworks';
-import DestroyedBall from './components/DestroyedBall';
 import Background from '../../components/background/Background';
 
-export default class GameScene extends Phaser.Scene implements IComponentManager {
-  components: IComponent[] = [];
-
+export default class GameScene extends Phaser.Scene {
   public manager!: SingleplayerManager;
 
   elementsManager!: ElementsManager;
@@ -28,21 +25,17 @@ export default class GameScene extends Phaser.Scene implements IComponentManager
 
   level!: number;
 
-  starsCount: number;
-
-  isGameOver: boolean;
-
   nextLevelButton!: NextLevelButton;
 
   matterCollision!: PhaserMatterCollisionPlugin;
 
   constructor() {
     super(SceneKeys.Game);
-    this.isGameOver = false;
-    this.starsCount = 0;
   }
 
   init(props: { level?: number }) {
+    this.data.values.stars = 0;
+    this.data.values.isGameOver = false;
     let { level = -1 } = props;
     if (level === -1) {
       const unlockedMaps = store.getState().app.maps.filter((map) => map.isUnlock);
@@ -54,10 +47,9 @@ export default class GameScene extends Phaser.Scene implements IComponentManager
 
   async create() {
     this.cameras.main.fadeIn();
-    this.elementsManager = new ElementsManager(this, Levels[this.level], 41);
+    this.elementsManager = new ElementsManager(this, Levels[this.level], 41, this.matterCollision);
     await this.elementsManager.create();
 
-    this.addComponents(this.elementsManager.trajectory, this.elementsManager.ball);
     this.manager = new SingleplayerManager(
       this,
       this.elementsManager.ball,
@@ -68,9 +60,6 @@ export default class GameScene extends Phaser.Scene implements IComponentManager
   }
 
   private async initEvents() {
-    this.collectStar(this.elementsManager.ball, this.elementsManager.stars.getChildren());
-    this.detectWin(this.elementsManager.ball, this.elementsManager.cup);
-    this.collideWithSaw(this.elementsManager.ball, this.elementsManager.saws.getChildren());
     this.events.on(EventNames.Win, this.elementsManager.ball.deactivate, this.elementsManager.ball);
     this.events.on(EventNames.Win, () => {
       const fireworks = new Fireworks();
@@ -85,7 +74,7 @@ export default class GameScene extends Phaser.Scene implements IComponentManager
     const { maps } = store.getState().app;
     const index = maps.findIndex((map) => map.id === this.level);
     if (index !== -1) {
-      const newMaps = MapService.updateMapsObject(maps, index, this.starsCount);
+      const newMaps = MapService.updateMapsObject(maps, index, this.data.values.stars);
       if (store.getState().user.isAuth) {
         await store.dispatch(axiosUpdateMaps(newMaps));
       } else {
@@ -98,63 +87,18 @@ export default class GameScene extends Phaser.Scene implements IComponentManager
   private displayWinPopup() {
     this.time.delayedCall(2000, async () => {
       const popup = new NextLevelButton(this);
-      await popup.create(this.starsCount, this.switchLevel);
-    });
-  }
-
-  private collectStar(
-    objectA: Phaser.GameObjects.GameObject,
-    objectB: Phaser.GameObjects.GameObject[],
-  ) {
-    console.log(objectA, objectB);
-    this.matterCollision.addOnCollideStart({
-      objectA,
-      objectB,
-      callback: ({ gameObjectB }) => {
-        gameObjectB?.destroy();
-        this.starsCount += 1;
-        SoundService.playSound(this, SoundsKeys.Star);
-      },
-    });
-  }
-
-  private detectWin(
-    objectA: Phaser.GameObjects.GameObject,
-    objectB: Phaser.GameObjects.GameObject,
-  ) {
-    this.matterCollision.addOnCollideStart({
-      objectA,
-      objectB,
-      callback: () => {
-        this.events.emit(EventNames.Win);
-      },
-    });
-  }
-
-  private collideWithSaw(
-    objectA: Phaser.GameObjects.GameObject,
-    objectB: Phaser.GameObjects.GameObject[],
-  ) {
-    this.matterCollision.addOnCollideStart({
-      objectA,
-      objectB,
-      callback: () => {
-        this.events.emit(EventNames.GameOver);
-        const ball = new DestroyedBall();
-        ball.create(this, this.elementsManager.ball.x, this.elementsManager.ball.y);
-        this.elementsManager.ball.destroy();
-      },
+      await popup.create(this.data.values.stars, this.switchLevel);
     });
   }
 
   private handleGameOver(): void {
-    this.isGameOver = true;
+    this.data.values.isGameOver = true;
     this.cameras.main.shake(1000, 0.015);
     SoundService.playSound(this, SoundsKeys.GameOver);
     this.time.addEvent({
       delay: 2000,
       callback: () => {
-        this.switchLevel(false);
+        this.switchLevel(SceneKeys.Game, false);
       },
     });
   }
@@ -162,34 +106,33 @@ export default class GameScene extends Phaser.Scene implements IComponentManager
   update() {
     try {
       this.background.update();
-      this.components.forEach((el) => el.update());
+      this.elementsManager.update();
       this.manager.update();
-      this.elementsManager.ball.checkBallPosition(this.isGameOver);
-      this.elementsManager.saws.update();
     } catch (e) {
       console.log();
     }
   }
 
-  addComponents(...args: IComponent[]) {
-    args.forEach((el) => this.components.push(el));
-  }
-
-  switchLevel(nextLevel: boolean) {
+  switchLevel(key: string, nextLevel?: boolean) {
     this.cameras.main.fadeOut();
-    this.starsCount = 0;
-    this.isGameOver = false;
+    this.data.values.stars = 0;
+    this.data.values.isGameOver = false;
     this.destroySprites();
     this.time.addEvent({
       delay: 2000,
       callback: () => {
-        this.events.removeAllListeners(EventNames.Win);
-        this.events.removeAllListeners('pointerup');
-        this.events.removeAllListeners('pointerdown');
-        this.events.removeListener(EventNames.BallStop);
-        this.scene.restart({ level: (this.level += Number(nextLevel)) });
+        this.scene.stop();
+        this.removeListeners();
+        this.scene.start(key, { level: (this.level += Number(nextLevel)) });
       },
     });
+  }
+
+  private removeListeners(): void {
+    this.events.removeAllListeners(EventNames.Win);
+    this.events.removeAllListeners('pointerup');
+    this.events.removeAllListeners('pointerdown');
+    this.events.removeListener(EventNames.BallStop);
   }
 
   private destroySprites(): void {

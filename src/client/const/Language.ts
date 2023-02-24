@@ -173,6 +173,16 @@ const LANGUAGE = {
       ru: 'Уровень пройден!',
     },
   },
+  popup: {
+    congrats: {
+      eng: 'Congratulations!',
+      ru: 'Поздравляем!',
+    },
+    multiplayWinMessage: {
+      eng: 'The winner is Player',
+      ru: 'Победил игрок',
+    },
+  },
 };
 
 export default LANGUAGE;

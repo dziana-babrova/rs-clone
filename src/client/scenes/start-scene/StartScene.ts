@@ -191,7 +191,7 @@ export default class StartScene extends Phaser.Scene {
 
   private startOnlineGame(): void {
     this.removeStartScreenObjects();
-    this.scene.start(SceneKeys.Online);
+    this.scene.start(SceneKeys.MultiPlayer);
   }
 
   private removeStartScreenObjects(): void {

@@ -46,6 +46,7 @@ export enum TextureKeys {
   LevelTwoStars = 'LevelTwoStars',
   LevelThreeStars = 'LevelThreeStars',
   LevelLock = 'LevelLock',
+  Buttons = 'Buttons',
 }
 
 export enum Colors {
@@ -106,6 +107,7 @@ export enum ColorsNumber {
   Stroke = 0x000000,
   Green = 0x00ff00,
   Orange = 0xff9600,
+  ButtonHovered = 0x9a652f,
 }
 
 export enum Controls {
@@ -161,4 +163,10 @@ export enum SettinsPopupKeys {
   Levels = 'levels',
   Landscape = 'landscape',
   Winners = 'winners',
+}
+
+export enum ButtonsFrames {
+  Restart = 'restart.png',
+  Next = 'next.png',
+  Back = 'back.png',
 }

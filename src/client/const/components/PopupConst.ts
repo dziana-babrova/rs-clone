@@ -19,7 +19,7 @@ const POPUP = {
       shift: 0,
     },
 
-    nextLevel: {
+    switchLevel: {
       width: 600,
       height: 300,
       shift: 100,
@@ -50,6 +50,12 @@ const POPUP = {
   labelText: {
     font: '38px Montserrat',
     color: '#ffffff',
+    align: 'center',
+  },
+
+  textBold: {
+    font: '600 35px Montserrat',
+    color: '#000000',
     align: 'center',
   },
 

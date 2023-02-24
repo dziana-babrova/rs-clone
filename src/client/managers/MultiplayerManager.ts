@@ -1,5 +1,6 @@
 import { Scene } from 'phaser';
-import { ElementTypeKeys } from 'common/types/enums';
+import { ElementTypeKeys, SceneKeys } from 'common/types/enums';
+import { GAME_SCENE } from 'client/const/scenes/GameSceneConsts';
 import Ball from 'client/components/Ball';
 import Map from 'client/scenes/game-scene/components/Map';
 import { multiPlayerMap, targets } from 'client/const/levels/MultiplayerLevels';
@@ -10,6 +11,7 @@ import Cup from 'client/scenes/game-scene/components/golf-course/Cup';
 import Flag from 'client/scenes/game-scene/components/Flag';
 import PhaserMatterCollisionPlugin from 'phaser-matter-collision-plugin';
 import HoleBar from 'client/scenes/game-scene/components/golf-course/HoleBar';
+import WinPopup from 'client/components/popups/WinPopup';
 import MapService from 'client/services/MapService';
 import ScorePanel from '../scenes/multiplayer-scene/components/ScorePanel';
 import Player from '../scenes/multiplayer-scene/components/Player';
@@ -67,7 +69,10 @@ export default class MultiplayerManager extends Phaser.GameObjects.Container {
     this.target = await this.createTemplate(targets[target]);
     await this.showTarget();
     this.bar = new HoleBar(this.scene, {
-      x: this.flag.x - 20, y: this.flag.y + 45, texture: 'hole-grass.png', type: ElementTypeKeys.Flag,
+      x: this.flag.x - 20,
+      y: this.flag.y + 45,
+      texture: 'hole-grass.png',
+      type: ElementTypeKeys.Flag,
     });
     this.bar.setDepth(300);
     if (target > 0) {
@@ -168,7 +173,7 @@ export default class MultiplayerManager extends Phaser.GameObjects.Container {
     if (player.id === 2) {
       this.score.changeText2(this.player2.score.toString());
     }
-    if (player.score >= 5) {
+    if (player.score >= 1) {
       this.player1.isAvailable = false;
       this.player2.isAvailable = false;
       this.showWinPopup(player);
@@ -181,8 +186,22 @@ export default class MultiplayerManager extends Phaser.GameObjects.Container {
   /* eslint-enable  no-param-reassign */
 
   // ToDo Add winner popup
-  showWinPopup(player: Player) {
-    console.log(`WIN${player.id}`);
+  async showWinPopup(player: Player): Promise<void> {
+    const popup = new WinPopup(
+      this.scene,
+      player.id,
+      this.switch.bind(this),
+      SceneKeys.MultiPlayer,
+    );
+    await popup.show();
+    await Promise.all([
+      popup.restartButton.show(
+        this.scene.scale.width / 2 - GAME_SCENE.nextLevelPopup.button.finalPaddingX,
+      ),
+      popup.backButton.show(
+        this.scene.scale.width / 2 + GAME_SCENE.nextLevelPopup.button.finalPaddingX,
+      ),
+    ]);
   }
 
   destroyElements() {
@@ -192,5 +211,25 @@ export default class MultiplayerManager extends Phaser.GameObjects.Container {
     const { cup } = this;
     this.cup = null;
     cup?.destroy();
+  }
+
+  destroyAllElements() {
+    this.destroyElements();
+    this.map.destroy();
+    this.target.destroy();
+    this.player1.destroyPlayer();
+    this.player2.destroyPlayer();
+  }
+
+  switch(scene: string) {
+    this.scene.cameras.main.fadeOut();
+    this.scene.time.addEvent({
+      delay: 2000,
+      callback: () => {
+        this.scene.scene.stop();
+        this.destroyAllElements();
+        this.scene.scene.start(scene);
+      },
+    });
   }
 }
