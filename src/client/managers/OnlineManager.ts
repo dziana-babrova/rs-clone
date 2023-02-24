@@ -29,11 +29,11 @@ export default class OnlineManager extends Phaser.GameObjects.Container {
 
   onlineService: OnlineSceneService;
 
-  target!: Map;
+  targets: Map[] = [];
 
   flag!: Flag;
 
-  bar!: HoleBar;
+  bars: HoleBar[] = [];
 
   enemy!: PlayerEnemy | null;
 
@@ -71,21 +71,33 @@ export default class OnlineManager extends Phaser.GameObjects.Container {
   }
 
   async switchTarget(target: Level): Promise<void> {
-    if (this.target) {
-      this.bar.destroy();
-      await this.onlineService.hideTarget(this.target);
-      this.target.each((el: Phaser.Physics.Matter.Sprite) => el.destroy());
+    this.destroyTargets();
+    this.targets = [];
+    this.bars.forEach((el) => el.destroy());
+    this.bars = [];
+    const newTarget = await this.createTemplate(target);
+    await this.onlineService.showTarget(newTarget);
+    if (this.targets.length > 0) {
+      this.destroyTargets();
     }
-    this.target = await this.createTemplate(target);
-    await this.onlineService.showTarget(this.target);
-    this.bar = new HoleBar(this.scene, {
+    this.targets.push(newTarget);
+    const newBar = new HoleBar(this.scene, {
       x: this.flag.x - 20,
       y: this.flag.y + 45,
       texture: 'hole-grass.png',
       type: ElementTypeKeys.Flag,
     });
-    this.bar.setDepth(300);
+    newBar.setDepth(300);
+    this.bars.push(newBar);
     this.isAvailable = true;
+  }
+
+  async destroyTargets(): Promise<void> {
+    this.targets.forEach(async (el) => {
+      await this.onlineService.hideTarget(el);
+      el.each((elem: Phaser.Physics.Matter.Sprite) => elem.destroy());
+    });
+    this.targets = [];
   }
 
   async createTemplate(level: Level): Promise<Map> {
