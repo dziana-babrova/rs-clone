@@ -8,6 +8,7 @@ import LocalStorageService from 'client/services/LocalStorageService';
 import { LocalStorageKeys } from 'client/const/AppConstants';
 import { Position } from 'common/types/types';
 import { BackgroundKeys } from 'common/types/enums';
+import PositionCalculation from 'client/utils/PositionCalculation';
 import SettingsPopup from './SettingsPopup';
 import LandscapeBtn from './LandscapeBtn';
 
@@ -64,43 +65,23 @@ export default class Landscape extends SettingsPopup {
   }
 
   private getPositions(): Position[] {
-    const positions: Position[] = [];
-
-    const sceneWidth = this.scene.cameras.main.width;
-
-    const popupWidth = POPUP.canvas.landscape.width;
-    const popupHeight = POPUP.canvas.landscape.height;
-
     const imageTexture = this.scene.textures.get(BackgroundKeys.Daytime).getSourceImage();
 
-    const imageWidth = imageTexture.width;
-    const imageHeight = imageTexture.height;
-
-    const imageMargin = {
-      x: 30,
-      y: 30,
-    };
-
-    const cols = 2;
-    const rows = 2;
-
-    const popupX = (sceneWidth - popupWidth) / 2;
-    const popupY = this.point;
-
-    const levelsWidth = cols * (imageWidth + imageMargin.x) - imageMargin.x;
-    const levelsHeight = rows * (imageHeight + imageMargin.y) - imageMargin.x;
-
-    const marginLeft = (popupWidth - levelsWidth) / 2;
-    const marginTop = (popupHeight - levelsHeight) / 2;
-
-    for (let row = 0; row < rows; row += 1) {
-      for (let col = 0; col < cols; col += 1) {
-        const x = marginLeft + col * (imageWidth + imageMargin.x) + popupX;
-        const y = marginTop + row * (imageHeight + imageMargin.y) + popupY + 10;
-        positions.push({ x, y });
-      }
-    }
-
-    return positions;
+    return PositionCalculation.getPositions({
+      sceneWidth: this.scene.cameras.main.width,
+      popupY: this.point,
+      cols: 2,
+      rows: 2,
+      popupSize: {
+        width: POPUP.canvas.landscape.width,
+        height: POPUP.canvas.landscape.height,
+      },
+      imageSize: {
+        width: imageTexture.width,
+        height: imageTexture.height,
+      },
+      gap: { width: 30, height: 30 },
+      shift: { x: 0, y: 10 },
+    });
   }
 }

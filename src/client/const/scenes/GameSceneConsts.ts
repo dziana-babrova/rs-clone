@@ -125,7 +125,7 @@ export const pulseSettings = {
 
 export const ballText = {
   style: {
-    font: '15px monospace',
+    font: '15px Montserrat',
   },
   duration: 900,
 };
