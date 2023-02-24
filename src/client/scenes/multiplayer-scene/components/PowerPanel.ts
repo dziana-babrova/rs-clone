@@ -21,7 +21,7 @@ export default class PowerPanel extends Phaser.GameObjects.Container {
     this.indicator = scene.add.rectangle(1, 1, 0, height, 0x00ff00);
     this.indicator.setOrigin(0);
     this.wrapper = this.createWrapper({
-      color: 0xffffff,
+      color: ColorsNumber.Primary,
       alpha: 1,
       x: 0,
       y: 0,

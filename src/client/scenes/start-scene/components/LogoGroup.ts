@@ -3,6 +3,7 @@ import { TextureKeys } from 'common/types/enums';
 import Phaser from 'phaser';
 import store from 'client/state/store';
 import { START_SCENE } from 'client/const/scenes/StartSceneConst';
+import { STYLE } from 'client/const/AppConstants';
 
 export default class LogoGroup extends Phaser.GameObjects.Group {
   subtitle!: Phaser.GameObjects.Text;
@@ -33,7 +34,7 @@ export default class LogoGroup extends Phaser.GameObjects.Group {
       -START_SCENE.moveY + START_SCENE.logoGroup.subtitle.y,
       LANGUAGE.startScene.subtitle[store.getState().app.lang as Language],
       {
-        fontFamily: 'Montserrat',
+        fontFamily: STYLE.font,
         fontSize: `${START_SCENE.logoGroup.subtitle.textSize}px`,
         align: 'center',
         color: START_SCENE.logoGroup.subtitle.color,

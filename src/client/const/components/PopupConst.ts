@@ -1,3 +1,5 @@
+import { STYLE } from '../AppConstants';
+
 const POPUP = {
   canvas: {
     levels: {
@@ -6,9 +8,9 @@ const POPUP = {
       shift: -40,
     },
     winners: {
-      width: 600,
-      height: 600,
-      shift: -40,
+      width: 580,
+      height: 680,
+      shift: -10,
     },
     landscape: {
       width: 700,
@@ -25,14 +27,12 @@ const POPUP = {
 
   canvasFill: {
     radius: 10,
-    lineColor: 0x000000,
     lineWidth: 5,
   },
 
   canvasStroke: {
     padding: 16,
     radius: 10,
-    lineColor: 0x000000,
     lineWidth: 5,
   },
 
@@ -40,20 +40,21 @@ const POPUP = {
     width: 400,
     height: 60,
     radius: 30,
-    lineColor: 0x000000,
     lineWidth: 5,
   },
 
   labelText: {
-    font: '38px Montserrat',
-    color: '#ffffff',
+    fontFamily: STYLE.font,
+    fontSize: '38px',
+    color: STYLE.lightText,
     align: 'center',
   },
 
   levels: {
     labelText: {
-      font: '38px Montserrat',
-      color: '#000000',
+      fontFamily: STYLE.font,
+      fontSize: '38px',
+      color: STYLE.lightText,
       align: 'center',
     },
   },

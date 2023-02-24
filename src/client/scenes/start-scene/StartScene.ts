@@ -160,9 +160,21 @@ export default class StartScene extends Scene {
     if (isActive) {
       this.authBtn.setInteractive();
       this.langBtn.setInteractive();
+      this.startSceneBtns.btnStartSingleGame.setInteractive();
+      this.startSceneBtns.btnTwoPlayersGame.setInteractive();
+      this.startSceneBtns.btnLevels.background.setInteractive();
+      this.startSceneBtns.btnLandscape.background.setInteractive();
+      this.startSceneBtns.btnWinners.background.setInteractive();
+      this.startSceneBtns.btnMusic.background.setInteractive();
     } else {
       this.authBtn.disableInteractive();
       this.langBtn.disableInteractive();
+      this.startSceneBtns.btnStartSingleGame.disableInteractive();
+      this.startSceneBtns.btnTwoPlayersGame.disableInteractive();
+      this.startSceneBtns.btnLevels.background.disableInteractive();
+      this.startSceneBtns.btnLandscape.background.disableInteractive();
+      this.startSceneBtns.btnWinners.background.disableInteractive();
+      this.startSceneBtns.btnMusic.background.disableInteractive();
     }
   }
 
