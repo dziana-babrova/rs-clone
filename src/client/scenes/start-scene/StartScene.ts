@@ -1,27 +1,28 @@
-import {
-  Colors, SceneKeys, SettinsPopupKeys as SettingsPopupKeys, SoundsKeys, TextureKeys,
-} from 'common/types/enums';
-import { Language, NEXT_LANG } from 'client/const/Language';
-import { LocalStorageKeys } from 'client/const/AppConstants';
-import LocalStorageService from 'client/services/LocalStorageService';
-import { axiosSignOut } from 'client/state/features/UserSlice';
-import { setLang, setMusic } from 'client/state/features/AppSlice';
-import store from 'client/state/store';
-import SoundService from 'client/services/SoundService';
 import Landscape from 'client/components/popups/Landscape';
 import Levels from 'client/components/popups/Levels';
 import Winners from 'client/components/popups/Winners';
+import { LocalStorageKeys } from 'client/const/AppConstants';
+import { Language, NEXT_LANG } from 'client/const/Language';
 import { emptyLevel } from 'client/const/levels/Levels';
+import LocalStorageService from 'client/services/LocalStorageService';
+import SoundService from 'client/services/SoundService';
+import { setLang, setMusic } from 'client/state/features/AppSlice';
+import { axiosSignOut } from 'client/state/features/UserSlice';
+import store from 'client/state/store';
+import {
+  Colors, SceneKeys, SettingsPopupKeys, SoundsKeys, TextureKeys,
+} from 'common/types/enums';
+import { Scene } from 'phaser';
+import ElementsManager from '../game-scene/components/ElementsManager';
+import AuthBtn from './components/AuthBtn';
+import AuthPopup from './components/AuthPopup';
 import LangBtn from './components/LangBtn';
 import LogoGroup from './components/LogoGroup';
-import AuthBtn from './components/AuthBtn';
-import StartSceneBtns from './components/StartSceneBtns';
-import AuthPopup from './components/AuthPopup';
-import ElementsManager from '../game-scene/components/ElementsManager';
-import RoomPopup from './components/RoomPopup';
 import MultiplayerBtns from './components/MultiplayerBtns';
+import RoomPopup from './components/RoomPopup';
+import StartSceneBtns from './components/StartSceneBtns';
 
-export default class StartScene extends Phaser.Scene {
+export default class StartScene extends Scene {
   lang: Language = Language.Eng;
 
   logoGroup!: LogoGroup;
@@ -103,11 +104,11 @@ export default class StartScene extends Phaser.Scene {
     this.multiplayerBtns.btnStartOnlineGame.on('pointerdown', this.showRoomPopup.bind(this));
     this.multiplayerBtns.btnBack.background.on('pointerdown', this.hideMultiplayerBtns.bind(this));
 
-    this.roomPopup.onClosePopup = this.onCloseRoomPopup.bind(this);
+    this.roomPopup.onClosePopup = this.onClosePopup.bind(this);
     this.roomPopup.onStartOnlineGame = this.startOnlineGame.bind(this);
 
     this.authBtn.on('pointerdown', this.authBtnHandler.bind(this));
-    this.authPopup.onClosePopup = this.onCloseAuthPopup.bind(this);
+    this.authPopup.onClosePopup = this.onClosePopup.bind(this);
 
     this.startSceneBtns.btnLevels.background.on('pointerdown', this.createSettingsPopup.bind(this, SettingsPopupKeys.Levels));
     this.startSceneBtns.btnLandscape.background.on('pointerdown', this.createSettingsPopup.bind(this, SettingsPopupKeys.Landscape));
@@ -130,7 +131,7 @@ export default class StartScene extends Phaser.Scene {
     ]);
   }
 
-  private createSettingsPopup(type: SettinsPopupKeys): void {
+  private createSettingsPopup(type: SettingsPopupKeys): void {
     this.handleInteractiveStartScreen(false);
     switch (type) {
       case SettingsPopupKeys.Levels: {
@@ -202,7 +203,7 @@ export default class StartScene extends Phaser.Scene {
     }
   }
 
-  private onCloseAuthPopup(isUpdateAuthBtnText = false): void {
+  private onClosePopup(isUpdateAuthBtnText = false): void {
     if (isUpdateAuthBtnText) {
       this.authBtn.updateBtnText();
     }
@@ -228,11 +229,6 @@ export default class StartScene extends Phaser.Scene {
     this.input.enabled = false;
     this.roomPopup.renderPopup();
     this.roomPopup.show();
-  }
-
-  private onCloseRoomPopup(): void {
-    this.input.enabled = true;
-    console.log('closeRoomPopup');
   }
 
   private startOnlineGame(): void {

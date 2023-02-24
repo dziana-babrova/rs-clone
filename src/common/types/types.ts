@@ -140,13 +140,10 @@ export type ServerValidationError = {
   location: string;
 };
 
-export type AuthFormInput = {
-  name: AuthFormInputsKeys;
-  type: string;
-};
+export type FormInputsKeys = AuthFormInputsKeys | RoomFormInputsKeys;
 
-export type RoomFormInput = {
-  name: RoomFormInputsKeys;
+export type FormInput = {
+  name: FormInputsKeys;
   type: string;
 };
 

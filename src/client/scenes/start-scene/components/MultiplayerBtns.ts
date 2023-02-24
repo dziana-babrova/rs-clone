@@ -1,13 +1,13 @@
-import Phaser from 'phaser';
-import TweenAnimationBuilder from 'client/utils/TweenAnimationBuilder';
+import LANGUAGE, { Language } from 'client/const/Language';
 import { START_SCENE, START_SCENE_ANIMATION } from 'client/const/scenes/StartSceneConst';
 import store from 'client/state/store';
-import LANGUAGE, { Language } from 'client/const/Language';
+import TweenAnimationBuilder from 'client/utils/TweenAnimationBuilder';
 import { Move } from 'common/types/enums';
+import { GameObjects } from 'phaser';
 import IconButton from './IconButton';
 import TextButton from './TextButton';
 
-export default class MultiplayerBtns extends Phaser.GameObjects.Container {
+export default class MultiplayerBtns extends GameObjects.Container {
   tweenAnimationBuilder: TweenAnimationBuilder;
 
   btnStartLocalGame!: TextButton;
@@ -80,8 +80,8 @@ export default class MultiplayerBtns extends Phaser.GameObjects.Container {
       this.scene,
       this,
       type === Move.Show ? 0 : -this.scene.cameras.main.width,
-      START_SCENE_ANIMATION.moveYAnimation.ease,
-      START_SCENE_ANIMATION.moveYAnimation.duration,
+      START_SCENE_ANIMATION.move.ease,
+      START_SCENE_ANIMATION.move.duration,
     );
   }
 

@@ -1,7 +1,4 @@
 const POPUP = {
-  y: -3000,
-  moveY: 3000,
-
   canvas: {
     levels: {
       width: 1200,

@@ -139,12 +139,7 @@ export const START_SCENE = {
 };
 
 export const START_SCENE_ANIMATION = {
-  moveYAnimation: {
-    ease: 'Back',
-    duration: 1000,
-  },
-
-  moveXAnimation: {
+  move: {
     ease: 'Back',
     duration: 1000,
   },

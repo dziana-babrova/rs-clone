@@ -133,8 +133,8 @@ export default class StartSceneBtns extends Phaser.GameObjects.Container {
       this.scene,
       this,
       type === Move.Show ? 0 : this.scene.cameras.main.width,
-      START_SCENE_ANIMATION.moveYAnimation.ease,
-      START_SCENE_ANIMATION.moveYAnimation.duration,
+      START_SCENE_ANIMATION.move.ease,
+      START_SCENE_ANIMATION.move.duration,
     );
   }
 
@@ -151,8 +151,8 @@ export default class StartSceneBtns extends Phaser.GameObjects.Container {
       this.scene,
       btn,
       this.scene.cameras.main.centerX,
-      START_SCENE_ANIMATION.moveXAnimation.ease,
-      START_SCENE_ANIMATION.moveYAnimation.duration,
+      START_SCENE_ANIMATION.move.ease,
+      START_SCENE_ANIMATION.move.duration,
     );
   }
 

@@ -5,12 +5,37 @@
   left: 50%;
   transform: translate(-50%, -50%);
   width: 100%;
-  max-width: 600px;
+  max-width: 580px;
   margin: auto;
   padding: 40px;
-  border-radius: 18px;
-  background-color: $color-popup-background;
-  border: 8px solid $color-popup-border;
+  border-radius: 14px;
+  background-color: $color-popup-border;
+
+  &::before {
+    content: '';
+    position: absolute;
+    z-index: -10;
+    top: 6px;
+    left: 6px;
+    width: calc(100% - 12px);
+    height: calc(100% - 12px);
+    border-radius: 14px;
+    background-color: $color-popup-background;
+    border: 2px solid $color-secondary;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    z-index: -20;
+    top: -2px;
+    left: -2px;
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    border-radius: 16px;
+    background-color: transparent;
+    border: 2px solid $color-secondary;
+  }
 
   &__message-wrapper {
     display: flex;
@@ -21,9 +46,7 @@
   }
 
   &__message {
-    &_room {
-      text-align: center;
-    }
+    text-align: center;
   }
 
   &__change {
@@ -37,11 +60,16 @@
 
   &__close {
     position: absolute;
-    right: 6px;
-    top: 6px;
+    z-index: 100;
+    right: -23px;
+    top: -23px;
     color: $color-grey-light;
-    width: 32px;
-    height: 32px;
+    width: 46px;
+    height: 46px;
+    background-image: url('../assets/close.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
     background-color: transparent;
     border: none;
 

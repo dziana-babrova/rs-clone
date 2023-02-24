@@ -133,6 +133,11 @@ export enum FormType {
   SignUp = 'signUp',
 }
 
+export enum PopupType {
+  Auth = 'auth',
+  Room = 'room',
+}
+
 export enum SoundsKeys {
   Hit = 'hit-sound',
   Firework = 'fireworks-sound',
@@ -161,7 +166,7 @@ export enum BackgroundFrames {
   SmallCloud = 'cloud2.png',
 }
 
-export enum SettinsPopupKeys {
+export enum SettingsPopupKeys {
   Levels = 'levels',
   Landscape = 'landscape',
   Winners = 'winners',
