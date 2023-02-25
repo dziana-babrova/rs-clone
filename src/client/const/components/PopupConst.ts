@@ -11,9 +11,9 @@ const POPUP = {
       shift: -40,
     },
     landscape: {
-      width: 900,
-      height: 300,
-      shift: -40,
+      width: 700,
+      height: 440,
+      shift: -60,
     },
 
     nextLevel: {

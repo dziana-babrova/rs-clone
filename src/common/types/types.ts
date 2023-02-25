@@ -189,9 +189,9 @@ export type WinnersResponse = Winner[];
 export type Size = {
   width: number,
   height: number,
-  shift: number,
 };
 
+export type SizeWithShift = Size & { shift: number };
 export interface IPlayerInfo {
   id: 1 | 2;
   socketId: string;
@@ -204,4 +204,15 @@ export type StatusMessage = { player1: boolean; player2: boolean };
 
 export type ScoreMessage = { score1: number; score2: number };
 
-export type ServerBalls = { [key: string]: { player: string; x: number; y: number } };
+export type ServerBalls = { [key: string]: { player: string; x: string; y: string } };
+
+export interface IPositionParams {
+  sceneWidth: number;
+  popupY: number;
+  cols: number;
+  rows: number;
+  popupSize: Size;
+  imageSize: Size;
+  gap: Size;
+  shift: Position;
+}

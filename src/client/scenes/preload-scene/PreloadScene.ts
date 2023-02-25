@@ -78,6 +78,7 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.image(TextureKeys.LevelTwoStars, '../assets/level2.svg');
     this.load.image(TextureKeys.LevelThreeStars, '../assets/level3.svg');
     this.load.image(TextureKeys.LevelLock, '../assets/levelLock.svg');
+    this.load.image(TextureKeys.Select, '../assets/select.svg');
 
     this.load.atlas(TextureKeys.Platforms, platfrom, texture);
     this.load.atlas(TextureKeys.Flag, '../assets/flag.png', '../assets/flag.json');
@@ -108,6 +109,10 @@ export default class PreloadScene extends Phaser.Scene {
       } else {
         this.load.image(btn, `../assets/${btn}.svg`);
       }
+    });
+
+    Object.values(START_SCENE.landscape.backround).forEach((background) => {
+      this.load.image(background, `../assets/bg-${background}.png`);
     });
 
     this.load.atlas('player1', 'assets/players/player1/player1.png', 'assets/players/player1/player1.json');

@@ -1,11 +1,11 @@
 import { Scene } from 'phaser';
 import { ColorsNumber, Move, TextureKeys } from 'common/types/enums';
 import TweenAnimationBuilder from 'client/utils/TweenAnimationBuilder';
-import { Size } from 'common/types/types';
+import { Size, SizeWithShift } from 'common/types/types';
 import POPUP, { POPUP_ANIMATION } from 'client/const/components/PopupConst';
 
 export default class PopupCanvasGroup extends Phaser.GameObjects.Container {
-  size: Size;
+  size: SizeWithShift;
 
   tweenAnimationBuilder: TweenAnimationBuilder;
 
@@ -17,7 +17,7 @@ export default class PopupCanvasGroup extends Phaser.GameObjects.Container {
 
   point: number;
 
-  constructor(scene: Scene, title: string, size: Size, isCloseBtn: boolean) {
+  constructor(scene: Scene, title: string, size: SizeWithShift, isCloseBtn: boolean) {
     super(scene);
     this.size = size;
     this.point = (this.scene.cameras.main.height - this.size.height) / 2 - this.size.shift;
