@@ -150,8 +150,8 @@ export default class PreloadScene extends Phaser.Scene {
   }
 
   createLoader() {
-    this.progressBar = new ProgressBar(this, PRELOAD_SCENE.gradientRectangle);
     this.progressBox = new ProgressBox(this, PRELOAD_SCENE.coloredRectangle);
+    this.progressBar = new ProgressBar(this, PRELOAD_SCENE.gradientRectangle);
     this.progressText = new ProgressText(this, PRELOAD_SCENE.mainText);
     this.progressPercentText = new ProgressPercentText(this, PRELOAD_SCENE.secondaryText);
     this.progressAssets = new ProgressAssets(this, PRELOAD_SCENE.secondaryText);
