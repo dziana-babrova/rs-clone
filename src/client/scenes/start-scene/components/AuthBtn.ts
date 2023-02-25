@@ -1,7 +1,8 @@
-import LANGUAGE, { Language } from 'client/const/Language';
+import LANGUAGE from 'client/const/Language';
 import Phaser from 'phaser';
 import store from 'client/state/store';
 import { START_SCENE } from 'client/const/scenes/StartSceneConst';
+import { Language } from 'common/types/enums';
 import TextButton from './TextButton';
 
 export default class AuthBtn extends TextButton {

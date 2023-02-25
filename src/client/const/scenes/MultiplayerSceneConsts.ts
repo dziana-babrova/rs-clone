@@ -50,3 +50,9 @@ export const botTimer = { start: 1000, end: 4000 };
 export const botAngle = { start: 30, end: 80 };
 
 export const botPower = { start: 50, end: powerIndicatorProps.width };
+
+export const waitMessageStyle = {
+  font: '30px monospace',
+};
+
+export const countStrings = ['3', '2', '1', 'GO!'];

@@ -58,13 +58,13 @@ export default class MultiplayerManager extends Phaser.GameObjects.Container {
     this.score = new ScorePanel(scene, { x: scene.cameras.main.centerX - 25, y: 0 });
   }
 
-  async createMap() {
+  async createMap(): Promise<void> {
     this.map = await this.createTemplate(multiPlayerMap);
     this.map.setDepth(50);
     await this.map.animate();
   }
 
-  async switchTarget(target = 0) {
+  async switchTarget(target = 0): Promise<void> {
     if (this.target) {
       this.bar.destroy();
       await this.hideTarget();
@@ -88,7 +88,7 @@ export default class MultiplayerManager extends Phaser.GameObjects.Container {
     }
   }
 
-  async createTemplate(level: Level) {
+  async createTemplate(level: Level): Promise<Map> {
     const mapElements = this.mapService.createLevelConfig(level.map);
     const template = this.mapService.createMap(this.scene, mapElements);
     template.setDepth(40);
@@ -104,17 +104,17 @@ export default class MultiplayerManager extends Phaser.GameObjects.Container {
     return template;
   }
 
-  async hideTarget() {
+  async hideTarget(): Promise<void> {
     const { y, ease, duration } = animations.hideAnimation;
     await this.animationBuilder.moveY(this.scene, this.target, y, ease, duration);
   }
 
-  async showTarget() {
+  async showTarget(): Promise<void> {
     const { y, ease, duration } = animations.showAnimation;
     await this.animationBuilder.moveY(this.scene, this.target, y, ease, duration);
   }
 
-  createPlayers(withBot: boolean) {
+  public createPlayers(withBot: boolean): void {
     this.player1 = new Player(
       this.scene,
       { x: firstPlayerPosition.x, y: firstPlayerPosition.y },
@@ -146,15 +146,15 @@ export default class MultiplayerManager extends Phaser.GameObjects.Container {
     this.initCollisions(this.player2.currentBall!, this.player2);
   }
 
-  initPlayer1Events() {
+  private initPlayer1Events(): void {
     this.scene.input.keyboard.on('keydown-SPACE', this.handlePlayerClick.bind(this, this.player1));
   }
 
-  initPlayer2Events() {
+  private initPlayer2Events(): void {
     this.scene.input.keyboard.on('keydown-UP', this.handlePlayerClick.bind(this, this.player2));
   }
 
-  async handlePlayerClick(player: Player) {
+  async handlePlayerClick(player: Player): Promise<void> {
     if (!player.isAvailable) return;
     if (!player.isHit) {
       player.fixAngle();
@@ -166,7 +166,7 @@ export default class MultiplayerManager extends Phaser.GameObjects.Container {
     }
   }
 
-  initCollisions(ball: Ball, player: Player) {
+  private initCollisions(ball: Ball, player: Player): void {
     this.detectWin(this.cup!, ball, player);
   }
 
@@ -174,7 +174,7 @@ export default class MultiplayerManager extends Phaser.GameObjects.Container {
     objectA: Phaser.GameObjects.GameObject,
     objectB: Phaser.GameObjects.GameObject,
     player: Player,
-  ) {
+  ): void {
     this.matterCollision.addOnCollideStart({
       objectA,
       objectB,
@@ -184,15 +184,15 @@ export default class MultiplayerManager extends Phaser.GameObjects.Container {
 
   /* eslint-disable  no-param-reassign */
   /* eslint-disable  no-plusplus */
-  handleWin(player: Player) {
+  private handleWin(player: Player): void {
     if (!this.isAvailable) return;
     this.isAvailable = false;
     player.score += 1;
     if (player.id === 1) {
-      this.score.changeText1(this.player1.score.toString());
+      this.score.changeFirstScore(this.player1.score.toString());
     }
     if (player.id === 2) {
-      this.score.changeText2(this.player2.score.toString());
+      this.score.changeSecondScore(this.player2.score.toString());
     }
     if (player.score >= 5) {
       this.player1.isAvailable = false;
@@ -207,11 +207,11 @@ export default class MultiplayerManager extends Phaser.GameObjects.Container {
   /* eslint-enable  no-param-reassign */
 
   // ToDo Add winner popup
-  showWinPopup(player: Player) {
+  private showWinPopup(player: Player): void {
     console.log(`WIN${player.id}`);
   }
 
-  destroyElements() {
+  private destroyElements(): void {
     this.player1.balls.clear(true, true);
     this.player2.balls.clear(true, true);
     this.flag.destroy();
