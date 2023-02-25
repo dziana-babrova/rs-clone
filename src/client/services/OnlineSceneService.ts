@@ -80,7 +80,7 @@ export default class OnlineSceneService {
   }
   /* eslint-enable no-param-reassign */
 
-  public createStaticPlayer(position: Position, isReverse: boolean, id: number): Player {
+  public createStaticPlayer(position: Position, isReverse: boolean, id: 1 | 2): Player {
     const player = new Player(this.scene, { x: position.x, y: position.y }, isReverse, id);
     player.isAvailable = false;
     player.trajectory.stop();

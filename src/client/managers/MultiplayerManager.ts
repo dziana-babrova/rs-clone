@@ -1,5 +1,5 @@
 import { Scene } from 'phaser';
-import { ElementTypeKeys, SceneKeys } from 'common/types/enums';
+import { ElementTypeKeys, SceneKeys, SoundsKeys } from 'common/types/enums';
 import { GAME_SCENE } from 'client/const/scenes/GameSceneConsts';
 import store from 'client/state/store';
 import LANGUAGE from 'client/const/Language';
@@ -21,6 +21,7 @@ import WinPopup from 'client/components/popups/WinPopup';
 import MapService from 'client/services/MapService';
 import GameBot from 'client/scenes/multiplayer-scene/components/GameBot';
 import { EventNames } from 'common/types/events';
+import SoundService from 'client/services/SoundService';
 import ScorePanel from '../scenes/multiplayer-scene/components/ScorePanel';
 import Player from '../scenes/multiplayer-scene/components/Player';
 
@@ -69,6 +70,7 @@ export default class MultiplayerManager extends Phaser.GameObjects.Container {
   }
 
   async switchTarget(target = 0): Promise<void> {
+    SoundService.playSound(this.scene, SoundsKeys.SwitchTarget);
     if (this.target) {
       this.bar.destroy();
       await this.hideTarget();
@@ -212,6 +214,7 @@ export default class MultiplayerManager extends Phaser.GameObjects.Container {
 
   // ToDo Add winner popup
   private async showWinPopup(player: Player): Promise<void> {
+    SoundService.playSound(this.scene, SoundsKeys.PlayerWin);
     const popup = new WinPopup(
       this.scene,
       player.id,

@@ -9,7 +9,7 @@ import MultiplayerTrajectory from './MultiplayerTrajectory';
 import PowerPanel from './PowerPanel';
 
 export default class Player {
-  id: number;
+  id: 1 | 2;
 
   isReverse: boolean;
 
@@ -33,7 +33,7 @@ export default class Player {
 
   character: Character;
 
-  constructor(scene: Scene, position: Position, isReverse: boolean, id: number) {
+  constructor(scene: Scene, position: Position, isReverse: boolean, id: 1 | 2) {
     this.scene = scene;
     this.position = position;
     this.balls = scene.add.group();

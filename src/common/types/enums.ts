@@ -155,6 +155,9 @@ export enum SoundsKeys {
   ResultStar = 'result-star-sound',
   GameOver = 'game-over-sound',
   Music = 'music',
+  SwitchTarget = 'switch-target',
+  PlayerWin = 'player-win',
+  PlayerLose = 'player-lose',
 }
 
 export enum BackgroundKeys {
@@ -189,4 +192,8 @@ export enum ButtonsFrames {
   Restart = 'restart.png',
   Next = 'next.png',
   Back = 'back.png',
+}
+
+export enum WinReasons {
+  EnemyLeave = 'leave',
 }
