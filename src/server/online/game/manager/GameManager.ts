@@ -63,13 +63,18 @@ export default class GameManager {
     this.map = this.createTemplate(multiPlayerMap);
   }
 
-  switchTarget(target = 0) {
+  async switchTarget(target = 0) {
     if (this.target) {
       this.target.each((el: Phaser.Physics.Matter.Sprite) => el.destroy());
     }
     this.target = this.createTemplate(targets[target]);
     this.socketService.emitSwitchTarget(targets[target]);
-    this.getStartBalls();
+    if (target === 0) {
+      await this.delay(3000);
+      this.getStartBalls();
+    } else {
+      this.getStartBalls();
+    }
     this.isAvailable = true;
   }
 
@@ -112,9 +117,12 @@ export default class GameManager {
     if (ball.player === 2) {
       this.score2 += 1;
     }
-    if (this.score1 >= 5 || this.score2 >= 5) {
+    if (this.score1 >= 5) {
       this.isAvailable = false;
-      this.socketService.emitGameOver({ score1: this.score1, score2: this.score2 });
+      this.socketService.emitGameOver(1);
+    } else if (this.score2 >= 5) {
+      this.isAvailable = false;
+      this.socketService.emitGameOver(2);
     } else {
       this.socketService.emitPlayersScore({ score1: this.score1, score2: this.score2 });
       this.destroyElements();
@@ -143,7 +151,7 @@ export default class GameManager {
     let changesString = '';
     this.balls.forEach((el) => {
       if (Math.abs(el.x - el.prevX) > 0.5 || Math.abs(el.y - el.prevY) > 0.5 || el.isNew) {
-        changesString += `${el.id}%${el.player}%${el.x}%${el.y}#`;
+        changesString += `${el.id}%${el.player}%${Math.round(el.x).toString(36)}%${Math.round(el.y).toString(36)}#`;
       }
       el.updatePosition();
     });

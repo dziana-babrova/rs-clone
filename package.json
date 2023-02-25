@@ -9,7 +9,7 @@
         "lint": "eslint . --ext .ts",
         "test": "jest",
         "dev-server": "nodemon ./src/server/index.ts",
-        "start-server": "node ./build-server/index.js",
+        "start-server": "node ./build-server/server/index.js",
         "build-server": "npm run clean && tsc --project ./tsconfig.server.json",
         "clean": "node node_modules/rimraf/bin lib"
     },

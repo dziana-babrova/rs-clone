@@ -42,5 +42,14 @@ export const animations = {
     ease: 'Quad',
     duration: 500,
   },
-
 };
+
+export const countStyle = {
+  font: '140px monospace',
+};
+
+export const waitMessageStyle = {
+  font: '30px monospace',
+};
+
+export const countStrings = ['3', '2', '1', 'GO!'];

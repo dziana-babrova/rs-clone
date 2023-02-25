@@ -1,3 +1,8 @@
+export enum Language {
+  Eng = 'eng',
+  Ru = 'ru',
+}
+
 export enum AnimationKeys {
   Wave = 'flag-wave',
 }

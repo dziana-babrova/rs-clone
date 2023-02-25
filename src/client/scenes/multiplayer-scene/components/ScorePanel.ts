@@ -28,7 +28,7 @@ export default class ScorePanel extends Phaser.GameObjects.Container {
     scene.add.existing(this);
   }
 
-  private createPanel(color: number, position: Position) {
+  private createPanel(color: number, position: Position): void {
     const graphics = this.scene.add.graphics();
     graphics.fillStyle(color, scoreBlockSettings.alpha);
     graphics.fillRoundedRect(
@@ -41,11 +41,11 @@ export default class ScorePanel extends Phaser.GameObjects.Container {
     this.add(graphics);
   }
 
-  changeText1(text: string) {
+  public changeFirstScore(text: string): void {
     this.firstPlayerScore.text = text;
   }
 
-  changeText2(text: string) {
+  public changeSecondScore(text: string): void {
     this.secondPlayerScore.text = text;
   }
 }

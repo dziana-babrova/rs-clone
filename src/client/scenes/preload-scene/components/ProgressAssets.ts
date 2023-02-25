@@ -1,7 +1,8 @@
-import LANGUAGE, { Language } from 'client/const/Language';
+import LANGUAGE from 'client/const/Language';
 import Phaser from 'phaser';
 import store from 'client/state/store';
 import { TextObjectProps } from 'common/types/types';
+import { Language } from 'common/types/enums';
 
 export default class ProgressAssets extends Phaser.GameObjects.Text {
   constructor(scene: Phaser.Scene, textObject: TextObjectProps) {

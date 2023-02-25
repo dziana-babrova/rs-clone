@@ -1,9 +1,11 @@
-import LANGUAGE, { Language } from 'client/const/Language';
+import LANGUAGE from 'client/const/Language';
 import MapService from 'client/services/MapService';
 import { axiosCreateMaps, axiosGetMaps } from 'client/state/features/AppSlice';
 import { axiosSignIn, axiosSignUp } from 'client/state/features/UserSlice';
 import store from 'client/state/store';
-import { AuthFormInputsKeys, FormType, PopupType } from 'common/types/enums';
+import {
+  AuthFormInputsKeys, FormType, Language, PopupType,
+} from 'common/types/enums';
 import ElementsFactory from 'client/utils/ElementGenerator';
 import { START_SCENE } from 'client/const/scenes/StartSceneConst';
 import DOMPopup from './DOMPopup';

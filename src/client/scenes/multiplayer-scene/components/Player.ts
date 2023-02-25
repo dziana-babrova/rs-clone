@@ -44,7 +44,6 @@ export default class Player {
       this.currentBall.setTint(playerProps.secondBallColor);
       this.character.scaleX = -this.character.scaleX;
     }
-    this.currentBall.setDepth(100);
     this.trajectory = new MultiplayerTrajectory(scene, position, isReverse);
     this.powerPanel = new PowerPanel(this.scene, position, isReverse);
     this.powerPanel.setDepth(105);
@@ -52,7 +51,7 @@ export default class Player {
     this.id = id;
   }
 
-  addBall(position: Position) {
+  private addBall(position: Position) {
     return new Promise((resolve) => {
       setTimeout(() => {
         const ball = new Ball(this.scene, { x: position.x, y: position.y - 30 });
@@ -68,7 +67,7 @@ export default class Player {
     });
   }
 
-  async hit() {
+  async hit(): Promise<void> {
     this.balls.add(this.currentBall!);
     const { angle } = this.trajectory;
     const power = this.powerPanel.indicator.width / powerIndicatorProps.width;
@@ -84,17 +83,17 @@ export default class Player {
     await this.addBall(this.position);
   }
 
-  fixAngle() {
+  public fixAngle(): void {
     this.trajectory.stop();
     this.isHit = true;
     this.character.prepare();
   }
 
-  showPower() {
+  public showPower(): void {
     this.powerPanel.animate();
   }
 
-  fixPower() {
+  public fixPower(): void {
     this.powerPanel.stop();
   }
 
