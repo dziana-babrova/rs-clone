@@ -6,6 +6,7 @@ export enum EventNames {
   ChangeTrajectory = 'changeTrajectory',
   Win = 'win',
   GameOver = 'game-over',
+  GameBotHit = 'game-bot-kick',
 }
 
 export enum SocketEvents {

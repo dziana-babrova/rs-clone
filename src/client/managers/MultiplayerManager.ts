@@ -8,13 +8,19 @@ import Map from 'client/scenes/game-scene/components/Map';
 import { multiPlayerMap, targets } from 'client/const/levels/MultiplayerLevels';
 import { Level } from 'common/types/types';
 import TweenAnimationBuilder from 'client/utils/TweenAnimationBuilder';
-import { animations, firstPlayerPosition, secondPlayerPosition } from 'client/const/scenes/MultiplayerSceneConsts';
+import {
+  animations,
+  firstPlayerPosition,
+  secondPlayerPosition,
+} from 'client/const/scenes/MultiplayerSceneConsts';
 import Cup from 'client/scenes/game-scene/components/golf-course/Cup';
 import Flag from 'client/scenes/game-scene/components/Flag';
 import PhaserMatterCollisionPlugin from 'phaser-matter-collision-plugin';
 import HoleBar from 'client/scenes/game-scene/components/golf-course/HoleBar';
 import WinPopup from 'client/components/popups/WinPopup';
 import MapService from 'client/services/MapService';
+import GameBot from 'client/scenes/multiplayer-scene/components/GameBot';
+import { EventNames } from 'common/types/events';
 import ScorePanel from '../scenes/multiplayer-scene/components/ScorePanel';
 import Player from '../scenes/multiplayer-scene/components/Player';
 
@@ -112,26 +118,43 @@ export default class MultiplayerManager extends Phaser.GameObjects.Container {
     await this.animationBuilder.moveY(this.scene, this.target, y, ease, duration);
   }
 
-  public createPlayers(): void {
+  public createPlayers(withBot: boolean): void {
     this.player1 = new Player(
       this.scene,
       { x: firstPlayerPosition.x, y: firstPlayerPosition.y },
       false,
       1,
     );
-    this.player2 = new Player(
-      this.scene,
-      { x: secondPlayerPosition.x, y: secondPlayerPosition.y },
-      true,
-      2,
-    );
+    this.initPlayer1Events();
+    if (!withBot) {
+      this.player2 = new Player(
+        this.scene,
+        { x: secondPlayerPosition.x, y: secondPlayerPosition.y },
+        true,
+        2,
+      );
+      this.initPlayer2Events();
+    } else {
+      this.player2 = new GameBot(
+        this.scene,
+        { x: secondPlayerPosition.x, y: secondPlayerPosition.y },
+        true,
+        2,
+      );
+      this.scene.events.on(EventNames.GameBotHit, () => {
+        this.initCollisions(this.player2.currentBall!, this.player2);
+      });
+      (this.player2 as GameBot).startBot();
+    }
     this.initCollisions(this.player1.currentBall!, this.player1);
     this.initCollisions(this.player2.currentBall!, this.player2);
-    this.initEvents();
   }
 
-  private initEvents(): void {
+  private initPlayer1Events(): void {
     this.scene.input.keyboard.on('keydown-SPACE', this.handlePlayerClick.bind(this, this.player1));
+  }
+
+  private initPlayer2Events(): void {
     this.scene.input.keyboard.on('keydown-UP', this.handlePlayerClick.bind(this, this.player2));
   }
 

@@ -1,4 +1,5 @@
 export const firstPlayerPosition = { x: 70, y: 550 };
+
 export const secondPlayerPosition = { x: 1290, y: 550 };
 
 export const scoreBlockSettings = {
@@ -43,6 +44,12 @@ export const animations = {
     duration: 500,
   },
 };
+
+export const botTimer = { start: 1000, end: 4000 };
+
+export const botAngle = { start: 30, end: 80 };
+
+export const botPower = { start: 50, end: powerIndicatorProps.width };
 
 export const countStyle = {
   font: '140px monospace',
