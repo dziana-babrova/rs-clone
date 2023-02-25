@@ -53,6 +53,7 @@ export enum TextureKeys {
   LevelLock = 'levelLock',
   Select = 'select',
   Buttons = 'buttons',
+  TopPanel = 'top-panel',
 }
 
 export enum Colors {
@@ -189,4 +190,15 @@ export enum ButtonsFrames {
   Restart = 'restart.png',
   Next = 'next.png',
   Back = 'back.png',
+}
+
+export enum TopPanelFrames {
+  Restart = 'restart.png',
+  Back = 'back.png',
+  Levels = 'levels.png',
+  SoundOn = 'sound-on.png',
+  SoundOff = 'sound-off.png',
+  MusicOn = 'music-on.png',
+  MusicOff = 'music-off.png',
+  Info = 'info.png',
 }

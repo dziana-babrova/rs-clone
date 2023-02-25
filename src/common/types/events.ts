@@ -7,6 +7,8 @@ export enum EventNames {
   Win = 'win',
   GameOver = 'game-over',
   GameBotHit = 'game-bot-kick',
+  PopupOpen = 'popup-open',
+  PopupClosed = 'popup-closed',
 }
 
 export enum SocketEvents {
