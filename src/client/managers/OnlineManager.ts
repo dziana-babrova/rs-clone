@@ -163,8 +163,8 @@ export default class OnlineManager extends Phaser.GameObjects.Container {
   }
 
   // ToDo Add winner popup
-  public showWinPopup(score: 1 | 2): void {
-    console.log(score);
+  public showWinPopup(winner: 1 | 2): void {
+    console.log(winner);
   }
 
   public clearField(): void {
