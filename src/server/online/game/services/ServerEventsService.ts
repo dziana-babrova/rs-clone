@@ -24,7 +24,7 @@ export default class ServerEventsService {
     this.server.to(this.room).emit(SocketEvents.ChangeStatus, data);
   }
 
-  emitGameOver(data: ScoreMessage) {
+  emitGameOver(data: 1 | 2) {
     this.server.to(this.room).emit(SocketEvents.GameOver, data);
   }
 

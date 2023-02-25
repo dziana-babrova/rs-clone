@@ -77,7 +77,7 @@ export default class SocketService {
     );
     this.socket.on(
       SocketEvents.GameOver,
-      (score: ScoreMessage) => this.events.emit(OnlineGameEvents.GameOver, score),
+      (score: 1 | 2) => this.events.emit(OnlineGameEvents.GameOver, score),
     );
     this.socket.on(
       SocketEvents.PlayerHit,
@@ -150,7 +150,7 @@ export default class SocketService {
     this.events.on(OnlineGameEvents.ChangeScore, cb, context);
   }
 
-  public gameOver(cb: (data: ScoreMessage) => void, context?: any): void {
+  public gameOver(cb: (data: 1 | 2) => void, context?: any): void {
     this.events.on(OnlineGameEvents.GameOver, cb, context);
   }
 

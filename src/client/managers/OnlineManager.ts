@@ -163,11 +163,8 @@ export default class OnlineManager extends Phaser.GameObjects.Container {
   }
 
   // ToDo Add winner popup
-  public showWinPopup(score: ScoreMessage): void {
-    let text;
-    if (score.score1 >= 5) text = 'First player win!';
-    if (score.score2 >= 5) text = 'Second player win!';
-    console.log(text);
+  public showWinPopup(score: 1 | 2): void {
+    console.log(score);
   }
 
   public clearField(): void {

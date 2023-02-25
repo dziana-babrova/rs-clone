@@ -117,9 +117,12 @@ export default class GameManager {
     if (ball.player === 2) {
       this.score2 += 1;
     }
-    if (this.score1 >= 5 || this.score2 >= 5) {
+    if (this.score1 >= 5) {
       this.isAvailable = false;
-      this.socketService.emitGameOver({ score1: this.score1, score2: this.score2 });
+      this.socketService.emitGameOver(1);
+    } else if (this.score2 >= 5) {
+      this.isAvailable = false;
+      this.socketService.emitGameOver(2);
     } else {
       this.socketService.emitPlayersScore({ score1: this.score1, score2: this.score2 });
       this.destroyElements();
