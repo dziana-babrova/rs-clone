@@ -1,24 +1,26 @@
 import POPUP from 'client/const/components/PopupConst';
-import LANGUAGE from 'client/const/Language';
+import LANGUAGE, { Language } from 'client/const/Language';
 import { Scene } from 'phaser';
 import store from 'client/state/store';
-import WinnerApiService from 'client/services/WinnersApiService';
-import { Position } from 'common/types/types';
+import { Position, WinnersResponse } from 'common/types/types';
 import PositionCalculation from 'client/utils/PositionCalculation';
-import { TextureKeys } from 'common/types/enums';
 import WINNERS_POPUP from 'client/const/components/WinnersPopupConst';
+import { TextureKeys } from 'common/types/enums';
+import ERROR_POPUP from 'client/const/components/ErrorPopupConst';
 import SettingsPopup from './SettingsPopup';
 import WinnerRow from './WinnerRow';
 
 export default class Winners extends SettingsPopup {
-  constructor(scene: Scene) {
-    super(scene, LANGUAGE.startScene.winners[store.getState().app.lang], POPUP.canvas.winners);
-    this.create();
-  }
+  constructor(scene: Scene, winners: WinnersResponse) {
+    const popupParams = winners.length === 0 ? POPUP.canvas.error : POPUP.canvas.winners;
+    super(scene, LANGUAGE.popup.winners.title[store.getState().app.lang], popupParams);
 
-  public async create(): Promise<void> {
-    console.log('winners');
-    await this.createWinners();
+    if (winners.length === 0) {
+      this.createEmptyMessage();
+    } else {
+      this.createWinners(winners);
+    }
+
     this.showPopup();
     this.initEvents();
   }
@@ -27,13 +29,18 @@ export default class Winners extends SettingsPopup {
     this.btnClose.on('pointerdown', this.closePopup.bind(this));
   }
 
-  private async createWinners() {
-    const response = await WinnerApiService.getWinners();
-    const winnersData = response.data;
-    console.log('winnersData: ', winnersData);
+  public createEmptyMessage(): void {
+    const errorMessage = this.scene.add.text(
+      this.scene.cameras.main.centerX,
+      this.scene.cameras.main.centerY + ERROR_POPUP.margin,
+      LANGUAGE.popup.winners.emptyError[store.getState().app.lang as Language],
+      ERROR_POPUP.text.style,
+    ).setOrigin(0.5);
+    this.add(errorMessage);
+  }
 
+  private async createWinners(winnersData: WinnersResponse) {
     const positions = this.getPositions();
-
     winnersData.forEach((winner, index) => {
       const winnerRow = new WinnerRow(this.scene, winner, index, positions[index]);
       this.add(winnerRow);

@@ -50,7 +50,7 @@ export default class WinnerRow extends GameObjects.Container {
     ).setOrigin(0, 0.5);
 
     const indexText = this.scene.add.text(
-      position.x + WINNERS_POPUP.rowFill.padding + WINNERS_POPUP.winnerImage.width + 5,
+      position.x + WINNERS_POPUP.rowFill.padding + WINNERS_POPUP.winnerImage.width + 10,
       rowParam.centerY,
       (id + 1).toString(),
       WINNERS_POPUP.indexText.style,

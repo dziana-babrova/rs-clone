@@ -91,7 +91,7 @@ export default class DOMPopup extends GameObjects.DOMElement {
     e.preventDefault();
     const target = e.target as HTMLElement;
 
-    if (target === this.node || target.closest('.popup__close')) {
+    if (target.closest('.popup__close')) {
       await this.hide();
       this.setY(-this.scene.cameras.main.height);
       this.onClosePopup();

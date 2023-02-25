@@ -2,6 +2,7 @@ import { STYLE } from '../AppConstants';
 
 const WINNERS_POPUP = {
   margin: 30,
+
   rowFill: {
     padding: 10,
     radius: 14,
@@ -22,7 +23,6 @@ const WINNERS_POPUP = {
       fontSize: '28px',
       color: STYLE.darkText,
       align: 'center',
-      fixedWidth: 30,
     },
   },
 

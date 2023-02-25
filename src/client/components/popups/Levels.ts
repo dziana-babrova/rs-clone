@@ -12,7 +12,7 @@ export default class Levels extends SettingsPopup {
   startLevel!: (levelId: number) => void;
 
   constructor(scene: Scene) {
-    super(scene, LANGUAGE.startScene.levels[store.getState().app.lang], POPUP.canvas.levels);
+    super(scene, LANGUAGE.popup.levels.title[store.getState().app.lang], POPUP.canvas.levels);
     this.create();
   }
 

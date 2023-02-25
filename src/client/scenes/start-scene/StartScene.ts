@@ -1,17 +1,21 @@
+import { AxiosError } from 'axios';
 import Landscape from 'client/components/popups/Landscape';
 import Levels from 'client/components/popups/Levels';
 import Winners from 'client/components/popups/Winners';
 import { LocalStorageKeys } from 'client/const/AppConstants';
 import { Language, NEXT_LANG } from 'client/const/Language';
 import { emptyLevel } from 'client/const/levels/Levels';
+import ErrorService from 'client/services/ErrorService';
 import LocalStorageService from 'client/services/LocalStorageService';
 import SoundService from 'client/services/SoundService';
+import WinnersService from 'client/services/WinnersService ';
 import { setLang, setMusic } from 'client/state/features/AppSlice';
 import { axiosSignOut } from 'client/state/features/UserSlice';
 import store from 'client/state/store';
 import {
   Colors, SceneKeys, SettingsPopupKeys, SoundsKeys, TextureKeys,
 } from 'common/types/enums';
+import { WinnersResponse } from 'common/types/types';
 import { Scene } from 'phaser';
 import ElementsManager from '../game-scene/components/ElementsManager';
 import AuthBtn from './components/AuthBtn';
@@ -56,6 +60,7 @@ export default class StartScene extends Scene {
 
   public async create(): Promise<void> {
     const { user } = store.getState();
+    ErrorService.setScene(this);
 
     if (user.isAuth) {
       this.authBtn = new AuthBtn(this, user.user.username);
@@ -131,7 +136,7 @@ export default class StartScene extends Scene {
     ]);
   }
 
-  private createSettingsPopup(type: SettingsPopupKeys): void {
+  private async createSettingsPopup(type: SettingsPopupKeys): Promise<void> {
     this.handleInteractiveStartScreen(false);
     switch (type) {
       case SettingsPopupKeys.Levels: {
@@ -148,8 +153,18 @@ export default class StartScene extends Scene {
         break;
       }
       case SettingsPopupKeys.Winners: {
-        this.settingsPopup = new Winners(this);
-        this.settingsPopup.onClosePopup = this.handleInteractiveStartScreen.bind(this, true);
+        const winnersResponse: WinnersResponse | AxiosError = await WinnersService.getWinners();
+        if ('message' in winnersResponse) {
+          this.handleInteractiveStartScreen.bind(this, false);
+          const errorPopup = ErrorService.createErrorPopup();
+          if (errorPopup) {
+            errorPopup.onClosePopup = this.handleInteractiveStartScreen.bind(this, true);
+          }
+        } else {
+          this.handleInteractiveStartScreen.bind(this, false);
+          this.settingsPopup = new Winners(this, winnersResponse);
+          this.settingsPopup.onClosePopup = this.handleInteractiveStartScreen.bind(this, true);
+        }
         break;
       }
       default:

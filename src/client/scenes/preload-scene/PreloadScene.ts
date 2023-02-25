@@ -174,7 +174,6 @@ export default class PreloadScene extends Phaser.Scene {
   }
 
   private getMapsFromLocalStorage() {
-    console.log('getMapsFromLocalStorage');
     const maps: Maps | null = LocalStorageService.getItem(LocalStorageKeys.maps);
     if (maps === null) {
       store.dispatch(setMaps(MapService.getDefaultMapsObject()));

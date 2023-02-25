@@ -7,11 +7,13 @@ const POPUP = {
       height: 400,
       shift: -40,
     },
+
     winners: {
       width: 580,
       height: 680,
       shift: -10,
     },
+
     landscape: {
       width: 700,
       height: 440,
@@ -22,6 +24,12 @@ const POPUP = {
       width: 600,
       height: 300,
       shift: 100,
+    },
+
+    error: {
+      width: 600,
+      height: 200,
+      shift: 0,
     },
   },
 
