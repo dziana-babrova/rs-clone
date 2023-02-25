@@ -175,7 +175,7 @@ export default class MultiplayerManager extends Phaser.GameObjects.Container {
     if (player.id === 2) {
       this.score.changeSecondScore(this.player2.score.toString());
     }
-    if (player.score >= 1) {
+    if (player.score >= 5) {
       this.player1.isAvailable = false;
       this.player2.isAvailable = false;
       this.showWinPopup(player);
