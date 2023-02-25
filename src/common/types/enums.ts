@@ -41,12 +41,13 @@ export enum TextureKeys {
   MiniBall = 'mini-ball',
   Background = 'background',
   Water = 'water',
-  LevelEmpty = 'LevelEmpty',
-  LevelOneStar = 'LevelOneStar',
-  LevelTwoStars = 'LevelTwoStars',
-  LevelThreeStars = 'LevelThreeStars',
-  LevelLock = 'LevelLock',
-  Buttons = 'Buttons',
+  LevelEmpty = 'levelEmpty',
+  LevelOneStar = 'levelOneStar',
+  LevelTwoStars = 'levelTwoStars',
+  LevelThreeStars = 'levelThreeStars',
+  LevelLock = 'levelLock',
+  Select = 'select',
+  Buttons = 'buttons',
 }
 
 export enum Colors {

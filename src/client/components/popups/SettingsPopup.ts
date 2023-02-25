@@ -1,13 +1,14 @@
 import Phaser from 'phaser';
 import PopupCanvasGroup from 'client/components/popups/PopupCanvas';
-import { Size } from 'common/types/types';
+import { SizeWithShift } from 'common/types/types';
 
 export default class SettingsPopup extends PopupCanvasGroup {
   onClosePopup!: () => void;
 
-  constructor(scene: Phaser.Scene, title: string, size: Size) {
+  constructor(scene: Phaser.Scene, title: string, size: SizeWithShift) {
     super(scene, title, size, true);
     scene.add.existing(this);
+    this.setDepth(1000);
     this.btnClose.on('pointerup', this.closePopup.bind(this));
   }
 

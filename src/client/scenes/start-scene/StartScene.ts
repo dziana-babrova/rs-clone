@@ -144,10 +144,12 @@ export default class StartScene extends Scene {
       }
       case SettingsPopupKeys.Landscape: {
         this.settingsPopup = new Landscape(this);
+        this.settingsPopup.onClosePopup = this.handleInteractiveStartScreen.bind(this, true);
         break;
       }
       case SettingsPopupKeys.Winners: {
         this.settingsPopup = new Winners(this);
+        this.settingsPopup.onClosePopup = this.handleInteractiveStartScreen.bind(this, true);
         break;
       }
       default:
