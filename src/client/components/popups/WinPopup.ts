@@ -52,7 +52,7 @@ export default class WinPopup extends PopupCanvasGroup {
   }
 
   public addButtons(restart: SwitchLevel): void {
-    this.restartButton = new Button(
+    this.backButton = new Button(
       this.scene,
       -GAME_SCENE.nextLevelPopup.button.initialPaddingX,
       GAME_SCENE.nextLevelPopup.button.Y,
@@ -62,7 +62,7 @@ export default class WinPopup extends PopupCanvasGroup {
       false,
     );
 
-    this.backButton = new Button(
+    this.restartButton = new Button(
       this.scene,
       this.scene.scale.width + GAME_SCENE.nextLevelPopup.button.initialPaddingX,
       GAME_SCENE.nextLevelPopup.button.Y,

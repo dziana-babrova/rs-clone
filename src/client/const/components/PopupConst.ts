@@ -19,7 +19,7 @@ const POPUP = {
     switchLevel: {
       width: 600,
       height: 300,
-      shift: 100,
+      shift: 75,
     },
   },
 

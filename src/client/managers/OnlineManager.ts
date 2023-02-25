@@ -14,16 +14,12 @@ import PlayerEnemy from 'client/scenes/multiplayer-scene/components/PlayerEnemy'
 import LANGUAGE from 'client/const/Language';
 import store from 'client/state/store';
 import { Socket } from 'socket.io-client';
-import CalculateService from 'client/services/CalculateService';
 import WinPopup from 'client/components/popups/WinPopup';
 import SocketService from 'client/services/SocketService';
 import Count from 'client/scenes/online-scene/components/Count';
-import LANGUAGE from 'client/const/Language';
-import store from 'client/state/store';
 import OnlineSceneService from 'client/services/OnlineSceneService';
 import ScorePanel from '../scenes/multiplayer-scene/components/ScorePanel';
 import Player from '../scenes/multiplayer-scene/components/Player';
-import { GAME_SCENE } from 'client/const/scenes/GameSceneConsts';
 
 export default class OnlineManager extends Phaser.GameObjects.Container {
   socket: Socket;
@@ -174,7 +170,7 @@ export default class OnlineManager extends Phaser.GameObjects.Container {
       LANGUAGE.winPopup.multiplayWinMessage[store.getState().app.lang],
     );
     await popup.show();
-    await popup.backButton.show(this.scene.scale.width / 2 - 35);
+    await popup.backButton.show(this.scene.scale.width / 2);
   }
 
   public clearField(): void {
