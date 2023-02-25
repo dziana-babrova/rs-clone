@@ -194,7 +194,7 @@ export default class MultiplayerManager extends Phaser.GameObjects.Container {
       player.id,
       this.switch.bind(this),
       SceneKeys.MultiPlayer,
-      LANGUAGE.popup.multiplayWinMessage[store.getState().app.lang],
+      LANGUAGE.winPopup.multiplayWinMessage[store.getState().app.lang],
     );
     await popup.show();
     await Promise.all([

@@ -93,6 +93,7 @@ export default class GameScene extends Phaser.Scene {
       if (this.level < Levels.length - 1) {
         await this.createNextLevelPopup();
       } else {
+        this.level = 0;
         await this.createWinPopup();
       }
     });
@@ -110,7 +111,7 @@ export default class GameScene extends Phaser.Scene {
       allStars,
       this.switchLevel.bind(this),
       SceneKeys.Game,
-      LANGUAGE.popup.singleplayWinMessage[store.getState().app.lang],
+      LANGUAGE.winPopup.singleplayWinMessage[store.getState().app.lang],
     );
     await popup.show();
     await Promise.all([

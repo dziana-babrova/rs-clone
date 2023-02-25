@@ -24,7 +24,7 @@ export default class WinPopup extends PopupCanvasGroup {
   ) {
     super(
       scene,
-      LANGUAGE.popup.congrats[store.getState().app.lang],
+      LANGUAGE.winPopup.congrats[store.getState().app.lang],
       POPUP.canvas.switchLevel,
       false,
     );
@@ -37,7 +37,10 @@ export default class WinPopup extends PopupCanvasGroup {
   public addText(score: number, text: string): void {
     let finalText = text.replace('{}', score.toString());
     if (score === 1 && store.getState().app.lang === 'eng') {
-      finalText = finalText.replace(LANGUAGE.popup.starPlural.eng, LANGUAGE.popup.starSingular.eng);
+      finalText = finalText.replace(
+        LANGUAGE.winPopup.starPlural.eng,
+        LANGUAGE.winPopup.starSingular.eng,
+      );
     }
     const textElement = this.scene.add
       .text(this.scene.scale.width / 2, this.scene.scale.height / 3, finalText, {

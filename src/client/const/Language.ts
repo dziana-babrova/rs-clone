@@ -221,7 +221,7 @@ const LANGUAGE = {
       ru: 'Уровень пройден!',
     },
   },
-  popup: {
+  winPopup: {
     congrats: {
       eng: 'Congratulations!',
       ru: 'Поздравляем!',

@@ -1,5 +1,5 @@
 import { Scene } from 'phaser';
-import { ElementTypeKeys } from 'common/types/enums';
+import { ElementTypeKeys, SceneKeys } from 'common/types/enums';
 import Ball from 'client/components/Ball';
 import Map from 'client/scenes/game-scene/components/Map';
 import { multiPlayerMap } from 'client/const/levels/MultiplayerLevels';
@@ -13,11 +13,15 @@ import Flag from 'client/scenes/game-scene/components/Flag';
 import HoleBar from 'client/scenes/game-scene/components/golf-course/HoleBar';
 import MapService from 'client/services/MapService';
 import PlayerEnemy from 'client/scenes/multiplayer-scene/components/PlayerEnemy';
+import LANGUAGE from 'client/const/Language';
+import store from 'client/state/store';
 import { Socket } from 'socket.io-client';
 import CalculateService from 'client/services/CalculateService';
+import WinPopup from 'client/components/popups/WinPopup';
 import SocketService from 'client/services/SocketService';
 import Player from '../scenes/multiplayer-scene/components/Player';
 import ScorePanel from '../scenes/multiplayer-scene/components/ScorePanel';
+import { GAME_SCENE } from 'client/const/scenes/GameSceneConsts';
 
 export default class OnlineManager extends Phaser.GameObjects.Container {
   socket: Socket;
@@ -225,13 +229,19 @@ export default class OnlineManager extends Phaser.GameObjects.Container {
     }
   }
 
-  // ToDo Add winner popup
-  showWinPopup(score: ScoreMessage) {
-    console.log('WINNER!!!');
-    let text;
-    if (score.score1 >= 5) text = 'First player win!';
-    if (score.score2 >= 5) text = 'Second player win!';
-    console.log(text);
+  async showWinPopup(score: ScoreMessage) {
+    const winner = score.score1 > score.score2 ? 1 : 2;
+    const popup = new WinPopup(
+      this.scene,
+      winner,
+      this.switch.bind(this),
+      SceneKeys.MultiPlayer,
+      LANGUAGE.winPopup.multiplayWinMessage[store.getState().app.lang],
+    );
+    await popup.show();
+    await popup.backButton.show(
+      this.scene.scale.width / 2 - 35,
+    );
   }
 
   clearField() {
@@ -259,5 +269,24 @@ export default class OnlineManager extends Phaser.GameObjects.Container {
     } else {
       this.enemy?.character.hit();
     }
+  }
+
+  destroyAllElements() {
+    this.clearField();
+    this.target.destroy();
+    this.currentPlayer.destroyPlayer();
+    this.enemy?.destroyPlayer();
+  }
+
+  switch(scene: string) {
+    this.scene.cameras.main.fadeOut();
+    this.scene.time.addEvent({
+      delay: 2000,
+      callback: () => {
+        this.scene.scene.stop();
+        this.destroyAllElements();
+        this.scene.scene.start(scene);
+      },
+    });
   }
 }
