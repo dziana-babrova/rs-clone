@@ -1,5 +1,5 @@
 import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
-import { SERVER_PROPS } from 'client/const/AppConstants';
+import { serverProps } from 'client/const/AppConstants';
 import LocalStorageService from 'client/services/LocalStorageService';
 import { AuthResponse } from 'common/types/types';
 
@@ -9,7 +9,7 @@ type AxiosConfig = InternalAxiosRequestConfig<any> & { isRetry: boolean };
 
 const api = axios.create({
   withCredentials: true,
-  baseURL: SERVER_PROPS.URL,
+  baseURL: serverProps.URL,
 });
 
 api.interceptors.request.use((config) => {
@@ -28,7 +28,7 @@ api.interceptors.response.use(
     ) {
       try {
         const newConfig = Object.assign(originalRequest, { _isRetry: true });
-        const response = await axios.get<AuthResponse>(`${SERVER_PROPS.URL}/auth/refresh`, {
+        const response = await axios.get<AuthResponse>(`${serverProps.URL}/auth/refresh`, {
           withCredentials: true,
         });
         LocalStorageService.setAccessToken(response.data.accessToken);
