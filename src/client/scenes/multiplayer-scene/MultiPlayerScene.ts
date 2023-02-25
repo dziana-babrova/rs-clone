@@ -11,19 +11,25 @@ export default class MultiPlayerScene extends Phaser.Scene {
 
   background!: Background;
 
+  withBot = false;
+
   constructor() {
     super(SceneKeys.MultiPlayer);
   }
 
-  init() {
+  init(data: { withBot?: boolean }) {
     this.background = new Background(this, store.getState().app.background);
+    console.log(data.withBot);
+    if (data.withBot) {
+      this.withBot = data.withBot;
+    }
   }
 
   async create() {
     this.elementsManager = new MultiplayerManager(this, 41, this.matterCollision);
     await this.elementsManager.createMap();
     await this.elementsManager.switchTarget(0);
-    this.elementsManager.createPlayers();
+    this.elementsManager.createPlayers(this.withBot);
   }
 
   update() {

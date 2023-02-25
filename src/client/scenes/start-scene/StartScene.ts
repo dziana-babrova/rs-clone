@@ -224,7 +224,7 @@ export default class StartScene extends Scene {
 
   private startLocalGame(): void {
     this.removeStartScreenObjects();
-    this.scene.start(SceneKeys.Online);
+    this.scene.start(SceneKeys.MultiPlayer, { withBot: false });
   }
 
   private showRoomPopup(): void {
