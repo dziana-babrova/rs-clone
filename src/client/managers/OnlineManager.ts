@@ -115,7 +115,9 @@ export default class OnlineManager extends Phaser.GameObjects.Container {
 
   public updatePlayers(players: IPlayerInfo[]): void {
     players.forEach((el) => {
-      const { socketId, position, isReverse, id } = el;
+      const {
+        socketId, position, isReverse, id,
+      } = el;
       const { x, y } = position;
       if (socketId === this.socket.id && !this.currentPlayer) {
         this.currentPlayer = this.onlineService.createStaticPlayer({ x, y }, isReverse, id);
