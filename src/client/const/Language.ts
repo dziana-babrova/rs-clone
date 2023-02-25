@@ -242,6 +242,28 @@ const LANGUAGE = {
       ru: 'Ожидаем второго игрока...',
     },
   },
+  winPopup: {
+    congrats: {
+      eng: 'Congratulations!',
+      ru: 'Поздравляем!',
+    },
+    multiplayWinMessage: {
+      eng: 'The winner is Player {}',
+      ru: 'Победил игрок {}',
+    },
+    singleplayWinMessage: {
+      eng: "You've reached the last level. \nYour score is {} stars. \nDo you want to restart?",
+      ru: 'Вы достигли последнего \nуровня. \nНабрано звёзд: {}. \nХотите начать заново?',
+    },
+    starSingular: {
+      eng: 'star',
+      ru: 'звезда',
+    },
+    starPlural: {
+      eng: 'stars',
+      ru: '',
+    },
+  },
 };
 
 export default LANGUAGE;

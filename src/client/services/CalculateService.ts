@@ -1,5 +1,5 @@
 import { ballSettings } from 'client/const/scenes/GameSceneConsts';
-import { Position } from 'common/types/types';
+import { Maps, Position } from 'common/types/types';
 
 export default class CalculateService {
   static calculateVelocityByPoints(
@@ -37,5 +37,10 @@ export default class CalculateService {
       velocityX: Math.cos((angle * Math.PI) / 180) * power * 40,
       velocityY: Math.sin((angle * Math.PI) / 180) * power * 40,
     };
+  }
+
+  static calculateStars(result: Maps): number {
+    const stars = result.reduce((prev, curr) => prev + curr.stars, 0);
+    return stars;
   }
 }

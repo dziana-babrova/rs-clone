@@ -18,7 +18,6 @@ export default class StarsGroup extends Phaser.GameObjects.Group {
       this.create(tile.x, tile.y, textures.star);
     });
     this.scene.add.existing(this);
-    console.log(this);
   }
 
   public create(x: number, y: number, texture: string): void {

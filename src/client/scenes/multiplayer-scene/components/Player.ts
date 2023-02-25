@@ -96,4 +96,11 @@ export default class Player {
   public fixPower(): void {
     this.powerPanel.stop();
   }
+
+  destroyPlayer() {
+    this.currentBall?.destroy();
+    this.character.destroy();
+    this.powerPanel.destroy();
+    this.trajectory.destroy();
+  }
 }

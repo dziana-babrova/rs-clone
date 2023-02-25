@@ -68,8 +68,6 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.image(TextureKeys.eng, '../assets/eng.png');
     this.load.image(TextureKeys.ru, '../assets/ru.png');
     this.load.image(TextureKeys.Close, '../assets/close.svg');
-    this.load.image(TextureKeys.Next, '../assets/next.svg');
-    this.load.image(TextureKeys.Restart, '../assets/restart.svg');
     this.load.image(TextureKeys.Ball, '../assets/Golf-Ball-big.png');
     this.load.image(TextureKeys.MiniBall, '../assets/mini-ball.png');
     this.load.image(TextureKeys.Saw, '../assets/saw.png');
@@ -87,7 +85,7 @@ export default class PreloadScene extends Phaser.Scene {
       '../assets/background.png',
       '../assets/background.json',
     );
-    this.load.atlas(TextureKeys.Water, '../assets/water.png', '../assets/water.json');
+    this.load.atlas(TextureKeys.Buttons, '../assets/popupButtons.png', '../assets/popupButtons.json');
 
     this.load.json('star', '../assets/star.json');
 

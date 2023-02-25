@@ -81,6 +81,7 @@ export default class Ball extends Phaser.Physics.Matter.Sprite implements ICompo
   }
 
   public deactivate(): void {
+    this.setDepth(0);
     this.pulse.destroy();
     this.text.destroy();
     this.isStopped = false;
