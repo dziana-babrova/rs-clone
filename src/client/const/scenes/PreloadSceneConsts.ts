@@ -3,7 +3,7 @@ const PRELOAD_SCENE = {
     x: 0,
     y: 0,
     style: {
-      font: '20px monospace',
+      font: '20px Montserrat',
     },
   },
 
@@ -11,7 +11,7 @@ const PRELOAD_SCENE = {
     x: 0,
     y: 0,
     style: {
-      font: '18px monospace',
+      font: '18px Montserrat',
     },
   },
 

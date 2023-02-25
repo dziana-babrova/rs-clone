@@ -1,5 +1,5 @@
 import {
-  Colors, ColorsNumber, AuthFormInputsKeys, RoomFormInputsKeys,
+  Colors, ColorsNumber, AuthFormInputsKeys, RoomFormInputsKeys, BackgroundKeys,
 } from 'common/types/enums';
 
 export const START_SCENE = {
@@ -109,7 +109,15 @@ export const START_SCENE = {
 
   },
   landscape: {
-
+    backround: [
+      BackgroundKeys.Daytime,
+      BackgroundKeys.Night,
+      BackgroundKeys.Palms,
+      BackgroundKeys.Mountains,
+    ],
+    selectIcon: {
+      shift: 10,
+    },
   },
   levels: {
 
