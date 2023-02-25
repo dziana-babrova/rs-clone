@@ -29,7 +29,7 @@ export default class MultiplayerTrajectory extends GameObjects.Container {
     this.setDepth(90);
   }
 
-  animate() {
+  private animate(): void {
     this.tween = this.scene.tweens.add({
       targets: this,
       angle: this.isReverse ? 90 : -90,
@@ -39,11 +39,11 @@ export default class MultiplayerTrajectory extends GameObjects.Container {
     });
   }
 
-  stop() {
+  public stop(): void {
     this.tween.pause();
   }
 
-  resume() {
+  public resume(): void {
     this.tween.play();
     this.tween.resume();
   }

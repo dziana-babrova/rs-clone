@@ -1,8 +1,8 @@
-import LANGUAGE, { Language } from 'client/const/Language';
+import LANGUAGE from 'client/const/Language';
 import { START_SCENE, START_SCENE_ANIMATION } from 'client/const/scenes/StartSceneConst';
 import store from 'client/state/store';
 import TweenAnimationBuilder from 'client/utils/TweenAnimationBuilder';
-import { Move } from 'common/types/enums';
+import { Language, Move } from 'common/types/enums';
 import { GameObjects } from 'phaser';
 import IconButton from './IconButton';
 import TextButton from './TextButton';
