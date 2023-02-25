@@ -192,7 +192,7 @@ export default class MultiplayerManager extends Phaser.GameObjects.Container {
     const popup = new WinPopup(
       this.scene,
       player.id,
-      this.switch.bind(this),
+      this.goToScene.bind(this),
       SceneKeys.MultiPlayer,
       LANGUAGE.winPopup.multiplayWinMessage[store.getState().app.lang],
     );
@@ -216,7 +216,7 @@ export default class MultiplayerManager extends Phaser.GameObjects.Container {
     cup?.destroy();
   }
 
-  destroyAllElements() {
+  private destroyAllElements(): void {
     this.destroyElements();
     this.map.destroy();
     this.target.destroy();
@@ -224,7 +224,7 @@ export default class MultiplayerManager extends Phaser.GameObjects.Container {
     this.player2.destroyPlayer();
   }
 
-  switch(scene: string) {
+  private goToScene(scene: string): void {
     this.scene.cameras.main.fadeOut();
     this.scene.time.addEvent({
       delay: 2000,

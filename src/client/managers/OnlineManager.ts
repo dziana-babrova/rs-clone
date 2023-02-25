@@ -167,7 +167,7 @@ export default class OnlineManager extends Phaser.GameObjects.Container {
     const popup = new WinPopup(
       this.scene,
       winner,
-      this.switch.bind(this),
+      this.goToScene.bind(this),
       SceneKeys.MultiPlayer,
       LANGUAGE.winPopup.multiplayWinMessage[store.getState().app.lang],
     );
@@ -224,13 +224,13 @@ export default class OnlineManager extends Phaser.GameObjects.Container {
   }
   /* eslint-enable  no-await-in-loop */
 
-  destroyAllElements() {
+  private destroyAllElements(): void {
     this.clearField();
     this.currentPlayer.destroyPlayer();
     this.enemy?.destroyPlayer();
   }
 
-  switch(scene: string) {
+  private goToScene(scene: string): void {
     this.scene.cameras.main.fadeOut();
     this.scene.time.addEvent({
       delay: 2000,

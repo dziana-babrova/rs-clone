@@ -91,13 +91,6 @@ export default class StartScene extends Scene {
 
     await golfCourse.create();
     golfCourse.ball.setVelocityX(25);
-
-    this.music = this.sound.add('music', {
-      volume: 0.2,
-      loop: true,
-    });
-
-    if (store.getState().app.music) this.music.play();
   }
 
   private initEvents(): void {
