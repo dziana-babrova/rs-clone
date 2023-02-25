@@ -51,6 +51,10 @@ export const botAngle = { start: 30, end: 80 };
 
 export const botPower = { start: 50, end: powerIndicatorProps.width };
 
+export const countStyle = {
+  font: '140px monospace',
+};
+
 export const waitMessageStyle = {
   font: '30px monospace',
 };

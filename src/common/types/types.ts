@@ -204,7 +204,7 @@ export type StatusMessage = { player1: boolean; player2: boolean };
 
 export type ScoreMessage = { score1: number; score2: number };
 
-export type ServerBalls = { [key: string]: { player: string; x: string; y: string } };
+export type ServerBalls = { [key: string]: { player: string; x: number; y: number } };
 
 export interface IPositionParams {
   sceneWidth: number;
