@@ -1,14 +1,14 @@
 import Phaser from 'phaser';
 import PopupCanvasGroup from 'client/components/popups/PopupCanvas';
 import POPUP from 'client/const/components/PopupConst';
-import LANGUAGE from 'client/const/Language';
+import LANGUAGE, { Language } from 'client/const/Language';
 import store from 'client/state/store';
 import ERROR_POPUP from 'client/const/components/ErrorPopupConst';
 
 export default class ErrorPopup extends PopupCanvasGroup {
   onClosePopup!: () => void;
 
-  constructor(scene: Phaser.Scene) {
+  constructor(scene: Phaser.Scene, lang: Language) {
     super(
       scene,
       LANGUAGE.popup.serverError.title[store.getState().app.lang],
@@ -19,7 +19,7 @@ export default class ErrorPopup extends PopupCanvasGroup {
     const text = this.scene.add.text(
       this.scene.cameras.main.centerX,
       this.scene.cameras.main.centerY + ERROR_POPUP.margin,
-      LANGUAGE.popup.serverError.text[store.getState().app.lang],
+      LANGUAGE.popup.serverError.text[lang],
       ERROR_POPUP.text.style,
     ).setOrigin(0.5, 0.5);
 

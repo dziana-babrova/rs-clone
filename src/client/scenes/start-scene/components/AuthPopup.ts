@@ -21,9 +21,10 @@ export default class AuthPopup extends DOMPopup {
 
   onClosePopup!: (isUbdateAuthBtnText?: boolean) => void;
 
+  onUpdateAuthBtn!: () => void;
+
   constructor(scene: Phaser.Scene) {
     super(scene, PopupType.Auth);
-    this.renderPopup();
     this.onSubmitPopup = this.onSubmitForm.bind(this);
   }
 
@@ -75,6 +76,8 @@ export default class AuthPopup extends DOMPopup {
     this.usernameLabel.style.display = 'none';
 
     this.node.append(popup);
+
+    this.show();
   }
 
   private onSubmitForm(target: HTMLElement): void {
@@ -101,33 +104,51 @@ export default class AuthPopup extends DOMPopup {
       );
 
     if (valid) {
-      let response;
-      if (this.formType === FormType.SignIn) {
-        response = await store.dispatch(axiosSignIn({ email, password }));
-        if (store.getState().user.isAuth) {
-          const responseMaps = await store.dispatch(axiosGetMaps());
-          if ('error' in responseMaps) {
+      switch (this.formType) {
+        case FormType.SignIn: {
+          const response = await store.dispatch(axiosSignIn({ email, password }));
+          if ('error' in response) {
+            const msg = response.payload?.message;
+            const errors = response.payload?.errors;
+            if (msg) this.handleErrors(msg, errors);
+          } else {
+            this.onUpdateAuthBtn();
+            this.closePopup();
+          }
+
+          if (store.getState().user.isAuth) {
+            const responseMaps = await store.dispatch(axiosGetMaps());
+            if ('error' in responseMaps) {
+              await store.dispatch(axiosCreateMaps(MapService.getDefaultMapsObject()));
+            }
+          }
+          break;
+        }
+        case FormType.SignUp: {
+          const username = this.form[AuthFormInputsKeys.Username].value;
+          const response = await store.dispatch(axiosSignUp({ email, username, password }));
+          if (store.getState().user.isAuth) {
             await store.dispatch(axiosCreateMaps(MapService.getDefaultMapsObject()));
           }
+          if ('error' in response) {
+            const msg = response.payload?.message;
+            const errors = response.payload?.errors;
+            if (msg) this.handleErrors(msg, errors);
+          } else {
+            this.onUpdateAuthBtn();
+            this.closePopup();
+          }
+          break;
         }
-      } else {
-        const username = this.form[AuthFormInputsKeys.Username].value;
-        response = await store.dispatch(axiosSignUp({ email, username, password }));
-        if (store.getState().user.isAuth) {
-          await store.dispatch(axiosCreateMaps(MapService.getDefaultMapsObject()));
-        }
-      }
-
-      if ('error' in response) {
-        const msg = response.payload?.message;
-        const errors = response.payload?.errors;
-        if (msg) this.handleErrors(msg, errors);
-      } else {
-        await this.hide();
-        this.setY(-this.scene.cameras.main.height);
-        this.onClosePopup(true);
+        default:
       }
     }
+  }
+
+  private async closePopup(): Promise<void> {
+    await this.hide();
+    this.setY(-this.scene.cameras.main.height);
+    this.onClosePopup();
   }
 
   private changeFormType(): void {

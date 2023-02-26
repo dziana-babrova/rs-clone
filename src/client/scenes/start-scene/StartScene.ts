@@ -1,4 +1,5 @@
 import { AxiosError } from 'axios';
+import LoadingOverlay from 'client/components/LoadingOverlay';
 import Landscape from 'client/components/popups/Landscape';
 import Levels from 'client/components/popups/Levels';
 import Winners from 'client/components/popups/Winners';
@@ -47,6 +48,8 @@ export default class StartScene extends Scene {
 
   music!: Phaser.Sound.BaseSound;
 
+  loadingOverlay!: LoadingOverlay;
+
   constructor() {
     super(SceneKeys.Start);
   }
@@ -59,8 +62,10 @@ export default class StartScene extends Scene {
   }
 
   public async create(): Promise<void> {
-    const { user } = store.getState();
+    this.loadingOverlay = new LoadingOverlay(this);
+
     ErrorService.setScene(this);
+    const { user } = store.getState();
 
     if (user.isAuth) {
       this.authBtn = new AuthBtn(this, user.user.username);
@@ -113,6 +118,7 @@ export default class StartScene extends Scene {
     this.roomPopup.onStartOnlineGame = this.startOnlineGame.bind(this);
 
     this.authBtn.on('pointerdown', this.authBtnHandler.bind(this));
+    this.authPopup.onUpdateAuthBtn = this.onUpdateAuthBtn.bind(this);
     this.authPopup.onClosePopup = this.onClosePopup.bind(this);
 
     this.startSceneBtns.btnLevels.background.on('pointerdown', this.createSettingsPopup.bind(this, SettingsPopupKeys.Levels));
@@ -122,14 +128,14 @@ export default class StartScene extends Scene {
     this.startSceneBtns.btnMusic.background.on('pointerdown', this.turnOnOffSound.bind(this));
   }
 
-  private async showMultiplayerBtns() {
+  private async showMultiplayerBtns(): Promise<void> {
     await Promise.all([
       this.startSceneBtns.hide(),
       this.multiplayerBtns.show(),
     ]);
   }
 
-  private async hideMultiplayerBtns() {
+  private async hideMultiplayerBtns(): Promise<void> {
     await Promise.all([
       this.startSceneBtns.show(),
       this.multiplayerBtns.hide(),
@@ -153,15 +159,16 @@ export default class StartScene extends Scene {
         break;
       }
       case SettingsPopupKeys.Winners: {
+        this.loadingOverlay.show();
         const winnersResponse: WinnersResponse | AxiosError = await WinnersService.getWinners();
+        this.loadingOverlay.hide();
+        this.handleInteractiveStartScreen.bind(this, false);
         if ('message' in winnersResponse) {
-          this.handleInteractiveStartScreen.bind(this, false);
           const errorPopup = ErrorService.createErrorPopup();
           if (errorPopup) {
             errorPopup.onClosePopup = this.handleInteractiveStartScreen.bind(this, true);
           }
         } else {
-          this.handleInteractiveStartScreen.bind(this, false);
           this.settingsPopup = new Winners(this, winnersResponse);
           this.settingsPopup.onClosePopup = this.handleInteractiveStartScreen.bind(this, true);
         }
@@ -223,20 +230,21 @@ export default class StartScene extends Scene {
   private async authBtnHandler(): Promise<void> {
     this.input.enabled = false;
     if (store.getState().user.isAuth) {
+      this.loadingOverlay.show();
       await store.dispatch(axiosSignOut());
       this.authBtn.updateBtnText();
       this.input.enabled = true;
+      this.loadingOverlay.hide();
     } else {
       this.authPopup.renderPopup();
-      this.authPopup.show();
     }
   }
 
-  private onClosePopup(isUpdateAuthBtnText = false): void {
-    if (isUpdateAuthBtnText) {
-      this.authBtn.updateBtnText();
-    }
+  private onUpdateAuthBtn(): void {
+    this.authBtn.updateBtnText();
+  }
 
+  private onClosePopup(): void {
     this.input.enabled = true;
   }
 
@@ -266,11 +274,12 @@ export default class StartScene extends Scene {
   }
 
   private removeStartScreenObjects(): void {
-    this.logoGroup.destroy();
-    this.startSceneBtns.destroy();
-    this.multiplayerBtns.destroy();
-    this.authBtn.destroy();
-    this.authPopup.destroy();
-    this.langBtn.destroy();
+    this.children.list.forEach((obj) => obj.destroy());
+    // this.logoGroup.destroy();
+    // this.startSceneBtns.destroy();
+    // this.multiplayerBtns.destroy();
+    // this.authBtn.destroy();
+    // this.authPopup.destroy();
+    // this.langBtn.destroy();
   }
 }
