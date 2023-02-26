@@ -78,7 +78,7 @@ export default class SawGroup extends Phaser.GameObjects.Group {
     if (saw.x > this.coordinates[index].x + this.distance) {
       this.directionX = -this.directionX;
     } else if (saw.x < this.coordinates[index].x - this.distance) {
-      this.directionX = +this.directionX;
+      this.directionX = -this.directionX;
     }
 
     if (saw.y > this.coordinates[index].y + this.distance) {

@@ -137,6 +137,7 @@ export default class TopPanel extends Phaser.GameObjects.Container {
       this.rightButtons[el][interactive]();
     });
     this.popup = isDisabled ? null : this.popup;
+    console.log(this.popup);
     this.scene.events.emit(isDisabled ? EventNames.PopupClosed : EventNames.PopupOpen);
   }
 

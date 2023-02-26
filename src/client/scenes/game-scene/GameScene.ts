@@ -40,15 +40,20 @@ export default class GameScene extends Phaser.Scene {
     super(SceneKeys.Game);
   }
 
-  init(props: { level?: number }) {
-    this.data.values.stars = 0;
-    this.data.values.isGameOver = false;
-    let { level = -1 } = props;
-    if (level === -1) {
-      const unlockedMaps = store.getState().app.maps.filter((map) => map.isUnlock);
-      level = unlockedMaps.length < Levels.length ? unlockedMaps[unlockedMaps.length - 1]?.id : 0;
-    }
-    this.level = level || 0;
+  // init(props: { level?: number }) {
+  //   this.data.values.stars = 0;
+  //   this.data.values.isGameOver = false;
+  //   let { level = -1 } = props;
+  //   if (level === -1) {
+  //     const unlockedMaps = store.getState().app.maps.filter((map) => map.isUnlock);
+  //     level = unlockedMaps.length < Levels.length ? unlockedMaps[unlockedMaps.length - 1]?.id : 0;
+  //   }
+  //   this.level = level || 0;
+  //   this.background = new Background(this, store.getState().app.background);
+  // }
+
+  init() {
+    this.level = 30;
     this.background = new Background(this, store.getState().app.background);
   }
 
@@ -62,14 +67,7 @@ export default class GameScene extends Phaser.Scene {
       this.elementsManager.ball,
       this.elementsManager.trajectory,
     );
-    this.panel = new TopPanel(
-      this,
-      SceneKeys.Game,
-      true,
-      true,
-      this.goToScene,
-      this.level,
-    );
+    this.panel = new TopPanel(this, SceneKeys.Game, true, true, this.goToScene, this.level);
 
     this.initEvents();
   }
