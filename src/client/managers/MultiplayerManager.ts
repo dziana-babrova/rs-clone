@@ -22,6 +22,7 @@ import MapService from 'client/services/MapService';
 import GameBot from 'client/scenes/multiplayer-scene/components/GameBot';
 import { EventNames } from 'common/types/events';
 import SoundService from 'client/services/SoundService';
+import HotkeysService from 'client/services/HotkeysService';
 import ScorePanel from '../scenes/multiplayer-scene/components/ScorePanel';
 import Player from '../scenes/multiplayer-scene/components/Player';
 
@@ -257,6 +258,7 @@ export default class MultiplayerManager extends Phaser.GameObjects.Container {
       callback: () => {
         this.scene.scene.stop();
         this.destroyAllElements();
+        HotkeysService.removeAllHotkeysEvents(this.scene);
         this.scene.scene.start(scene);
       },
     });
