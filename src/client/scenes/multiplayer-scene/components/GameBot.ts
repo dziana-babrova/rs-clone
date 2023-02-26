@@ -7,7 +7,7 @@ import Player from './Player';
 export default class GameBot extends Player {
   timer: NodeJS.Timeout | null = null;
 
-  constructor(scene: Scene, position: Position, isReverse: boolean, id: number) {
+  constructor(scene: Scene, position: Position, isReverse: boolean, id: 1 | 2) {
     super(scene, position, isReverse, id);
     this.trajectory.stop();
     this.trajectory.alpha = 0;

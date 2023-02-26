@@ -251,6 +251,10 @@ const LANGUAGE = {
       eng: 'The winner is Player {}',
       ru: 'Победил игрок {}',
     },
+    leaveMessage: {
+      eng: 'The opponent has left \nthe game.',
+      ru: 'Противник покинул игру.',
+    },
     singleplayWinMessage: {
       eng: "You've reached the last level. \nYour score is {} stars. \nDo you want to restart?",
       ru: 'Вы достигли последнего \nуровня. \nНабрано звёзд: {}. \nХотите начать заново?',
