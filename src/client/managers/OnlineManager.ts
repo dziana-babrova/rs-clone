@@ -248,6 +248,7 @@ export default class OnlineManager extends Phaser.GameObjects.Container {
   }
 
   public goToScene(scene: string): void {
+    this.socketService.leave();
     this.scene.cameras.main.fadeOut();
     this.scene.time.addEvent({
       delay: 2000,
