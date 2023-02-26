@@ -25,6 +25,6 @@ export default class ProgressBar extends Phaser.GameObjects.Graphics {
     } = this.rectangleProps;
     this.clear();
     this.fillGradientStyle(topLeft, topRight, bottomLeft, bottomRight, alpha);
-    this.fillRect(x, y, width * value, height);
+    this.fillRoundedRect(x, y, width * value, height, 10);
   }
 }
