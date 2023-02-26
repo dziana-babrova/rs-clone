@@ -43,7 +43,6 @@ export default class OnlineScene extends Phaser.Scene {
     this.socketService.switchTarget(this.elementsManager.switchTarget, this.elementsManager);
     this.socketService.addPlayer(this.elementsManager.updatePlayers, this.elementsManager);
     this.socketService.deletePlayer(this.elementsManager.deletePlayer, this.elementsManager);
-    this.socketService.createBalls(this.elementsManager.setStartBalls, this.elementsManager);
     this.socketService.updateBalls(this.elementsManager.updateBalls, this.elementsManager);
     this.socketService.statusChange(this.elementsManager.updateStatus, this.elementsManager);
     this.socketService.clearField(this.elementsManager.clearField, this.elementsManager);
