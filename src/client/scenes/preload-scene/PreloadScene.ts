@@ -132,7 +132,7 @@ export default class PreloadScene extends Phaser.Scene {
       frameRate: 10,
     });
 
-    this.scene.start(SceneKeys.Start);
+    this.scene.start(SceneKeys.Game);
   }
 
   private trackProgress(value: number): void {

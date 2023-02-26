@@ -37,15 +37,16 @@ export default class GameScene extends Phaser.Scene {
     super(SceneKeys.Game);
   }
 
-  init(props: { level?: number }) {
-    this.data.values.stars = 0;
-    this.data.values.isGameOver = false;
-    let { level = -1 } = props;
-    if (level === -1) {
-      const unlockedMaps = store.getState().app.maps.filter((map) => map.isUnlock);
-      level = unlockedMaps[unlockedMaps.length - 1]?.id || 0;
-    }
-    this.level = level;
+  // init(props: { level?: number }) {
+  // this.data.values.stars = 0;
+  // this.data.values.isGameOver = false;
+  // let { level = -1 } = props;
+  // if (level === -1) {
+  //   const unlockedMaps = store.getState().app.maps.filter((map) => map.isUnlock);
+  //   level = unlockedMaps[unlockedMaps.length - 1]?.id || 0;
+  // }
+  init() {
+    this.level = 30;
     this.background = new Background(this, store.getState().app.background);
   }
 
@@ -118,9 +119,7 @@ export default class GameScene extends Phaser.Scene {
       popup.restartButton.show(
         this.scale.width / 2 - GAME_SCENE.nextLevelPopup.button.finalPaddingX,
       ),
-      popup.backButton.show(
-        this.scale.width / 2 + GAME_SCENE.nextLevelPopup.button.finalPaddingX,
-      ),
+      popup.backButton.show(this.scale.width / 2 + GAME_SCENE.nextLevelPopup.button.finalPaddingX),
     ]);
   }
 
