@@ -2,7 +2,7 @@ import PhaserMatterCollisionPlugin from 'phaser-matter-collision-plugin';
 import { SceneKeys, SoundsKeys } from 'common/types/enums';
 import store from 'client/state/store';
 import Phaser from 'phaser';
-import { EventNames } from 'common/types/events';
+import { EventNames, HotkeysEvents } from 'common/types/events';
 import SingleplayerManager from 'client/managers/SingleplayerManager';
 import { Maps } from 'common/types/types';
 import SoundService from 'client/services/SoundService';
@@ -20,6 +20,7 @@ import NextLevelButton from './components/next-level-popup/NextLevelButton';
 import ElementsManager from './components/ElementsManager';
 import Fireworks from './components/Fireworks';
 import Background from '../../components/background/Background';
+import HotkeysService from 'client/services/HotkeysService';
 
 export default class GameScene extends Phaser.Scene {
   public manager!: SingleplayerManager;
@@ -62,16 +63,10 @@ export default class GameScene extends Phaser.Scene {
       this.elementsManager.ball,
       this.elementsManager.trajectory,
     );
-    this.panel = new TopPanel(
-      this,
-      SceneKeys.Game,
-      true,
-      true,
-      this.goToScene,
-      this.level,
-    );
+    this.panel = new TopPanel(this, SceneKeys.Game, true, true, this.goToScene, this.level);
 
     this.initEvents();
+    this.initHotkeys();
   }
 
   private async initEvents(): Promise<void> {
@@ -83,6 +78,17 @@ export default class GameScene extends Phaser.Scene {
     this.events.on(EventNames.Win, this.updateMaps.bind(this));
     this.events.on(EventNames.Win, this.displayWinPopup.bind(this));
     this.events.on(EventNames.GameOver, this.handleGameOver.bind(this));
+  }
+
+  private initHotkeys() {
+    HotkeysService.initHotkeysEvents(this);
+    this.events.on(HotkeysEvents.Levels, this.panel.openLevels.bind(this.panel));
+    this.events.on(HotkeysEvents.Info, this.panel.openInfo.bind(this.panel));
+    this.events.on(HotkeysEvents.Back, this.panel.closePopup.bind(this.panel));
+    this.events.on(HotkeysEvents.Sounds, this.panel.toggleSound.bind(this.panel));
+    this.events.on(HotkeysEvents.Music, this.panel.toggleMusic.bind(this.panel));
+    this.events.on(HotkeysEvents.Mute, this.panel.toggleMute.bind(this.panel));
+    this.events.on(HotkeysEvents.Restart, this.panel.restart.bind(this.panel));
   }
 
   private async updateMaps(): Promise<void> {
@@ -130,9 +136,7 @@ export default class GameScene extends Phaser.Scene {
       popup.restartButton.show(
         this.scale.width / 2 - GAME_SCENE.nextLevelPopup.button.finalPaddingX,
       ),
-      popup.backButton.show(
-        this.scale.width / 2 + GAME_SCENE.nextLevelPopup.button.finalPaddingX,
-      ),
+      popup.backButton.show(this.scale.width / 2 + GAME_SCENE.nextLevelPopup.button.finalPaddingX),
     ]);
   }
 

@@ -16,4 +16,10 @@ export default class HotkeysService {
     keyboard.on(`keydown-${hotkeys.winners}`, () => scene.events.emit(HotkeysEvents.Winners));
   }
 
+  disablePopupHotkeys(scene: Scene){
+    scene.input.keyboard.removeKey(hotkeys.levels);
+    scene.input.keyboard.removeKey(hotkeys.info);
+    scene.input.keyboard.removeKey(hotkeys.winners);
+  }
+
 }

@@ -51,8 +51,6 @@ export default class OnlineManager extends Phaser.GameObjects.Container {
 
   waitingMessage: GameObjects.Text | null = null;
 
-  panel: TopPanel;
-
   constructor(scene: Scene, tileSize: number, socket: Socket, socketService: SocketService) {
     super(scene);
     this.socket = socket;
@@ -62,7 +60,6 @@ export default class OnlineManager extends Phaser.GameObjects.Container {
     this.score = new ScorePanel(scene, { x: scene.cameras.main.centerX - 25, y: 0 });
     this.onlineService = new OnlineSceneService(this.scene);
     this.initEvents();
-    this.panel = new TopPanel(this.scene, SceneKeys.Online, false, false, this.goToScene);
   }
 
   private initEvents(): void {
@@ -234,7 +231,7 @@ export default class OnlineManager extends Phaser.GameObjects.Container {
     this.enemy?.destroyPlayer();
   }
 
-  private goToScene(scene: string): void {
+  public goToScene(scene: string): void {
     this.scene.cameras.main.fadeOut();
     this.scene.time.addEvent({
       delay: 2000,
