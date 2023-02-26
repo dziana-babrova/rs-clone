@@ -4,7 +4,9 @@ import store from 'client/state/store';
 import { LocalStorageKeys } from 'client/const/AppConstants';
 import LocalStorageService from 'client/services/LocalStorageService';
 import SoundService from 'client/services/SoundService';
-import { TextureKeys, TopPanelFrames, SoundsKeys, SceneKeys } from 'common/types/enums';
+import {
+  TextureKeys, TopPanelFrames, SoundsKeys, SceneKeys,
+} from 'common/types/enums';
 import { Scene } from 'phaser';
 import { setMusic, setSound } from 'client/state/features/AppSlice';
 import { SwitchLevel } from 'common/types/types';
@@ -125,6 +127,7 @@ export default class TopPanel extends Phaser.GameObjects.Container {
 
   public openLevels(): void {
     if (!this.popup) {
+      console.log(this);
       this.popup = new Levels(this.scene);
       this.toggleButtonsInteractivity(false);
       this.popup.onClosePopup = this.toggleButtonsInteractivity.bind(this, true);
@@ -159,11 +162,10 @@ export default class TopPanel extends Phaser.GameObjects.Container {
   }
 
   public closePopup() {
-    console.log(this.popup);
     if (this.popup) {
       this.popup.closePopup();
     } else {
-      this.goTo(SceneKeys.Start)
+      this.goTo(SceneKeys.Start);
     }
   }
 
@@ -172,17 +174,16 @@ export default class TopPanel extends Phaser.GameObjects.Container {
   public toggleMute() {
     const isMusicPlaying = store.getState().app.music;
     const isSoundsPlaying = store.getState().app.sound;
-    if(!isMusicPlaying && !isSoundsPlaying){
+    if (!isMusicPlaying && !isSoundsPlaying) {
       this.toggleMusic();
       this.toggleSound();
       return;
-    } 
+    }
     if (isMusicPlaying) this.toggleMusic();
-    if (isSoundsPlaying) this.toggleMusic();
+    if (isSoundsPlaying) this.toggleSound();
   }
 
-  public restart(){
-    console.log('restart');
-    this.goTo(this.sceneKey, false)
+  public restart() {
+    this.goTo(this.sceneKey, false);
   }
 }

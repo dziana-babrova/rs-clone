@@ -17,8 +17,8 @@ import { Socket } from 'socket.io-client';
 import WinPopup from 'client/components/popups/WinPopup';
 import SocketService from 'client/services/SocketService';
 import Count from 'client/scenes/online-scene/components/Count';
-import TopPanel from 'client/components/top-panel/TopPanel';
 import OnlineSceneService from 'client/services/OnlineSceneService';
+import HotkeysService from 'client/services/HotkeysService';
 import ScorePanel from '../scenes/multiplayer-scene/components/ScorePanel';
 import Player from '../scenes/multiplayer-scene/components/Player';
 
@@ -238,6 +238,7 @@ export default class OnlineManager extends Phaser.GameObjects.Container {
       callback: () => {
         this.scene.scene.stop();
         this.destroyAllElements();
+        HotkeysService.removeAllHotkeysEvents(this.scene);
         this.scene.scene.start(scene);
       },
     });

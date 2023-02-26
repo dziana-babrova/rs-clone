@@ -16,11 +16,11 @@ import LANGUAGE from 'client/const/Language';
 import { GAME_SCENE } from 'client/const/scenes/GameSceneConsts';
 import TopPanel from 'client/components/top-panel/TopPanel';
 import CalculateService from 'client/services/CalculateService';
+import HotkeysService from 'client/services/HotkeysService';
 import NextLevelButton from './components/next-level-popup/NextLevelButton';
 import ElementsManager from './components/ElementsManager';
 import Fireworks from './components/Fireworks';
 import Background from '../../components/background/Background';
-import HotkeysService from 'client/services/HotkeysService';
 
 export default class GameScene extends Phaser.Scene {
   public manager!: SingleplayerManager;
@@ -106,6 +106,7 @@ export default class GameScene extends Phaser.Scene {
   }
 
   private displayWinPopup() {
+    HotkeysService.disablePopupHotkeys(this);
     this.panel.toggleButtonsInteractivity(false);
     this.time.delayedCall(2000, async () => {
       if (this.level < Levels.length - 1) {
@@ -182,6 +183,7 @@ export default class GameScene extends Phaser.Scene {
     this.events.removeAllListeners('pointerup');
     this.events.removeAllListeners('pointerdown');
     this.events.removeListener(EventNames.BallStop);
+    HotkeysService.removeAllHotkeysEvents(this);
   }
 
   private destroySprites(): void {

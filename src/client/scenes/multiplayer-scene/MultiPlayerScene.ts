@@ -3,9 +3,9 @@ import store from 'client/state/store';
 import TopPanel from 'client/components/top-panel/TopPanel';
 import Background from 'client/components/background/Background';
 import PhaserMatterCollisionPlugin from 'phaser-matter-collision-plugin';
-import MultiplayerManager from '../../managers/MultiplayerManager';
 import HotkeysService from 'client/services/HotkeysService';
 import { HotkeysEvents } from 'common/types/events';
+import MultiplayerManager from '../../managers/MultiplayerManager';
 
 export default class MultiPlayerScene extends Phaser.Scene {
   elementsManager!: MultiplayerManager;
@@ -52,6 +52,7 @@ export default class MultiPlayerScene extends Phaser.Scene {
     this.events.on(HotkeysEvents.Sounds, this.panel.toggleSound.bind(this.panel));
     this.events.on(HotkeysEvents.Music, this.panel.toggleMusic.bind(this.panel));
     this.events.on(HotkeysEvents.Mute, this.panel.toggleMute.bind(this.panel));
+    this.events.on(HotkeysEvents.Restart, this.panel.restart.bind(this.panel));
   }
 
   update() {

@@ -19,6 +19,8 @@ import { setLang, setMusic } from 'client/state/features/AppSlice';
 import { axiosSignOut } from 'client/state/features/UserSlice';
 import store from 'client/state/store';
 import { Scene } from 'phaser';
+import HotkeysService from 'client/services/HotkeysService';
+import { HotkeysEvents } from 'common/types/events';
 import ElementsManager from '../game-scene/components/ElementsManager';
 import AuthBtn from './components/AuthBtn';
 import AuthPopup from './components/AuthPopup';
@@ -27,8 +29,6 @@ import LogoGroup from './components/LogoGroup';
 import MultiplayerBtns from './components/MultiplayerBtns';
 import RoomPopup from './components/RoomPopup';
 import StartSceneBtns from './components/StartSceneBtns';
-import HotkeysService from 'client/services/HotkeysService';
-import { HotkeysEvents } from 'common/types/events';
 
 export default class StartScene extends Scene {
   lang: Language = Language.Eng;
@@ -287,6 +287,7 @@ export default class StartScene extends Scene {
     this.authBtn.destroy();
     this.authPopup.destroy();
     this.langBtn.destroy();
+    HotkeysService.removeAllHotkeysEvents(this);
   }
 
   goToOnline() {
