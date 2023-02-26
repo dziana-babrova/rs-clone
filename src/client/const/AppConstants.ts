@@ -11,5 +11,5 @@ export const LocalStorageKeys = {
 
 export const SERVER_PROPS = {
   URL: 'http://localhost:3000/api',
-  ONLINE: 'http://localhost:3000/',
+  ONLINE: 'https://rs-clone-server-production-739c.up.railway.app',
 };

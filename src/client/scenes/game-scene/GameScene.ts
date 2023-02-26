@@ -46,14 +46,14 @@ export default class GameScene extends Phaser.Scene {
   //   let { level = -1 } = props;
   //   if (level === -1) {
   //     const unlockedMaps = store.getState().app.maps.filter((map) => map.isUnlock);
-  //     level = unlockedMaps.length < Levels.length ? unlockedMaps[unlockedMaps.length - 1]?.id : 0;
+  //    level = unlockedMaps.length < Levels.length ? unlockedMaps[unlockedMaps.length - 1]?.id : 0;
   //   }
   //   this.level = level || 0;
   //   this.background = new Background(this, store.getState().app.background);
   // }
 
   init() {
-    this.level = 30;
+    this.level = 59;
     this.background = new Background(this, store.getState().app.background);
   }
 
