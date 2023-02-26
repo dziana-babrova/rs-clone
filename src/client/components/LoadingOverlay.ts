@@ -27,7 +27,7 @@ export default class LoadingOverlay {
       60,
     ).setOrigin(0.5);
 
-    const radius = 30;
+    const radius = 18;
 
     const path = new Phaser.Curves
       .Path(
@@ -53,7 +53,7 @@ export default class LoadingOverlay {
         TextureKeys.Ball,
       )
       .setOrigin(0.5)
-      .setScale(0.1);
+      .setScale(0.2);
 
     this.container.add(rectangle);
     this.container.add(this.loadingBall1);
@@ -86,7 +86,7 @@ export default class LoadingOverlay {
       targets: target,
       yoyo: true,
       ease: 'Linear',
-      scale: !target.scale ? 0.1 : 0,
+      scale: !target.scale ? 0.2 : 0,
       duration: 2000,
       loop: -1,
     });
