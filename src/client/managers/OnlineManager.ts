@@ -1,5 +1,7 @@
 import { GameObjects, Scene } from 'phaser';
-import { ElementTypeKeys, SceneKeys } from 'common/types/enums';
+import {
+  ElementTypeKeys, SceneKeys, SoundsKeys, WinReasons,
+} from 'common/types/enums';
 import Ball from 'client/components/Ball';
 import Map from 'client/scenes/game-scene/components/Map';
 import { multiPlayerMap } from 'client/const/levels/MultiplayerLevels';
@@ -18,6 +20,7 @@ import WinPopup from 'client/components/popups/WinPopup';
 import SocketService from 'client/services/SocketService';
 import Count from 'client/scenes/online-scene/components/Count';
 import OnlineSceneService from 'client/services/OnlineSceneService';
+import SoundService from 'client/services/SoundService';
 import HotkeysService from 'client/services/HotkeysService';
 import ScorePanel from '../scenes/multiplayer-scene/components/ScorePanel';
 import Player from '../scenes/multiplayer-scene/components/Player';
@@ -73,6 +76,7 @@ export default class OnlineManager extends Phaser.GameObjects.Container {
   }
 
   async switchTarget(target: Level): Promise<void> {
+    SoundService.playSound(this.scene, SoundsKeys.SwitchTarget);
     this.destroyTargets();
     this.targets = [];
     this.bars.forEach((el) => el.destroy());
@@ -137,6 +141,7 @@ export default class OnlineManager extends Phaser.GameObjects.Container {
     if (!players.find((el) => el.id === this.enemy?.id)) {
       this.enemy?.character.destroy();
       this.enemy = null;
+      this.showWinPopup(this.currentPlayer.id, WinReasons.EnemyLeave);
     }
   }
 
@@ -164,16 +169,26 @@ export default class OnlineManager extends Phaser.GameObjects.Container {
     }
   }
 
-  public async showWinPopup(winner: 1 | 2) {
+  public async showWinPopup(winner: 1 | 2, reason?: WinReasons) {
+    if (winner === this.currentPlayer.id) {
+      SoundService.playSound(this.scene, SoundsKeys.PlayerWin);
+    } else {
+      SoundService.playSound(this.scene, SoundsKeys.PlayerLose);
+    }
+    let message = LANGUAGE.winPopup.multiplayWinMessage[store.getState().app.lang];
+    if (reason === WinReasons.EnemyLeave) {
+      message += `\n${LANGUAGE.winPopup.leaveMessage[store.getState().app.lang]}`;
+    }
     const popup = new WinPopup(
       this.scene,
       winner,
       this.goToScene.bind(this),
       SceneKeys.MultiPlayer,
-      LANGUAGE.winPopup.multiplayWinMessage[store.getState().app.lang],
+      message,
     );
     await popup.show();
     await popup.backButton.show(this.scene.scale.width / 2);
+    this.socketService.leave();
   }
 
   public clearField(): void {
@@ -198,6 +213,7 @@ export default class OnlineManager extends Phaser.GameObjects.Container {
     } else {
       this.enemy?.character.hit();
     }
+    SoundService.playSound(this.scene, SoundsKeys.Hit);
   }
 
   private showWaitingMessage(): void {
