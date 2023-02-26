@@ -250,7 +250,7 @@ export default class MultiplayerManager extends Phaser.GameObjects.Container {
     this.player2.destroyPlayer();
   }
 
-  private goToScene(scene: string): void {
+  public goToScene(scene: string): void {
     this.scene.cameras.main.fadeOut();
     this.scene.time.addEvent({
       delay: 2000,
