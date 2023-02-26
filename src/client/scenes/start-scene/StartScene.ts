@@ -7,7 +7,7 @@ import { LocalStorageKeys } from 'client/const/AppConstants';
 import { NEXT_LANG } from 'client/const/Language';
 import {
   Language,
-  Colors, SceneKeys, SettingsPopupKeys, SoundsKeys, TextureKeys,
+  Colors, SceneKeys, SettingsPopupKeys, SoundsKeys, TextureKeys, InfoPopupType,
 } from 'common/types/enums';
 import { emptyLevel } from 'client/const/levels/Levels';
 import ErrorService from 'client/services/ErrorService';
@@ -20,6 +20,7 @@ import { axiosSignOut } from 'client/state/features/UserSlice';
 import store from 'client/state/store';
 import { Scene } from 'phaser';
 import { WinnersResponse } from 'common/types/types';
+import InfoPopup from 'client/components/dom-popup/InfoPopup';
 import ElementsManager from '../game-scene/components/ElementsManager';
 import AuthBtn from './components/AuthBtn';
 import AuthPopup from './components/AuthPopup';
@@ -28,6 +29,7 @@ import LogoGroup from './components/LogoGroup';
 import MultiplayerBtns from './components/MultiplayerBtns';
 import RoomPopup from './components/RoomPopup';
 import StartSceneBtns from './components/StartSceneBtns';
+import InfoBtn from './components/InfoBtn';
 
 export default class StartScene extends Scene {
   lang: Language = Language.Eng;
@@ -42,11 +44,13 @@ export default class StartScene extends Scene {
 
   langBtn!: LangBtn;
 
+  infoBtn!: InfoBtn;
+
   authBtn!: AuthBtn;
 
   authPopup!: AuthPopup;
 
-  settingsPopup!: Levels | Landscape | Winners;
+  settingsPopup!: Levels | Landscape | Winners | InfoPopup;
 
   music!: Phaser.Sound.BaseSound;
 
@@ -84,16 +88,22 @@ export default class StartScene extends Scene {
     this.roomPopup = new RoomPopup(this, this.socketService);
     this.authPopup = new AuthPopup(this);
     this.langBtn = new LangBtn(this);
+    this.infoBtn = new InfoBtn(this);
+
     const golfCourse = new ElementsManager(this, emptyLevel, 41);
 
     await Promise.all([
       this.logoGroup.show(),
       this.authBtn.show(),
       this.langBtn.show(),
+      this.infoBtn.show(),
       this.startSceneBtns.showSingleGameBtn(),
       this.startSceneBtns.showTwoPlayersGameBtn(),
       this.startSceneBtns.showBtnSettings(),
     ]);
+
+    const infoPopup = new InfoPopup(this, InfoPopupType.Start, SceneKeys.Start);
+    console.log('infoPopup: ', infoPopup);
 
     SoundService.playMusic(this, SoundsKeys.Music);
 
@@ -119,6 +129,8 @@ export default class StartScene extends Scene {
     this.authBtn.on('pointerdown', this.authBtnHandler.bind(this));
     this.authPopup.onUpdateAuthBtn = this.onUpdateAuthBtn.bind(this);
     this.authPopup.onClosePopup = this.onClosePopup.bind(this);
+
+    this.infoBtn.on('pointerdown', this.infoBtnHandler.bind(this));
 
     this.startSceneBtns.btnLevels.background.on('pointerdown', this.createSettingsPopup.bind(this, SettingsPopupKeys.Levels));
     this.startSceneBtns.btnLandscape.background.on('pointerdown', this.createSettingsPopup.bind(this, SettingsPopupKeys.Landscape));
@@ -149,12 +161,10 @@ export default class StartScene extends Scene {
         if (this.settingsPopup instanceof Levels) {
           this.settingsPopup.startLevel = this.startSingleGame.bind(this);
         }
-        this.settingsPopup.onClosePopup = this.handleInteractiveStartScreen.bind(this, true);
         break;
       }
       case SettingsPopupKeys.Landscape: {
         this.settingsPopup = new Landscape(this);
-        this.settingsPopup.onClosePopup = this.handleInteractiveStartScreen.bind(this, true);
         break;
       }
       case SettingsPopupKeys.Winners: {
@@ -169,18 +179,19 @@ export default class StartScene extends Scene {
           }
         } else {
           this.settingsPopup = new Winners(this, winnersResponse);
-          this.settingsPopup.onClosePopup = this.handleInteractiveStartScreen.bind(this, true);
         }
         break;
       }
       default:
     }
+    this.settingsPopup.onClosePopup = this.handleInteractiveStartScreen.bind(this, true);
   }
 
   private handleInteractiveStartScreen(isActive: boolean): void {
     if (isActive) {
       this.authBtn.setInteractive();
       this.langBtn.setInteractive();
+      this.infoBtn.setInteractive();
       this.startSceneBtns.btnStartSingleGame.setInteractive();
       this.startSceneBtns.btnTwoPlayersGame.setInteractive();
       this.startSceneBtns.btnLevels.background.setInteractive();
@@ -190,6 +201,7 @@ export default class StartScene extends Scene {
     } else {
       this.authBtn.disableInteractive();
       this.langBtn.disableInteractive();
+      this.infoBtn.disableInteractive();
       this.startSceneBtns.btnStartSingleGame.disableInteractive();
       this.startSceneBtns.btnTwoPlayersGame.disableInteractive();
       this.startSceneBtns.btnLevels.background.disableInteractive();
@@ -237,6 +249,12 @@ export default class StartScene extends Scene {
     } else {
       this.authPopup.renderPopup();
     }
+  }
+
+  private infoBtnHandler(): void {
+    this.input.enabled = false;
+    const infoPopup = new InfoPopup(this, InfoPopupType.Start, SceneKeys.Start);
+    infoPopup.onClosePopup = this.onClosePopup.bind(this);
   }
 
   private onUpdateAuthBtn(): void {

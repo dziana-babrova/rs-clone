@@ -79,6 +79,7 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.image(TextureKeys.Select, '../assets/select.svg');
     this.load.image(TextureKeys.Winner, '../assets/winner.svg');
     this.load.image(TextureKeys.Star, '../assets/star.svg');
+    this.load.image(TextureKeys.Info, '../assets/info.svg');
 
     this.load.atlas(TextureKeys.Platforms, platfrom, texture);
     this.load.atlas(TextureKeys.Flag, '../assets/flag.png', '../assets/flag.json');

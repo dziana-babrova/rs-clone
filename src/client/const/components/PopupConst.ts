@@ -31,6 +31,12 @@ const POPUP = {
       height: 200,
       shift: 0,
     },
+
+    info: {
+      width: 600,
+      height: 200,
+      shift: -40,
+    },
   },
 
   canvasFill: {

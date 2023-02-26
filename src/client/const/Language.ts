@@ -183,6 +183,90 @@ const LANGUAGE = {
         ru: 'Список победителей пуст.\nЗарегистрируйтесь и начните играть в игру.',
       },
     },
+    info: {
+      about: {
+        'preload-scene': [],
+        'start-scene': [
+          {
+            eng: 'Play golf alone or with a friend.',
+            ru: 'Играй в гольф один или с другом.',
+          },
+          {
+            eng: `In the game for one, try to complete all the levels.\n
+          Sign in to be included in the winners table.\n
+          Collect stars. Beware of saws`,
+            ru: `В игре для одного попробуй пройти все уровни.\n
+          Войди для того, чтобы попасть в таблицу победителей.\n
+          Собирай звёзды. Остерегайся пил`,
+          },
+          {
+            eng: `To play together, use one laptop or create a room to play online.\n
+          Send the name of the room to a friend.\n
+          Enter a random room to play with a random opponent.\n
+          Or play with a bot.`,
+            ru: `Для игры вдвоём используйте один ноутбук или создавай комнату для игры онлайн.\n
+          Отправь название комнаты другу.\n
+          Войди в случайную комнату для игры со случайным соперником.\n
+          Или сыграй с ботом.`,
+          },
+          {
+            eng: 'Повеселись.',
+            ru: 'Have fun.',
+          },
+        ],
+        'game-scene': [],
+        'multiplayer-scene': [],
+        'online-scene': [],
+      },
+      hotkeys: {
+        mute: {
+          eng: 'mute/unmute',
+          ru: 'отключить/включить звук',
+        },
+        sounds: {
+          eng: 'turn on/off game sounds',
+          ru: 'включить/выключить звуки игры',
+        },
+        music: {
+          eng: 'turn on/off music',
+          ru: 'включить/выключить музыку',
+        },
+        levels: {
+          eng: 'show levels popup',
+          ru: 'показать таблицу уровней',
+        },
+        info: {
+          eng: 'show info popup',
+          ru: 'показать информацию',
+        },
+        restart: {
+          eng: 'restart level',
+          ru: 'перезапуск уровня',
+        },
+        back: {
+          eng: 'go to start screen',
+          ru: 'перейти на стартовый экран',
+        },
+        winners: {
+          eng: 'show winners popup',
+          ru: 'показать таблицу победителей',
+        },
+      },
+      type: {
+        start: {
+          title: {
+            eng: 'Credits',
+            ru: 'Об игре',
+          },
+        },
+        game: {
+          title: {
+            eng: 'Game rules',
+            ru: 'Правила игры',
+          },
+        },
+      },
+    },
     socketErrors: {
       alreadyExists: {
         eng: 'Room with this name already exists',

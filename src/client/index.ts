@@ -24,10 +24,10 @@ const config: Types.Core.GameConfig = {
   scene: [PreloadScene, StartScene, GameScene, MultiPlayerScene, OnlineScene],
   scale: {
     mode: Phaser.Scale.FIT,
+    autoCenter: Phaser.Scale.CENTER_HORIZONTALLY,
   },
   dom: {
     createContainer: true,
-    // behindCanvas: false,
   },
   physics: {
     default: 'matter',

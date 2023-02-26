@@ -22,18 +22,24 @@ export default class ElementsFactory {
     return element;
   }
 
-  public static createButton(className: string, text: string): HTMLButtonElement {
+  public static createButtonElement(className: string, text: string): HTMLButtonElement {
     const element = document.createElement('button');
     element.className = className;
     element.textContent = text;
     return element;
   }
 
-  public static createAnchor(className: string, text: string, link: string): HTMLAnchorElement {
+  public static createAnchorElement(
+    className: string,
+    text: string,
+    link: string,
+    isBlank = true,
+  ): HTMLAnchorElement {
     const element = document.createElement('a');
     element.className = className;
     element.href = link;
     element.textContent = text;
+    if (isBlank) element.target = '_blank';
     return element;
   }
 
@@ -80,6 +86,18 @@ export default class ElementsFactory {
     element.className = className;
     element.htmlFor = forId;
     element.textContent = text;
+    return element;
+  }
+
+  public static createImageElement(
+    className: string,
+    src: string,
+    alt: string,
+  ): HTMLImageElement {
+    const element = document.createElement('img');
+    element.className = className;
+    element.src = src;
+    element.alt = alt;
     return element;
   }
 }

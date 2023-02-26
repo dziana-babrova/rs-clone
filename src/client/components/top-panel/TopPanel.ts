@@ -5,28 +5,29 @@ import { LocalStorageKeys } from 'client/const/AppConstants';
 import LocalStorageService from 'client/services/LocalStorageService';
 import SoundService from 'client/services/SoundService';
 import {
-  TextureKeys, TopPanelFrames, SoundsKeys, SceneKeys,
+  TextureKeys, TopPanelFrames, SoundsKeys, SceneKeys, InfoPopupType,
 } from 'common/types/enums';
 import { Scene } from 'phaser';
 import { setMusic, setSound } from 'client/state/features/AppSlice';
 import { SwitchLevel } from 'common/types/types';
 import { EventNames } from 'common/types/events';
 import Levels from '../popups/Levels';
+import InfoPopup from '../dom-popup/InfoPopup';
 
 export default class TopPanel extends Phaser.GameObjects.Container {
   levelText!: Phaser.GameObjects.Text;
 
-  popup: null | undefined | Levels;
+  popup: null | undefined | Levels | InfoPopup;
 
   leftButtons: { [key: string]: Phaser.GameObjects.Image };
 
   rightButtons: { [key: string]: Phaser.GameObjects.Image };
 
-  sceneKey: string;
+  sceneKey: SceneKeys;
 
   constructor(
     scene: Scene,
-    sceneKey: string,
+    sceneKey: SceneKeys,
     hasRestart: boolean,
     hasLevels: boolean,
     goTo: SwitchLevel,
@@ -100,6 +101,7 @@ export default class TopPanel extends Phaser.GameObjects.Container {
     this.leftButtons[TopPanelFrames.Back].on('pointerup', goTo.bind(this.scene, SceneKeys.Start));
     this.leftButtons[TopPanelFrames.Restart].on('pointerup', goTo.bind(this.scene, this.sceneKey, false));
     this.leftButtons[TopPanelFrames.Levels].on('pointerup', this.openLevels.bind(this));
+    this.leftButtons[TopPanelFrames.Info].on('pointerup', this.openInfo.bind(this));
   }
 
   private toggleMusic(): void {
@@ -125,6 +127,14 @@ export default class TopPanel extends Phaser.GameObjects.Container {
       this.toggleButtonsInteractivity(false);
       this.popup.onClosePopup = this.toggleButtonsInteractivity.bind(this, true);
       this.popup.startLevel = this.startLevel.bind(this);
+    }
+  }
+
+  private openInfo(): void {
+    if (!this.popup) {
+      this.popup = new InfoPopup(this.scene, InfoPopupType.Single, this.sceneKey);
+      this.toggleButtonsInteractivity(false);
+      this.popup.onClosePopup = this.toggleButtonsInteractivity.bind(this, true);
     }
   }
 

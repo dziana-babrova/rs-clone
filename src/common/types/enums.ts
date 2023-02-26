@@ -56,6 +56,7 @@ export enum TextureKeys {
   Star = 'star',
   Buttons = 'buttons',
   TopPanel = 'top-panel',
+  Info = 'info',
 }
 
 export enum Colors {
@@ -212,4 +213,28 @@ export enum TopPanelFrames {
   MusicOn = 'music-on.png',
   MusicOff = 'music-off.png',
   Info = 'info.png',
+}
+
+export enum InfoPopupType {
+  Start = 'start',
+  Single = 'single',
+  Multiplayer = 'multiplayer',
+}
+
+export enum InfoPopupScene {
+  Start = 'start',
+  Single = 'single',
+  Local = 'local',
+  Online = 'online',
+}
+
+export enum HotkeysKeys {
+  Mute = 'mute',
+  Sounds = 'sounds',
+  Music = 'music',
+  Levels = 'levels',
+  Info = 'info',
+  Restart = 'restart',
+  Back = 'back',
+  Winners = 'winners',
 }

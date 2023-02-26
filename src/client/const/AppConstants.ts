@@ -21,3 +21,14 @@ export const STYLE = {
   lightText: Colors.Primary,
   darkText: Colors.Secondary,
 };
+
+export const hotkeys = {
+  mute: 'D',
+  sounds: 'S',
+  music: 'M',
+  levels: 'L',
+  info: 'I',
+  restart: 'R',
+  back: 'ESC',
+  winners: 'W',
+};

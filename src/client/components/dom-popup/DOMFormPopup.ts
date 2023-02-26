@@ -1,61 +1,27 @@
-import { POPUP_ANIMATION } from 'client/const/components/PopupConst';
 import LANGUAGE from 'client/const/Language';
 import { START_SCENE } from 'client/const/scenes/StartSceneConst';
 import store from 'client/state/store';
 import ElementsFactory from 'client/utils/ElementGenerator';
-import TweenAnimationBuilder from 'client/utils/TweenAnimationBuilder';
 import {
-  AuthFormInputsKeys, Move, PopupType, RoomFormInputsKeys,
+  AuthFormInputsKeys, PopupType, RoomFormInputsKeys,
 } from 'common/types/enums';
 import {
   ClientValidationError, FormInput, FormInputsKeys, ValidationErrorType,
 } from 'common/types/types';
-import { GameObjects } from 'phaser';
+import DOMPopup from './DOMPopup';
 
-export default class DOMPopup extends GameObjects.DOMElement {
-  tweenAnimationBuilder: TweenAnimationBuilder;
-
+export default class DOMFormPopup extends DOMPopup {
   form!: HTMLFormElement;
 
   popupType: PopupType;
 
-  btnClose!: HTMLButtonElement;
-
-  onClosePopup!: () => void;
-
-  onSubmitPopup!: (target: HTMLElement) => void;
-
   constructor(scene: Phaser.Scene, type: PopupType) {
-    super(
-      scene,
-      0,
-      -scene.cameras.main.height,
-      'div',
-    );
-    // this.setOrigin(0.5, 0.5);
-    this.node.className = 'overlay';
-    this.tweenAnimationBuilder = new TweenAnimationBuilder();
-
-    scene.add.existing(this);
-
-    this.initEvents();
-
+    super(scene);
     this.popupType = type;
-  }
-
-  protected createPopup(): HTMLDivElement {
-    return ElementsFactory.createDivElement('popup');
   }
 
   protected createForm(): void {
     this.form = ElementsFactory.createFormElement('popup__form form');
-  }
-
-  protected createBtnClose(): void {
-    this.btnClose = ElementsFactory.createButton(
-      'btn popup__close',
-      '',
-    );
   }
 
   protected createInputElem<T extends FormInput>(item: T): HTMLLabelElement {
@@ -80,25 +46,6 @@ export default class DOMPopup extends GameObjects.DOMElement {
 
     label.append(input, output);
     return label;
-  }
-
-  protected initEvents(): void {
-    this.addListener('click');
-    this.on('click', this.handleClick);
-  }
-
-  private async handleClick(e: Event): Promise<void> {
-    e.preventDefault();
-    const target = e.target as HTMLElement;
-
-    if (target.closest('.popup__close')) {
-      await this.hide();
-      this.setY(-this.scene.cameras.main.height);
-      this.onClosePopup();
-      return;
-    }
-
-    this.onSubmitPopup(target);
   }
 
   protected checkFormValues<T extends FormInputsKeys>(...arr: T[]): boolean {
@@ -273,23 +220,5 @@ export default class DOMPopup extends GameObjects.DOMElement {
     START_SCENE.formInputs[this.popupType].forEach((input) => {
       this.updateHint(input.name);
     });
-  }
-
-  public show(): Promise<unknown> {
-    return this.move(Move.Show);
-  }
-
-  public hide(): Promise<unknown> {
-    return this.move(Move.Hide);
-  }
-
-  public move(type: Move): Promise<unknown> {
-    return this.tweenAnimationBuilder.moveY(
-      this.scene,
-      this,
-      type === Move.Show ? 0 : this.scene.cameras.main.height,
-      POPUP_ANIMATION.ease,
-      POPUP_ANIMATION.duration,
-    );
   }
 }

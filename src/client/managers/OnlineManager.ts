@@ -65,7 +65,13 @@ export default class OnlineManager extends Phaser.GameObjects.Container {
     this.score = new ScorePanel(scene, { x: scene.cameras.main.centerX - 25, y: 0 });
     this.onlineService = new OnlineSceneService(this.scene);
     this.initEvents();
-    this.panel = new TopPanel(this.scene, SceneKeys.Online, false, false, this.goToScene);
+    this.panel = new TopPanel(
+      this.scene,
+      SceneKeys.Online,
+      false,
+      false,
+      this.goToScene,
+    );
   }
 
   private initEvents(): void {

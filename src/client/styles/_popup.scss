@@ -1,40 +1,59 @@
 .popup {
   cursor: default;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  position: relative;
+  // display: flex;
+  // justify-content: center;
+  // align-items: center;
   width: 100%;
   max-width: 580px;
-  margin: auto;
+  margin: 0 auto;
+  margin-top: 100px;
   padding: 40px;
   border-radius: 14px;
-  background-color: $color-popup-border;
+  background-color: $color-popup-background;
+  border: 2px solid $color-secondary;
 
-  &::before {
-    content: '';
-    position: absolute;
-    z-index: -10;
-    top: 6px;
-    left: 6px;
-    width: calc(100% - 12px);
-    height: calc(100% - 12px);
-    border-radius: 14px;
-    background-color: $color-popup-background;
-    border: 2px solid $color-secondary;
+  &_info {
+    max-width: 1000px;
   }
 
   &::after {
     content: '';
     position: absolute;
     z-index: -20;
-    top: -2px;
-    left: -2px;
-    width: calc(100% + 4px);
-    height: calc(100% + 4px);
+    top: -8px;
+    left: -8px;
+    width: calc(100% + 16px);
+    height: calc(100% + 16px);
     border-radius: 16px;
-    background-color: transparent;
+    background-color: $color-popup-border;
     border: 2px solid $color-secondary;
+  }
+
+  &__title {
+  }
+  &__about {
+  }
+  &__about-text {
+  }
+  &__hotkeys {
+  }
+
+  &__popup__contacts {
+  }
+
+  &__logo-link {
+  }
+
+  &__logo {
+    width: 100px;
+    height: auto;
+  }
+
+  &__link {
+  }
+
+  &__copyright {
   }
 
   &__message-wrapper {

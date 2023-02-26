@@ -226,3 +226,15 @@ export type ElementsConfig = {
   cupConfig: LevelElements;
   sawConfig: LevelElements[];
 };
+
+export interface IDeveloper {
+  name: string,
+  username: string,
+  link: string,
+}
+
+export type Link = {
+  text: string,
+  link: string,
+  src?: string,
+};
