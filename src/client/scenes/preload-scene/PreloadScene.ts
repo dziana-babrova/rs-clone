@@ -86,6 +86,7 @@ export default class PreloadScene extends Phaser.Scene {
       '../assets/background.json',
     );
     this.load.atlas(TextureKeys.Buttons, '../assets/popupButtons.png', '../assets/popupButtons.json');
+    this.load.atlas(TextureKeys.TopPanel, '../assets/topPanel.png', '../assets/topPanel.json');
 
     this.load.json('star', '../assets/star.json');
 

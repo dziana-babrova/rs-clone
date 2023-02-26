@@ -19,6 +19,11 @@ export const GAME_SCENE = {
     speed: { min: 300, max: 350 },
   },
 
+  topPanel: {
+    paddingY: 50,
+    paddingX: 70,
+  },
+
   nextLevelPopup: {
     y: -3000,
 
@@ -134,4 +139,10 @@ export const trajectorySettings = {
   COLOR: 0xffffff,
   NUM_OF_POINTS: 20,
   RADIUS: 5,
+};
+
+export const levelText = {
+  font: '600 35px Montserrat',
+  color: '#ffffff',
+  align: 'center',
 };

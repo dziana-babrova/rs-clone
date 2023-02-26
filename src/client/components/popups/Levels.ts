@@ -3,13 +3,13 @@ import LANGUAGE from 'client/const/Language';
 import { Scene } from 'phaser';
 import store from 'client/state/store';
 import { TextureKeys } from 'common/types/enums';
-import { Position } from 'common/types/types';
+import { Position, SwitchLevel } from 'common/types/types';
 import PositionCalculation from 'client/utils/PositionCalculation';
 import LevelBtn from './LevelBtn';
 import SettingsPopup from './SettingsPopup';
 
 export default class Levels extends SettingsPopup {
-  startLevel!: (levelId: number) => void;
+  startLevel!: (levelId: number) => void | SwitchLevel;
 
   constructor(scene: Scene) {
     super(scene, LANGUAGE.startScene.levels[store.getState().app.lang], POPUP.canvas.levels);

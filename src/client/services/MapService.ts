@@ -69,19 +69,28 @@ export default class MapService {
   }
 
   static updateMapsObject(maps: Maps, index: number, stars: number): Maps {
+    const updatedMaps = [];
     const indexMap: MapDescription = {
       id: maps[index].id,
       isUnlock: true,
       stars,
     };
+    updatedMaps.push(indexMap);
 
-    const nextMap: MapDescription = {
-      id: maps[index + 1].id,
-      isUnlock: true,
-      stars: maps[index + 1].stars,
-    };
+    if (maps[index + 1]) {
+      const nextMap: MapDescription = {
+        id: maps[index + 1].id,
+        isUnlock: true,
+        stars: maps[index + 1].stars,
+      };
+      updatedMaps.push(nextMap);
+    }
 
-    const newMaps: Maps = [...maps.slice(0, index), indexMap, nextMap, ...maps.slice(index + 2)];
+    const newMaps: Maps = [
+      ...maps.slice(0, index),
+      ...updatedMaps,
+      ...maps.slice(index + updatedMaps.length),
+    ];
 
     return newMaps;
   }
