@@ -27,4 +27,8 @@ export default class PlayerEnemy {
     this.isReverse = isReverse;
     this.id = id;
   }
+
+  destroyPlayer() {
+    this.character.destroy();
+  }
 }

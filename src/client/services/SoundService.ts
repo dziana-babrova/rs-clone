@@ -1,8 +1,9 @@
 import { Scene } from 'phaser';
 import store from 'client/state/store';
+import { SoundsKeys } from 'common/types/enums';
 
 export default class SoundService {
-  static playSound(scene: Scene, key: string) {
+  static playSound(scene: Scene, key: SoundsKeys) {
     if (store.getState().app.sound) {
       scene.sound.add(key, {
         volume: 1,

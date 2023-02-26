@@ -1,6 +1,7 @@
 import { ColorsNumber } from 'common/types/enums';
 
 export const firstPlayerPosition = { x: 70, y: 550 };
+
 export const secondPlayerPosition = { x: 1290, y: 550 };
 
 export const scoreBlockSettings = {
@@ -44,5 +45,20 @@ export const animations = {
     ease: 'Quad',
     duration: 500,
   },
-
 };
+
+export const botTimer = { start: 1000, end: 4000 };
+
+export const botAngle = { start: 30, end: 80 };
+
+export const botPower = { start: 50, end: powerIndicatorProps.width };
+
+export const countStyle = {
+  font: '140px monospace',
+};
+
+export const waitMessageStyle = {
+  font: '30px monospace',
+};
+
+export const countStrings = ['3', '2', '1', 'GO!'];

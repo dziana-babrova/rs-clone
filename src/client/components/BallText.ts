@@ -1,9 +1,9 @@
 import { ballText } from 'client/const/scenes/GameSceneConsts';
-import LANGUAGE, { Language } from 'client/const/Language';
+import LANGUAGE from 'client/const/Language';
 import { GameObjects, Scene } from 'phaser';
 import store from 'client/state/store';
 import SoundService from 'client/services/SoundService';
-import { SoundsKeys } from 'common/types/enums';
+import { Language, SoundsKeys } from 'common/types/enums';
 
 export default class BallText extends GameObjects.Text {
   scene: Scene;

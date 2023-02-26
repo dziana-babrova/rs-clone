@@ -38,7 +38,7 @@ export default class PowerPanel extends Phaser.GameObjects.Container {
     }
   }
 
-  private createWrapper(props: RectangleObjectProps) {
+  private createWrapper(props: RectangleObjectProps): Phaser.GameObjects.Graphics {
     const {
       color, alpha, x, y, width, height,
     } = props;
@@ -48,7 +48,7 @@ export default class PowerPanel extends Phaser.GameObjects.Container {
     return wrapper;
   }
 
-  animate() {
+  public animate(): void {
     this.setAlpha(1);
     const green = Phaser.Display.Color.ValueToColor(ColorsNumber.Green);
     const orange = Phaser.Display.Color.ValueToColor(ColorsNumber.Orange);
@@ -73,7 +73,7 @@ export default class PowerPanel extends Phaser.GameObjects.Container {
     });
   }
 
-  stop() {
+  public stop(): void {
     this.tween.remove();
     setTimeout(() => this.setAlpha(0), powerIndicatorProps.stopTimeout);
   }

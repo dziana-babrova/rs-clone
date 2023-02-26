@@ -1,11 +1,10 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AxiosError } from 'axios';
 import { LocalStorageKeys } from 'client/const/AppConstants';
-import { Language } from 'client/const/Language';
+import { Language, BackgroundKeys } from 'common/types/enums';
 import LocalStorageService from 'client/services/LocalStorageService';
 import MapsApiService from 'client/services/MapsApiService';
 import MapService from 'client/services/MapService';
-import { BackgroundKeys } from 'common/types/enums';
 import { AxiosErrorResponse, IAppState, Maps } from 'common/types/types';
 
 const initialState: IAppState = {

@@ -2,6 +2,7 @@ import platfrom from 'client/assets/platforms.png';
 import texture from 'client/assets/platforms.json';
 import {
   SceneKeys, TextureKeys, AnimationKeys, SoundsKeys, BackgroundKeys,
+  Language,
 } from 'common/types/enums';
 import PRELOAD_SCENE from 'client/const/scenes/PreloadSceneConsts';
 import Phaser from 'phaser';
@@ -12,7 +13,7 @@ import {
   axiosGetMaps, setBackground, setLang, setMaps, setMusic, setSound,
 } from 'client/state/features/AppSlice';
 import store from 'client/state/store';
-import { Language } from 'client/const/Language';
+
 import { axiosCheckAuth } from 'client/state/features/UserSlice';
 import MapService from 'client/services/MapService';
 import { Maps } from 'common/types/types';
@@ -67,8 +68,6 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.image(TextureKeys.eng, '../assets/eng.png');
     this.load.image(TextureKeys.ru, '../assets/ru.png');
     this.load.image(TextureKeys.Close, '../assets/close.svg');
-    this.load.image(TextureKeys.Next, '../assets/next.svg');
-    this.load.image(TextureKeys.Restart, '../assets/restart.svg');
     this.load.image(TextureKeys.Ball, '../assets/Golf-Ball-big.png');
     this.load.image(TextureKeys.MiniBall, '../assets/mini-ball.png');
     this.load.image(TextureKeys.Saw, '../assets/saw.png');
@@ -88,7 +87,7 @@ export default class PreloadScene extends Phaser.Scene {
       '../assets/background.png',
       '../assets/background.json',
     );
-    this.load.atlas(TextureKeys.Water, '../assets/water.png', '../assets/water.json');
+    this.load.atlas(TextureKeys.Buttons, '../assets/popupButtons.png', '../assets/popupButtons.json');
 
     this.load.json('star', '../assets/star.json');
 
@@ -102,6 +101,9 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.audio(SoundsKeys.Star, '../assets/music/star.mp3');
     this.load.audio(SoundsKeys.ResultStar, '../assets/music/result-star.mp3');
     this.load.audio(SoundsKeys.GameOver, '../assets/music/game-over.mp3');
+    this.load.audio(SoundsKeys.SwitchTarget, '../assets/music/switch-target.mp3');
+    this.load.audio(SoundsKeys.PlayerWin, '../assets/music/game-won.mp3');
+    this.load.audio(SoundsKeys.PlayerLose, '../assets/music/game-lose.mp3');
 
     Object.values(START_SCENE.btnSettings.type).forEach((btn) => {
       if (btn === 'music') {

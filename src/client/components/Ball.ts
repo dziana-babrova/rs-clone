@@ -23,6 +23,7 @@ export default class Ball extends Phaser.Physics.Matter.Sprite implements ICompo
     this.scene.add.existing(this);
     this.pulse = new Pulse(scene);
     this.text = new BallText(scene);
+    this.setDepth(100);
   }
 
   private setBallBody(): void {
@@ -63,7 +64,7 @@ export default class Ball extends Phaser.Physics.Matter.Sprite implements ICompo
     }
   }
 
-  hitBall(velocityX: number, velocityY: number) {
+  public hitBall(velocityX: number, velocityY: number): void {
     this.setVelocity(velocityX, velocityY);
     SoundService.playSound(this.scene, SoundsKeys.Hit);
   }
@@ -80,6 +81,7 @@ export default class Ball extends Phaser.Physics.Matter.Sprite implements ICompo
   }
 
   public deactivate(): void {
+    this.setDepth(0);
     this.pulse.destroy();
     this.text.destroy();
     this.isStopped = false;

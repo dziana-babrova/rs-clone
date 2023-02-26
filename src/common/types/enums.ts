@@ -1,3 +1,8 @@
+export enum Language {
+  Eng = 'eng',
+  Ru = 'ru',
+}
+
 export enum AnimationKeys {
   Wave = 'flag-wave',
 }
@@ -47,11 +52,9 @@ export enum TextureKeys {
   LevelThreeStars = 'levelThreeStars',
   LevelLock = 'levelLock',
   Select = 'select',
-  WinnerGold = 'winnerGold',
-  WinnerSilver = 'winnerSilver',
-  WinnerBronse = 'winnerBronse',
   Winner = 'winner',
   Star = 'star',
+  Buttons = 'buttons',
 }
 
 export enum Colors {
@@ -114,6 +117,7 @@ export enum ColorsNumber {
   Stroke = 0x000000,
   Green = 0x00ff00,
   Orange = 0xff9600,
+  ButtonHovered = 0x9a652f,
 }
 
 export enum Controls {
@@ -155,6 +159,9 @@ export enum SoundsKeys {
   ResultStar = 'result-star-sound',
   GameOver = 'game-over-sound',
   Music = 'music',
+  SwitchTarget = 'switch-target',
+  PlayerWin = 'player-win',
+  PlayerLose = 'player-lose',
 }
 
 export enum BackgroundKeys {
@@ -183,4 +190,14 @@ export enum SettingsPopupKeys {
 export enum RoomPopupFormBtns {
   createRoom = 'createRoom',
   getInRoom = 'getInRoom',
+}
+
+export enum ButtonsFrames {
+  Restart = 'restart.png',
+  Next = 'next.png',
+  Back = 'back.png',
+}
+
+export enum WinReasons {
+  EnemyLeave = 'leave',
 }

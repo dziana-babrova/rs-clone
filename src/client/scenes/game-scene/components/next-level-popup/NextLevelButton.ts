@@ -1,6 +1,6 @@
 /* eslint-disable no-fallthrough */
 
-import { ColorsNumber, TextureKeys } from 'common/types/enums';
+import { ButtonsFrames, ColorsNumber, SceneKeys } from 'common/types/enums';
 import { GAME_SCENE } from 'client/const/scenes/GameSceneConsts';
 import PopupCanvasGroup from 'client/components/popups/PopupCanvas';
 import POPUP from 'client/const/components/PopupConst';
@@ -8,9 +8,9 @@ import LANGUAGE from 'client/const/Language';
 import store from 'client/state/store';
 import StarTemplateGroup from './StarTemplateGroup';
 import CollectedStarsGroup from './CollectedStarsGroup';
-import Button from './Button';
+import Button from '../../../../components/popups/Button';
 
-export default class NextLevelButton extends Phaser.GameObjects.Container {
+export default class NextLevelPopup extends Phaser.GameObjects.Container {
   constructor(scene: Phaser.Scene) {
     super(scene, 0, 0);
 
@@ -19,12 +19,12 @@ export default class NextLevelButton extends Phaser.GameObjects.Container {
 
   public async create(
     stars: number,
-    nextLevelHandler: (nextLevel: boolean) => void,
+    nextLevelHandler: (scene: string, nextLevel?: boolean) => void,
   ): Promise<void> {
     const canvas = new PopupCanvasGroup(
       this.scene,
       LANGUAGE.gameScene.win[store.getState().app.lang],
-      POPUP.canvas.nextLevel,
+      POPUP.canvas.switchLevel,
       false,
     );
     await canvas.show();
@@ -45,22 +45,18 @@ export default class NextLevelButton extends Phaser.GameObjects.Container {
       this.scene,
       -GAME_SCENE.nextLevelPopup.button.initialPaddingX,
       GAME_SCENE.nextLevelPopup.button.Y,
-      GAME_SCENE.nextLevelPopup.button.radius,
-      ColorsNumber.PopupBorder,
-      ColorsNumber.Stroke,
-      TextureKeys.Restart,
+      ButtonsFrames.Restart,
       nextLevelHandler,
+      SceneKeys.Game,
       false,
     );
     const nextButton = new Button(
       this.scene,
       this.scene.scale.width + GAME_SCENE.nextLevelPopup.button.initialPaddingX,
       GAME_SCENE.nextLevelPopup.button.Y,
-      GAME_SCENE.nextLevelPopup.button.radius,
-      ColorsNumber.PopupBorder,
-      ColorsNumber.Stroke,
-      TextureKeys.Next,
+      ButtonsFrames.Next,
       nextLevelHandler,
+      SceneKeys.Game,
       true,
     );
     await Promise.all([

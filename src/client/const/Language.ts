@@ -1,7 +1,4 @@
-export enum Language {
-  Eng = 'eng',
-  Ru = 'ru',
-}
+import { Language } from 'common/types/enums';
 
 export const NEXT_LANG = {
   eng: Language.Ru,
@@ -186,6 +183,24 @@ const LANGUAGE = {
         ru: 'Список победителей пуст.\nЗарегистрируйтесь и начните играть в игру.',
       },
     },
+    socketErrors: {
+      alreadyExists: {
+        eng: 'Room with this name already exists',
+        ru: 'Комната с таким именем уже существует',
+      },
+      notExists: {
+        eng: 'Room with this name does not exist',
+        ru: 'Комната с таким именем не существует',
+      },
+      isFull: {
+        eng: 'Room is full',
+        ru: 'Комната уже заполнена',
+      },
+      somethingWrong: {
+        eng: 'Something went wrong you are alone in the room',
+        ru: 'Что-то пошло не так, вы один в комнате',
+      },
+    },
   },
   preloadScene: {
     title: {
@@ -239,6 +254,38 @@ const LANGUAGE = {
     win: {
       eng: 'Level completed!',
       ru: 'Уровень пройден!',
+    },
+  },
+  multiplayerScene: {
+    waitMessage: {
+      eng: 'Waiting for second player...',
+      ru: 'Ожидаем второго игрока...',
+    },
+  },
+  winPopup: {
+    congrats: {
+      eng: 'Congratulations!',
+      ru: 'Поздравляем!',
+    },
+    multiplayWinMessage: {
+      eng: 'The winner is Player {}',
+      ru: 'Победил игрок {}',
+    },
+    leaveMessage: {
+      eng: 'The opponent has left \nthe game.',
+      ru: 'Противник покинул игру.',
+    },
+    singleplayWinMessage: {
+      eng: "You've reached the last level. \nYour score is {} stars. \nDo you want to restart?",
+      ru: 'Вы достигли последнего \nуровня. \nНабрано звёзд: {}. \nХотите начать заново?',
+    },
+    starSingular: {
+      eng: 'star',
+      ru: 'звезда',
+    },
+    starPlural: {
+      eng: 'stars',
+      ru: '',
     },
   },
 };

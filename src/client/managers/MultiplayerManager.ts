@@ -1,16 +1,27 @@
 import { Scene } from 'phaser';
-import { ElementTypeKeys } from 'common/types/enums';
+import { ElementTypeKeys, SceneKeys, SoundsKeys } from 'common/types/enums';
+import { GAME_SCENE } from 'client/const/scenes/GameSceneConsts';
+import store from 'client/state/store';
+import LANGUAGE from 'client/const/Language';
 import Ball from 'client/components/Ball';
 import Map from 'client/scenes/game-scene/components/Map';
 import { multiPlayerMap, targets } from 'client/const/levels/MultiplayerLevels';
 import { Level } from 'common/types/types';
 import TweenAnimationBuilder from 'client/utils/TweenAnimationBuilder';
-import { animations, firstPlayerPosition, secondPlayerPosition } from 'client/const/scenes/MultiplayerSceneConsts';
+import {
+  animations,
+  firstPlayerPosition,
+  secondPlayerPosition,
+} from 'client/const/scenes/MultiplayerSceneConsts';
 import Cup from 'client/scenes/game-scene/components/golf-course/Cup';
 import Flag from 'client/scenes/game-scene/components/Flag';
 import PhaserMatterCollisionPlugin from 'phaser-matter-collision-plugin';
 import HoleBar from 'client/scenes/game-scene/components/golf-course/HoleBar';
+import WinPopup from 'client/components/popups/WinPopup';
 import MapService from 'client/services/MapService';
+import GameBot from 'client/scenes/multiplayer-scene/components/GameBot';
+import { EventNames } from 'common/types/events';
+import SoundService from 'client/services/SoundService';
 import ScorePanel from '../scenes/multiplayer-scene/components/ScorePanel';
 import Player from '../scenes/multiplayer-scene/components/Player';
 
@@ -52,13 +63,14 @@ export default class MultiplayerManager extends Phaser.GameObjects.Container {
     this.score = new ScorePanel(scene, { x: scene.cameras.main.centerX - 25, y: 0 });
   }
 
-  async createMap() {
+  async createMap(): Promise<void> {
     this.map = await this.createTemplate(multiPlayerMap);
     this.map.setDepth(50);
     await this.map.animate();
   }
 
-  async switchTarget(target = 0) {
+  async switchTarget(target = 0): Promise<void> {
+    SoundService.playSound(this.scene, SoundsKeys.SwitchTarget);
     if (this.target) {
       this.bar.destroy();
       await this.hideTarget();
@@ -67,7 +79,10 @@ export default class MultiplayerManager extends Phaser.GameObjects.Container {
     this.target = await this.createTemplate(targets[target]);
     await this.showTarget();
     this.bar = new HoleBar(this.scene, {
-      x: this.flag.x - 20, y: this.flag.y + 45, texture: 'hole-grass.png', type: ElementTypeKeys.Flag,
+      x: this.flag.x - 20,
+      y: this.flag.y + 45,
+      texture: 'hole-grass.png',
+      type: ElementTypeKeys.Flag,
     });
     this.bar.setDepth(300);
     if (target > 0) {
@@ -79,7 +94,7 @@ export default class MultiplayerManager extends Phaser.GameObjects.Container {
     }
   }
 
-  async createTemplate(level: Level) {
+  async createTemplate(level: Level): Promise<Map> {
     const mapElements = this.mapService.createLevelConfig(level.map);
     const template = this.mapService.createMap(this.scene, mapElements);
     template.setDepth(40);
@@ -95,40 +110,57 @@ export default class MultiplayerManager extends Phaser.GameObjects.Container {
     return template;
   }
 
-  async hideTarget() {
+  async hideTarget(): Promise<void> {
     const { y, ease, duration } = animations.hideAnimation;
     await this.animationBuilder.moveY(this.scene, this.target, y, ease, duration);
   }
 
-  async showTarget() {
+  async showTarget(): Promise<void> {
     const { y, ease, duration } = animations.showAnimation;
     await this.animationBuilder.moveY(this.scene, this.target, y, ease, duration);
   }
 
-  createPlayers() {
+  public createPlayers(withBot: boolean): void {
     this.player1 = new Player(
       this.scene,
       { x: firstPlayerPosition.x, y: firstPlayerPosition.y },
       false,
       1,
     );
-    this.player2 = new Player(
-      this.scene,
-      { x: secondPlayerPosition.x, y: secondPlayerPosition.y },
-      true,
-      2,
-    );
+    this.initPlayer1Events();
+    if (!withBot) {
+      this.player2 = new Player(
+        this.scene,
+        { x: secondPlayerPosition.x, y: secondPlayerPosition.y },
+        true,
+        2,
+      );
+      this.initPlayer2Events();
+    } else {
+      this.player2 = new GameBot(
+        this.scene,
+        { x: secondPlayerPosition.x, y: secondPlayerPosition.y },
+        true,
+        2,
+      );
+      this.scene.events.on(EventNames.GameBotHit, () => {
+        this.initCollisions(this.player2.currentBall!, this.player2);
+      });
+      (this.player2 as GameBot).startBot();
+    }
     this.initCollisions(this.player1.currentBall!, this.player1);
     this.initCollisions(this.player2.currentBall!, this.player2);
-    this.initEvents();
   }
 
-  initEvents() {
+  private initPlayer1Events(): void {
     this.scene.input.keyboard.on('keydown-SPACE', this.handlePlayerClick.bind(this, this.player1));
+  }
+
+  private initPlayer2Events(): void {
     this.scene.input.keyboard.on('keydown-UP', this.handlePlayerClick.bind(this, this.player2));
   }
 
-  async handlePlayerClick(player: Player) {
+  async handlePlayerClick(player: Player): Promise<void> {
     if (!player.isAvailable) return;
     if (!player.isHit) {
       player.fixAngle();
@@ -140,7 +172,7 @@ export default class MultiplayerManager extends Phaser.GameObjects.Container {
     }
   }
 
-  initCollisions(ball: Ball, player: Player) {
+  private initCollisions(ball: Ball, player: Player): void {
     this.detectWin(this.cup!, ball, player);
   }
 
@@ -148,7 +180,7 @@ export default class MultiplayerManager extends Phaser.GameObjects.Container {
     objectA: Phaser.GameObjects.GameObject,
     objectB: Phaser.GameObjects.GameObject,
     player: Player,
-  ) {
+  ): void {
     this.matterCollision.addOnCollideStart({
       objectA,
       objectB,
@@ -158,15 +190,15 @@ export default class MultiplayerManager extends Phaser.GameObjects.Container {
 
   /* eslint-disable  no-param-reassign */
   /* eslint-disable  no-plusplus */
-  handleWin(player: Player) {
+  private handleWin(player: Player): void {
     if (!this.isAvailable) return;
     this.isAvailable = false;
     player.score += 1;
     if (player.id === 1) {
-      this.score.changeText1(this.player1.score.toString());
+      this.score.changeFirstScore(this.player1.score.toString());
     }
     if (player.id === 2) {
-      this.score.changeText2(this.player2.score.toString());
+      this.score.changeSecondScore(this.player2.score.toString());
     }
     if (player.score >= 5) {
       this.player1.isAvailable = false;
@@ -181,16 +213,52 @@ export default class MultiplayerManager extends Phaser.GameObjects.Container {
   /* eslint-enable  no-param-reassign */
 
   // ToDo Add winner popup
-  showWinPopup(player: Player) {
-    console.log(`WIN${player.id}`);
+  private async showWinPopup(player: Player): Promise<void> {
+    SoundService.playSound(this.scene, SoundsKeys.PlayerWin);
+    const popup = new WinPopup(
+      this.scene,
+      player.id,
+      this.goToScene.bind(this),
+      SceneKeys.MultiPlayer,
+      LANGUAGE.winPopup.multiplayWinMessage[store.getState().app.lang],
+    );
+    await popup.show();
+    await Promise.all([
+      popup.restartButton.show(
+        this.scene.scale.width / 2 - GAME_SCENE.nextLevelPopup.button.finalPaddingX,
+      ),
+      popup.backButton.show(
+        this.scene.scale.width / 2 + GAME_SCENE.nextLevelPopup.button.finalPaddingX,
+      ),
+    ]);
   }
 
-  destroyElements() {
+  private destroyElements(): void {
     this.player1.balls.clear(true, true);
     this.player2.balls.clear(true, true);
     this.flag.destroy();
     const { cup } = this;
     this.cup = null;
     cup?.destroy();
+  }
+
+  private destroyAllElements(): void {
+    this.destroyElements();
+    this.map.destroy();
+    this.target.destroy();
+    this.player1.destroyPlayer();
+    this.player2.destroyPlayer();
+  }
+
+  private goToScene(scene: string): void {
+    this.scene.cameras.main.fadeOut();
+    this.scene.time.addEvent({
+      delay: 2000,
+      callback: () => {
+        this.scene.scene.stop();
+        this.destroyAllElements();
+        this.scene.scene.start(scene);
+      },
+    });
   }
 }

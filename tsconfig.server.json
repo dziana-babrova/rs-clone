@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "rootDir": "server",
+    "rootDir": "src",
     "outDir": "build-server",
     "module": "commonjs",
     "lib": ["es6"],
@@ -16,5 +16,6 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["server"]
+  "include": ["src/server", "src/common"],
+  "exclude": ["src/client"]
 }

@@ -4,20 +4,22 @@ import Landscape from 'client/components/popups/Landscape';
 import Levels from 'client/components/popups/Levels';
 import Winners from 'client/components/popups/Winners';
 import { LocalStorageKeys } from 'client/const/AppConstants';
-import { Language, NEXT_LANG } from 'client/const/Language';
+import { NEXT_LANG } from 'client/const/Language';
+import {
+  Language,
+  Colors, SceneKeys, SettingsPopupKeys, SoundsKeys, TextureKeys,
+} from 'common/types/enums';
 import { emptyLevel } from 'client/const/levels/Levels';
 import ErrorService from 'client/services/ErrorService';
 import LocalStorageService from 'client/services/LocalStorageService';
+import SocketService from 'client/services/SocketService';
 import SoundService from 'client/services/SoundService';
 import WinnersService from 'client/services/WinnersService ';
 import { setLang, setMusic } from 'client/state/features/AppSlice';
 import { axiosSignOut } from 'client/state/features/UserSlice';
 import store from 'client/state/store';
-import {
-  Colors, SceneKeys, SettingsPopupKeys, SoundsKeys, TextureKeys,
-} from 'common/types/enums';
-import { WinnersResponse } from 'common/types/types';
 import { Scene } from 'phaser';
+import { WinnersResponse } from 'common/types/types';
 import ElementsManager from '../game-scene/components/ElementsManager';
 import AuthBtn from './components/AuthBtn';
 import AuthPopup from './components/AuthPopup';
@@ -48,6 +50,8 @@ export default class StartScene extends Scene {
 
   music!: Phaser.Sound.BaseSound;
 
+  socketService!: SocketService;
+
   loadingOverlay!: LoadingOverlay;
 
   constructor() {
@@ -56,6 +60,7 @@ export default class StartScene extends Scene {
 
   public init(): void {
     this.cameras.main.setBackgroundColor(Colors.StartSceneBG);
+    this.socketService = new SocketService();
   }
 
   public preload(): void {
@@ -76,7 +81,7 @@ export default class StartScene extends Scene {
     this.logoGroup = new LogoGroup(this);
     this.startSceneBtns = new StartSceneBtns(this);
     this.multiplayerBtns = new MultiplayerBtns(this);
-    this.roomPopup = new RoomPopup(this);
+    this.roomPopup = new RoomPopup(this, this.socketService);
     this.authPopup = new AuthPopup(this);
     this.langBtn = new LangBtn(this);
     const golfCourse = new ElementsManager(this, emptyLevel, 41);
@@ -96,13 +101,6 @@ export default class StartScene extends Scene {
 
     await golfCourse.create();
     golfCourse.ball.setVelocityX(25);
-
-    this.music = this.sound.add('music', {
-      volume: 0.2,
-      loop: true,
-    });
-
-    if (store.getState().app.music) this.music.play();
   }
 
   private initEvents(): void {
@@ -114,8 +112,9 @@ export default class StartScene extends Scene {
     this.multiplayerBtns.btnStartOnlineGame.on('pointerdown', this.showRoomPopup.bind(this));
     this.multiplayerBtns.btnBack.background.on('pointerdown', this.hideMultiplayerBtns.bind(this));
 
-    this.roomPopup.onClosePopup = this.onClosePopup.bind(this);
+    this.roomPopup.onClosePopup = this.onCloseRoomPopup.bind(this);
     this.roomPopup.onStartOnlineGame = this.startOnlineGame.bind(this);
+    this.socketService.successConnection(this.startOnlineGame, this);
 
     this.authBtn.on('pointerdown', this.authBtnHandler.bind(this));
     this.authPopup.onUpdateAuthBtn = this.onUpdateAuthBtn.bind(this);
@@ -248,6 +247,11 @@ export default class StartScene extends Scene {
     this.input.enabled = true;
   }
 
+  private onCloseRoomPopup() {
+    this.onClosePopup();
+    this.socketService.leave();
+  }
+
   private startSingleGame(level?: number): void {
     this.removeStartScreenObjects();
     if (typeof level === 'number') {
@@ -259,27 +263,25 @@ export default class StartScene extends Scene {
 
   private startLocalGame(): void {
     this.removeStartScreenObjects();
-    this.scene.start(SceneKeys.Online);
+    this.scene.start(SceneKeys.MultiPlayer, { withBot: false });
   }
 
-  private showRoomPopup(): void {
+  async showRoomPopup(): Promise<void> {
+    await this.socketService.join();
     this.input.enabled = false;
     this.roomPopup.renderPopup();
     this.roomPopup.show();
   }
 
   private startOnlineGame(): void {
-    console.log('startOnlineGame');
-    // this.scene.start(SceneKeys.MultiPlayer);
+    this.scene.start(SceneKeys.Online, this.socketService);
   }
 
   private removeStartScreenObjects(): void {
     this.children.list.forEach((obj) => obj.destroy());
-    // this.logoGroup.destroy();
-    // this.startSceneBtns.destroy();
-    // this.multiplayerBtns.destroy();
-    // this.authBtn.destroy();
-    // this.authPopup.destroy();
-    // this.langBtn.destroy();
+  }
+
+  goToOnline() {
+    this.scene.start(SceneKeys.Online, this.socketService);
   }
 }

@@ -1,11 +1,11 @@
 import POPUP from 'client/const/components/PopupConst';
-import LANGUAGE, { Language } from 'client/const/Language';
+import LANGUAGE from 'client/const/Language';
 import { Scene } from 'phaser';
 import store from 'client/state/store';
 import { Position, WinnersResponse } from 'common/types/types';
 import PositionCalculation from 'client/utils/PositionCalculation';
 import WINNERS_POPUP from 'client/const/components/WinnersPopupConst';
-import { TextureKeys } from 'common/types/enums';
+import { Language, TextureKeys } from 'common/types/enums';
 import ERROR_POPUP from 'client/const/components/ErrorPopupConst';
 import SettingsPopup from './SettingsPopup';
 import WinnerRow from './WinnerRow';

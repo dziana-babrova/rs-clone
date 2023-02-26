@@ -8,7 +8,7 @@ export default class PlayerServer implements IPlayerInfo {
 
   position: Position;
 
-  idReverse: boolean;
+  isReverse: boolean;
 
   score = 0;
 
@@ -16,6 +16,6 @@ export default class PlayerServer implements IPlayerInfo {
     this.id = id;
     this.socketId = socketId;
     this.position = id === 1 ? firstPlayerPosition : secondPlayerPosition;
-    this.idReverse = id === 2;
+    this.isReverse = id === 2;
   }
 }

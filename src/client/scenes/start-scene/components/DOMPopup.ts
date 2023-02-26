@@ -254,7 +254,7 @@ export default class DOMPopup extends GameObjects.DOMElement {
     });
   }
 
-  private addErrorClass<T extends FormInputsKeys>(key: T): void {
+  protected addErrorClass<T extends FormInputsKeys>(key: T): void {
     this.form[`${key}Hint`].classList.add('form__hint_error');
     this.form[`${key}Hint`].classList.remove('form__hint_valid');
   }

@@ -1,6 +1,6 @@
 import ErrorPopup from 'client/components/popups/ErrorPopup';
 import { LocalStorageKeys } from 'client/const/AppConstants';
-import { Language } from 'client/const/Language';
+import { Language } from 'common/types/enums';
 
 import { Scene } from 'phaser';
 import LocalStorageService from './LocalStorageService';
