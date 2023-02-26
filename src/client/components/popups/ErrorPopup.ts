@@ -1,10 +1,10 @@
 import Phaser from 'phaser';
 import PopupCanvasGroup from 'client/components/popups/PopupCanvas';
-import POPUP from 'client/const/components/PopupConst';
 import LANGUAGE from 'client/const/Language';
 import store from 'client/state/store';
 import ERROR_POPUP from 'client/const/components/ErrorPopupConst';
 import { Language } from 'common/types/enums';
+import POPUP from 'client/const/components/PopupConst';
 
 export default class ErrorPopup extends PopupCanvasGroup {
   onClosePopup!: () => void;

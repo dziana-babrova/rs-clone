@@ -32,7 +32,7 @@ export default class DOMPopup extends GameObjects.DOMElement {
       -scene.cameras.main.height,
       'div',
     );
-    this.setOrigin(0.5, 0.5);
+    // this.setOrigin(0.5, 0.5);
     this.node.className = 'overlay';
     this.tweenAnimationBuilder = new TweenAnimationBuilder();
 
