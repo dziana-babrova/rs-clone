@@ -19,6 +19,7 @@ import { Socket } from 'socket.io-client';
 import WinPopup from 'client/components/popups/WinPopup';
 import SocketService from 'client/services/SocketService';
 import Count from 'client/scenes/online-scene/components/Count';
+import TopPanel from 'client/components/top-panel/TopPanel';
 import OnlineSceneService from 'client/services/OnlineSceneService';
 import SoundService from 'client/services/SoundService';
 import ScorePanel from '../scenes/multiplayer-scene/components/ScorePanel';
@@ -53,6 +54,8 @@ export default class OnlineManager extends Phaser.GameObjects.Container {
 
   waitingMessage: GameObjects.Text | null = null;
 
+  panel: TopPanel;
+
   constructor(scene: Scene, tileSize: number, socket: Socket, socketService: SocketService) {
     super(scene);
     this.socket = socket;
@@ -62,6 +65,7 @@ export default class OnlineManager extends Phaser.GameObjects.Container {
     this.score = new ScorePanel(scene, { x: scene.cameras.main.centerX - 25, y: 0 });
     this.onlineService = new OnlineSceneService(this.scene);
     this.initEvents();
+    this.panel = new TopPanel(this.scene, SceneKeys.Online, false, false, this.goToScene);
   }
 
   private initEvents(): void {

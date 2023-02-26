@@ -60,6 +60,7 @@ export default class SingleplayerManager {
     this.scene.input.on('pointerdown', (event: PointerEvent, targets: unknown[]) => {
       // сheck ifActive - return
       if (targets.length) return;
+      if (!this.isActive) return;
       if (!this.ball.isStopped || this.isHit || this.controls === Controls.Keyboard) { return; }
       this.controls = Controls.Mouse;
       this.startAim({ x: event.x, y: event.y });
@@ -70,9 +71,12 @@ export default class SingleplayerManager {
       this.setAngleAndDistance({ x: event.x, y: event.y });
       this.hit();
     });
+    this.scene.events.on(EventNames.PopupOpen, () => { this.isActive = false; });
+    this.scene.events.on(EventNames.PopupClosed, () => { this.isActive = true; });
   }
 
   private handleKeyboardInput() {
+    if (!this.isActive) return;
     if (this.cursors.left.isDown) {
       this.distance -= 1;
       this.setKeyboardAsControl();

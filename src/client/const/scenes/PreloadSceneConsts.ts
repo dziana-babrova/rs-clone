@@ -20,24 +20,26 @@ const PRELOAD_SCENE = {
   },
 
   coloredRectangle: {
-    color: 0x222222,
-    alpha: 0.8,
+    color: 0xD78122,
+    alpha: 1,
     x: 240,
-    y: 270,
+    y: 280,
     width: 320,
-    height: 50,
+    height: 30,
+    strokeColor: 0x000000,
+    strokeWidth: 2,
   },
 
   gradientRectangle: {
-    x: 250,
+    x: 240,
     y: 280,
-    width: 300,
+    width: 320,
     height: 30,
     alpha: 1,
-    topLeft: 0xff0000,
-    topRight: 0xff0000,
-    bottomLeft: 0xffff00,
-    bottomRight: 0xffff00,
+    topLeft: 0x6BA310,
+    topRight: 0x446B00,
+    bottomLeft: 0x446B00,
+    bottomRight: 0x7FAB1A,
   },
 
   fireworksTexture: {

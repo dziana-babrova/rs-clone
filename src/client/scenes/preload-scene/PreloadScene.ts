@@ -88,6 +88,7 @@ export default class PreloadScene extends Phaser.Scene {
       '../assets/background.json',
     );
     this.load.atlas(TextureKeys.Buttons, '../assets/popupButtons.png', '../assets/popupButtons.json');
+    this.load.atlas(TextureKeys.TopPanel, '../assets/topPanel.png', '../assets/topPanel.json');
 
     this.load.json('star', '../assets/star.json');
 
@@ -155,8 +156,8 @@ export default class PreloadScene extends Phaser.Scene {
   }
 
   createLoader() {
-    this.progressBar = new ProgressBar(this, PRELOAD_SCENE.gradientRectangle);
     this.progressBox = new ProgressBox(this, PRELOAD_SCENE.coloredRectangle);
+    this.progressBar = new ProgressBar(this, PRELOAD_SCENE.gradientRectangle);
     this.progressText = new ProgressText(this, PRELOAD_SCENE.mainText);
     this.progressPercentText = new ProgressPercentText(this, PRELOAD_SCENE.secondaryText);
     this.progressAssets = new ProgressAssets(this, PRELOAD_SCENE.secondaryText);

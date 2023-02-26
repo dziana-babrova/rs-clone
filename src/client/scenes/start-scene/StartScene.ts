@@ -253,6 +253,7 @@ export default class StartScene extends Scene {
   }
 
   private startSingleGame(level?: number): void {
+    this.scene.stop();
     this.removeStartScreenObjects();
     if (typeof level === 'number') {
       this.scene.start(SceneKeys.Game, { level });

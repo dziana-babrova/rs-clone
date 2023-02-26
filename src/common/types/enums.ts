@@ -55,6 +55,7 @@ export enum TextureKeys {
   Winner = 'winner',
   Star = 'star',
   Buttons = 'buttons',
+  TopPanel = 'top-panel',
 }
 
 export enum Colors {
@@ -200,4 +201,15 @@ export enum ButtonsFrames {
 
 export enum WinReasons {
   EnemyLeave = 'leave',
+}
+
+export enum TopPanelFrames {
+  Restart = 'restart.png',
+  Back = 'back.png',
+  Levels = 'levels.png',
+  SoundOn = 'sound-on.png',
+  SoundOff = 'sound-off.png',
+  MusicOn = 'music-on.png',
+  MusicOff = 'music-off.png',
+  Info = 'info.png',
 }
