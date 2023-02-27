@@ -56,7 +56,7 @@ export default class OnlineScene extends Phaser.Scene {
   private initHotkeys() {
     HotkeysService.initHotkeysEvents(this);
     this.events.on(HotkeysEvents.Info, this.panel.openInfo.bind(this.panel));
-    this.events.on(HotkeysEvents.Back, this.panel.closePopup.bind(this.panel));
+    this.events.on(HotkeysEvents.Back, this.panel.handleEscInput.bind(this.panel));
     this.events.on(HotkeysEvents.Sounds, this.panel.toggleSound.bind(this.panel));
     this.events.on(HotkeysEvents.Music, this.panel.toggleMusic.bind(this.panel));
     this.events.on(HotkeysEvents.Mute, this.panel.toggleMute.bind(this.panel));

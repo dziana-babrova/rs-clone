@@ -127,7 +127,6 @@ export default class TopPanel extends Phaser.GameObjects.Container {
 
   public openLevels(): void {
     if (!this.popup) {
-      console.log(this);
       this.popup = new Levels(this.scene);
       this.toggleButtonsInteractivity(false);
       this.popup.onClosePopup = this.toggleButtonsInteractivity.bind(this, true);
@@ -161,7 +160,7 @@ export default class TopPanel extends Phaser.GameObjects.Container {
     });
   }
 
-  public closePopup() {
+  public handleEscInput() {
     if (this.popup) {
       this.popup.closePopup();
     } else {
