@@ -186,7 +186,7 @@ export default class OnlineManager extends Phaser.GameObjects.Container {
   }
 
   public clearField(): void {
-    this.flag.destroy();
+    if (this.flag) this.flag.destroy();
     Object.values(this.balls).forEach((el) => el.destroy());
     this.balls = {};
   }
