@@ -1,3 +1,5 @@
+import { Colors } from 'common/types/enums';
+
 const key = 'rsCloneMiniGolf';
 
 export const LocalStorageKeys = {
@@ -23,4 +25,10 @@ export const hotkeys = {
   restart: 'R',
   back: 'ESC',
   winners: 'W',
+};
+
+export const STYLE = {
+  font: 'Montserrat',
+  lightText: Colors.Primary,
+  darkText: Colors.Secondary,
 };

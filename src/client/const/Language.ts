@@ -89,6 +89,16 @@ const LANGUAGE = {
         },
       },
     },
+    serverError: {
+      title: {
+        eng: 'Server Error',
+        ru: 'Oшибка',
+      },
+      text: {
+        eng: 'Sorry, we couldn\'t get data\n from the server.\nPlease try again later.',
+        ru: 'К сожалению, нам не удалось получить данные с сервера.\nПожалуйста,\nповторите попытку позже.',
+      },
+    },
     errors: {
       emptyError: {
         email: {
@@ -151,6 +161,28 @@ const LANGUAGE = {
       eng: 'Valid format',
       ru: 'Правильный формат',
     },
+    levels: {
+      title: {
+        eng: 'Levels',
+        ru: 'Уровни',
+      },
+    },
+    landscape: {
+      title: {
+        eng: 'Landscape',
+        ru: 'Фон для игры',
+      },
+    },
+    winners: {
+      title: {
+        eng: 'Winners',
+        ru: 'Победители',
+      },
+      emptyError: {
+        eng: 'The list of winners is empty.\nSign In and start playing the game.',
+        ru: 'Список победителей пуст.\nЗарегистрируйтесь и начните играть в игру.',
+      },
+    },
     socketErrors: {
       alreadyExists: {
         eng: 'Room with this name already exists',
@@ -208,18 +240,6 @@ const LANGUAGE = {
     logout: {
       eng: 'Logout',
       ru: 'Выйти',
-    },
-    levels: {
-      eng: 'Levels',
-      ru: 'Уровни',
-    },
-    landscape: {
-      eng: 'Landscape',
-      ru: 'Фон для игры',
-    },
-    winners: {
-      eng: 'Winners',
-      ru: 'Победители',
     },
   },
   gameScene: {

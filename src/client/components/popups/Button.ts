@@ -30,7 +30,7 @@ export default class Button extends Phaser.GameObjects.Group {
       x,
       y,
       GAME_SCENE.nextLevelPopup.button.radius,
-      ColorsNumber.NextLevelPopupBorder,
+      ColorsNumber.PopupBorder,
     );
     button.setStrokeStyle(GAME_SCENE.nextLevelPopup.button.lineWidth, ColorsNumber.Stroke);
     button.setInteractive({
@@ -69,6 +69,6 @@ export default class Button extends Phaser.GameObjects.Group {
   }
 
   private enterButtonRestState(button: Phaser.GameObjects.Arc): void {
-    button.setFillStyle(ColorsNumber.NextLevelPopupBorder);
+    button.setFillStyle(ColorsNumber.PopupBorder);
   }
 }

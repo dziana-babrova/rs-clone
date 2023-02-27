@@ -1,9 +1,12 @@
+import { STYLE } from '../AppConstants';
+
 const PRELOAD_SCENE = {
   mainText: {
     x: 0,
     y: 0,
     style: {
-      font: '20px Montserrat',
+      fontFamily: STYLE.font,
+      fontSize: '20px',
     },
   },
 
@@ -11,7 +14,8 @@ const PRELOAD_SCENE = {
     x: 0,
     y: 0,
     style: {
-      font: '18px Montserrat',
+      fontFamily: STYLE.font,
+      fontSize: '18px',
     },
   },
 

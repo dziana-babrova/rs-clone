@@ -1,3 +1,6 @@
+import { ColorsNumber } from 'common/types/enums';
+import { STYLE } from '../AppConstants';
+
 export const GAME_SCENE = {
   fireworks: {
     alpha: { start: 1, end: 0, ease: 'Cubic.easeIn' },
@@ -122,7 +125,7 @@ export const ballSettings = {
 };
 
 export const pulseSettings = {
-  color: 0xffffff,
+  color: ColorsNumber.Primary,
   size: 70,
   minAlpha: 0.2,
   duration: 900,
@@ -130,19 +133,22 @@ export const pulseSettings = {
 
 export const ballText = {
   style: {
-    font: '15px Montserrat',
+    fontFamily: STYLE.font,
+    fontSize: '15px',
   },
   duration: 900,
 };
 
 export const trajectorySettings = {
-  COLOR: 0xffffff,
+  COLOR: ColorsNumber.Primary,
   NUM_OF_POINTS: 20,
   RADIUS: 5,
 };
 
 export const levelText = {
-  font: '600 35px Montserrat',
-  color: '#ffffff',
+  fontFamily: STYLE.font,
+  fontSize: '35px',
+  fontStyle: '600',
+  color: STYLE.lightText,
   align: 'center',
 };

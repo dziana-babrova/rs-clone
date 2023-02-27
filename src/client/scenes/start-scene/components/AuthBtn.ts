@@ -40,6 +40,8 @@ export default class AuthBtn extends TextButton {
   public updateBtnText(): void {
     if (!store.getState().user.isAuth) {
       this.setText(LANGUAGE.startScene.signIn[store.getState().app.lang as Language]);
+    } else {
+      this.setText(store.getState().user.user.username);
     }
   }
 
