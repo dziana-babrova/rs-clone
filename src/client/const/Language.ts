@@ -84,8 +84,8 @@ const LANGUAGE = {
           ru: 'Введите название комнаты',
         },
         hint: {
-          eng: 'Length must be at least 6 characters',
-          ru: 'Длина должна быть не менее 6 символов',
+          eng: 'Length must be at least 3 characters',
+          ru: 'Длина должна быть не менее 3 символов',
         },
       },
     },
@@ -132,8 +132,8 @@ const LANGUAGE = {
           ru: 'Длина имени должна быть не менее 3 символов',
         },
         room: {
-          eng: 'Name length must be at least 6 characters',
-          ru: 'Длина названия должна быть не менее 6 символов',
+          eng: 'Name length must be at least 3 characters',
+          ru: 'Длина названия должна быть не менее 3 символов',
         },
       },
       notFoundError: {

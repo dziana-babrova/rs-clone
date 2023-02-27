@@ -94,10 +94,10 @@ export default class DOMFormPopup extends DOMPopup {
           break;
         }
         case RoomFormInputsKeys.Room: {
-          if (value.length < 6) {
+          if (value.length < 3) {
             errors.push({
               param: RoomFormInputsKeys.Room,
-              msg: 'Name length must be at least 6 characters',
+              msg: 'Name length must be at least 3 characters',
             });
             return false;
           }
