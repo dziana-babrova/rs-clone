@@ -27,6 +27,8 @@ export default class AuthPopup extends DOMFormPopup {
 
   constructor(scene: Phaser.Scene) {
     super(scene, PopupType.Auth);
+    this.renderPopup();
+    this.show();
     this.onClickPopup = this.onSubmitForm.bind(this);
   }
 
@@ -79,8 +81,6 @@ export default class AuthPopup extends DOMFormPopup {
     this.usernameLabel.style.display = 'none';
 
     this.node.append(popup);
-
-    this.show();
   }
 
   private onSubmitForm(target: HTMLElement): void {

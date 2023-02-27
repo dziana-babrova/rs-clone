@@ -21,6 +21,7 @@ import { setLang, setMusic } from 'client/state/features/AppSlice';
 import { axiosSignOut } from 'client/state/features/UserSlice';
 import store from 'client/state/store';
 import { Scene } from 'phaser';
+
 import InfoPopup from 'client/components/dom-popup/InfoPopup';
 import WinnerApiService from 'client/services/WinnersApiService';
 import HotkeysService from 'client/services/HotkeysService';
@@ -45,15 +46,13 @@ export default class StartScene extends Scene {
 
   multiplayerBtns!: MultiplayerBtns;
 
-  roomPopup!: RoomPopup;
-
   langBtn!: LangBtn;
 
   infoBtn!: InfoBtn;
 
-  authBtn!: AuthBtn;
+  popup: AuthPopup | RoomPopup | InfoPopup | null = null;
 
-  authPopup!: AuthPopup;
+  authBtn!: AuthBtn;
 
   settingsPopup: Levels | Landscape | Winners | ErrorPopup | null = null;
 
@@ -88,8 +87,6 @@ export default class StartScene extends Scene {
     this.logoGroup = new LogoGroup(this);
     this.startSceneBtns = new StartSceneBtns(this);
     this.multiplayerBtns = new MultiplayerBtns(this);
-    this.roomPopup = new RoomPopup(this, this.socketService);
-    this.authPopup = new AuthPopup(this);
     this.langBtn = new LangBtn(this);
     this.infoBtn = new InfoBtn(this);
 
@@ -124,13 +121,9 @@ export default class StartScene extends Scene {
     this.multiplayerBtns.btnStartOnlineGame.on('pointerdown', this.showRoomPopup.bind(this));
     this.multiplayerBtns.btnBack.background.on('pointerdown', this.hideMultiplayerBtns.bind(this));
 
-    this.roomPopup.onClosePopup = this.onCloseRoomPopup.bind(this);
-    this.roomPopup.onStartOnlineGame = this.startOnlineGame.bind(this);
     this.socketService.successConnection(this.startOnlineGame, this);
 
     this.authBtn.on('pointerdown', this.authBtnHandler.bind(this));
-    this.authPopup.onUpdateAuthBtn = this.onUpdateAuthBtn.bind(this);
-    this.authPopup.onClosePopup = this.onClosePopup.bind(this);
 
     this.infoBtn.on('pointerdown', this.infoBtnHandler.bind(this));
 
@@ -248,15 +241,15 @@ export default class StartScene extends Scene {
 
   private onClosePopup(): void {
     this.input.enabled = true;
+    this.popup?.destroy();
+    this.popup = null;
     HotkeysService.keyBoardOn(this);
-    this.authPopup.visible = false;
   }
 
   private onCloseRoomPopup() {
     this.onClosePopup();
     this.socketService.leave();
     HotkeysService.keyBoardOn(this);
-    this.roomPopup.visible = false;
   }
 
   private turnOnOffSound(): void {
@@ -287,24 +280,28 @@ export default class StartScene extends Scene {
   }
 
   private async authBtnHandler(): Promise<void> {
-    this.input.enabled = false;
     if (store.getState().user.isAuth) {
+      this.input.enabled = false;
       this.loadingOverlay.show();
       await store.dispatch(axiosSignOut());
       this.authBtn.updateBtnText();
       this.input.enabled = true;
       this.loadingOverlay.hide();
-    } else {
-      this.authPopup.visible = true;
-      this.authPopup.renderPopup();
+    } else if (!this.popup) {
+      this.input.enabled = false;
+      this.popup = new AuthPopup(this);
+      this.popup.onUpdateAuthBtn = this.onUpdateAuthBtn.bind(this);
+      this.popup.onClosePopup = this.onClosePopup.bind(this);
       HotkeysService.keyBoardOff(this);
     }
   }
 
   private infoBtnHandler(): void {
-    this.input.enabled = false;
-    const infoPopup = new InfoPopup(this);
-    infoPopup.onClosePopup = this.onClosePopup.bind(this);
+    if (!this.popup) {
+      this.input.enabled = false;
+      this.popup = new InfoPopup(this);
+      this.popup.onClosePopup = this.onClosePopup.bind(this);
+    }
   }
 
   private onUpdateAuthBtn(): void {
@@ -327,12 +324,14 @@ export default class StartScene extends Scene {
   }
 
   async showRoomPopup(): Promise<void> {
-    this.roomPopup.visible = true;
-    await this.socketService.join();
-    this.input.enabled = false;
-    this.roomPopup.renderPopup();
-    this.roomPopup.show();
-    HotkeysService.keyBoardOff(this);
+    if (!this.popup) {
+      this.input.enabled = false;
+      await this.socketService.join();
+      this.popup = new RoomPopup(this, this.socketService);
+      this.popup.onClosePopup = this.onCloseRoomPopup.bind(this);
+      this.popup.onStartOnlineGame = this.startOnlineGame.bind(this);
+      HotkeysService.keyBoardOff(this);
+    }
   }
 
   private startOnlineGame(): void {

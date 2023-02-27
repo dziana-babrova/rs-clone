@@ -96,10 +96,11 @@ export default class DOMInfoPopup extends DOMPopup {
       }
       case ControlKeys.LeftRight: {
         return `<svg width="62" height="20" viewBox="0 0 62 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M15 18L5 1L25 0.999999L15 18Z" fill="black"/>
-        <path d="M47 1L57 18L37 18L47 1Z" fill="black"/>
-        <path d="M34.294 1L29.6065 18.4148H27L31.6875 1H34.294Z" fill="black"/>
+        <path d="M5 10L22 0V20L5 10Z" fill="black"/>
+        <path d="M57 10L40 20L40 -2.28242e-06L57 10Z" fill="black"/>
+        <path d="M34.5426 1.77271L29.8551 19.1875H27.2485L31.936 1.77271H34.5426Z" fill="black"/>
         </svg>
+        
         `;
         break;
       }

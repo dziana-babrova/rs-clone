@@ -27,6 +27,7 @@ export default class RoomPopup extends DOMFormPopup {
   constructor(scene: Phaser.Scene, socketService: SocketService) {
     super(scene, PopupType.Room);
     this.renderPopup();
+    this.show();
     this.onClickPopup = this.onSubmitForm.bind(this);
     this.socketService = socketService;
     this.socketService.roomError(this.showRoomErrors, this);
