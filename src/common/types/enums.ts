@@ -32,6 +32,8 @@ export enum SceneKeys {
 export enum TextureKeys {
   Platforms = 'platforms',
   Ball = 'ball',
+  BallMini = 'ball-mini',
+  BallMedium = 'ball-medium',
   Logo = 'logo',
   Close = 'close',
   MusicOn = 'music-on',
@@ -43,7 +45,6 @@ export enum TextureKeys {
   Restart = 'restart',
   Next = 'next',
   Saw = 'saw',
-  MiniBall = 'mini-ball',
   Background = 'background',
   Water = 'water',
   LevelEmpty = 'levelEmpty',

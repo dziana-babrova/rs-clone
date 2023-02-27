@@ -53,7 +53,7 @@ export default class LoadingOverlay {
         this.path,
         this.scene.cameras.main.centerX + LOADING_OVERLAY.pathRadius,
         this.scene.cameras.main.centerY,
-        TextureKeys.Ball,
+        TextureKeys.BallMedium,
       )
       .setOrigin(0.5)
       .setScale(scale);
