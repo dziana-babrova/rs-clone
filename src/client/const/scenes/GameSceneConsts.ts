@@ -146,7 +146,9 @@ export const trajectorySettings = {
 };
 
 export const levelText = {
-  font: '600 35px Montserrat',
-  color: '#ffffff',
+  fontFamily: STYLE.font,
+  fontSize: '35px',
+  fontStyle: '600',
+  color: STYLE.lightText,
   align: 'center',
 };

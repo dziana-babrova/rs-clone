@@ -11,9 +11,20 @@ export const LocalStorageKeys = {
   accessToken: `${key}-access-token`,
 };
 
-export const SERVER_PROPS = {
+export const serverProps = {
   URL: 'http://localhost:3000/api',
   ONLINE: 'http://localhost:3000/',
+};
+
+export const hotkeys = {
+  mute: 'D',
+  sounds: 'S',
+  music: 'M',
+  levels: 'L',
+  info: 'I',
+  restart: 'R',
+  back: 'ESC',
+  winners: 'W',
 };
 
 export const STYLE = {

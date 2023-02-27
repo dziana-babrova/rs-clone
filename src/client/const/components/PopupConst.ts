@@ -59,8 +59,10 @@ const POPUP = {
   },
 
   textBold: {
-    font: '600 35px Montserrat',
-    color: '#000000',
+    fontFamily: STYLE.font,
+    fontSize: '35px',
+    fontStyle: '600',
+    color: STYLE.darkText,
     align: 'center',
   },
 

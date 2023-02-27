@@ -24,6 +24,8 @@ export default class TopPanel extends Phaser.GameObjects.Container {
 
   sceneKey: string;
 
+  goTo: SwitchLevel;
+
   constructor(
     scene: Scene,
     sceneKey: string,
@@ -38,6 +40,7 @@ export default class TopPanel extends Phaser.GameObjects.Container {
     this.sceneKey = sceneKey;
     this.createLevelText(level);
     this.createButtons(hasRestart, hasLevels);
+    this.goTo = goTo.bind(scene);
     this.initEvents(goTo);
     this.add([...Object.values(this.leftButtons), ...Object.values(this.rightButtons)]);
     this.scene.add.existing(this);
@@ -98,11 +101,14 @@ export default class TopPanel extends Phaser.GameObjects.Container {
     this.rightButtons.music.on('pointerup', this.toggleMusic.bind(this));
     this.rightButtons.sound.on('pointerup', this.toggleSound.bind(this));
     this.leftButtons[TopPanelFrames.Back].on('pointerup', goTo.bind(this.scene, SceneKeys.Start));
-    this.leftButtons[TopPanelFrames.Restart].on('pointerup', goTo.bind(this.scene, this.sceneKey, false));
+    this.leftButtons[TopPanelFrames.Restart].on(
+      'pointerup',
+      goTo.bind(this.scene, this.sceneKey, false),
+    );
     this.leftButtons[TopPanelFrames.Levels].on('pointerup', this.openLevels.bind(this));
   }
 
-  private toggleMusic(): void {
+  public toggleMusic(): void {
     const isPlaying = store.getState().app.music;
     const musicTexture = isPlaying ? TopPanelFrames.MusicOff : TopPanelFrames.MusicOn;
     store.dispatch(setMusic(!isPlaying));
@@ -111,7 +117,7 @@ export default class TopPanel extends Phaser.GameObjects.Container {
     this.rightButtons.music.setTexture(TextureKeys.TopPanel, musicTexture);
   }
 
-  private toggleSound(): void {
+  public toggleSound(): void {
     const isPlaying = store.getState().app.sound;
     const soundTexture = isPlaying ? TopPanelFrames.SoundOff : TopPanelFrames.SoundOn;
     store.dispatch(setSound(!isPlaying));
@@ -119,8 +125,9 @@ export default class TopPanel extends Phaser.GameObjects.Container {
     this.rightButtons.sound.setTexture(TextureKeys.TopPanel, soundTexture);
   }
 
-  private openLevels(): void {
+  public openLevels(): void {
     if (!this.popup) {
+      console.log(this);
       this.popup = new Levels(this.scene);
       this.toggleButtonsInteractivity(false);
       this.popup.onClosePopup = this.toggleButtonsInteractivity.bind(this, true);
@@ -152,5 +159,31 @@ export default class TopPanel extends Phaser.GameObjects.Container {
         this.scene.scene.start(SceneKeys.Game, { level });
       },
     });
+  }
+
+  public closePopup() {
+    if (this.popup) {
+      this.popup.closePopup();
+    } else {
+      this.goTo(SceneKeys.Start);
+    }
+  }
+
+  public openInfo() {}
+
+  public toggleMute() {
+    const isMusicPlaying = store.getState().app.music;
+    const isSoundsPlaying = store.getState().app.sound;
+    if (!isMusicPlaying && !isSoundsPlaying) {
+      this.toggleMusic();
+      this.toggleSound();
+      return;
+    }
+    if (isMusicPlaying) this.toggleMusic();
+    if (isSoundsPlaying) this.toggleSound();
+  }
+
+  public restart() {
+    this.goTo(this.sceneKey, false);
   }
 }
