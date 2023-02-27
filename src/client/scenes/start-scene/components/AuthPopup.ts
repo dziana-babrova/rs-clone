@@ -148,12 +148,6 @@ export default class AuthPopup extends DOMFormPopup {
     }
   }
 
-  private async closePopup(): Promise<void> {
-    await this.hide();
-    this.setY(-this.scene.cameras.main.height);
-    this.onClosePopup();
-  }
-
   private changeFormType(): void {
     if (this.formType === FormType.SignIn) {
       this.formType = FormType.SignUp;

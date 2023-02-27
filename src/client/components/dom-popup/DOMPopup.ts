@@ -52,7 +52,7 @@ export default class DOMPopup extends GameObjects.DOMElement {
     if (this.onClickPopup) this.onClickPopup(target);
   }
 
-  public async closePopup() {
+  public async closePopup(): Promise<void> {
     await this.hide();
     this.setY(-this.scene.cameras.main.height);
     this.onClosePopup();
