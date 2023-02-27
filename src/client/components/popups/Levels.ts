@@ -23,7 +23,7 @@ export default class Levels extends SettingsPopup {
   buttons: GameObjects.Group;
 
   constructor(scene: Scene, level: number) {
-    super(scene, LANGUAGE.startScene.levels[store.getState().app.lang], POPUP.canvas.levels);
+    super(scene, LANGUAGE.popup.levels.title[store.getState().app.lang], POPUP.canvas.levels);
     this.level = level + 1;
     const {
       width, height, arrowSize, arrowGap, bottomPadding, shift, xCorrection,
