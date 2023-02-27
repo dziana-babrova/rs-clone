@@ -243,8 +243,8 @@ const level8: Level = {
     '                              ',
     '              O               ',
     '                              ',
-    '          O     #    O        ',
-    '       B                      ',
+    '          O          O        ',
+    '       B        #             ',
     '      TTTTTTT       TT{+}TT      ',
     '      .......       ..[*]..      ',
     '      .......       ..<->..      ',
@@ -256,9 +256,10 @@ const level8: Level = {
   saw: {
     type: 'move',
     directionX: 0,
-    directionY: 3,
+    directionY: -1,
     angle: 0,
-    distance: 100,
+    distance: 300,
+    duration: 1000,
   },
 };
 
@@ -490,6 +491,7 @@ const level17: Level = {
     directionY: 0,
     angle: 0,
     distance: 0,
+    duration: 0,
   },
 };
 
@@ -498,9 +500,9 @@ const level18: Level = {
     '',
     '',
     '',
+    '               #      ',
     '',
-    '',
-    '               #             /\\',
+    '                             /\\',
     '                           O/!?\\',
     '                           /!..?TTT',
     '                         O/!.......',
@@ -519,9 +521,10 @@ const level18: Level = {
   saw: {
     type: 'move',
     directionX: 0,
-    directionY: 3,
+    directionY: 1,
     angle: 0,
-    distance: 150,
+    distance: 200,
+    duration: 1000,
   },
 };
 
@@ -579,6 +582,7 @@ const level20: Level = {
     directionY: 0,
     angle: 0.05,
     distance: 100,
+    duration: 0,
   },
 };
 
@@ -819,7 +823,7 @@ const level30: Level = {
     '',
     '                O          ',
     '',
-    '      #                 #      B  ',
+    '      #                     #  B  ',
     'T{+}\\      /TTTTTTTTT\\      /TTTTT',
     '.[*]?\\    /!.........?\\    /!.....',
     '.<->.?\\O /!...........?\\ O/!......',
@@ -832,10 +836,11 @@ const level30: Level = {
   ],
   saw: {
     type: 'move',
-    directionX: 3,
+    directionX: 1,
     directionY: 0,
     angle: 0,
-    distance: 150,
+    distance: 200,
+    duration: 1000,
   },
 };
 
@@ -1013,11 +1018,12 @@ const level37: Level = {
     '..................................',
   ],
   saw: {
-    type: '',
-    directionX: 0,
+    type: 'move',
+    directionX: 1,
     directionY: 0,
     angle: 0,
-    distance: 0,
+    distance: 500,
+    duration: 1000,
   },
 };
 
@@ -1176,9 +1182,9 @@ const level44: Level = {
     '',
     '',
     '',
-    '',
+    '               #     ',
     '   O',
-    'TTTTT\\    TT\\B     #',
+    'TTTTT\\    TT\\B     ',
     '.....?\\   ..?T\\',
     '......?{+}....?{~}T\\O',
     '.......[*].....[|].?TTTTTT\\',
@@ -1192,6 +1198,15 @@ const level44: Level = {
     '..................................',
     '..................................',
   ],
+
+  saw: {
+    type: 'move',
+    directionX: 1,
+    directionY: 0,
+    angle: 0,
+    distance: 500,
+    duration: 1000,
+  },
 };
 
 const level45: Level = {
@@ -1324,6 +1339,7 @@ const level49: Level = {
     directionY: 0,
     angle: 0,
     distance: 0,
+    duration: 0,
   },
 };
 
@@ -1458,6 +1474,7 @@ const level54: Level = {
     directionY: 0,
     angle: 0,
     distance: 0,
+    duration: 0,
   },
 };
 

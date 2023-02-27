@@ -40,20 +40,15 @@ export default class GameScene extends Phaser.Scene {
     super(SceneKeys.Game);
   }
 
-  // init(props: { level?: number }) {
-  //   this.data.values.stars = 0;
-  //   this.data.values.isGameOver = false;
-  //   let { level = -1 } = props;
-  //   if (level === -1) {
-  //     const unlockedMaps = store.getState().app.maps.filter((map) => map.isUnlock);
-  //    level = unlockedMaps.length < Levels.length ? unlockedMaps[unlockedMaps.length - 1]?.id : 0;
-  //   }
-  //   this.level = level || 0;
-  //   this.background = new Background(this, store.getState().app.background);
-  // }
-
-  init() {
-    this.level = 59;
+  init(props: { level?: number }) {
+    this.data.values.stars = 0;
+    this.data.values.isGameOver = false;
+    let { level = -1 } = props;
+    if (level === -1) {
+      const unlockedMaps = store.getState().app.maps.filter((map) => map.isUnlock);
+      level = unlockedMaps.length < Levels.length ? unlockedMaps[unlockedMaps.length - 1]?.id : 0;
+    }
+    this.level = level || 0;
     this.background = new Background(this, store.getState().app.background);
   }
 
@@ -158,11 +153,11 @@ export default class GameScene extends Phaser.Scene {
     this.cameras.main.fadeOut();
     this.data.values.stars = 0;
     this.data.values.isGameOver = false;
-    this.destroySprites();
     this.time.addEvent({
       delay: 2000,
       callback: () => {
         this.scene.stop();
+        this.destroySprites();
         this.removeListeners();
         this.scene.start(key, { level: (this.level += Number(nextLevel)) });
       },
@@ -177,7 +172,7 @@ export default class GameScene extends Phaser.Scene {
   }
 
   private destroySprites(): void {
-    const allSprites = this.children.list.filter((x) => x instanceof Phaser.GameObjects.Sprite);
-    allSprites.forEach((x) => x.destroy());
+    // const allSprites = this.children.list.filter((x) => x instanceof Phaser.GameObjects.Sprite);
+    // allSprites.forEach((x) => x.destroy());
   }
 }
