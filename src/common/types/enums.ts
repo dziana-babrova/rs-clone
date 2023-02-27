@@ -136,7 +136,7 @@ export enum Move {
 
 export enum AuthFormInputsKeys {
   Email = 'email',
-  Username = 'username',
+  Nickname = 'nickname',
   Password = 'password',
 }
 

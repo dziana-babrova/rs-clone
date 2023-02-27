@@ -134,7 +134,7 @@ export const START_SCENE = {
         type: 'email',
       },
       {
-        name: AuthFormInputsKeys.Username,
+        name: AuthFormInputsKeys.Nickname,
         type: 'text',
       },
       {

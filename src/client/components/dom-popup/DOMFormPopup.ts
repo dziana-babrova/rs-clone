@@ -83,10 +83,10 @@ export default class DOMFormPopup extends DOMPopup {
           }
           break;
         }
-        case AuthFormInputsKeys.Username: {
+        case AuthFormInputsKeys.Nickname: {
           if (value.length < 3) {
             errors.push({
-              param: AuthFormInputsKeys.Username,
+              param: AuthFormInputsKeys.Nickname,
               msg: 'Username length must be at least 3 characters',
             });
             return false;
