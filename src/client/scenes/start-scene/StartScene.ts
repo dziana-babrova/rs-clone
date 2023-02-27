@@ -238,12 +238,14 @@ export default class StartScene extends Scene {
   private onClosePopup(): void {
     this.input.enabled = true;
     HotkeysService.keyBoardOn(this);
+    this.authPopup.visible = false;
   }
-  
+
   private onCloseRoomPopup() {
     this.onClosePopup();
     this.socketService.leave();
     HotkeysService.keyBoardOn(this);
+    this.roomPopup.visible = false;
   }
 
   private turnOnOffSound(): void {
@@ -282,6 +284,7 @@ export default class StartScene extends Scene {
       this.input.enabled = true;
       this.loadingOverlay.hide();
     } else {
+      this.authPopup.visible = true;
       this.authPopup.renderPopup();
       HotkeysService.keyBoardOff(this);
     }
@@ -307,6 +310,7 @@ export default class StartScene extends Scene {
   }
 
   async showRoomPopup(): Promise<void> {
+    this.roomPopup.visible = true;
     await this.socketService.join();
     this.input.enabled = false;
     this.roomPopup.renderPopup();

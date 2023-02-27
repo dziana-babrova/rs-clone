@@ -32,11 +32,13 @@ export default class HotkeysService {
     scene.events.removeAllListeners(HotkeysEvents.Winners);
   }
 
-  static keyBoardOff(scene: Scene){
+  /* eslint-disable no-param-reassign */
+  static keyBoardOff(scene: Scene) {
     scene.input.keyboard.enabled = false;
   }
-  
-  static keyBoardOn(scene: Scene){
+
+  static keyBoardOn(scene: Scene) {
     scene.input.keyboard.enabled = true;
   }
+  /* eslint-enable no-param-reassign */
 }
