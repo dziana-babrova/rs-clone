@@ -7,6 +7,10 @@ import { IDeveloper, Link } from 'common/types/types';
 import DOMPopup from './DOMPopup';
 
 export default class DOMInfoPopup extends DOMPopup {
+  protected createTitle(title: string): HTMLElement {
+    return ElementsFactory.createBaseElementWithText('h2', 'popup__title', title);
+  }
+
   protected createAbout(arr: string[]): HTMLElement {
     const container = ElementsFactory.createBaseElement('section', 'popup__about about');
 
@@ -107,7 +111,7 @@ export default class DOMInfoPopup extends DOMPopup {
   protected createLink(item: Link, className: string): HTMLAnchorElement {
     const link = ElementsFactory.createAnchorElement(
       className,
-      '',
+      ('src' in item && item.src) ? '' : item.text,
       item.link,
     );
 

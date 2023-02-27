@@ -1,48 +1,78 @@
 .popup {
   cursor: default;
-  position: relative;
-  // display: flex;
-  // justify-content: center;
-  // align-items: center;
+  display: grid;
+  grid-template-columns: 1fr max-content;
+  grid-template-areas: 
+  'about hotkeys'
+  'contacts hotkeys'
+  'contacts logo';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   width: 100%;
   max-width: 580px;
-  margin: 0 auto;
-  margin-top: 100px;
   padding: 40px;
-  border-radius: 14px;
-  background-color: $color-popup-background;
+  border-radius: 16px;
+  background-color: $color-popup-border;
   border: 2px solid $color-secondary;
 
   &_info {
     max-width: 1000px;
   }
 
-  &::after {
+  &::before{
     content: '';
     position: absolute;
     z-index: -20;
-    top: -8px;
-    left: -8px;
-    width: calc(100% + 16px);
-    height: calc(100% + 16px);
-    border-radius: 16px;
-    background-color: $color-popup-border;
+    top: 6px;
+    left: 6px;
+    width: calc(100% - 12px);
+    height: calc(100% - 12px);
+    border-radius: 14px;
+    background-color: $color-popup-background;
     border: 2px solid $color-secondary;
   }
 
   &__title {
+    display: block;
+    position: absolute;
+    top: -27px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 400px;
+    height: 60px;
+    font-size: 38px;
+    line-height: 58px;
+    text-align: center;
+    color: $color-primary;
+    background-color: $color-popup-border;
+    border-radius: 30px;
+    border: 2px solid $color-secondary;
   }
+
+  &__subtitle {
+    font-size: 28px;
+    font-weight: 500;
+  }
+
   &__about {
+    grid-area: about;
   }
   &__about-text {
   }
   &__hotkeys {
+    grid-area: hotkeys;
   }
 
-  &__popup__contacts {
+  &__contacts {
+    grid-area: contacts;
+    place-self: end start;
   }
 
   &__logo-link {
+    grid-area: logo;
+    place-self: end end;
   }
 
   &__logo {
@@ -54,6 +84,11 @@
   }
 
   &__copyright {
+    position: absolute;
+    bottom: 14px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 14px;
   }
 
   &__message-wrapper {
@@ -104,8 +139,8 @@
   &__close {
     position: absolute;
     z-index: 100;
-    right: -23px;
-    top: -23px;
+    right: -18px;
+    top: -18px;
     color: $color-grey-light;
     width: 46px;
     height: 46px;

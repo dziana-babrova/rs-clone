@@ -25,6 +25,9 @@ export default class InfoPopup extends DOMInfoPopup {
 
     const { lang } = store.getState().app;
 
+    const title = this.createTitle(LANGUAGE.popup.info.type[this.type].title[lang]);
+    popup.append(title);
+
     const aboutStringArr = LANGUAGE.popup.info.about[this.sceneKey]
       .map((item) => item[lang as Language]);
 

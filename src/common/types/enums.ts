@@ -218,7 +218,7 @@ export enum TopPanelFrames {
 export enum InfoPopupType {
   Start = 'start',
   Single = 'single',
-  Multiplayer = 'multiplayer',
+  MultiPlayer = 'multiPlayer',
 }
 
 export enum InfoPopupScene {

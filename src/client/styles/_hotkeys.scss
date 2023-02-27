@@ -1,12 +1,13 @@
 .hotkeys {
+  border
   &__title {
     margin: 0 auto;
   }
 
   &__list {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
   }
 
   &__item {

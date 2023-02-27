@@ -255,14 +255,20 @@ const LANGUAGE = {
       type: {
         start: {
           title: {
-            eng: 'Credits',
+            eng: 'About',
             ru: 'Об игре',
           },
         },
-        game: {
+        single: {
           title: {
-            eng: 'Game rules',
-            ru: 'Правила игры',
+            eng: 'Single Player Game',
+            ru: 'Одиночная Игра',
+          },
+        },
+        multiPlayer: {
+          title: {
+            eng: 'Two Players Game',
+            ru: 'Игра для двоих',
           },
         },
       },

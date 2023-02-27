@@ -6,7 +6,7 @@ import StartScene from 'client/scenes/start-scene/StartScene';
 import GameScene from 'client/scenes/game-scene/GameScene';
 import MultiPlayerScene from 'client/scenes/multiplayer-scene/MultiPlayerScene';
 
-import './styles/style.scss';
+import './styles/_style.scss';
 import OnlineScene from 'client/scenes/online-scene/OnlineScene';
 
 const pluginConfig = {

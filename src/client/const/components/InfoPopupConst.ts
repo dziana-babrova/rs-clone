@@ -49,7 +49,7 @@ const INFO_POPUP = {
       HotkeysKeys.Restart,
       HotkeysKeys.Back,
     ],
-    multiplayer: [
+    multiPlayer: [
       HotkeysKeys.Mute,
       HotkeysKeys.Sounds,
       HotkeysKeys.Music,
