@@ -1,5 +1,6 @@
 import INFO_POPUP from 'client/const/components/InfoPopupConst';
 import LANGUAGE from 'client/const/Language';
+import MultiPlayerScene from 'client/scenes/multiplayer-scene/MultiPlayerScene';
 import store from 'client/state/store';
 import {
   ControlKeys, HotkeysKeys, InfoPopupType, SceneKeys,
@@ -19,7 +20,7 @@ export default class InfoPopup extends DOMInfoPopup {
         break;
       }
       case SceneKeys.MultiPlayer: {
-        this.type = ('withBot' in this.scene && this.scene.withBot)
+        this.type = ('withBot' in this.scene && (this.scene as MultiPlayerScene).withBot)
           ? InfoPopupType.Bot
           : InfoPopupType.MultiPlayer;
         break;

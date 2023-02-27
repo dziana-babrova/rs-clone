@@ -181,7 +181,7 @@ export default class TopPanel extends Phaser.GameObjects.Container {
 
   public handleEscInput() {
     if (this.popup) {
-      this.popup.onClosePopup();
+      this.popup.closePopup();
     } else {
       this.goTo(SceneKeys.Start);
     }
