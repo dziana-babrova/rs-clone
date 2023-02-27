@@ -112,7 +112,8 @@ export default class StartScene extends Scene {
     this.startSceneBtns.btnStartSingleGame.on('pointerdown', this.startSingleGame.bind(this));
     this.startSceneBtns.btnTwoPlayersGame.on('pointerdown', this.showMultiplayerBtns.bind(this));
 
-    this.multiplayerBtns.btnStartLocalGame.on('pointerdown', this.startLocalGame.bind(this));
+    this.multiplayerBtns.btnStartLocalGame.on('pointerdown', this.startLocalGame.bind(this, false));
+    this.multiplayerBtns.btnStartWithBotGame.on('pointerdown', this.startLocalGame.bind(this, true));
     this.multiplayerBtns.btnStartOnlineGame.on('pointerdown', this.showRoomPopup.bind(this));
     this.multiplayerBtns.btnBack.background.on('pointerdown', this.hideMultiplayerBtns.bind(this));
 
@@ -296,9 +297,9 @@ export default class StartScene extends Scene {
     this.scene.start(SceneKeys.Game);
   }
 
-  private startLocalGame(): void {
+  private startLocalGame(withBot: Boolean): void {
     this.removeStartScreenObjects();
-    this.scene.start(SceneKeys.MultiPlayer, { withBot: false });
+    this.scene.start(SceneKeys.MultiPlayer, { withBot });
   }
 
   async showRoomPopup(): Promise<void> {
