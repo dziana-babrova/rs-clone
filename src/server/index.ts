@@ -11,6 +11,7 @@ import mapsRouter from './routers/MapsRouter';
 import winnersRouter from './routers/WinnersRouter';
 import SocketController from './online/controller/SocketController';
 import State from './online/state/State';
+import morgan from 'morgan';
 
 dotenv.config();
 
@@ -25,6 +26,7 @@ app.use(cors({
   credentials: true,
   origin: process.env.CLIENT,
 }));
+app.use(morgan('combined'));
 app.use('/api/auth', authRouter);
 app.use('/api/maps', mapsRouter);
 app.use('/api/winners', winnersRouter);

@@ -1,3 +1,5 @@
+import { ColorsNumber } from 'common/types/enums';
+
 export const firstPlayerPosition = { x: 70, y: 550 };
 
 export const secondPlayerPosition = { x: 1290, y: 550 };
@@ -25,7 +27,7 @@ export const playerProps = {
 
 export const trajectoryProps = {
   radius: 5,
-  color: 0xffffff,
+  color: ColorsNumber.Primary,
   padding: 20,
   distance: 15,
   alpha: 0.8,

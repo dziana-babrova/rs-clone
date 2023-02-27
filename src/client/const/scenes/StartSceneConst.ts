@@ -63,7 +63,6 @@ export const START_SCENE = {
     hoverBgColor: Colors.PinkDark,
     y: 275,
   },
-
   btnAuth: {
     width: 200,
     textSize: 32,
@@ -104,9 +103,6 @@ export const START_SCENE = {
       marginTop: 40,
     },
     moveX: 1000,
-  },
-  winners: {
-
   },
   landscape: {
     backround: [

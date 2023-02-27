@@ -84,7 +84,7 @@ export default class GameScene extends Phaser.Scene {
     HotkeysService.initHotkeysEvents(this);
     this.events.on(HotkeysEvents.Levels, this.panel.openLevels.bind(this.panel));
     this.events.on(HotkeysEvents.Info, this.panel.openInfo.bind(this.panel));
-    this.events.on(HotkeysEvents.Back, this.panel.closePopup.bind(this.panel));
+    this.events.on(HotkeysEvents.Back, this.panel.handleEscInput.bind(this.panel));
     this.events.on(HotkeysEvents.Sounds, this.panel.toggleSound.bind(this.panel));
     this.events.on(HotkeysEvents.Music, this.panel.toggleMusic.bind(this.panel));
     this.events.on(HotkeysEvents.Mute, this.panel.toggleMute.bind(this.panel));

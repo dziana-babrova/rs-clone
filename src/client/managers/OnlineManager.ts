@@ -145,12 +145,6 @@ export default class OnlineManager extends Phaser.GameObjects.Container {
     }
   }
 
-  public setStartBalls(balls: string): void {
-    const serverBalls = this.onlineService.deserializeBalls(balls);
-    this.balls = this.onlineService.mapServerBallsToBalls(serverBalls);
-    this.currentPlayer.isAvailable = true;
-  }
-
   public updateBalls(balls: string): void {
     this.onlineService.updateBalls(this.balls, balls);
   }
@@ -198,8 +192,9 @@ export default class OnlineManager extends Phaser.GameObjects.Container {
   }
 
   public updateStatus(status: StatusMessage): void {
+    const prevStatus = this.currentPlayer.isAvailable;
     this.currentPlayer.isAvailable = this.currentPlayer.id === 1 ? status.player1 : status.player2;
-    if (this.currentPlayer.isAvailable) this.currentPlayer.trajectory.resume();
+    if (!prevStatus && this.currentPlayer.isAvailable) this.currentPlayer.trajectory.resume();
   }
 
   public updateScore(score: ScoreMessage): void {

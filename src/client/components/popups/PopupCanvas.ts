@@ -58,9 +58,9 @@ export default class PopupCanvasGroup extends Phaser.GameObjects.Container {
     const graphicsStroke = this.scene.add.graphics();
     graphicsStroke.lineStyle(
       POPUP.canvasStroke.lineWidth,
-      POPUP.canvasStroke.lineColor,
+      ColorsNumber.PopupLine,
     );
-    graphicsStroke.fillStyle(ColorsNumber.NextLevelPopupBorder);
+    graphicsStroke.fillStyle(ColorsNumber.PopupBorder);
 
     graphicsStroke.strokeRoundedRect(
       xStroke,
@@ -81,9 +81,9 @@ export default class PopupCanvasGroup extends Phaser.GameObjects.Container {
     const graphicsFill = this.scene.add.graphics();
     graphicsFill.lineStyle(
       POPUP.canvasFill.lineWidth,
-      POPUP.canvasFill.lineColor,
+      ColorsNumber.PopupLine,
     );
-    graphicsFill.fillStyle(ColorsNumber.NextLevelPopupBackground);
+    graphicsFill.fillStyle(ColorsNumber.PopupBackground);
     graphicsFill.strokeRoundedRect(
       xFill,
       this.point,
@@ -111,9 +111,9 @@ export default class PopupCanvasGroup extends Phaser.GameObjects.Container {
     const graphics = this.scene.add.graphics();
     graphics.lineStyle(
       POPUP.labelFill.lineWidth,
-      POPUP.labelFill.lineColor,
+      ColorsNumber.PopupLine,
     );
-    graphics.fillStyle(ColorsNumber.NextLevelPopupBorder);
+    graphics.fillStyle(ColorsNumber.PopupBorder);
     graphics.strokeRoundedRect(
       x,
       y,
