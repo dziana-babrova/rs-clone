@@ -222,6 +222,7 @@ export enum InfoPopupType {
   Game = 'game',
   MultiPlayer = 'multiplayer',
   Online = 'online',
+  Bot = 'bot',
 }
 
 export enum InfoPopupScene {

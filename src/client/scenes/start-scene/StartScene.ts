@@ -249,7 +249,6 @@ export default class StartScene extends Scene {
   private onCloseRoomPopup() {
     this.onClosePopup();
     this.socketService.leave();
-    HotkeysService.keyBoardOn(this);
   }
 
   private turnOnOffSound(): void {
@@ -301,6 +300,7 @@ export default class StartScene extends Scene {
       this.input.enabled = false;
       this.popup = new InfoPopup(this);
       this.popup.onClosePopup = this.onClosePopup.bind(this);
+      HotkeysService.keyBoardOff(this);
     }
   }
 

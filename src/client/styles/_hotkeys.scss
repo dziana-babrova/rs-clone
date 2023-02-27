@@ -12,7 +12,7 @@
   }
 
   &__key {
-    place-self: center;
+    flex-shrink: 0;
     display: block;
     text-align: center;
     font-size: 20px;
