@@ -47,6 +47,8 @@ export default class DOMPopup extends GameObjects.DOMElement {
   }
 
   private async handleClick(e: Event): Promise<void> {
+    if (e.target && (e.target as HTMLElement).closest('a')) return;
+
     e.preventDefault();
     const target = e.target as HTMLElement;
 

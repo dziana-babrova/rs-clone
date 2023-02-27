@@ -69,8 +69,8 @@ export default class InfoPopup extends DOMInfoPopup {
 
     if (this.type === InfoPopupType.Start) {
       const contacts = this.createContacts(INFO_POPUP.developers);
-      const logoLink = this.createLink(INFO_POPUP.links.rsSchool, 'popup__logo-link');
-      const textLink = this.createLink(INFO_POPUP.links.copyright, 'popup__link popup__copyright');
+      const logoLink = this.createLink(INFO_POPUP.links.rsSchool, 'popup__logo-link link');
+      const textLink = this.createLink(INFO_POPUP.links.copyright, 'popup__link popup__copyright link');
       popup.append(contacts, logoLink, textLink);
     }
 

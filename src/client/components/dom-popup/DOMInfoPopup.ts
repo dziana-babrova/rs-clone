@@ -146,7 +146,7 @@ export default class DOMInfoPopup extends DOMPopup {
     );
 
     const link = ElementsFactory.createAnchorElement(
-      'contacts__link',
+      'contacts__link link',
       item.username,
       item.link,
     );
