@@ -168,7 +168,7 @@ export default class StartScene extends Scene {
     this.handleInteractiveStartScreen(false);
     switch (type) {
       case SettingsPopupKeys.Levels: {
-        const level = store.getState().app.maps.findIndex(el => !el.isUnlock);
+        const level = store.getState().app.maps.findIndex((el) => !el.isUnlock);
         this.settingsPopup = new Levels(this, level);
         if (this.settingsPopup instanceof Levels) {
           this.settingsPopup.startLevel = this.startSingleGame.bind(this);

@@ -1,15 +1,24 @@
 import { TextureKeys } from 'common/types/enums';
 import { Position } from 'common/types/types';
-import { CustomValidation } from 'express-validator/src/context-items';
 import { GameObjects, Scene } from 'phaser';
 
 export default class PaginationArrows extends GameObjects.Container {
   prevArrow: GameObjects.Sprite;
+
   nextArrow: GameObjects.Sprite;
+
   onPrevPageClick: () => void;
+
   onNextPageClick: () => void;
 
-  constructor(scene: Scene, position: Position, size: number, gap: number, onPrevCallback: () => void, onNextCallback: () => void) {
+  constructor(
+    scene: Scene,
+    position: Position,
+    size: number,
+    gap: number,
+    onPrevCallback: () => void,
+    onNextCallback: () => void,
+  ) {
     super(scene, position.x, position.y);
     this.onNextPageClick = onNextCallback;
     this.onPrevPageClick = onPrevCallback;
@@ -18,15 +27,13 @@ export default class PaginationArrows extends GameObjects.Container {
     this.nextArrow = this.createArrow(gap / 2, 0, size);
     this.add([this.prevArrow, this.nextArrow]);
     this.setDepth(350);
+    this.initEvents();
   }
 
   createArrow(x: number, y: number, size: number) {
     const arrow = this.scene.add.sprite(x, y, TextureKeys.Pagination);
     arrow.setOrigin(0);
     arrow.scale = size / arrow.width;
-    arrow.setInteractive({
-      useHandCursor: true,
-    });
     return arrow;
   }
 
@@ -52,5 +59,10 @@ export default class PaginationArrows extends GameObjects.Container {
       useHandCursor: true,
     });
     this.nextArrow.setAlpha(1);
+  }
+
+  private initEvents(): void {
+    this.nextArrow.on('pointerdown', this.onNextPageClick);
+    this.prevArrow.on('pointerdown', this.onPrevPageClick);
   }
 }

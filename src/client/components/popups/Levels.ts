@@ -11,29 +11,36 @@ import PaginationArrows from './PaginationArrows';
 
 export default class Levels extends SettingsPopup {
   startLevel!: (levelId: number) => void | SwitchLevel;
+
   level: number;
+
   currentPage = 1;
+
   pages = 1;
+
   pagination: PaginationArrows;
+
   buttons: GameObjects.Group;
 
   constructor(scene: Scene, level: number) {
     super(scene, LANGUAGE.startScene.levels[store.getState().app.lang], POPUP.canvas.levels);
     this.level = level + 1;
-    const { width, height, arrowSize, arrowGap, bottomPadding, shift } = POPUP.canvas.levels;
+    const {
+      width, height, arrowSize, arrowGap, bottomPadding, shift, xCorrection,
+    } = POPUP.canvas.levels;
     this.pagination = new PaginationArrows(
       scene,
       {
-        x: (this.scene.cameras.main.width - width) / 2 + width / 2 + 13,
+        x: (this.scene.cameras.main.width - width) / 2 + width / 2 + xCorrection,
         y: this.point + height + shift - bottomPadding,
       },
       arrowSize,
       arrowGap,
-      () => {},
-      () => {}
+      this.prevPage.bind(this),
+      this.nextPage.bind(this),
     );
     this.add(this.pagination);
-    this.buttons = scene.add.group()
+    this.buttons = scene.add.group();
     const { currentPage, pages } = this.getPaginationInfo();
     this.currentPage = currentPage;
     this.pages = pages;
@@ -42,7 +49,7 @@ export default class Levels extends SettingsPopup {
 
   public create(): void {
     this.updateArrows();
-    this.createLevels(this.getLevelByPage(this.currentPage));
+    this.createLevels(this.getLevelsByPage(this.currentPage));
     this.showPopup();
     this.initEvents();
   }
@@ -96,7 +103,7 @@ export default class Levels extends SettingsPopup {
     return { currentPage, pages };
   }
 
-  private getLevelByPage(page: number) {
+  private getLevelsByPage(page: number) {
     const levelsData = store.getState().app.maps;
     const { perPage } = POPUP.canvas.levels;
     return levelsData.slice((page - 1) * perPage, page * perPage);
@@ -117,22 +124,36 @@ export default class Levels extends SettingsPopup {
     this.pagination.enableNextArrow();
   }
 
-  private nextPage() {
+  protected async nextPage() {
     if (this.currentPage >= this.pages) return;
-    this.changeAlpha(this.buttons, 0);
     this.currentPage += 1;
-    const levels = this.getLevelByPage(this.currentPage);
-    this.createLevels(levels);
+    await this.changePage();
   }
 
-  changeAlpha(targets: GameObjects.Group, to: number) {
+  protected async prevPage() {
+    if (this.currentPage <= 1) return;
+    this.currentPage -= 1;
+    await this.changePage();
+  }
+
+  protected async changePage() {
+    await this.changeAlpha(this.buttons, 0);
+    const { buttons } = this;
+    this.buttons = this.scene.add.group();
+    buttons.destroy();
+    const levels = this.getLevelsByPage(this.currentPage);
+    this.createLevels(levels);
+    this.updateArrows();
+  }
+
+  private changeAlpha(targets: GameObjects.Group, to: number) {
     return new Promise((resolve) => {
       this.scene.tweens.add({
-        targets: targets,
-        alpha: to, 
+        targets: targets.getChildren(),
+        alpha: to,
         duration: 300,
-        onComplete: resolve
+        onComplete: resolve,
       });
-    })
+    });
   }
 }

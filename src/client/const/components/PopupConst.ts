@@ -8,6 +8,7 @@ const POPUP = {
       arrowSize: 50,
       arrowGap: 20,
       bottomPadding: 20,
+      xCorrection: 13,
     },
     winners: {
       width: 600,
