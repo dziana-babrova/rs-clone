@@ -1,10 +1,13 @@
-import { ColorsNumber, TextureKeys } from 'common/types/enums';
-import { GameObjects, Scene } from 'phaser';
+import LOADING_OVERLAY from 'client/const/components/LoadingOverlay';
+import { TextureKeys } from 'common/types/enums';
+import { Curves, GameObjects, Scene } from 'phaser';
 
 export default class LoadingOverlay {
   scene: Scene;
 
   container!: GameObjects.Container;
+
+  path!: Curves.Path;
 
   loadingBall1!: GameObjects.PathFollower;
 
@@ -23,37 +26,18 @@ export default class LoadingOverlay {
       this.scene.cameras.main.centerY,
       this.scene.cameras.main.width,
       this.scene.cameras.main.height,
-      ColorsNumber.Secondary,
-      60,
+      LOADING_OVERLAY.overlay.color,
+      LOADING_OVERLAY.overlay.fillAlpha,
     ).setOrigin(0.5);
 
-    const radius = 18;
-
-    const path = new Phaser.Curves
+    this.path = new Phaser.Curves
       .Path(
-        this.scene.cameras.main.centerX + radius,
+        this.scene.cameras.main.centerX + LOADING_OVERLAY.pathRadius,
         this.scene.cameras.main.centerY,
-      ).circleTo(radius);
+      ).circleTo(LOADING_OVERLAY.pathRadius);
 
-    this.loadingBall1 = this.scene.add
-      .follower(
-        path,
-        this.scene.cameras.main.centerX + radius,
-        this.scene.cameras.main.centerY,
-        TextureKeys.Ball,
-      )
-      .setOrigin(0.5)
-      .setScale(0);
-
-    this.loadingBall2 = this.scene.add
-      .follower(
-        path,
-        this.scene.cameras.main.centerX + radius,
-        this.scene.cameras.main.centerY,
-        TextureKeys.Ball,
-      )
-      .setOrigin(0.5)
-      .setScale(0.2);
+    this.loadingBall1 = this.createLoadingBall(0);
+    this.loadingBall2 = this.createLoadingBall(0.2);
 
     this.container.add(rectangle);
     this.container.add(this.loadingBall1);
@@ -61,6 +45,18 @@ export default class LoadingOverlay {
 
     this.scene.add.existing(this.container);
     this.showLoading();
+  }
+
+  private createLoadingBall(scale: number): GameObjects.PathFollower {
+    return this.scene.add
+      .follower(
+        this.path,
+        this.scene.cameras.main.centerX + LOADING_OVERLAY.pathRadius,
+        this.scene.cameras.main.centerY,
+        TextureKeys.Ball,
+      )
+      .setOrigin(0.5)
+      .setScale(scale);
   }
 
   public showLoading(): void {

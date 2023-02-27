@@ -12,7 +12,10 @@ export default class WinnerRow extends GameObjects.Container {
     position: Position,
   ) {
     super(scene);
+    this.createRow(winner, id, position);
+  }
 
+  private createRow(winner: Winner, id: number, position: Position): void {
     const rowParam = {
       width: POPUP.canvas.winners.width - WINNERS_POPUP.margin * 2,
       height: WINNERS_POPUP.winnerImage.width + WINNERS_POPUP.rowFill.padding * 2,

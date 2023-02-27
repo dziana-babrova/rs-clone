@@ -1,4 +1,3 @@
-import { AxiosError } from 'axios';
 import LoadingOverlay from 'client/components/LoadingOverlay';
 import Landscape from 'client/components/popups/Landscape';
 import Levels from 'client/components/popups/Levels';
@@ -14,12 +13,11 @@ import ErrorService from 'client/services/ErrorService';
 import LocalStorageService from 'client/services/LocalStorageService';
 import SocketService from 'client/services/SocketService';
 import SoundService from 'client/services/SoundService';
-import WinnersService from 'client/services/WinnersService ';
 import { setLang, setMusic } from 'client/state/features/AppSlice';
 import { axiosSignOut } from 'client/state/features/UserSlice';
 import store from 'client/state/store';
 import { Scene } from 'phaser';
-import { WinnersResponse } from 'common/types/types';
+import WinnerApiService from 'client/services/WinnersApiService';
 import ElementsManager from '../game-scene/components/ElementsManager';
 import AuthBtn from './components/AuthBtn';
 import AuthPopup from './components/AuthPopup';
@@ -69,7 +67,6 @@ export default class StartScene extends Scene {
   public async create(): Promise<void> {
     this.loadingOverlay = new LoadingOverlay(this);
 
-    ErrorService.setScene(this);
     const { user } = store.getState();
 
     if (user.isAuth) {
@@ -159,17 +156,17 @@ export default class StartScene extends Scene {
       }
       case SettingsPopupKeys.Winners: {
         this.loadingOverlay.show();
-        const winnersResponse: WinnersResponse | AxiosError = await WinnersService.getWinners();
-        this.loadingOverlay.hide();
-        this.handleInteractiveStartScreen.bind(this, false);
-        if ('message' in winnersResponse) {
-          const errorPopup = ErrorService.createErrorPopup();
-          if (errorPopup) {
-            errorPopup.onClosePopup = this.handleInteractiveStartScreen.bind(this, true);
-          }
-        } else {
-          this.settingsPopup = new Winners(this, winnersResponse);
+        try {
+          const response = await WinnerApiService.getWinners();
+          this.loadingOverlay.hide();
+          this.handleInteractiveStartScreen.bind(this, false);
+          this.settingsPopup = new Winners(this, response.data);
           this.settingsPopup.onClosePopup = this.handleInteractiveStartScreen.bind(this, true);
+        } catch (e: unknown) {
+          this.loadingOverlay.hide();
+          this.handleInteractiveStartScreen.bind(this, false);
+          const errorPopup = ErrorService.createErrorPopup(this);
+          errorPopup.onClosePopup = this.handleInteractiveStartScreen.bind(this, true);
         }
         break;
       }
