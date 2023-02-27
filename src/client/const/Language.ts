@@ -235,6 +235,20 @@ const LANGUAGE = {
             'Счёт ведётся до 5 очков.',
           ],
         },
+        bot: {
+          eng: [
+            'Fight the Bot!',
+            'The number of balls is unlimited.',
+            'Сan you beat the computer?',
+            'The score is kept up to 5 points.',
+          ],
+          ru: [
+            'Сразись с Ботом!',
+            'Количество мячей безгранично.',
+            'Сможешь ли ты выиграть у компьютера?',
+            'Счёт ведётся до 5 очков.',
+          ],
+        },
         online: {
           eng: [
             'Compete with an opponent.',
@@ -341,6 +355,12 @@ const LANGUAGE = {
           title: {
             eng: 'Two Players Game',
             ru: 'Игра для двоих',
+          },
+        },
+        bot: {
+          title: {
+            eng: 'Game with Bot',
+            ru: 'Игра c Ботом',
           },
         },
         online: {

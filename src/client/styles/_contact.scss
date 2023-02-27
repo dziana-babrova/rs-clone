@@ -19,11 +19,11 @@
 
   &__link {
     font-weight: 700;
-    color: $color-popup-border;
+    color: $color-link;
     @include transition(color);
 
     &:hover {
-      color: $color-popup-link-hover;
+      color: $color-link-dark;
     }
   }
 }
