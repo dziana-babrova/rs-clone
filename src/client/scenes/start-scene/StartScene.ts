@@ -21,7 +21,6 @@ import { setLang, setMusic } from 'client/state/features/AppSlice';
 import { axiosSignOut } from 'client/state/features/UserSlice';
 import store from 'client/state/store';
 import { Scene } from 'phaser';
-import { WinnersResponse } from 'common/types/types';
 import InfoPopup from 'client/components/dom-popup/InfoPopup';
 import WinnerApiService from 'client/services/WinnersApiService';
 import HotkeysService from 'client/services/HotkeysService';

@@ -1,13 +1,13 @@
 import Phaser, { Game, Types, AUTO } from 'phaser';
 import PhaserMatterCollisionPlugin from 'phaser-matter-collision-plugin';
 import gameConfig from 'client/gameConfig';
-import PreloadScene from 'client/scenes/preload-scene/PreloadScene';
-import StartScene from 'client/scenes/start-scene/StartScene';
 import GameScene from 'client/scenes/game-scene/GameScene';
 import MultiPlayerScene from 'client/scenes/multiplayer-scene/MultiPlayerScene';
 
 import './styles/_style.scss';
 import OnlineScene from 'client/scenes/online-scene/OnlineScene';
+import PreloadScene from './scenes/preload-scene/PreloadScene';
+import StartScene from './scenes/start-scene/StartScene';
 
 const pluginConfig = {
   plugin: PhaserMatterCollisionPlugin,

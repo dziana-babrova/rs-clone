@@ -327,7 +327,7 @@ const LANGUAGE = {
       type: {
         start: {
           title: {
-            eng: 'About',
+            eng: 'Аbout',
             ru: 'Об игре',
           },
         },

@@ -51,7 +51,7 @@ export default class TopPanel extends Phaser.GameObjects.Container {
   }
 
   private createLevelText(level?: number) {
-    const text = level ? `Level ${(level + 1).toString().padStart(3, '0')}` : '';
+    const text = level ? `Level ${(level + 1).toString().padStart(2, '0')}` : '';
     this.levelText = this.scene.add
       .text(this.scene.scale.width / 2, 50, text, levelText)
       .setOrigin(0.5);
@@ -139,7 +139,7 @@ export default class TopPanel extends Phaser.GameObjects.Container {
     }
   }
 
-  private openInfo(): void {
+  public openInfo(): void {
     if (!this.popup) {
       this.popup = new InfoPopup(this.scene);
       this.toggleButtonsInteractivity(false);
@@ -175,13 +175,11 @@ export default class TopPanel extends Phaser.GameObjects.Container {
 
   public handleEscInput() {
     if (this.popup) {
-      this.popup.closePopup();
+      this.popup.onClosePopup();
     } else {
       this.goTo(SceneKeys.Start);
     }
   }
-
-  public openInfo() {}
 
   public toggleMute() {
     const isMusicPlaying = store.getState().app.music;
