@@ -64,7 +64,9 @@ export default class SawGroup extends Phaser.GameObjects.Group {
   }
 
   private move(saw: Phaser.GameObjects.Sprite, index: number) {
-    const directionX = index % 2 === 0 ? 1 : -1;
+    // eslint-disable-next-line no-nested-ternary
+    const directionX = this.directionX === 0 ? 0 : index % 2 === 0 ? 1 : -1;
+    console.log(directionX);
     const tween = this.scene.tweens.add({
       targets: saw,
       x: { from: saw.x, to: saw.x + (directionX * this.distance) },

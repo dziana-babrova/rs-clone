@@ -70,14 +70,19 @@ export default class GameScene extends Phaser.Scene {
   }
 
   private async initEvents(): Promise<void> {
-    this.events.on(EventNames.Win, this.elementsManager.ball.deactivate, this.elementsManager.ball);
-    this.events.on(EventNames.Win, () => {
+    this.events.once(
+      EventNames.Win,
+      this.elementsManager.ball.deactivate,
+      this.elementsManager.ball,
+    );
+    this.events.once(EventNames.Win, () => {
+      console.log('log');
       const fireworks = new Fireworks();
       fireworks.create(this, this.elementsManager.cup.x, this.elementsManager.cup.y);
     });
-    this.events.on(EventNames.Win, this.updateMaps.bind(this));
-    this.events.on(EventNames.Win, this.displayWinPopup.bind(this));
-    this.events.on(EventNames.GameOver, this.handleGameOver.bind(this));
+    this.events.once(EventNames.Win, this.updateMaps.bind(this));
+    this.events.once(EventNames.Win, this.displayWinPopup.bind(this));
+    this.events.once(EventNames.GameOver, this.handleGameOver.bind(this));
   }
 
   private initHotkeys() {
@@ -94,13 +99,12 @@ export default class GameScene extends Phaser.Scene {
   private async updateMaps(): Promise<void> {
     const { maps } = store.getState().app;
     const index = maps.findIndex((map) => map.id === this.level);
-    if (index !== -1 && maps[index].stars < this.data.values.stars) {
+    if (index !== -1 && maps[index].stars <= this.data.values.stars) {
       const newMaps = MapService.updateMapsObject(maps, index, this.data.values.stars);
       if (store.getState().user.isAuth) {
         await store.dispatch(axiosUpdateMaps(newMaps));
-      } else {
-        store.dispatch(setMaps(newMaps));
       }
+      store.dispatch(setMaps(newMaps));
       LocalStorageService.setItem<Maps>(LocalStorageKeys.maps, newMaps);
     }
   }
@@ -142,6 +146,7 @@ export default class GameScene extends Phaser.Scene {
   }
 
   private handleGameOver(): void {
+    if (this.data.values.isGameOver) return;
     this.data.values.isGameOver = true;
     this.cameras.main.shake(1000, 0.015);
     SoundService.playSound(this, SoundsKeys.GameOver);
@@ -166,12 +171,11 @@ export default class GameScene extends Phaser.Scene {
   public goToScene(key: string, nextLevel?: boolean): void {
     this.cameras.main.fadeOut();
     this.data.values.stars = 0;
-    this.data.values.isGameOver = false;
     this.time.addEvent({
       delay: 2000,
       callback: () => {
-        this.scene.stop();
         this.elementsManager.destroyElements();
+        this.scene.stop();
         this.removeListeners();
         this.scene.start(key, { level: (this.level += Number(nextLevel)) });
       },
