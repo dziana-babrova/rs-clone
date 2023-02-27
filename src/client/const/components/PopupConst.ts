@@ -6,6 +6,11 @@ const POPUP = {
       width: 1200,
       height: 400,
       shift: -40,
+      perPage: 30,
+      arrowSize: 50,
+      arrowGap: 20,
+      bottomPadding: 20,
+      xCorrection: 13,
     },
 
     winners: {

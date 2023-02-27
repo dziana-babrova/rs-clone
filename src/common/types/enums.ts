@@ -57,6 +57,7 @@ export enum TextureKeys {
   Star = 'star',
   Buttons = 'buttons',
   TopPanel = 'top-panel',
+  Pagination = 'pagination-arrow',
 }
 
 export enum Colors {
