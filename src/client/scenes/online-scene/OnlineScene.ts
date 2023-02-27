@@ -43,7 +43,6 @@ export default class OnlineScene extends Phaser.Scene {
     this.socketService.switchTarget(this.elementsManager.switchTarget, this.elementsManager);
     this.socketService.addPlayer(this.elementsManager.updatePlayers, this.elementsManager);
     this.socketService.deletePlayer(this.elementsManager.deletePlayer, this.elementsManager);
-    this.socketService.createBalls(this.elementsManager.setStartBalls, this.elementsManager);
     this.socketService.updateBalls(this.elementsManager.updateBalls, this.elementsManager);
     this.socketService.statusChange(this.elementsManager.updateStatus, this.elementsManager);
     this.socketService.clearField(this.elementsManager.clearField, this.elementsManager);
@@ -57,7 +56,7 @@ export default class OnlineScene extends Phaser.Scene {
   private initHotkeys() {
     HotkeysService.initHotkeysEvents(this);
     this.events.on(HotkeysEvents.Info, this.panel.openInfo.bind(this.panel));
-    this.events.on(HotkeysEvents.Back, this.panel.closePopup.bind(this.panel));
+    this.events.on(HotkeysEvents.Back, this.panel.handleEscInput.bind(this.panel));
     this.events.on(HotkeysEvents.Sounds, this.panel.toggleSound.bind(this.panel));
     this.events.on(HotkeysEvents.Music, this.panel.toggleMusic.bind(this.panel));
     this.events.on(HotkeysEvents.Mute, this.panel.toggleMute.bind(this.panel));

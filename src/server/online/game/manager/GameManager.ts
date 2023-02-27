@@ -93,8 +93,8 @@ export default class GameManager {
     this.player2ball = new BallServer(this.scene, secondPlayerPosition, 2, this.ballId++);
     this.initCollisions(this.player1ball);
     this.initCollisions(this.player2ball);
+    this.balls = [];
     this.balls.push(this.player1ball, this.player2ball);
-    this.socketService.emitCreateBall(this.serializeBalls());
     this.player1IsActive = true;
     this.player2IsActive = true;
     this.sendPlayersStatus();
@@ -140,11 +140,6 @@ export default class GameManager {
     this.cup = null;
     cup?.destroy();
     this.socketService.emitClearField();
-  }
-
-  serializeBalls() {
-    const textBalls = this.balls.map((el) => `${el.id}%${el.player}%${el.x}%${el.y}`);
-    return textBalls.join('#');
   }
 
   getBallsChanges() {
@@ -196,7 +191,7 @@ export default class GameManager {
 
   destroyBall(ball: BallServer) {
     const candidate = this.balls.find((el) => el.id === ball.id);
-    this.balls = this.balls.filter((el) => el !== candidate);
+    this.balls = this.balls.filter((el) => el.id !== ball.id);
     candidate?.destroy();
   }
 
