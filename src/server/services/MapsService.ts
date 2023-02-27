@@ -14,7 +14,9 @@ class MapsService {
   async updateMaps(userId: Schema.Types.ObjectId, maps: MapDescription[]) {
     const dbMaps = await Maps.findOne({ user: userId });
     if (dbMaps) {
+      const stars = maps.reduce((acc, el) => acc + el.stars, 0);
       dbMaps.maps = maps;
+      dbMaps.stars = stars;
       await dbMaps.save();
       return;
     }

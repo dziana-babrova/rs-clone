@@ -1,3 +1,5 @@
+![Server stack](https://github.com/dziana-babrova/rs-clone/raw/develop/src/server/logo.png)
+
 # Just golf clone server
 
  API for 'Mini Golf' game ('RS Clone' task)
