@@ -8,9 +8,9 @@ import {
 } from 'common/types/enums';
 import ElementsFactory from 'client/utils/ElementGenerator';
 import { START_SCENE } from 'client/const/scenes/StartSceneConst';
-import DOMPopup from './DOMPopup';
+import DOMFormPopup from 'client/components/dom-popup/DOMFormPopup';
 
-export default class AuthPopup extends DOMPopup {
+export default class AuthPopup extends DOMFormPopup {
   usernameLabel!: HTMLLabelElement;
 
   btnSubmit!: HTMLButtonElement;
@@ -27,7 +27,9 @@ export default class AuthPopup extends DOMPopup {
 
   constructor(scene: Phaser.Scene) {
     super(scene, PopupType.Auth);
-    this.onSubmitPopup = this.onSubmitForm.bind(this);
+    this.renderPopup();
+    this.show();
+    this.onClickPopup = this.onSubmitForm.bind(this);
   }
 
   public renderPopup(): void {
@@ -43,13 +45,13 @@ export default class AuthPopup extends DOMPopup {
       return inputElem;
     });
 
-    this.btnSubmit = ElementsFactory.createButton(
+    this.btnSubmit = ElementsFactory.createButtonElement(
       'btn btn__submit popup__submit',
       LANGUAGE.popup.auth[this.formType].submitBtn[store.getState().app.lang as Language],
     );
     this.btnSubmit.type = 'submit';
 
-    this.btnClose = ElementsFactory.createButton(
+    this.btnClose = ElementsFactory.createButtonElement(
       'btn popup__close',
       '',
     );
@@ -62,7 +64,7 @@ export default class AuthPopup extends DOMPopup {
       LANGUAGE.popup.auth[this.formType].message[store.getState().app.lang as Language],
     );
 
-    this.btnChangeForm = ElementsFactory.createButton(
+    this.btnChangeForm = ElementsFactory.createButtonElement(
       'btn popup__change',
       LANGUAGE.popup
         .auth[this.formType === FormType.SignIn ? FormType.SignUp : FormType.SignUp]
@@ -79,8 +81,6 @@ export default class AuthPopup extends DOMPopup {
     this.usernameLabel.style.display = 'none';
 
     this.node.append(popup);
-
-    this.show();
   }
 
   private onSubmitForm(target: HTMLElement): void {

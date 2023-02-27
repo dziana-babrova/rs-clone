@@ -4,10 +4,10 @@ import Background from 'client/components/background/Background';
 import { Socket } from 'socket.io-client';
 import { DefaultEventsMap } from 'socket.io/dist/typed-events';
 import SocketService from 'client/services/SocketService';
-import OnlineManager from 'client/managers/OnlineManager';
 import HotkeysService from 'client/services/HotkeysService';
 import { HotkeysEvents } from 'common/types/events';
 import TopPanel from 'client/components/top-panel/TopPanel';
+import OnlineManager from 'client/managers/OnlineManager';
 
 export default class OnlineScene extends Phaser.Scene {
   elementsManager!: OnlineManager;

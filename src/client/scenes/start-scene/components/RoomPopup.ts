@@ -1,3 +1,4 @@
+import DOMFormPopup from 'client/components/dom-popup/DOMFormPopup';
 import LANGUAGE from 'client/const/Language';
 import { START_SCENE } from 'client/const/scenes/StartSceneConst';
 import SocketService from 'client/services/SocketService';
@@ -5,9 +6,8 @@ import store from 'client/state/store';
 import ElementsFactory from 'client/utils/ElementGenerator';
 import { PopupType, RoomFormInputsKeys, RoomPopupFormBtns } from 'common/types/enums';
 import { FormInputsKeys } from 'common/types/types';
-import DOMPopup from './DOMPopup';
 
-export default class RoomPopup extends DOMPopup {
+export default class RoomPopup extends DOMFormPopup {
   form!: HTMLFormElement;
 
   roomLabel!: HTMLLabelElement;
@@ -27,7 +27,8 @@ export default class RoomPopup extends DOMPopup {
   constructor(scene: Phaser.Scene, socketService: SocketService) {
     super(scene, PopupType.Room);
     this.renderPopup();
-    this.onSubmitPopup = this.onSubmitForm.bind(this);
+    this.show();
+    this.onClickPopup = this.onSubmitForm.bind(this);
     this.socketService = socketService;
     this.socketService.roomError(this.showRoomErrors, this);
   }
@@ -40,18 +41,18 @@ export default class RoomPopup extends DOMPopup {
 
     const inputElems = START_SCENE.formInputs.room.map((item) => this.createInputElem(item));
 
-    this.btnCreateRoom = ElementsFactory.createButton(
+    this.btnCreateRoom = ElementsFactory.createButtonElement(
       'btn popup__submit btn__create',
       LANGUAGE.popup.room.createRoom[store.getState().app.lang],
     );
     this.btnCreateRoom.type = 'submit';
 
-    this.btnGetInRoom = ElementsFactory.createButton(
+    this.btnGetInRoom = ElementsFactory.createButtonElement(
       'btn popup__submit btn__getin',
       LANGUAGE.popup.room.getInRoom[store.getState().app.lang],
     );
 
-    this.btnRandomRoom = ElementsFactory.createButton(
+    this.btnRandomRoom = ElementsFactory.createButtonElement(
       'btn popup__submit popup__submit_random btn__random',
       LANGUAGE.popup.room.randomRoom[store.getState().app.lang],
     );

@@ -12,17 +12,18 @@ import { setMusic, setSound } from 'client/state/features/AppSlice';
 import { SwitchLevel } from 'common/types/types';
 import { EventNames } from 'common/types/events';
 import Levels from '../popups/Levels';
+import InfoPopup from '../dom-popup/InfoPopup';
 
 export default class TopPanel extends Phaser.GameObjects.Container {
   levelText!: Phaser.GameObjects.Text;
 
-  popup: null | undefined | Levels;
+  popup: null | undefined | Levels | InfoPopup;
 
   leftButtons: { [key: string]: Phaser.GameObjects.Image };
 
   rightButtons: { [key: string]: Phaser.GameObjects.Image };
 
-  sceneKey: string;
+  sceneKey: SceneKeys;
 
   goTo: SwitchLevel;
 
@@ -30,7 +31,7 @@ export default class TopPanel extends Phaser.GameObjects.Container {
 
   constructor(
     scene: Scene,
-    sceneKey: string,
+    sceneKey: SceneKeys,
     hasRestart: boolean,
     hasLevels: boolean,
     goTo: SwitchLevel,
@@ -50,7 +51,7 @@ export default class TopPanel extends Phaser.GameObjects.Container {
   }
 
   private createLevelText(level?: number) {
-    const text = level ? `Level ${(level + 1).toString().padStart(3, '0')}` : '';
+    const text = level ? `Level ${(level + 1).toString().padStart(2, '0')}` : '';
     this.levelText = this.scene.add
       .text(this.scene.scale.width / 2, 50, text, levelText)
       .setOrigin(0.5);
@@ -109,6 +110,7 @@ export default class TopPanel extends Phaser.GameObjects.Container {
       goTo.bind(this.scene, this.sceneKey, false),
     );
     this.leftButtons[TopPanelFrames.Levels].on('pointerup', this.openLevels.bind(this));
+    this.leftButtons[TopPanelFrames.Info].on('pointerup', this.openInfo.bind(this));
   }
 
   public toggleMusic(): void {
@@ -134,6 +136,14 @@ export default class TopPanel extends Phaser.GameObjects.Container {
       this.toggleButtonsInteractivity(false);
       this.popup.onClosePopup = this.toggleButtonsInteractivity.bind(this, true);
       this.popup.startLevel = this.startLevel.bind(this);
+    }
+  }
+
+  public openInfo(): void {
+    if (!this.popup) {
+      this.popup = new InfoPopup(this.scene);
+      this.toggleButtonsInteractivity(false);
+      this.popup.onClosePopup = this.toggleButtonsInteractivity.bind(this, true);
     }
   }
 
@@ -165,13 +175,11 @@ export default class TopPanel extends Phaser.GameObjects.Container {
 
   public handleEscInput() {
     if (this.popup) {
-      this.popup.closePopup();
+      this.popup.onClosePopup();
     } else {
       this.goTo(SceneKeys.Start);
     }
   }
-
-  public openInfo() {}
 
   public toggleMute() {
     const isMusicPlaying = store.getState().app.music;

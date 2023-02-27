@@ -84,8 +84,8 @@ const LANGUAGE = {
           ru: 'Введите название комнаты',
         },
         hint: {
-          eng: 'Length must be at least 6 characters',
-          ru: 'Длина должна быть не менее 6 символов',
+          eng: 'Length must be at least 3 characters',
+          ru: 'Длина должна быть не менее 3 символов',
         },
       },
     },
@@ -132,8 +132,8 @@ const LANGUAGE = {
           ru: 'Длина имени должна быть не менее 3 символов',
         },
         room: {
-          eng: 'Name length must be at least 6 characters',
-          ru: 'Длина названия должна быть не менее 6 символов',
+          eng: 'Name length must be at least 3 characters',
+          ru: 'Длина названия должна быть не менее 3 символов',
         },
       },
       notFoundError: {
@@ -181,6 +181,174 @@ const LANGUAGE = {
       emptyError: {
         eng: 'The list of winners is empty.\nSign In and start playing the game.',
         ru: 'Список победителей пуст.\nЗарегистрируйтесь и начните играть в игру.',
+      },
+    },
+    info: {
+      about: {
+        start: {
+          eng: [
+            'Play golf alone, with a friend, online or challenge the Bot.',
+            `In the game for one, try to complete all the levels.
+            Sign in to be included in the winners table.
+            Collect stars. Beware of saws.`,
+            `To play together, use one laptop or create a room to play online.
+            Send the name of the room to a friend.
+            Enter a random room to play with a random opponent.
+            Or play with a bot.`,
+            'Have fun!',
+          ],
+          ru: [
+            'Играй в гольф один, с другом, онлайн или сразись с Ботом.',
+            `В игре для одного попробуй пройти все уровни.
+            Войди для того, чтобы попасть в таблицу победителей.
+            Собирай звёзды. Остерегайся пил.`,
+            `Для игры вдвоём используйте один ноутбук или создавай комнату для игры онлайн.
+            Отправь название комнаты другу.
+            Войди в случайную комнату для игры со случайным соперником.
+            Или сыграй с ботом.`,
+            'Удачи!',
+          ],
+        },
+        game: {
+          eng: [
+            'Try to complete all the levels.',
+            'Collect stars. Beware of saws.',
+            'Use mouse or keyboard.',
+          ],
+          ru: [
+            'Попробуй пройти все уровни.',
+            'Собирай звёзды. Остерегайся пил.',
+            'Используйте мышь или клавиатуру.',
+          ],
+        },
+        multiplayer: {
+          eng: [
+            'Compete with an opponent.',
+            'The number of balls is unlimited.',
+            'But one of you will hit the hole first!',
+            'The score is kept up to 5 points.',
+          ],
+          ru: [
+            'Соревнуйся с соперником.',
+            'Количество мячей безгранично.',
+            'Но кто-то из вас попадёт в лунку первым!',
+            'Счёт ведётся до 5 очков.',
+          ],
+        },
+        online: {
+          eng: [
+            'Compete with an opponent.',
+            'The number of balls is unlimited.',
+            'But one of you will hit the hole first!',
+            'The score is kept up to 5 points.',
+          ],
+          ru: [
+            'Соревнуйся с соперником.',
+            'Количество мячей безгранично.',
+            'Но кто-то из вас попадёт в лунку первым!',
+            'Счёт ведётся до 5 очков.',
+          ],
+        },
+      },
+      hotkeys: {
+        title: {
+          eng: 'Hotkeys',
+          ru: 'Горячие клавиши',
+        },
+        mute: {
+          eng: 'mute/unmute',
+          ru: 'отключить/включить звук',
+        },
+        sounds: {
+          eng: 'turn on/off game sounds',
+          ru: 'включить/выключить звуки игры',
+        },
+        music: {
+          eng: 'turn on/off music',
+          ru: 'включить/выключить музыку',
+        },
+        levels: {
+          eng: 'show levels popup',
+          ru: 'показать таблицу уровней',
+        },
+        info: {
+          eng: 'show info popup',
+          ru: 'показать информацию',
+        },
+        restart: {
+          eng: 'restart level',
+          ru: 'перезапуск уровня',
+        },
+        back: {
+          eng: 'go to start screen',
+          ru: 'перейти на стартовый экран',
+        },
+        winners: {
+          eng: 'show winners popup',
+          ru: 'показать таблицу победителей',
+        },
+      },
+      controlKeys: {
+        title: {
+          eng: 'Control keys',
+          ru: 'Клавиши управления',
+        },
+        space: {
+          eng: 'kick the ball',
+          ru: 'ударить по мячу',
+        },
+        leftRight: {
+          eng: 'change the force of impact',
+          ru: 'изменить силу удара',
+        },
+        upDown: {
+          eng: 'change the angle of impact',
+          ru: 'изменить угол удара',
+        },
+        multiUpLocal: {
+          eng: 'right player kick control',
+          ru: 'управление ударом правого игрока',
+        },
+        multiSpaceLocal: {
+          eng: 'left player kick control',
+          ru: 'управление ударом левого игрока',
+        },
+        multiSpaceOnline: {
+          eng: 'stick stroke control',
+          ru: 'управление ударом клюшкой',
+        },
+      },
+      contacts: {
+        title: {
+          eng: 'Developers',
+          ru: 'Разработчики',
+        },
+      },
+      type: {
+        start: {
+          title: {
+            eng: 'Аbout',
+            ru: 'Об игре',
+          },
+        },
+        game: {
+          title: {
+            eng: 'Single Player Game',
+            ru: 'Одиночная Игра',
+          },
+        },
+        multiplayer: {
+          title: {
+            eng: 'Two Players Game',
+            ru: 'Игра для двоих',
+          },
+        },
+        online: {
+          title: {
+            eng: 'Online Game',
+            ru: 'Онлайн игра',
+          },
+        },
       },
     },
     socketErrors: {

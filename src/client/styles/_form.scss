@@ -1,11 +1,12 @@
 .form {
+  margin-top: 15px;
   margin-bottom: 15px;
   
   &__label {
     display: flex;
     flex-direction: column;
     gap: 5px;
-    margin-bottom: 10px;
+    margin-bottom: 25px;
   }
 
   &__input {
@@ -13,10 +14,14 @@
     font-weight: 400;
     padding: 0 10px;
     border: 1px solid $color-secondary;
-    border-radius: 0;
+    border-radius: 5px;
     font-size: 1.8rem;
     height: 50px;
-    color: $color-grey;
+    color: $color-secondary;
+
+    &::placeholder {
+      color: $color-grey;
+    }
 
   @include mobile {
     font-size: 1.4rem;
