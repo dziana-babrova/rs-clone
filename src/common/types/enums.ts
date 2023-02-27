@@ -54,6 +54,7 @@ export enum TextureKeys {
   Select = 'select',
   Buttons = 'buttons',
   TopPanel = 'top-panel',
+  Pagination = 'pagination-arrow',
 }
 
 export enum Colors {

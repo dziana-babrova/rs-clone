@@ -26,6 +26,8 @@ export default class TopPanel extends Phaser.GameObjects.Container {
 
   goTo: SwitchLevel;
 
+  level: number;
+
   constructor(
     scene: Scene,
     sceneKey: string,
@@ -38,6 +40,7 @@ export default class TopPanel extends Phaser.GameObjects.Container {
     this.leftButtons = {};
     this.rightButtons = {};
     this.sceneKey = sceneKey;
+    this.level = level || 1;
     this.createLevelText(level);
     this.createButtons(hasRestart, hasLevels);
     this.goTo = goTo.bind(scene);
@@ -127,8 +130,7 @@ export default class TopPanel extends Phaser.GameObjects.Container {
 
   public openLevels(): void {
     if (!this.popup) {
-      console.log(this);
-      this.popup = new Levels(this.scene);
+      this.popup = new Levels(this.scene, this.level);
       this.toggleButtonsInteractivity(false);
       this.popup.onClosePopup = this.toggleButtonsInteractivity.bind(this, true);
       this.popup.startLevel = this.startLevel.bind(this);
