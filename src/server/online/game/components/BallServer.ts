@@ -1,4 +1,3 @@
-import { TextureKeys } from 'common/types/enums';
 import { Scene } from 'phaser';
 import { ServerSideEvents } from '../../../../common/types/events';
 import { Position } from '../../../../common/types/types';
@@ -18,7 +17,7 @@ export default class BallServer extends Phaser.Physics.Matter.Sprite {
   isNew = true;
 
   constructor(scene: Scene, position: Position, player: 1 | 2, id: number) {
-    super(scene.matter.world, position.x, position.y, TextureKeys.Ball);
+    super(scene.matter.world, position.x, position.y, 'ball');
     this.scene = scene;
     this.player = player;
     this.prevX = position.x;
