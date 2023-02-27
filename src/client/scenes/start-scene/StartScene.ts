@@ -169,8 +169,8 @@ export default class StartScene extends Scene {
       this.createSettingsPopup(key);
       return;
     }
-    if (this.settingsPopup) this.settingsPopup.closePopup();
-    if (this.popup instanceof InfoPopup) this.popup.closePopup();
+    if (this.settingsPopup) await this.settingsPopup.closePopup();
+    if (this.popup instanceof InfoPopup) await this.popup.closePopup();
     this.createSettingsPopup(key);
   }
 
