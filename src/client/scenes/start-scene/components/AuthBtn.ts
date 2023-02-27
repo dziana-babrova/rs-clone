@@ -12,16 +12,14 @@ export default class AuthBtn extends TextButton {
     super(
       scene,
       {
-        x: scene.cameras.main.width
-          - START_SCENE.btnAuth.width / 2
-          - START_SCENE.btnAuth.y,
+        x: scene.cameras.main.width - START_SCENE.btnAuth.y,
         y: START_SCENE.btnAuth.y,
       },
       text,
       START_SCENE.btnAuth,
     );
 
-    this.setScale(0);
+    this.setOrigin(1, 0).setScale(0);
 
     this.on('pointerover', this.showExit.bind(this));
     this.on('pointerout', this.hideExit.bind(this));
