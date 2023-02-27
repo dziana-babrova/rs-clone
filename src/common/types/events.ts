@@ -53,3 +53,14 @@ export enum ServerSideEvents {
   HitBall = 'ball-kick',
   DestroyBall = 'ball-destroy',
 }
+
+export enum HotkeysEvents {
+  Mute = 'hotkey-mute',
+  Sounds = 'hotkey-sounds',
+  Music = 'hotkey-music',
+  Levels = 'hotkey-levels',
+  Info = 'hotkey-info',
+  Restart = 'hotkey-restart',
+  Back = 'hotkey-esc',
+  Winners = 'hotkey-winners',
+}
