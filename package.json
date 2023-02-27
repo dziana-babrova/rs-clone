@@ -1,7 +1,7 @@
 {
-    "name": "async-race",
+    "name": "mini-golf",
     "version": "1.0.0",
-    "description": "async race",
+    "description": "mini-golf",
     "main": "index.js",
     "scripts": {
         "start": "webpack serve --open --config ./webpack.config.js --env mode=dev",
@@ -15,12 +15,18 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/rolling-scopes-school/dziana-babrova-JSFE2022Q3"
+        "url": "https://github.com/dziana-babrova/rs-clone"
     },
     "keywords": [
-        "rsschool"
+        "rsschool",
+        "rs-clone",
+        "mini-golf"
     ],
-    "author": "Dziana Babrova <dzianababrova@gmail.com>",
+    "contributors": [
+        "Diana Bobrova <dzianababrova@gmail.com>",
+        "Alexandr Chebatul <a.chebatul@gmail.com>",
+        "Irina Nazarova <irina-ns@yandex.ru>"
+    ],
     "license": "ISC",
     "devDependencies": {
         "@babel/preset-env": "^7.20.2",
