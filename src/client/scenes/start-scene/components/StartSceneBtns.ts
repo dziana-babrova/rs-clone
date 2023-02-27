@@ -44,7 +44,7 @@ export default class StartSceneBtns extends Phaser.GameObjects.Container {
       this.scene,
       {
         x: centerX,
-        y: START_SCENE.btnStartOnlineGame.y,
+        y: START_SCENE.btnStartTwoPlayersGame.y,
       },
       LANGUAGE.startScene.twoPlayersGame[store.getState().app.lang as Language],
       START_SCENE.btnBase,

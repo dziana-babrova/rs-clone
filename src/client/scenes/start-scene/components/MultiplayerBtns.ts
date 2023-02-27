@@ -14,6 +14,8 @@ export default class MultiplayerBtns extends GameObjects.Container {
 
   btnStartOnlineGame!: TextButton;
 
+  btnStartWithBotGame!: TextButton;
+
   btnBack!: IconButton;
 
   point: number;
@@ -45,12 +47,22 @@ export default class MultiplayerBtns extends GameObjects.Container {
       START_SCENE.btnBase,
     );
 
+    this.btnStartWithBotGame = new TextButton(
+      this.scene,
+      {
+        x: centerX,
+        y: START_SCENE.btnStartWithBotGame.y,
+      },
+      LANGUAGE.startScene.botGame[store.getState().app.lang],
+      START_SCENE.btnBase,
+    );
+
     this.btnBack = new IconButton(
       this.scene,
       START_SCENE.btnSettings.type.back,
       {
         x: centerX,
-        y: START_SCENE.btnSettings.y,
+        y: START_SCENE.btnSettings.y + START_SCENE.btnSettings.shift,
       },
       START_SCENE.btnSettings.btnSettingsParams,
     );
@@ -58,6 +70,7 @@ export default class MultiplayerBtns extends GameObjects.Container {
     [
       this.btnStartLocalGame,
       this.btnStartOnlineGame,
+      this.btnStartWithBotGame,
       ...this.btnBack.getChildren(),
     ].forEach((obj) => {
       this.add(obj);
@@ -88,5 +101,6 @@ export default class MultiplayerBtns extends GameObjects.Container {
   public updateText(lang: Language): void {
     this.btnStartLocalGame.setText(LANGUAGE.startScene.localGame[lang]);
     this.btnStartOnlineGame.setText(LANGUAGE.startScene.onlineGame[lang]);
+    this.btnStartWithBotGame.setText(LANGUAGE.startScene.botGame[lang]);
   }
 }

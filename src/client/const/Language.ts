@@ -233,6 +233,10 @@ const LANGUAGE = {
       eng: 'Local Game',
       ru: 'Играть локально',
     },
+    botGame: {
+      eng: 'Game with Bot',
+      ru: 'Игра c Ботом',
+    },
     signIn: {
       eng: 'Sign In',
       ru: 'Войти',
