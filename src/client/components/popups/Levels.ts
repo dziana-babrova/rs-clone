@@ -24,7 +24,7 @@ export default class Levels extends SettingsPopup {
 
   constructor(scene: Scene, level: number) {
     super(scene, LANGUAGE.popup.levels.title[store.getState().app.lang], POPUP.canvas.levels);
-    this.level = level + 1;
+    this.level = level === -1 ? 1 : level + 1;
     const {
       width, height, arrowSize, arrowGap, bottomPadding, shift, xCorrection,
     } = POPUP.canvas.levels;
