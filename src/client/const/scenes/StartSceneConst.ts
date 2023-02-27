@@ -53,7 +53,7 @@ export const START_SCENE = {
     textColor: Colors.Text,
     bgColor: Colors.Pink,
     hoverBgColor: Colors.PinkDark,
-    y: 370,
+    y: 340,
   },
   btnStartLocalGame: {
     width: 400,
@@ -61,9 +61,16 @@ export const START_SCENE = {
     textColor: Colors.Text,
     bgColor: Colors.Pink,
     hoverBgColor: Colors.PinkDark,
-    y: 275,
+    y: 260,
   },
-
+  btnStartWithBotGame: {
+    width: 400,
+    textSize: 40,
+    textColor: Colors.Text,
+    bgColor: Colors.Pink,
+    hoverBgColor: Colors.PinkDark,
+    y: 420,
+  },
   btnAuth: {
     width: 200,
     textSize: 32,
@@ -84,6 +91,7 @@ export const START_SCENE = {
       back: 'back',
     },
     y: 520,
+    shift: 20,
     halfGap: 15,
     btnSettingsParams: {
       width: 75,
@@ -104,9 +112,6 @@ export const START_SCENE = {
       marginTop: 40,
     },
     moveX: 1000,
-  },
-  winners: {
-
   },
   landscape: {
     backround: [

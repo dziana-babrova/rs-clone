@@ -163,7 +163,7 @@ export default class TopPanel extends Phaser.GameObjects.Container {
     });
   }
 
-  public closePopup() {
+  public handleEscInput() {
     if (this.popup) {
       this.popup.closePopup();
     } else {

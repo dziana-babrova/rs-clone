@@ -38,7 +38,7 @@ export default class LevelBtn extends GameObjects.Container {
         .text(
           imagePositions[index].x + 45,
           imagePositions[index].y + 8,
-          (level.id + 1).toString().padStart(3, '0'),
+          (level.id + 1).toString().padStart(2, '0'),
           POPUP.levels.labelText,
         )
         .setOrigin(0.5, 0);

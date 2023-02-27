@@ -12,6 +12,11 @@ export default class SettingsPopup extends PopupCanvasGroup {
     this.btnClose.on('pointerup', this.closePopup.bind(this));
   }
 
+  public async removePopup(): Promise<void> {
+    this.onClosePopup();
+    this.destroy();
+  }
+
   public async closePopup(): Promise<void> {
     await this.hide();
     this.onClosePopup();

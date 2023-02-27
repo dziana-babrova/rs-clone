@@ -14,7 +14,7 @@ export default class DestroyedBall {
       },
     };
 
-    const particles = scene.add.particles(TextureKeys.MiniBall);
+    const particles = scene.add.particles(TextureKeys.BallMini);
 
     const emitter1 = particles.createEmitter(emitterConfig).setFrequency(3000);
 

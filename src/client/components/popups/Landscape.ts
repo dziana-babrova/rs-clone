@@ -20,7 +20,7 @@ export default class Landscape extends SettingsPopup {
   constructor(scene: Scene) {
     super(
       scene,
-      LANGUAGE.startScene.landscape[store.getState().app.lang],
+      LANGUAGE.popup.landscape.title[store.getState().app.lang],
       POPUP.canvas.landscape,
     );
     this.create();

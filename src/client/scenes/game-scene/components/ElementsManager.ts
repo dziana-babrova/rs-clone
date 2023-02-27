@@ -163,4 +163,11 @@ export default class ElementsManager
       },
     });
   }
+
+  public destroyElements(): void {
+    this.stars.clear();
+    this.map.destroy();
+    this.cup.destroy();
+    this.ball.destroy();
+  }
 }

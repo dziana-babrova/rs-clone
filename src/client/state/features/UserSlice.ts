@@ -100,6 +100,7 @@ const userSlice = createSlice({
       .addCase(axiosSignIn.rejected, (state, action) => {
         // There we will call the method that will show errors on forms.
         console.log('rejected', action.error);
+        console.log('action: ', action);
         state.isLoading = false;
       })
       .addCase(axiosSignIn.fulfilled, (state, action) => {

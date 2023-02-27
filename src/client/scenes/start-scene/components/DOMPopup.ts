@@ -32,7 +32,7 @@ export default class DOMPopup extends GameObjects.DOMElement {
       -scene.cameras.main.height,
       'div',
     );
-    this.setOrigin(0.5, 0.5);
+    // this.setOrigin(0.5, 0.5);
     this.node.className = 'overlay';
     this.tweenAnimationBuilder = new TweenAnimationBuilder();
 
@@ -91,7 +91,7 @@ export default class DOMPopup extends GameObjects.DOMElement {
     e.preventDefault();
     const target = e.target as HTMLElement;
 
-    if (target === this.node || target.closest('.popup__close')) {
+    if (target.closest('.popup__close')) {
       await this.hide();
       this.setY(-this.scene.cameras.main.height);
       this.onClosePopup();
@@ -195,20 +195,21 @@ export default class DOMPopup extends GameObjects.DOMElement {
 
   private showNotFoundError(): void {
     this.updateHints();
-    this.form[`${RoomFormInputsKeys.Room}Hint`].value = LANGUAGE.popup.errors.notFoundError[store.getState().app.lang];
-    this.addErrorClass(RoomFormInputsKeys.Room);
+    console.log('notfoundHandler');
+    this.form[`${AuthFormInputsKeys.Email}Hint`].value = LANGUAGE.popup.errors.notFoundError[store.getState().app.lang];
+    this.addErrorClass(AuthFormInputsKeys.Email);
   }
 
   private showExistError(): void {
     this.updateHints();
-    this.form[`${RoomFormInputsKeys.Room}Hint`].value = LANGUAGE.popup.errors.existError[store.getState().app.lang];
-    this.addErrorClass(RoomFormInputsKeys.Room);
+    this.form[`${AuthFormInputsKeys.Email}Hint`].value = LANGUAGE.popup.errors.existError[store.getState().app.lang];
+    this.addErrorClass(AuthFormInputsKeys.Email);
   }
 
   private showPasswordError(): void {
     this.updateHints();
-    this.form[`${RoomFormInputsKeys.Room}Hint`].value = LANGUAGE.popup.errors.passwordError[store.getState().app.lang];
-    this.addErrorClass(RoomFormInputsKeys.Room);
+    this.form[`${AuthFormInputsKeys.Password}Hint`].value = LANGUAGE.popup.errors.passwordError[store.getState().app.lang];
+    this.addErrorClass(AuthFormInputsKeys.Password);
   }
 
   private showErrors<T extends ValidationErrorType>(errors: T[]): void {

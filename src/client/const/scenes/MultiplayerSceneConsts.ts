@@ -1,3 +1,6 @@
+import { ColorsNumber } from 'common/types/enums';
+import { STYLE } from '../AppConstants';
+
 export const firstPlayerPosition = { x: 70, y: 550 };
 
 export const secondPlayerPosition = { x: 1290, y: 550 };
@@ -25,7 +28,7 @@ export const playerProps = {
 
 export const trajectoryProps = {
   radius: 5,
-  color: 0xffffff,
+  color: ColorsNumber.Primary,
   padding: 20,
   distance: 15,
   alpha: 0.8,
@@ -52,11 +55,13 @@ export const botAngle = { start: 30, end: 80 };
 export const botPower = { start: 50, end: powerIndicatorProps.width };
 
 export const countStyle = {
-  font: '140px monospace',
+  fontFamily: STYLE.font,
+  fontSize: '140px',
 };
 
 export const waitMessageStyle = {
-  font: '30px monospace',
+  fontFamily: STYLE.font,
+  fontSize: '30px',
 };
 
 export const countStrings = ['3', '2', '1', 'GO!'];

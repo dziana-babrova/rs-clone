@@ -84,7 +84,7 @@ export default class GameScene extends Phaser.Scene {
     HotkeysService.initHotkeysEvents(this);
     this.events.on(HotkeysEvents.Levels, this.panel.openLevels.bind(this.panel));
     this.events.on(HotkeysEvents.Info, this.panel.openInfo.bind(this.panel));
-    this.events.on(HotkeysEvents.Back, this.panel.closePopup.bind(this.panel));
+    this.events.on(HotkeysEvents.Back, this.panel.handleEscInput.bind(this.panel));
     this.events.on(HotkeysEvents.Sounds, this.panel.toggleSound.bind(this.panel));
     this.events.on(HotkeysEvents.Music, this.panel.toggleMusic.bind(this.panel));
     this.events.on(HotkeysEvents.Mute, this.panel.toggleMute.bind(this.panel));
@@ -167,11 +167,11 @@ export default class GameScene extends Phaser.Scene {
     this.cameras.main.fadeOut();
     this.data.values.stars = 0;
     this.data.values.isGameOver = false;
-    this.destroySprites();
     this.time.addEvent({
       delay: 2000,
       callback: () => {
         this.scene.stop();
+        this.elementsManager.destroyElements();
         this.removeListeners();
         this.scene.start(key, { level: (this.level += Number(nextLevel)) });
       },
@@ -184,10 +184,5 @@ export default class GameScene extends Phaser.Scene {
     this.events.removeAllListeners('pointerdown');
     this.events.removeListener(EventNames.BallStop);
     HotkeysService.removeAllHotkeysEvents(this);
-  }
-
-  private destroySprites(): void {
-    const allSprites = this.children.list.filter((x) => x instanceof Phaser.GameObjects.Sprite);
-    allSprites.forEach((x) => x.destroy());
   }
 }

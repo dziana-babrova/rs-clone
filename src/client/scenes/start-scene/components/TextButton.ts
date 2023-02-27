@@ -1,20 +1,21 @@
 import { Colors } from 'common/types/enums';
-import Phaser from 'phaser';
+import { GameObjects } from 'phaser';
 import { TextButtonParams } from 'common/types/types';
+import { STYLE } from 'client/const/AppConstants';
 
 type Position = {
   x: number,
   y: number,
 };
 
-export default class TextButton extends Phaser.GameObjects.Text {
+export default class TextButton extends GameObjects.Text {
   bgColor: Colors;
 
   hoverBgColor: Colors;
 
   constructor(scene: Phaser.Scene, coords: Position, text: string, params: TextButtonParams) {
     super(scene, coords.x, coords.y, text, {
-      fontFamily: 'Montserrat',
+      fontFamily: STYLE.font,
       fontSize: `${params.textSize}px`,
       backgroundColor: params.bgColor,
       color: params.textColor,

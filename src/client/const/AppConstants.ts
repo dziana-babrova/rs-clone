@@ -1,3 +1,5 @@
+import { Colors } from 'common/types/enums';
+
 const key = 'rsCloneMiniGolf';
 
 export const LocalStorageKeys = {
@@ -10,8 +12,8 @@ export const LocalStorageKeys = {
 };
 
 export const serverProps = {
-  URL: 'http://localhost:3000/api',
-  ONLINE: 'http://localhost:3000/',
+  URL: 'https://rs-clone-golf-api-server.onrender.com/api',
+  ONLINE: 'https://rs-clone-server-production-739c.up.railway.app/',
 };
 
 export const hotkeys = {
@@ -23,4 +25,10 @@ export const hotkeys = {
   restart: 'R',
   back: 'ESC',
   winners: 'W',
+};
+
+export const STYLE = {
+  font: 'Montserrat',
+  lightText: Colors.Primary,
+  darkText: Colors.Secondary,
 };
