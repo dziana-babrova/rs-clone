@@ -102,15 +102,15 @@ export default class TopPanel extends Phaser.GameObjects.Container {
   }
 
   private initEvents(goTo: SwitchLevel): void {
-    this.rightButtons.music.on('pointerup', this.toggleMusic.bind(this));
-    this.rightButtons.sound.on('pointerup', this.toggleSound.bind(this));
-    this.leftButtons[TopPanelFrames.Back].on('pointerup', goTo.bind(this.scene, SceneKeys.Start));
+    this.rightButtons.music.on('pointerdown', this.toggleMusic.bind(this));
+    this.rightButtons.sound.on('pointerdown', this.toggleSound.bind(this));
+    this.leftButtons[TopPanelFrames.Back].on('pointerdown', goTo.bind(this.scene, SceneKeys.Start));
     this.leftButtons[TopPanelFrames.Restart].on(
-      'pointerup',
+      'pointerdown',
       goTo.bind(this.scene, this.sceneKey, false),
     );
-    this.leftButtons[TopPanelFrames.Levels].on('pointerup', this.openLevels.bind(this));
-    this.leftButtons[TopPanelFrames.Info].on('pointerup', this.openInfo.bind(this));
+    this.leftButtons[TopPanelFrames.Levels].on('pointerdown', this.openLevels.bind(this));
+    this.leftButtons[TopPanelFrames.Info].on('pointerdown', this.openInfo.bind(this));
   }
 
   public toggleMusic(): void {
