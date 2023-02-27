@@ -9,6 +9,8 @@ export default class DOMPopup extends GameObjects.DOMElement {
 
   btnClose!: HTMLButtonElement;
 
+  domPopup!: HTMLDivElement;
+
   onClosePopup!: () => void;
 
   onClickPopup!: (target: HTMLElement) => void;
@@ -31,7 +33,8 @@ export default class DOMPopup extends GameObjects.DOMElement {
   }
 
   protected createPopup(): HTMLDivElement {
-    return ElementsFactory.createDivElement('popup');
+    this.domPopup = ElementsFactory.createDivElement('popup');
+    return this.domPopup;
   }
 
   protected createBtnClose(): void {
