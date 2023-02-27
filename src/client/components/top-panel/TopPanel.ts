@@ -143,8 +143,14 @@ export default class TopPanel extends Phaser.GameObjects.Container {
     if (!this.popup) {
       this.popup = new InfoPopup(this.scene);
       this.toggleButtonsInteractivity(false);
-      this.popup.onClosePopup = this.toggleButtonsInteractivity.bind(this, true);
+      this.popup.onClosePopup = this.closeInfoPopup.bind(this);
     }
+  }
+
+  public closeInfoPopup(): void {
+    this.popup?.destroy();
+    this.popup = null;
+    this.toggleButtonsInteractivity(true);
   }
 
   public toggleButtonsInteractivity(isDisabled: boolean): void {

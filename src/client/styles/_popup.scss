@@ -4,7 +4,6 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  gap: 20px;
   width: 100%;
   max-width: 580px;
   padding: 40px;
@@ -13,8 +12,10 @@
   border: 2px solid $color-secondary;
 
   &_info-start {
+    top: calc(50% + 10px);
     max-width: 900px;
     display: grid;
+    gap: 10px 25px;
     grid-template-columns: 120px 1fr max-content 120px;
     grid-template-rows: 1fr max-content max-content;
     grid-template-areas: 
@@ -26,6 +27,7 @@
   &_info-game {
     max-width: 900px;
     display: grid;
+    gap: 10px 20px;
     grid-template-columns: 1fr max-content;
     grid-template-areas: 
     'about hotkeys'
@@ -74,7 +76,7 @@
 
   &__about {
     grid-area: about;
-    place-self: center;
+    place-self: center start;
   }
 
   &__hotkeys {
@@ -82,7 +84,7 @@
   }
 
   &__controls {
-    place-self: end center;
+    place-self: end start;
     grid-area: controls;
   }
 
@@ -105,7 +107,7 @@
     @include transition(color);
 
     &:hover {
-      color: $color-popup-link-hover;
+      color: $color-link-dark;
     }
   }
 
