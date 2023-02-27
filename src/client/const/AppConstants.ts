@@ -11,15 +11,9 @@ export const LocalStorageKeys = {
   accessToken: `${key}-access-token`,
 };
 
-export const SERVER_PROPS = {
-  URL: 'http://localhost:3000/api', // 'https://rs-clone-server-production-739c.up.railway.app/api'
-  ONLINE: 'http://localhost:3000', // 'https://rs-clone-server-production-739c.up.railway.app/'
-};
-
-export const STYLE = {
-  font: 'Montserrat',
-  lightText: Colors.Primary,
-  darkText: Colors.Secondary,
+export const serverProps = {
+  URL: 'https://rs-clone-golf-api-server.onrender.com/api',
+  ONLINE: 'https://rs-clone-server-production-739c.up.railway.app/',
 };
 
 export const hotkeys = {
@@ -31,4 +25,10 @@ export const hotkeys = {
   restart: 'R',
   back: 'ESC',
   winners: 'W',
+};
+
+export const STYLE = {
+  font: 'Montserrat',
+  lightText: Colors.Primary,
+  darkText: Colors.Secondary,
 };

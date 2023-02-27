@@ -4,7 +4,7 @@ import {
   IPlayerInfo, Level, ScoreMessage, StatusMessage,
 } from 'common/types/types';
 import { OnlineGameEvents, SocketEvents } from 'common/types/events';
-import { SERVER_PROPS } from 'client/const/AppConstants';
+import { serverProps } from 'client/const/AppConstants';
 
 export default class SocketService {
   socket!: Socket;
@@ -20,7 +20,7 @@ export default class SocketService {
   }
 
   async join() {
-    this.socket = await io(SERVER_PROPS.ONLINE);
+    this.socket = await io(serverProps.ONLINE);
     this.socket.on('connect', () => { this.id = this.socket.id; });
     this.initEvents();
     return this.socket;
@@ -55,10 +55,7 @@ export default class SocketService {
       SocketEvents.SwitchTarget,
       (target: Level) => this.events.emit(OnlineGameEvents.SwitchTarget, target),
     );
-    this.socket.on(
-      SocketEvents.CreateBalls,
-      (balls: string) => this.events.emit(OnlineGameEvents.CreateBalls, balls),
-    );
+
     this.socket.on(
       SocketEvents.UpdateBalls,
       (balls: string) => this.events.emit(OnlineGameEvents.UpdateBalls, balls),
@@ -128,10 +125,6 @@ export default class SocketService {
 
   public switchTarget(cb: (data: Level) => void, context?: any): void {
     this.events.on(OnlineGameEvents.SwitchTarget, cb, context);
-  }
-
-  public createBalls(cb: (data: string) => void, context?: any): void {
-    this.events.on(OnlineGameEvents.CreateBalls, cb, context);
   }
 
   public updateBalls(cb: (data: string) => void, context?: any): void {

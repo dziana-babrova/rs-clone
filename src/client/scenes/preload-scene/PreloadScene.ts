@@ -68,8 +68,9 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.image(TextureKeys.eng, '../assets/eng.png');
     this.load.image(TextureKeys.ru, '../assets/ru.png');
     this.load.image(TextureKeys.Close, '../assets/close.svg');
-    this.load.image(TextureKeys.Ball, '../assets/Golf-Ball-big.png');
-    this.load.image(TextureKeys.MiniBall, '../assets/mini-ball.png');
+    this.load.image(TextureKeys.Ball, '../assets/ball-big.png');
+    this.load.image(TextureKeys.BallMedium, '../assets/ball-medium.png');
+    this.load.image(TextureKeys.BallMini, '../assets/ball-mini.png');
     this.load.image(TextureKeys.Saw, '../assets/saw.png');
     this.load.image(TextureKeys.LevelEmpty, '../assets/levelEmpty.svg');
     this.load.image(TextureKeys.LevelOneStar, '../assets/level1.svg');
@@ -80,6 +81,7 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.image(TextureKeys.Winner, '../assets/winner.svg');
     this.load.image(TextureKeys.Star, '../assets/star.svg');
     this.load.image(TextureKeys.Info, '../assets/info.svg');
+    this.load.image(TextureKeys.Pagination, '../assets/right-arrow.png');
 
     this.load.atlas(TextureKeys.Platforms, platfrom, texture);
     this.load.atlas(TextureKeys.Flag, '../assets/flag.png', '../assets/flag.json');

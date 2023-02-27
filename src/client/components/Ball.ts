@@ -1,6 +1,6 @@
 import { ballSettings } from 'client/const/scenes/GameSceneConsts';
 import SoundService from 'client/services/SoundService';
-import { SoundsKeys } from 'common/types/enums';
+import { SoundsKeys, TextureKeys } from 'common/types/enums';
 import { EventNames } from 'common/types/events';
 import { IComponent, Position } from 'common/types/types';
 import { Scene } from 'phaser';
@@ -17,7 +17,7 @@ export default class Ball extends Phaser.Physics.Matter.Sprite implements ICompo
   private text: BallText;
 
   constructor(scene: Scene, position: Position) {
-    super(scene.matter.world, position.x, position.y, 'ball');
+    super(scene.matter.world, position.x, position.y, TextureKeys.Ball);
     this.scene = scene;
     this.setBallBody();
     this.scene.add.existing(this);

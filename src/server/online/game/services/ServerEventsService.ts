@@ -16,10 +16,6 @@ export default class ServerEventsService {
     this.server.to(this.room).emit(SocketEvents.SwitchTarget, data);
   }
 
-  emitCreateBall(data: string) {
-    this.server.to(this.room).emit(SocketEvents.CreateBalls, data);
-  }
-
   emitPlayersStatus(data: StatusMessage) {
     this.server.to(this.room).emit(SocketEvents.ChangeStatus, data);
   }

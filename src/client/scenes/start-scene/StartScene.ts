@@ -1,4 +1,3 @@
-import { AxiosError } from 'axios';
 import LoadingOverlay from 'client/components/LoadingOverlay';
 import Landscape from 'client/components/popups/Landscape';
 import Levels from 'client/components/popups/Levels';
@@ -7,20 +6,27 @@ import { LocalStorageKeys } from 'client/const/AppConstants';
 import { NEXT_LANG } from 'client/const/Language';
 import {
   Language,
-  Colors, SceneKeys, SettingsPopupKeys, SoundsKeys, TextureKeys,
+  Colors,
+  SceneKeys,
+  SettingsPopupKeys,
+  SoundsKeys,
+  TextureKeys,
 } from 'common/types/enums';
 import { emptyLevel } from 'client/const/levels/Levels';
 import ErrorService from 'client/services/ErrorService';
 import LocalStorageService from 'client/services/LocalStorageService';
 import SocketService from 'client/services/SocketService';
 import SoundService from 'client/services/SoundService';
-import WinnersService from 'client/services/WinnersService ';
 import { setLang, setMusic } from 'client/state/features/AppSlice';
 import { axiosSignOut } from 'client/state/features/UserSlice';
 import store from 'client/state/store';
 import { Scene } from 'phaser';
 import { WinnersResponse } from 'common/types/types';
 import InfoPopup from 'client/components/dom-popup/InfoPopup';
+import WinnerApiService from 'client/services/WinnersApiService';
+import HotkeysService from 'client/services/HotkeysService';
+import { HotkeysEvents } from 'common/types/events';
+import ErrorPopup from 'client/components/popups/ErrorPopup';
 import ElementsManager from '../game-scene/components/ElementsManager';
 import AuthBtn from './components/AuthBtn';
 import AuthPopup from './components/AuthPopup';
@@ -50,7 +56,7 @@ export default class StartScene extends Scene {
 
   authPopup!: AuthPopup;
 
-  settingsPopup!: Levels | Landscape | Winners | InfoPopup;
+  settingsPopup: Levels | Landscape | Winners | ErrorPopup | null = null;
 
   music!: Phaser.Sound.BaseSound;
 
@@ -67,13 +73,11 @@ export default class StartScene extends Scene {
     this.socketService = new SocketService();
   }
 
-  public preload(): void {
-  }
+  public preload(): void {}
 
   public async create(): Promise<void> {
     this.loadingOverlay = new LoadingOverlay(this);
 
-    ErrorService.setScene(this);
     const { user } = store.getState();
 
     if (user.isAuth) {
@@ -105,6 +109,7 @@ export default class StartScene extends Scene {
     SoundService.playMusic(this, SoundsKeys.Music);
 
     this.initEvents();
+    this.initHotkeys();
 
     await golfCourse.create();
     golfCourse.ball.setVelocityX(25);
@@ -115,7 +120,8 @@ export default class StartScene extends Scene {
     this.startSceneBtns.btnStartSingleGame.on('pointerdown', this.startSingleGame.bind(this));
     this.startSceneBtns.btnTwoPlayersGame.on('pointerdown', this.showMultiplayerBtns.bind(this));
 
-    this.multiplayerBtns.btnStartLocalGame.on('pointerdown', this.startLocalGame.bind(this));
+    this.multiplayerBtns.btnStartLocalGame.on('pointerdown', this.startLocalGame.bind(this, false));
+    this.multiplayerBtns.btnStartWithBotGame.on('pointerdown', this.startLocalGame.bind(this, true));
     this.multiplayerBtns.btnStartOnlineGame.on('pointerdown', this.showRoomPopup.bind(this));
     this.multiplayerBtns.btnBack.background.on('pointerdown', this.hideMultiplayerBtns.bind(this));
 
@@ -129,32 +135,61 @@ export default class StartScene extends Scene {
 
     this.infoBtn.on('pointerdown', this.infoBtnHandler.bind(this));
 
-    this.startSceneBtns.btnLevels.background.on('pointerdown', this.createSettingsPopup.bind(this, SettingsPopupKeys.Levels));
-    this.startSceneBtns.btnLandscape.background.on('pointerdown', this.createSettingsPopup.bind(this, SettingsPopupKeys.Landscape));
-    this.startSceneBtns.btnWinners.background.on('pointerdown', this.createSettingsPopup.bind(this, SettingsPopupKeys.Winners));
+    this.startSceneBtns.btnLevels.background.on(
+      'pointerdown',
+      this.createSettingsPopup.bind(this, SettingsPopupKeys.Levels),
+    );
+    this.startSceneBtns.btnLandscape.background.on(
+      'pointerdown',
+      this.createSettingsPopup.bind(this, SettingsPopupKeys.Landscape),
+    );
+    this.startSceneBtns.btnWinners.background.on(
+      'pointerdown',
+      this.createSettingsPopup.bind(this, SettingsPopupKeys.Winners),
+    );
 
     this.startSceneBtns.btnMusic.background.on('pointerdown', this.turnOnOffSound.bind(this));
   }
 
-  private async showMultiplayerBtns(): Promise<void> {
-    await Promise.all([
-      this.startSceneBtns.hide(),
-      this.multiplayerBtns.show(),
-    ]);
+  private initHotkeys() {
+    HotkeysService.initHotkeysEvents(this);
+    this.events.on(
+      HotkeysEvents.Levels,
+      this.handlePopupHotKey.bind(this, SettingsPopupKeys.Levels),
+    );
+    this.events.on(
+      HotkeysEvents.Winners,
+      this.handlePopupHotKey.bind(this, SettingsPopupKeys.Winners),
+    );
+    this.events.on(HotkeysEvents.Back, () => {
+      if (this.settingsPopup) this.settingsPopup.closePopup();
+    });
+    this.events.on(HotkeysEvents.Music, this.turnOnOffSound.bind(this));
   }
 
-  private async hideMultiplayerBtns(): Promise<void> {
-    await Promise.all([
-      this.startSceneBtns.show(),
-      this.multiplayerBtns.hide(),
-    ]);
+  protected async handlePopupHotKey(key: SettingsPopupKeys) {
+    if (!this.settingsPopup) {
+      this.createSettingsPopup(key);
+      return;
+    }
+    await this.settingsPopup.closePopup();
+    this.createSettingsPopup(key);
+  }
+
+  private async showMultiplayerBtns() {
+    await Promise.all([this.startSceneBtns.hide(), this.multiplayerBtns.show()]);
+  }
+
+  private async hideMultiplayerBtns() {
+    await Promise.all([this.startSceneBtns.show(), this.multiplayerBtns.hide()]);
   }
 
   private async createSettingsPopup(type: SettingsPopupKeys): Promise<void> {
     this.handleInteractiveStartScreen(false);
     switch (type) {
       case SettingsPopupKeys.Levels: {
-        this.settingsPopup = new Levels(this);
+        const level = store.getState().app.maps.findIndex((el) => !el.isUnlock);
+        this.settingsPopup = new Levels(this, level);
         if (this.settingsPopup instanceof Levels) {
           this.settingsPopup.startLevel = this.startSingleGame.bind(this);
         }
@@ -166,22 +201,21 @@ export default class StartScene extends Scene {
       }
       case SettingsPopupKeys.Winners: {
         this.loadingOverlay.show();
-        const winnersResponse: WinnersResponse | AxiosError = await WinnersService.getWinners();
-        this.loadingOverlay.hide();
-        this.handleInteractiveStartScreen.bind(this, false);
-        if ('message' in winnersResponse) {
-          const errorPopup = ErrorService.createErrorPopup();
-          if (errorPopup) {
-            errorPopup.onClosePopup = this.handleInteractiveStartScreen.bind(this, true);
-          }
-        } else {
-          this.settingsPopup = new Winners(this, winnersResponse);
+        try {
+          const response = await WinnerApiService.getWinners();
+          this.loadingOverlay.hide();
+          this.handleInteractiveStartScreen.bind(this, false);
+          this.settingsPopup = new Winners(this, response.data);
+        } catch (e: unknown) {
+          this.loadingOverlay.hide();
+          this.handleInteractiveStartScreen.bind(this, false);
+          this.settingsPopup = ErrorService.createErrorPopup(this);
         }
         break;
       }
       default:
     }
-    this.settingsPopup.onClosePopup = this.handleInteractiveStartScreen.bind(this, true);
+    if (this.settingsPopup) this.settingsPopup.onClosePopup = this.onCloseSettingsPopup.bind(this);
   }
 
   private handleInteractiveStartScreen(isActive: boolean): void {
@@ -206,6 +240,24 @@ export default class StartScene extends Scene {
       this.startSceneBtns.btnWinners.background.disableInteractive();
       this.startSceneBtns.btnMusic.background.disableInteractive();
     }
+  }
+
+  private onCloseSettingsPopup(): void {
+    this.handleInteractiveStartScreen(true);
+    this.settingsPopup = null;
+  }
+
+  private onClosePopup(): void {
+    this.input.enabled = true;
+    HotkeysService.keyBoardOn(this);
+    this.authPopup.visible = false;
+  }
+
+  private onCloseRoomPopup() {
+    this.onClosePopup();
+    this.socketService.leave();
+    HotkeysService.keyBoardOn(this);
+    this.roomPopup.visible = false;
   }
 
   private turnOnOffSound(): void {
@@ -244,7 +296,9 @@ export default class StartScene extends Scene {
       this.input.enabled = true;
       this.loadingOverlay.hide();
     } else {
+      this.authPopup.visible = true;
       this.authPopup.renderPopup();
+      HotkeysService.keyBoardOff(this);
     }
   }
 
@@ -258,15 +312,6 @@ export default class StartScene extends Scene {
     this.authBtn.updateBtnText();
   }
 
-  private onClosePopup(): void {
-    this.input.enabled = true;
-  }
-
-  private onCloseRoomPopup() {
-    this.onClosePopup();
-    this.socketService.leave();
-  }
-
   private startSingleGame(level?: number): void {
     this.scene.stop();
     this.removeStartScreenObjects();
@@ -277,16 +322,18 @@ export default class StartScene extends Scene {
     this.scene.start(SceneKeys.Game);
   }
 
-  private startLocalGame(): void {
+  private startLocalGame(withBot: Boolean): void {
     this.removeStartScreenObjects();
-    this.scene.start(SceneKeys.MultiPlayer, { withBot: false });
+    this.scene.start(SceneKeys.MultiPlayer, { withBot });
   }
 
   async showRoomPopup(): Promise<void> {
+    this.roomPopup.visible = true;
     await this.socketService.join();
     this.input.enabled = false;
     this.roomPopup.renderPopup();
     this.roomPopup.show();
+    HotkeysService.keyBoardOff(this);
   }
 
   private startOnlineGame(): void {
@@ -295,6 +342,7 @@ export default class StartScene extends Scene {
 
   private removeStartScreenObjects(): void {
     this.children.list.forEach((obj) => obj.destroy());
+    HotkeysService.removeAllHotkeysEvents(this);
   }
 
   goToOnline() {

@@ -6,19 +6,10 @@ import { Scene } from 'phaser';
 import LocalStorageService from './LocalStorageService';
 
 export default class ErrorService {
-  private static scene: Scene | null;
-
-  static setScene(scene: Scene) {
-    this.scene = scene;
-  }
-
-  static createErrorPopup(): ErrorPopup | null {
+  static createErrorPopup(scene: Scene): ErrorPopup {
     const lang: Language = LocalStorageService.getItem(LocalStorageKeys.lang) || Language.Eng;
-    if (this.scene) {
-      const errorPopup = new ErrorPopup(this.scene, lang);
-      errorPopup.showPopup();
-      return errorPopup;
-    }
-    return null;
+    const errorPopup = new ErrorPopup(scene, lang);
+    errorPopup.showPopup();
+    return errorPopup;
   }
 }

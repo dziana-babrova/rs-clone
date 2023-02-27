@@ -74,6 +74,7 @@ export default class AuthPopup extends DOMFormPopup {
     popup.append(this.form, messageWrapper, this.btnClose);
 
     this.form[AuthFormInputsKeys.Email].autocomplete = 'username';
+    this.form[AuthFormInputsKeys.Username].autocomplete = 'nickname';
     this.form[AuthFormInputsKeys.Password].autocomplete = 'current-password';
     this.usernameLabel.style.display = 'none';
 

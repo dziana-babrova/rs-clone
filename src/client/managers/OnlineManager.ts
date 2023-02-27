@@ -19,9 +19,9 @@ import { Socket } from 'socket.io-client';
 import WinPopup from 'client/components/popups/WinPopup';
 import SocketService from 'client/services/SocketService';
 import Count from 'client/scenes/online-scene/components/Count';
-import TopPanel from 'client/components/top-panel/TopPanel';
 import OnlineSceneService from 'client/services/OnlineSceneService';
 import SoundService from 'client/services/SoundService';
+import HotkeysService from 'client/services/HotkeysService';
 import ScorePanel from '../scenes/multiplayer-scene/components/ScorePanel';
 import Player from '../scenes/multiplayer-scene/components/Player';
 
@@ -54,8 +54,6 @@ export default class OnlineManager extends Phaser.GameObjects.Container {
 
   waitingMessage: GameObjects.Text | null = null;
 
-  panel: TopPanel;
-
   constructor(scene: Scene, tileSize: number, socket: Socket, socketService: SocketService) {
     super(scene);
     this.socket = socket;
@@ -65,13 +63,6 @@ export default class OnlineManager extends Phaser.GameObjects.Container {
     this.score = new ScorePanel(scene, { x: scene.cameras.main.centerX - 25, y: 0 });
     this.onlineService = new OnlineSceneService(this.scene);
     this.initEvents();
-    this.panel = new TopPanel(
-      this.scene,
-      SceneKeys.Online,
-      false,
-      false,
-      this.goToScene,
-    );
   }
 
   private initEvents(): void {
@@ -154,12 +145,6 @@ export default class OnlineManager extends Phaser.GameObjects.Container {
     }
   }
 
-  public setStartBalls(balls: string): void {
-    const serverBalls = this.onlineService.deserializeBalls(balls);
-    this.balls = this.onlineService.mapServerBallsToBalls(serverBalls);
-    this.currentPlayer.isAvailable = true;
-  }
-
   public updateBalls(balls: string): void {
     this.onlineService.updateBalls(this.balls, balls);
   }
@@ -207,8 +192,9 @@ export default class OnlineManager extends Phaser.GameObjects.Container {
   }
 
   public updateStatus(status: StatusMessage): void {
+    const prevStatus = this.currentPlayer.isAvailable;
     this.currentPlayer.isAvailable = this.currentPlayer.id === 1 ? status.player1 : status.player2;
-    if (this.currentPlayer.isAvailable) this.currentPlayer.trajectory.resume();
+    if (!prevStatus && this.currentPlayer.isAvailable) this.currentPlayer.trajectory.resume();
   }
 
   public updateScore(score: ScoreMessage): void {
@@ -256,13 +242,15 @@ export default class OnlineManager extends Phaser.GameObjects.Container {
     this.enemy?.destroyPlayer();
   }
 
-  private goToScene(scene: string): void {
+  public goToScene(scene: string): void {
+    this.socketService.leave();
     this.scene.cameras.main.fadeOut();
     this.scene.time.addEvent({
       delay: 2000,
       callback: () => {
         this.scene.scene.stop();
         this.destroyAllElements();
+        HotkeysService.removeAllHotkeysEvents(this.scene);
         this.scene.scene.start(scene);
       },
     });

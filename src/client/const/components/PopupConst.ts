@@ -6,6 +6,11 @@ const POPUP = {
       width: 1200,
       height: 400,
       shift: -40,
+      perPage: 30,
+      arrowSize: 50,
+      arrowGap: 20,
+      bottomPadding: 20,
+      xCorrection: 13,
     },
 
     winners: {
@@ -65,8 +70,10 @@ const POPUP = {
   },
 
   textBold: {
-    font: '600 35px Montserrat',
-    color: '#000000',
+    fontFamily: STYLE.font,
+    fontSize: '35px',
+    fontStyle: '600',
+    color: STYLE.darkText,
     align: 'center',
   },
 

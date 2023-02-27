@@ -69,6 +69,7 @@ export type Saw = {
   directionY: number;
   angle: number;
   distance: number;
+  duration: number,
 };
 
 export type SawType = 'rotate' | 'move' | '';
