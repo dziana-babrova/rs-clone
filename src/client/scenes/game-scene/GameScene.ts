@@ -171,7 +171,7 @@ export default class GameScene extends Phaser.Scene {
       delay: 2000,
       callback: () => {
         this.scene.stop();
-        this.destroySprites();
+        this.elementsManager.destroyElements();
         this.removeListeners();
         this.scene.start(key, { level: (this.level += Number(nextLevel)) });
       },
@@ -184,10 +184,5 @@ export default class GameScene extends Phaser.Scene {
     this.events.removeAllListeners('pointerdown');
     this.events.removeListener(EventNames.BallStop);
     HotkeysService.removeAllHotkeysEvents(this);
-  }
-
-  private destroySprites(): void {
-    // const allSprites = this.children.list.filter((x) => x instanceof Phaser.GameObjects.Sprite);
-    // allSprites.forEach((x) => x.destroy());
   }
 }
