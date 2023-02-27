@@ -11,6 +11,7 @@ export default class GameBot extends Player {
     super(scene, position, isReverse, id);
     this.trajectory.stop();
     this.trajectory.alpha = 0;
+    this.scene.events.once(EventNames.SceneChange, this.stopBot.bind(this));
   }
 
   public startBot(): void {
@@ -26,8 +27,15 @@ export default class GameBot extends Player {
   }
 
   async tick(): Promise<void> {
-    await this.hitBotBall();
-    this.timer = setTimeout(this.tick.bind(this), this.getRandomNum(botTimer.start, botTimer.end));
+    try {
+      await this.hitBotBall();
+      this.timer = setTimeout(
+        this.tick.bind(this),
+        this.getRandomNum(botTimer.start, botTimer.end),
+      );
+    } catch {
+      console.log();
+    }
   }
 
   protected async hitBotBall(): Promise<void> {

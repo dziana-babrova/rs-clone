@@ -205,6 +205,7 @@ export default class MultiplayerManager extends Phaser.GameObjects.Container {
       this.player1.isAvailable = false;
       this.player2.isAvailable = false;
       this.showWinPopup(player);
+      if (this.player2 instanceof GameBot) this.player2.stopBot();
     } else {
       this.destroyElements();
       this.switchTarget(++this.currentTarget);
@@ -252,6 +253,8 @@ export default class MultiplayerManager extends Phaser.GameObjects.Container {
   }
 
   public goToScene(scene: string): void {
+    this.scene.events.emit(EventNames.SceneChange);
+    if (this.player2 instanceof GameBot) this.player2.stopBot();
     this.scene.cameras.main.fadeOut();
     this.scene.time.addEvent({
       delay: 2000,

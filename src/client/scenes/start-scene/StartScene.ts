@@ -102,7 +102,7 @@ export default class StartScene extends Scene {
       this.startSceneBtns.showBtnSettings(),
     ]);
 
-    SoundService.playMusic(this, SoundsKeys.Music);
+    if (!this.data.values.musicPlaying) SoundService.playMusic(this, SoundsKeys.Music);
 
     this.initEvents();
     this.initHotkeys();
