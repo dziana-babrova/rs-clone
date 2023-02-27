@@ -5,7 +5,7 @@ import { LocalStorageKeys } from 'client/const/AppConstants';
 import LocalStorageService from 'client/services/LocalStorageService';
 import SoundService from 'client/services/SoundService';
 import {
-  TextureKeys, TopPanelFrames, SoundsKeys, SceneKeys, InfoPopupType,
+  TextureKeys, TopPanelFrames, SoundsKeys, SceneKeys,
 } from 'common/types/enums';
 import { Scene } from 'phaser';
 import { setMusic, setSound } from 'client/state/features/AppSlice';
@@ -132,7 +132,7 @@ export default class TopPanel extends Phaser.GameObjects.Container {
 
   private openInfo(): void {
     if (!this.popup) {
-      this.popup = new InfoPopup(this.scene, InfoPopupType.Single, this.sceneKey);
+      this.popup = new InfoPopup(this.scene);
       this.toggleButtonsInteractivity(false);
       this.popup.onClosePopup = this.toggleButtonsInteractivity.bind(this, true);
     }

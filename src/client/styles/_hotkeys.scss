@@ -1,9 +1,4 @@
 .hotkeys {
-  border
-  &__title {
-    margin: 0 auto;
-  }
-
   &__list {
     display: flex;
     flex-direction: column;
@@ -17,14 +12,15 @@
   }
 
   &__key {
+    place-self: center;
     display: block;
     text-align: center;
     font-size: 20px;
-    font-weight: 500;
+    font-weight: 700;
     padding: 6px;
     min-width: 40px;
     background-color: $color-popup-border;
-    border-radius: 2px;
+    border-radius: 4px;
     border: 2px solid $color-secondary;
   }
 

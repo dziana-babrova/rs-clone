@@ -7,7 +7,7 @@ import { LocalStorageKeys } from 'client/const/AppConstants';
 import { NEXT_LANG } from 'client/const/Language';
 import {
   Language,
-  Colors, SceneKeys, SettingsPopupKeys, SoundsKeys, TextureKeys, InfoPopupType,
+  Colors, SceneKeys, SettingsPopupKeys, SoundsKeys, TextureKeys,
 } from 'common/types/enums';
 import { emptyLevel } from 'client/const/levels/Levels';
 import ErrorService from 'client/services/ErrorService';
@@ -101,9 +101,6 @@ export default class StartScene extends Scene {
       this.startSceneBtns.showTwoPlayersGameBtn(),
       this.startSceneBtns.showBtnSettings(),
     ]);
-
-    const infoPopup = new InfoPopup(this, InfoPopupType.Start, SceneKeys.Start);
-    console.log('infoPopup: ', infoPopup);
 
     SoundService.playMusic(this, SoundsKeys.Music);
 
@@ -253,7 +250,7 @@ export default class StartScene extends Scene {
 
   private infoBtnHandler(): void {
     this.input.enabled = false;
-    const infoPopup = new InfoPopup(this, InfoPopupType.Start, SceneKeys.Start);
+    const infoPopup = new InfoPopup(this);
     infoPopup.onClosePopup = this.onClosePopup.bind(this);
   }
 

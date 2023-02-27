@@ -1,25 +1,47 @@
 import INFO_POPUP from 'client/const/components/InfoPopupConst';
 import LANGUAGE from 'client/const/Language';
 import store from 'client/state/store';
-import { InfoPopupType, Language, SceneKeys } from 'common/types/enums';
+import {
+  ControlKeys, HotkeysKeys, InfoPopupType, SceneKeys,
+} from 'common/types/enums';
 import DOMInfoPopup from './DOMInfoPopup';
 
 export default class InfoPopup extends DOMInfoPopup {
   type: InfoPopupType;
 
-  sceneKey: SceneKeys;
-
-  constructor(scene: Phaser.Scene, type: InfoPopupType, sceneKey: SceneKeys) {
+  constructor(scene: Phaser.Scene) {
     super(scene);
-    this.type = type;
-    this.sceneKey = sceneKey;
+    this.type = InfoPopupType.Start;
+
+    switch (scene.scene.key) {
+      case SceneKeys.Game: {
+        this.type = InfoPopupType.Game;
+        break;
+      }
+      case SceneKeys.MultiPlayer: {
+        this.type = InfoPopupType.MultiPlayer;
+        break;
+      }
+      case SceneKeys.Online: {
+        this.type = InfoPopupType.Online;
+        break;
+      }
+      default:
+    }
+
     this.renderPopup();
     this.show();
   }
 
   public renderPopup(): void {
     this.node.innerHTML = '';
+
     const popup = this.createPopup();
+    if (this.type === InfoPopupType.Start) {
+      popup.classList.add('popup_info-start');
+    } else {
+      popup.classList.add('popup_info-game');
+    }
     popup.classList.add('popup_info');
     this.createBtnClose();
 
@@ -28,15 +50,19 @@ export default class InfoPopup extends DOMInfoPopup {
     const title = this.createTitle(LANGUAGE.popup.info.type[this.type].title[lang]);
     popup.append(title);
 
-    const aboutStringArr = LANGUAGE.popup.info.about[this.sceneKey]
-      .map((item) => item[lang as Language]);
+    const aboutStringArr = LANGUAGE.popup.info.about[this.type][lang];
 
     if (aboutStringArr.length > 0) {
       const about = this.createAbout(aboutStringArr);
       popup.append(about);
     }
 
-    const hotkeys = this.createHotkeys(INFO_POPUP.hotkeys[this.type]);
+    if (this.type !== InfoPopupType.Start) {
+      const contolKeys = this.createKeys<ControlKeys>(INFO_POPUP.controlKeys[this.type], false);
+      popup.append(contolKeys);
+    }
+
+    const hotkeys = this.createKeys<HotkeysKeys>(INFO_POPUP.hotkeys[this.type], true);
     popup.append(hotkeys);
 
     if (this.type === InfoPopupType.Start) {

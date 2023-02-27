@@ -1,4 +1,4 @@
-import { HotkeysKeys } from 'common/types/enums';
+import { ControlKeys, HotkeysKeys } from 'common/types/enums';
 
 const INFO_POPUP = {
   developers: [
@@ -29,38 +29,54 @@ const INFO_POPUP = {
       link: 'https://github.com/dziana-babrova/rs-clone',
     },
   },
-  hotkeys: {
-    start: [
-      HotkeysKeys.Mute,
-      HotkeysKeys.Sounds,
-      HotkeysKeys.Music,
-      HotkeysKeys.Levels,
-      HotkeysKeys.Info,
-      HotkeysKeys.Restart,
-      HotkeysKeys.Back,
-      HotkeysKeys.Winners,
+  controlKeys: {
+    game: [
+      ControlKeys.Space,
+      ControlKeys.UpDown,
+      ControlKeys.LeftRight,
     ],
-    single: [
-      HotkeysKeys.Mute,
-      HotkeysKeys.Sounds,
-      HotkeysKeys.Music,
-      HotkeysKeys.Levels,
-      HotkeysKeys.Info,
-      HotkeysKeys.Restart,
-      HotkeysKeys.Back,
+    multiplayer: [
+      ControlKeys.MultiSpaceLocal,
+      ControlKeys.MultiUpLocal,
     ],
-    multiPlayer: [
-      HotkeysKeys.Mute,
-      HotkeysKeys.Sounds,
-      HotkeysKeys.Music,
-      HotkeysKeys.Info,
-      HotkeysKeys.Back,
+    online: [
+      ControlKeys.MultiSpaceOnline,
     ],
   },
-  about: {
-    // start: {
-
-    // },
+  hotkeys: {
+    start: [
+      HotkeysKeys.Info,
+      HotkeysKeys.Mute,
+      HotkeysKeys.Sounds,
+      HotkeysKeys.Music,
+      HotkeysKeys.Restart,
+      HotkeysKeys.Levels,
+      HotkeysKeys.Winners,
+      HotkeysKeys.Back,
+    ],
+    game: [
+      HotkeysKeys.Mute,
+      HotkeysKeys.Sounds,
+      HotkeysKeys.Music,
+      HotkeysKeys.Levels,
+      HotkeysKeys.Info,
+      HotkeysKeys.Restart,
+      HotkeysKeys.Back,
+    ],
+    multiplayer: [
+      HotkeysKeys.Mute,
+      HotkeysKeys.Sounds,
+      HotkeysKeys.Music,
+      HotkeysKeys.Info,
+      HotkeysKeys.Back,
+    ],
+    online: [
+      HotkeysKeys.Mute,
+      HotkeysKeys.Sounds,
+      HotkeysKeys.Music,
+      HotkeysKeys.Info,
+      HotkeysKeys.Back,
+    ],
   },
 };
 

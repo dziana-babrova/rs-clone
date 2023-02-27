@@ -1,15 +1,10 @@
 .popup {
   cursor: default;
-  display: grid;
-  grid-template-columns: 1fr max-content;
-  grid-template-areas: 
-  'about hotkeys'
-  'contacts hotkeys'
-  'contacts logo';
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  gap: 20px;
   width: 100%;
   max-width: 580px;
   padding: 40px;
@@ -17,9 +12,26 @@
   background-color: $color-popup-border;
   border: 2px solid $color-secondary;
 
-  &_info {
+  &_info-start {
     max-width: 1000px;
+    display: grid;
+    grid-template-columns: 1fr max-content;
+    grid-template-rows: 1fr max-content max-content;
+    grid-template-areas: 
+    'about hotkeys'
+    'contacts hotkeys'
+    'contacts logo';
   }
+
+  &_info-game {
+    max-width: 900px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: 
+    'about hotkeys'
+    'controls hotkeys'
+  }
+
 
   &::before{
     content: '';
@@ -37,10 +49,12 @@
   &__title {
     display: block;
     position: absolute;
+    white-space: nowrap;
     top: -27px;
     left: 50%;
     transform: translateX(-50%);
-    width: 400px;
+    min-width: 400px;
+    padding: 0 40px;
     height: 60px;
     font-size: 38px;
     line-height: 58px;
@@ -52,22 +66,29 @@
   }
 
   &__subtitle {
-    font-size: 28px;
+    font-size: 24px;
     font-weight: 500;
+    margin-bottom: 8px;
+    text-align: center;
   }
 
   &__about {
     grid-area: about;
+    place-self: center;
   }
-  &__about-text {
-  }
+
   &__hotkeys {
     grid-area: hotkeys;
   }
 
+  &__controls {
+    place-self: end center;
+    grid-area: controls;
+  }
+
   &__contacts {
     grid-area: contacts;
-    place-self: end start;
+    place-self: end center;
   }
 
   &__logo-link {
@@ -81,14 +102,19 @@
   }
 
   &__link {
+    @include transition(color);
+
+    &:hover {
+      color: $color-popup-link-hover;
+    }
   }
 
   &__copyright {
     position: absolute;
-    bottom: 14px;
+    bottom: 16px;
     left: 50%;
     transform: translateX(-50%);
-    font-size: 14px;
+    font-size: 16px;
   }
 
   &__message-wrapper {
@@ -115,7 +141,8 @@
   &__submit {
     text-transform: capitalize;
     display: block;
-    margin: 10px auto;
+    margin: 0 auto;
+    margin-bottom: 10px;
     width: 100%;
     height: 57px;
     font-weight: 500;
@@ -123,11 +150,17 @@
     background-color: $color-main;
     color: $color-primary;
 
+    &:last-child {
+      margin-bottom: 0;
+    }
+
     &:hover {
       background-color: $color-main-dark;
     }
 
     &_random {
+      margin-top: 15px;
+      margin-bottom: 0;
       background-color: $color-link;
 
       &:hover {
@@ -150,14 +183,5 @@
     background-size: contain;
     background-color: transparent;
     border: none;
-
-    @include mobile {
-      width: 26px;
-      height: 26px;
-    }
-
-    &:hover {
-      color: $color-link;
-    }
   }
 }

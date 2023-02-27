@@ -142,7 +142,6 @@ export default class DOMFormPopup extends DOMPopup {
 
   private showNotFoundError(): void {
     this.updateHints();
-    console.log('notfoundHandler');
     this.form[`${AuthFormInputsKeys.Email}Hint`].value = LANGUAGE.popup.errors.notFoundError[store.getState().app.lang];
     this.addErrorClass(AuthFormInputsKeys.Email);
   }

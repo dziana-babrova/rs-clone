@@ -1,8 +1,28 @@
 .contacts {
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
   &__person {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    font-size: 18px;
   }
+
   &__text {
+    place-self: end;
   }
+
   &__link {
+    font-weight: 700;
+    color: $color-popup-border;
+    @include transition(color);
+
+    &:hover {
+      color: $color-popup-link-hover;
+    }
   }
 }

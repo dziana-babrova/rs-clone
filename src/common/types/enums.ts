@@ -217,8 +217,9 @@ export enum TopPanelFrames {
 
 export enum InfoPopupType {
   Start = 'start',
-  Single = 'single',
-  MultiPlayer = 'multiPlayer',
+  Game = 'game',
+  MultiPlayer = 'multiplayer',
+  Online = 'online',
 }
 
 export enum InfoPopupScene {
@@ -237,4 +238,13 @@ export enum HotkeysKeys {
   Restart = 'restart',
   Back = 'back',
   Winners = 'winners',
+}
+
+export enum ControlKeys {
+  Space = 'space',
+  LeftRight = 'leftRight',
+  UpDown = 'upDown',
+  MultiUpLocal = 'multiUpLocal',
+  MultiSpaceLocal = 'multiSpaceLocal',
+  MultiSpaceOnline = 'multiSpaceOnline',
 }

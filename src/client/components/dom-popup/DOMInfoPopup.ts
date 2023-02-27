@@ -2,7 +2,7 @@ import { hotkeys } from 'client/const/AppConstants';
 import LANGUAGE from 'client/const/Language';
 import store from 'client/state/store';
 import ElementsFactory from 'client/utils/ElementGenerator';
-import { HotkeysKeys } from 'common/types/enums';
+import { ControlKeys, HotkeysKeys } from 'common/types/enums';
 import { IDeveloper, Link } from 'common/types/types';
 import DOMPopup from './DOMPopup';
 
@@ -28,44 +28,91 @@ export default class DOMInfoPopup extends DOMPopup {
     );
   }
 
-  protected createHotkeys(arr: HotkeysKeys[]): HTMLElement {
-    const container = ElementsFactory.createBaseElement('section', 'popup__hotkeys hotkeys');
+  protected createKeys<T extends HotkeysKeys | ControlKeys>(arr: T[], isHotkeys: boolean):
+  HTMLElement {
+    const className = isHotkeys ? 'popup__hotkeys hotkeys' : 'popup__controls hotkeys';
+    const container = ElementsFactory.createBaseElement('section', className);
+
+    const titleText = isHotkeys
+      ? LANGUAGE.popup.info.hotkeys.title[store.getState().app.lang]
+      : LANGUAGE.popup.info.controlKeys.title[store.getState().app.lang];
 
     const title = ElementsFactory.createBaseElementWithText(
       'h3',
       'popup__subtitle hotkeys__title',
-      'Hotkeys',
+      titleText,
     );
 
     const list = ElementsFactory.createBaseElement('ul', 'hotkeys__list');
-    const items = arr.map((item) => this.createHotkeyRow(item));
+    const items = arr.map((item) => this.createKeyRow(item, isHotkeys));
 
     list.append(...items);
     container.append(title, list);
     return container;
   }
 
-  protected createHotkeyRow(item: HotkeysKeys): HTMLElement {
+  protected createKeyRow<T extends HotkeysKeys | ControlKeys>(item: T, isHotkeys: boolean):
+  HTMLElement {
     const li = ElementsFactory.createBaseElement(
       'li',
       'hotkeys__item',
     );
 
-    const key = ElementsFactory.createBaseElementWithText(
+    const keyText = isHotkeys
+      ? hotkeys[item as HotkeysKeys]
+      : this.getControlKeyText(item as ControlKeys);
+
+    const key = ElementsFactory.createBaseElement(
       'span',
       'hotkeys__key',
-      hotkeys[item],
     );
+    key.innerHTML = keyText;
+
+    const labelText = isHotkeys
+      ? LANGUAGE.popup.info.hotkeys[item as HotkeysKeys][store.getState().app.lang]
+      : LANGUAGE.popup.info.controlKeys[item as ControlKeys][store.getState().app.lang];
 
     const label = ElementsFactory.createBaseElementWithText(
       'span',
       'hotkeys__label',
-      `- ${LANGUAGE.popup.info.hotkeys[item][store.getState().app.lang]}`,
+      `- ${labelText}`,
     );
 
     li.append(key, label);
 
     return li;
+  }
+
+  private getControlKeyText(key: ControlKeys): string {
+    switch (key) {
+      case ControlKeys.UpDown: {
+        return `<svg width="62" height="20" viewBox="0 0 62 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M15 18L5 1L25 0.999999L15 18Z" fill="black"/>
+        <path d="M47 1L57 18L37 18L47 1Z" fill="black"/>
+        <path d="M34.294 1L29.6065 18.4148H27L31.6875 1H34.294Z" fill="black"/>
+        </svg>
+        `;
+        break;
+      }
+      case ControlKeys.LeftRight: {
+        return `<svg width="62" height="20" viewBox="0 0 62 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M15 18L5 1L25 0.999999L15 18Z" fill="black"/>
+        <path d="M47 1L57 18L37 18L47 1Z" fill="black"/>
+        <path d="M34.294 1L29.6065 18.4148H27L31.6875 1H34.294Z" fill="black"/>
+        </svg>
+        `;
+        break;
+      }
+      case ControlKeys.MultiUpLocal: {
+        return `<svg width="62" height="20" viewBox="0 0 62 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M31 1L41 18L21 18L31 1Z" fill="black"/>
+        </svg>
+        `;
+        break;
+      }
+      default:
+    }
+    return 'Space';
   }
 
   protected createContacts(arr: IDeveloper[]): HTMLElement {
@@ -74,7 +121,7 @@ export default class DOMInfoPopup extends DOMPopup {
     const title = ElementsFactory.createBaseElementWithText(
       'h3',
       'popup__subtitle contacts__title',
-      'Developers',
+      LANGUAGE.popup.info.contacts.title[store.getState().app.lang],
     );
 
     const list = ElementsFactory.createBaseElement('ul', 'contacts__list');
