@@ -31,4 +31,12 @@ export default class HotkeysService {
     scene.events.removeAllListeners(HotkeysEvents.Sounds);
     scene.events.removeAllListeners(HotkeysEvents.Winners);
   }
+
+  static keyBoardOff(scene: Scene){
+    scene.input.keyboard.enabled = false;
+  }
+  
+  static keyBoardOn(scene: Scene){
+    scene.input.keyboard.enabled = true;
+  }
 }
