@@ -57,7 +57,7 @@ export default class DOMPopup extends GameObjects.DOMElement {
       return;
     }
 
-    this.onClickPopup(target);
+    if (this.onClickPopup) this.onClickPopup(target);
   }
 
   public show(): Promise<unknown> {

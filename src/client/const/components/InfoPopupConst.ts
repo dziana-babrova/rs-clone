@@ -42,6 +42,9 @@ const INFO_POPUP = {
     online: [
       ControlKeys.MultiSpaceOnline,
     ],
+    bot: [
+      ControlKeys.MultiSpaceOnline,
+    ],
   },
   hotkeys: {
     start: [
@@ -71,6 +74,13 @@ const INFO_POPUP = {
       HotkeysKeys.Back,
     ],
     online: [
+      HotkeysKeys.Mute,
+      HotkeysKeys.Sounds,
+      HotkeysKeys.Music,
+      HotkeysKeys.Info,
+      HotkeysKeys.Back,
+    ],
+    bot: [
       HotkeysKeys.Mute,
       HotkeysKeys.Sounds,
       HotkeysKeys.Music,

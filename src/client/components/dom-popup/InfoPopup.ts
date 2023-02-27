@@ -19,7 +19,9 @@ export default class InfoPopup extends DOMInfoPopup {
         break;
       }
       case SceneKeys.MultiPlayer: {
-        this.type = InfoPopupType.MultiPlayer;
+        this.type = ('withBot' in this.scene && this.scene.withBot)
+          ? InfoPopupType.Bot
+          : InfoPopupType.MultiPlayer;
         break;
       }
       case SceneKeys.Online: {
