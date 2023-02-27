@@ -72,7 +72,7 @@ export const START_SCENE = {
     y: 420,
   },
   btnAuth: {
-    width: 200,
+    width: 0,
     textSize: 32,
     textColor: Colors.Text,
     bgColor: Colors.Blue,
@@ -134,7 +134,7 @@ export const START_SCENE = {
         type: 'email',
       },
       {
-        name: AuthFormInputsKeys.Username,
+        name: AuthFormInputsKeys.Nickname,
         type: 'text',
       },
       {
