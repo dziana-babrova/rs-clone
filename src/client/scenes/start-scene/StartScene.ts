@@ -284,7 +284,6 @@ export default class StartScene extends Scene {
     } else {
       this.authPopup.renderPopup();
       HotkeysService.keyBoardOff(this);
-      console.log(this.events);
     }
   }
 
