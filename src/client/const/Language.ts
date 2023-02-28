@@ -50,41 +50,41 @@ const LANGUAGE = {
     popupInputs: {
       email: {
         placeholder: {
-          eng: 'Input e-mail',
+          eng: 'E-mail',
           ru: 'Введите e-mail',
         },
         hint: {
-          eng: 'Should match the format: mail@example.com',
+          eng: 'Email must match the format: mail@example.com',
           ru: 'Формат: mail@example.com',
         },
       },
       username: {
         placeholder: {
-          eng: 'Input nickname',
+          eng: 'Nickname',
           ru: 'Введите имя',
         },
         hint: {
-          eng: 'Length must be at least 3 characters',
+          eng: 'Nickname must contain at least 3 characters',
           ru: 'Длина должна быть не менее 3 символов',
         },
       },
       password: {
         placeholder: {
-          eng: 'Input password',
+          eng: 'Password',
           ru: 'Введите пароль',
         },
         hint: {
-          eng: 'Length must be at least 6 characters',
+          eng: 'Password must contain at least 6 characters',
           ru: 'Длина должна быть не менее 6 символов',
         },
       },
       room: {
         placeholder: {
-          eng: 'Input room name',
+          eng: 'Enter room name',
           ru: 'Введите название комнаты',
         },
         hint: {
-          eng: 'Length must be at least 3 characters',
+          eng: 'Room name must contain at least 3 characters',
           ru: 'Длина должна быть не менее 3 символов',
         },
       },
@@ -95,44 +95,45 @@ const LANGUAGE = {
         ru: 'Oшибка',
       },
       text: {
-        eng: 'Sorry, we couldn\'t get data\n from the server.\nPlease try again later.',
-        ru: 'К сожалению, нам не удалось получить данные с сервера.\nПожалуйста,\nповторите попытку позже.',
+        eng: "Sorry, we couldn't get data\n from the server.\nPlease try again later.",
+        ru:
+          'К сожалению, нам не удалось получить данные с сервера.\nПожалуйста,\nповторите попытку позже.',
       },
     },
     errors: {
       emptyError: {
         email: {
-          eng: 'Email should not be empty',
-          ru: 'Электронная почта не должна быть пустой',
+          eng: 'The email field is required',
+          ru: 'Укажите электронную почту',
         },
         password: {
-          eng: 'Password should not be empty',
-          ru: 'Пароль не должен быть пустым',
+          eng: 'The password field is required',
+          ru: 'Укажите пароль',
         },
         username: {
-          eng: 'Username should not be empty',
-          ru: 'Имя не должен быть пустым',
+          eng: 'The username field is required',
+          ru: 'Укажите никнейм',
         },
         room: {
-          eng: 'Name should not be empty',
-          ru: 'Название не должно быть пустым',
+          eng: 'Enter the name',
+          ru: 'Введите имя',
         },
       },
       lengthError: {
         email: {
-          eng: 'Email length must be at least 3 characters',
+          eng: 'Email must contain at least 3 characters',
           ru: 'Длина почты должна быть не менее 3 символов',
         },
         password: {
-          eng: 'Password length must be at least 6 characters',
+          eng: 'Password must contain at least 6 characters',
           ru: 'Длина пароля должна быть не менее 6 символов',
         },
         username: {
-          eng: 'Username length must be at least 3 characters',
+          eng: 'Username must containe at least 3 characters',
           ru: 'Длина имени должна быть не менее 3 символов',
         },
         room: {
-          eng: 'Name length must be at least 3 characters',
+          eng: 'Name must contain at least 3 characters',
           ru: 'Длина названия должна быть не менее 3 символов',
         },
       },
@@ -187,7 +188,7 @@ const LANGUAGE = {
       about: {
         start: {
           eng: [
-            'Play golf alone, with a friend, online or challenge the Bot.',
+            'Play golf alone, with a friend, online or compete with the Bot.',
             `In the game for one, try to complete all the levels.
             Sign in to be included in the winners table.
             Collect stars. Beware of saws.`,
@@ -237,7 +238,7 @@ const LANGUAGE = {
         },
         bot: {
           eng: [
-            'Fight the Bot!',
+            'Compete with the Bot!',
             'The number of balls is unlimited.',
             'Сan you beat the computer?',
             'The score is kept up to 5 points.',
@@ -271,7 +272,7 @@ const LANGUAGE = {
         },
         mute: {
           eng: 'mute/unmute',
-          ru: 'отключить/включить звук',
+          ru: 'включить/выключить звук',
         },
         sounds: {
           eng: 'turn on/off game sounds',
@@ -291,7 +292,7 @@ const LANGUAGE = {
         },
         restart: {
           eng: 'restart level',
-          ru: 'перезапуск уровня',
+          ru: 'перезапустить уровень',
         },
         back: {
           eng: 'go to start screen',
@@ -308,28 +309,28 @@ const LANGUAGE = {
           ru: 'Клавиши управления',
         },
         space: {
-          eng: 'kick the ball',
+          eng: 'hit the ball',
           ru: 'ударить по мячу',
         },
         leftRight: {
-          eng: 'change the force of impact',
+          eng: 'change the hitting force',
           ru: 'изменить силу удара',
         },
         upDown: {
-          eng: 'change the angle of impact',
+          eng: 'change the hitting angle',
           ru: 'изменить угол удара',
         },
         multiUpLocal: {
-          eng: 'right player kick control',
+          eng: 'right player hit control',
           ru: 'управление ударом правого игрока',
         },
         multiSpaceLocal: {
-          eng: 'left player kick control',
+          eng: 'left player hit control',
           ru: 'управление ударом левого игрока',
         },
         multiSpaceOnline: {
-          eng: 'stick stroke control',
-          ru: 'управление ударом клюшкой',
+          eng: 'hit control',
+          ru: 'управление ударом',
         },
       },
       contacts: {
@@ -430,7 +431,7 @@ const LANGUAGE = {
       ru: 'Войти',
     },
     logout: {
-      eng: 'Logout',
+      eng: 'Signout',
       ru: 'Выйти',
     },
   },
