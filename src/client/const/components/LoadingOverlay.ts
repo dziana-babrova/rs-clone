@@ -5,7 +5,7 @@ const LOADING_OVERLAY = {
 
   overlay: {
     color: ColorsNumber.Secondary,
-    fillAlpha: 60,
+    fillAlpha: 70,
   },
 };
 
