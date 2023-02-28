@@ -343,10 +343,19 @@ export default class StartScene extends Scene {
   }
 
   private startOnlineGame(): void {
+    this.removeStartScreenObjects();
     this.scene.start(SceneKeys.Online, this.socketService);
   }
 
   private removeStartScreenObjects(): void {
+    this.popup?.destroy();
+    this.popup = null;
+    this.settingsPopup?.destroy();
+    this.settingsPopup = null;
+    this.events.removeAllListeners('pointerup');
+    this.events.removeAllListeners('pointerdown');
+    this.events.removeAllListeners('pointerover');
+    this.events.removeAllListeners('pointerout');
     this.children.list.forEach((obj) => obj.destroy());
     HotkeysService.removeAllHotkeysEvents(this);
   }
