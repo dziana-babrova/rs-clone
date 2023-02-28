@@ -2,6 +2,7 @@ import LANGUAGE from 'client/const/Language';
 import { START_SCENE } from 'client/const/scenes/StartSceneConst';
 import store from 'client/state/store';
 import ElementsFactory from 'client/utils/ElementGenerator';
+import Loader from 'client/utils/loader/Loader';
 import {
   AuthFormInputsKeys, PopupType, RoomFormInputsKeys,
 } from 'common/types/enums';
@@ -13,11 +14,16 @@ import DOMPopup from './DOMPopup';
 export default class DOMFormPopup extends DOMPopup {
   form!: HTMLFormElement;
 
+  loader: Loader;
+
   popupType: PopupType;
 
   constructor(scene: Phaser.Scene, type: PopupType) {
     super(scene);
     this.popupType = type;
+
+    this.loader = new Loader();
+    this.node.append(this.loader.wrapper);
   }
 
   protected createForm(): void {

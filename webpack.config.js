@@ -35,7 +35,7 @@ const baseConfig = {
         ],
       },
       {
-        test: /\.(ico|jpg|svg|png)$/,
+        test: /\.(ico|jpg|svg|png|gif)$/,
         type: 'asset/resource',
       },
       {
@@ -65,16 +65,16 @@ const baseConfig = {
     new EslingPlugin({ extensions: 'ts' }),
     new MiniCssExtractPlugin({}),
     new CopyPlugin({
-      patterns: [
-        { from: 'src/client/assets', to: 'assets' },
-      ],
+      patterns: [{ from: 'src/client/assets', to: 'assets' }],
     }),
   ],
 };
 
 module.exports = ({ mode }) => {
-    const isProductionMode = mode === 'prod';
-    const envConfig = isProductionMode ? require('./webpack.prod.config') : require('./webpack.dev.config');
+  const isProductionMode = mode === 'prod';
+  const envConfig = isProductionMode
+    ? require('./webpack.prod.config')
+    : require('./webpack.dev.config');
 
-    return merge(baseConfig, envConfig);
+  return merge(baseConfig, envConfig);
 };

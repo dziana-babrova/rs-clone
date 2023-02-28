@@ -34,7 +34,6 @@ export default class AuthPopup extends DOMFormPopup {
 
   public renderPopup(): void {
     this.formType = FormType.SignIn;
-    this.node.innerHTML = '';
     const popup = this.createPopup();
     this.createForm();
     this.createBtnClose();
@@ -110,7 +109,9 @@ export default class AuthPopup extends DOMFormPopup {
       switch (this.formType) {
         case FormType.SignIn: {
           this.domPopup?.classList.add('disable');
+          this.loader.showLoader();
           const response = await store.dispatch(axiosSignIn({ email, password }));
+          this.loader.hideLoader();
           this.domPopup?.classList.remove('disable');
           if ('error' in response) {
             const msg = response.payload?.message;
@@ -132,7 +133,9 @@ export default class AuthPopup extends DOMFormPopup {
         case FormType.SignUp: {
           const username = this.form[AuthFormInputsKeys.Nickname].value;
           this.domPopup?.classList.add('disable');
+          this.loader.showLoader();
           const response = await store.dispatch(axiosSignUp({ email, username, password }));
+          this.loader.hideLoader();
           this.domPopup?.classList.remove('disable');
           if (store.getState().user.isAuth) {
             await store.dispatch(axiosCreateMaps(MapService.getDefaultMapsObject()));
