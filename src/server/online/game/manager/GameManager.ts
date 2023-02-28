@@ -124,10 +124,10 @@ export default class GameManager {
       this.isAvailable = false;
       this.socketService.emitGameOver(2);
     } else {
-      this.socketService.emitPlayersScore({ score1: this.score1, score2: this.score2 });
       this.destroyElements();
       this.switchTarget(++this.currentTarget);
     }
+    this.socketService.emitPlayersScore({ score1: this.score1, score2: this.score2 });
   }
 
   /* eslint-enable  no-param-reassign */
