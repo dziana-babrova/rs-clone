@@ -153,18 +153,24 @@ export default class StartScene extends Scene {
       HotkeysEvents.Winners,
       this.handlePopupHotKey.bind(this, SettingsPopupKeys.Winners),
     );
-    this.events.on(HotkeysEvents.Back, () => {
-      if (this.settingsPopup) this.settingsPopup.closePopup();
+    this.events.on(
+      HotkeysEvents.Info,
+      this.infoBtnHandler.bind(this),
+    );
+    this.events.on(HotkeysEvents.Back, async () => {
+      if (this.settingsPopup) await this.settingsPopup.closePopup();
+      if (this.popup && this.popup instanceof InfoPopup) await this.popup.closePopup();
     });
     this.events.on(HotkeysEvents.Music, this.turnOnOffSound.bind(this));
   }
 
   protected async handlePopupHotKey(key: SettingsPopupKeys) {
-    if (!this.settingsPopup) {
+    if (!this.settingsPopup && !this.popup) {
       this.createSettingsPopup(key);
       return;
     }
-    await this.settingsPopup.closePopup();
+    if (this.settingsPopup) await this.settingsPopup.closePopup();
+    if (this.popup instanceof InfoPopup) await this.popup.closePopup();
     this.createSettingsPopup(key);
   }
 
@@ -295,12 +301,14 @@ export default class StartScene extends Scene {
     }
   }
 
-  private infoBtnHandler(): void {
+  protected async infoBtnHandler(): Promise<void> {
+    if (this.settingsPopup) {
+      this.settingsPopup.closePopup();
+    }
     if (!this.popup) {
       this.input.enabled = false;
       this.popup = new InfoPopup(this);
       this.popup.onClosePopup = this.onClosePopup.bind(this);
-      HotkeysService.keyBoardOff(this);
     }
   }
 
@@ -335,10 +343,19 @@ export default class StartScene extends Scene {
   }
 
   private startOnlineGame(): void {
+    this.removeStartScreenObjects();
     this.scene.start(SceneKeys.Online, this.socketService);
   }
 
   private removeStartScreenObjects(): void {
+    this.popup?.destroy();
+    this.popup = null;
+    this.settingsPopup?.destroy();
+    this.settingsPopup = null;
+    this.events.removeAllListeners('pointerup');
+    this.events.removeAllListeners('pointerdown');
+    this.events.removeAllListeners('pointerover');
+    this.events.removeAllListeners('pointerout');
     this.children.list.forEach((obj) => obj.destroy());
     HotkeysService.removeAllHotkeysEvents(this);
   }

@@ -24,8 +24,8 @@ export default class MultiPlayerScene extends Phaser.Scene {
 
   init(data: { withBot?: boolean }) {
     this.background = new Background(this, store.getState().app.background);
-    if (data.withBot) {
-      this.withBot = data.withBot;
+    if (data) {
+      this.withBot = data.withBot || false;
     }
   }
 

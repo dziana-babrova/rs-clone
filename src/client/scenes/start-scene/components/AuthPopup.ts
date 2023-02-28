@@ -41,7 +41,7 @@ export default class AuthPopup extends DOMFormPopup {
 
     const inputElems = START_SCENE.formInputs.auth.map((item) => {
       const inputElem = this.createInputElem(item);
-      if (item.name === AuthFormInputsKeys.Username) this.usernameLabel = inputElem;
+      if (item.name === AuthFormInputsKeys.Nickname) this.usernameLabel = inputElem;
       return inputElem;
     });
 
@@ -76,7 +76,7 @@ export default class AuthPopup extends DOMFormPopup {
     popup.append(this.form, messageWrapper, this.btnClose);
 
     this.form[AuthFormInputsKeys.Email].autocomplete = 'username';
-    this.form[AuthFormInputsKeys.Username].autocomplete = 'nickname';
+    this.form[AuthFormInputsKeys.Nickname].autocomplete = 'nickname';
     this.form[AuthFormInputsKeys.Password].autocomplete = 'current-password';
     this.usernameLabel.style.display = 'none';
 
@@ -103,13 +103,15 @@ export default class AuthPopup extends DOMFormPopup {
       : this.checkFormValues(
         AuthFormInputsKeys.Email,
         AuthFormInputsKeys.Password,
-        AuthFormInputsKeys.Username,
+        AuthFormInputsKeys.Nickname,
       );
 
     if (valid) {
       switch (this.formType) {
         case FormType.SignIn: {
+          this.domPopup?.classList.add('disable');
           const response = await store.dispatch(axiosSignIn({ email, password }));
+          this.domPopup?.classList.remove('disable');
           if ('error' in response) {
             const msg = response.payload?.message;
             const errors = response.payload?.errors;
@@ -128,8 +130,10 @@ export default class AuthPopup extends DOMFormPopup {
           break;
         }
         case FormType.SignUp: {
-          const username = this.form[AuthFormInputsKeys.Username].value;
+          const username = this.form[AuthFormInputsKeys.Nickname].value;
+          this.domPopup?.classList.add('disable');
           const response = await store.dispatch(axiosSignUp({ email, username, password }));
+          this.domPopup?.classList.remove('disable');
           if (store.getState().user.isAuth) {
             await store.dispatch(axiosCreateMaps(MapService.getDefaultMapsObject()));
           }
@@ -146,12 +150,6 @@ export default class AuthPopup extends DOMFormPopup {
         default:
       }
     }
-  }
-
-  private async closePopup(): Promise<void> {
-    await this.hide();
-    this.setY(-this.scene.cameras.main.height);
-    this.onClosePopup();
   }
 
   private changeFormType(): void {

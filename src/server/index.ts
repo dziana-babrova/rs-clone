@@ -5,13 +5,13 @@ import cors from 'cors';
 import * as dotenv from 'dotenv';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
+import morgan from 'morgan';
 import errorMiddleware from './middleware/error-middleware';
 import authRouter from './routers/AuthRouter';
 import mapsRouter from './routers/MapsRouter';
 import winnersRouter from './routers/WinnersRouter';
 import SocketController from './online/controller/SocketController';
 import State from './online/state/State';
-import morgan from 'morgan';
 
 dotenv.config();
 

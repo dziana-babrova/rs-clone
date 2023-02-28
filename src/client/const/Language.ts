@@ -58,7 +58,7 @@ const LANGUAGE = {
           ru: 'Формат: mail@example.com',
         },
       },
-      username: {
+      nickname: {
         placeholder: {
           eng: 'Nickname',
           ru: 'Введите имя',
@@ -110,7 +110,7 @@ const LANGUAGE = {
           eng: 'The password field is required',
           ru: 'Укажите пароль',
         },
-        username: {
+        nickname: {
           eng: 'The username field is required',
           ru: 'Укажите никнейм',
         },
@@ -128,8 +128,8 @@ const LANGUAGE = {
           eng: 'Password must contain at least 6 characters',
           ru: 'Длина пароля должна быть не менее 6 символов',
         },
-        username: {
-          eng: 'Username must containe at least 3 characters',
+        nickname: {
+          eng: 'Username must contain at least 3 characters',
           ru: 'Длина имени должна быть не менее 3 символов',
         },
         room: {
