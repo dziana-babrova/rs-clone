@@ -49,6 +49,8 @@ export default class GameManager {
 
   player2IsActive = false;
 
+  isNewRound = false;
+
   constructor(scene: Scene, tileSize: number, server: Server, room: string) {
     this.scene = scene;
     this.mapService = new ServerMapService(tileSize);
@@ -75,6 +77,7 @@ export default class GameManager {
     } else {
       this.getStartBalls();
     }
+    this.isNewRound = true;
     this.isAvailable = true;
   }
 
@@ -124,10 +127,10 @@ export default class GameManager {
       this.isAvailable = false;
       this.socketService.emitGameOver(2);
     } else {
-      this.socketService.emitPlayersScore({ score1: this.score1, score2: this.score2 });
       this.destroyElements();
       this.switchTarget(++this.currentTarget);
     }
+    this.socketService.emitPlayersScore({ score1: this.score1, score2: this.score2 });
   }
 
   /* eslint-enable  no-param-reassign */
@@ -154,12 +157,14 @@ export default class GameManager {
   }
 
   handleHit(data: { velocityX: number; velocityY: number; player: number }) {
+    this.isNewRound = false;
     if (data.player === 1) {
       this.player1IsActive = false;
       this.sendPlayersStatus();
       this.player1ball.hitBall(data.velocityX, data.velocityY);
       this.socketService.emitPlayerHit(1);
       this.delay(1000).then(() => {
+        if (this.isNewRound) return;
         this.player1ball = new BallServer(this.scene, firstPlayerPosition, 1, this.ballId++);
         this.initCollisions(this.player1ball);
         this.balls.push(this.player1ball);
@@ -173,6 +178,7 @@ export default class GameManager {
       this.player2ball.hitBall(-data.velocityX, data.velocityY);
       this.socketService.emitPlayerHit(2);
       this.delay(1000).then(() => {
+        if (this.isNewRound) return;
         this.player2ball = new BallServer(this.scene, secondPlayerPosition, 2, this.ballId++);
         this.initCollisions(this.player2ball);
         this.balls.push(this.player2ball);
