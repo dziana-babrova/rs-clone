@@ -16,12 +16,7 @@ export default class DOMPopup extends GameObjects.DOMElement {
   onClickPopup!: (target: HTMLElement) => void;
 
   constructor(scene: Phaser.Scene) {
-    super(
-      scene,
-      0,
-      -scene.cameras.main.height,
-      'div',
-    );
+    super(scene, 0, -scene.cameras.main.height, 'div');
     (this.parent as HTMLElement).style.transformOrigin = 'top';
 
     this.node.className = 'overlay';
@@ -38,10 +33,7 @@ export default class DOMPopup extends GameObjects.DOMElement {
   }
 
   protected createBtnClose(): void {
-    this.btnClose = ElementsFactory.createButtonElement(
-      'btn popup__close',
-      '',
-    );
+    this.btnClose = ElementsFactory.createButtonElement('btn popup__close', '');
   }
 
   protected initEvents(): void {
@@ -56,13 +48,17 @@ export default class DOMPopup extends GameObjects.DOMElement {
     const target = e.target as HTMLElement;
 
     if (target.closest('.popup__close')) {
-      await this.hide();
-      this.setY(-this.scene.cameras.main.height);
-      this.onClosePopup();
+      await this.closePopup();
       return;
     }
 
     if (this.onClickPopup) this.onClickPopup(target);
+  }
+
+  public async closePopup(): Promise<void> {
+    await this.hide();
+    this.setY(-this.scene.cameras.main.height);
+    this.onClosePopup();
   }
 
   public show(): Promise<unknown> {
