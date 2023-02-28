@@ -12,7 +12,7 @@ export const LocalStorageKeys = {
 };
 
 export const serverProps = {
-  URL: 'https://rs-clone-golf-api-server.onrender.com/api',
+  URL: 'https://rs-clone-server-production-739c.up.railway.app/api',
   ONLINE: 'https://rs-clone-server-production-739c.up.railway.app/',
 };
 
