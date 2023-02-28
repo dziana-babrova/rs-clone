@@ -34,7 +34,6 @@ export default class RoomPopup extends DOMFormPopup {
   }
 
   public renderPopup(): void {
-    this.node.innerHTML = '';
     const popup = this.createPopup();
     this.createForm();
     this.createBtnClose();

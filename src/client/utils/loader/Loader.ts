@@ -15,11 +15,11 @@ class Loader {
     this.wrapper.onclick = (e) => {
       e.stopImmediatePropagation();
     };
-    // this.hideLoader();
+    this.hideLoader();
   }
 
   showLoader() {
-    this.wrapper.style.display = 'block';
+    this.wrapper.style.display = '';
   }
 
   hideLoader() {
@@ -27,4 +27,4 @@ class Loader {
   }
 }
 
-export default new Loader();
+export default Loader;
