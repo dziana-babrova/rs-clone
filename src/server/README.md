@@ -4,6 +4,14 @@
 
  API for 'Mini Golf' game ('RS Clone' task)
 
+ ## Tech stack
+ - NodeJS
+ - Express
+ - MongoDB (ODM Mongoose)
+ - Bcrypt
+ - JWT
+ - Socket.IO
+
 ##  Setup and Running
 
 - Clone this repo: `$ https://github.com/dziana-babrova/rs-clone.git`.
@@ -20,29 +28,29 @@
 
  **Auth**
 
-- [Sign Up](https://github.com/dziana-babrova/rs-clone/server#sing-up)
+- [Sign Up](#sing-up)
 
-- [Sign In](https://github.com/dziana-babrova/rs-clone/server#sing-in)
+- [Sign In](#sing-in)
 
-- [Sign Out](https://github.com/dziana-babrova/rs-clone/server#sing-out)
+- [Sign Out](#sing-out)
 
-- [Refresh](https://github.com/dziana-babrova/rs-clone/server#refresh)
+- [Refresh](#refresh)
 
  **Maps**
 
-- [Get Maps](https://github.com/dziana-babrova/rs-clone/server#get-maps)
+- [Get Maps](#get-maps)
 
-- [Update Maps](https://github.com/dziana-babrova/rs-clone/server#update-maps)
+- [Update Maps](#update-maps)
 
-- [Create Maps](https://github.com/dziana-babrova/rs-clone/server#create-maps)
+- [Create Maps](#create-maps)
 
  **Winners**
 
-- [Get Maps](https://github.com/dziana-babrova/rs-clone/server#get-winners)
+- [Get Maps](#get-winners)
 
 
 
-<a name="sign-up"></a>**Sign Up**
+<a id="sign-up"></a>**Sign Up**
 
 ----
 
@@ -185,7 +193,7 @@ None
 
 </details>
 
-<a name="sign-in"></a>**Sign In**
+<a id="sign-in"></a>**Sign In**
 
 ----
 
@@ -343,7 +351,7 @@ None
 
 </details>
 
-<a name="sign-out"></a>**Sing Out**
+<a id="sign-out"></a>**Sing Out**
 
 ----
 
@@ -426,7 +434,7 @@ None
 
 </details>
 
-<a name="refresh"></a>**Refresh**
+<a id="refresh"></a>**Refresh**
 
 ----
 
@@ -512,7 +520,7 @@ None
 
 </details>
 
-<a name="get-maps"></a>**Get Maps**
+<a id="get-maps"></a>**Get Maps**
 
 ----
 
@@ -624,7 +632,7 @@ None
 
 
 
-<a name="update-maps"></a>**Update Maps**
+<a id="update-maps"></a>**Update Maps**
 
 ----
 
@@ -724,7 +732,7 @@ None
 
 </details>
 
-<a name="update-maps"></a>**Create Maps**
+<a id="update-maps"></a>**Create Maps**
 
 ----
 
