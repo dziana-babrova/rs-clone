@@ -4,6 +4,14 @@
 
  API for 'Mini Golf' game ('RS Clone' task)
 
+ ## Tech stack
+ - NodeJS
+ - Express
+ - MongoDB (ODM Mongoose)
+ - Bcrypt
+ - JWT
+ - Socket.IO
+
 ##  Setup and Running
 
 - Clone this repo: `$ https://github.com/dziana-babrova/rs-clone.git`.
@@ -20,31 +28,31 @@
 
  **Auth**
 
-- [Sign Up](https://github.com/dziana-babrova/rs-clone/server#sing-up)
+- [Sign Up](#sign-up)
 
-- [Sign In](https://github.com/dziana-babrova/rs-clone/server#sing-in)
+- [Sign In](#sign-in)
 
-- [Sign Out](https://github.com/dziana-babrova/rs-clone/server#sing-out)
+- [Sign Out](#sign-out)
 
-- [Refresh](https://github.com/dziana-babrova/rs-clone/server#refresh)
+- [Refresh](#refresh)
 
  **Maps**
 
-- [Get Maps](https://github.com/dziana-babrova/rs-clone/server#get-maps)
+- [Get Maps](#get-maps)
 
-- [Update Maps](https://github.com/dziana-babrova/rs-clone/server#update-maps)
+- [Update Maps](#update-maps)
 
-- [Create Maps](https://github.com/dziana-babrova/rs-clone/server#create-maps)
+- [Create Maps](#create-maps)
 
  **Winners**
 
-- [Get Maps](https://github.com/dziana-babrova/rs-clone/server#get-winners)
-
-
-
-<a name="sign-up"></a>**Sign Up**
+- [Get Maps](#get-winners)
 
 ----
+
+
+<a id="sign-up"></a>**Sign Up**
+
 
 Returns json data with two JWT tokens (access and refresh) and UserDto instanse.
 
@@ -185,11 +193,11 @@ None
 
 </details>
 
-<a name="sign-in"></a>**Sign In**
-
 ----
 
-Returns json data with two JWT tokens (access and refresh) and UserDto instanse.
+<a id="sign-in"></a>**Sign In**
+
+Returns json data with two JWT tokens (access and refresh) and UserDto instance.
 
 <details>
 
@@ -343,9 +351,9 @@ None
 
 </details>
 
-<a name="sign-out"></a>**Sing Out**
-
 ----
+
+<a id="sign-out"></a>**Sing Out**
 
 Logout of the user account.
 
@@ -426,9 +434,9 @@ None
 
 </details>
 
-<a name="refresh"></a>**Refresh**
-
 ----
+
+<a id="refresh"></a>**Refresh**
 
 Refresh JWT tokens.
 
@@ -512,9 +520,9 @@ None
 
 </details>
 
-<a name="get-maps"></a>**Get Maps**
-
 ----
+
+<a id="get-maps"></a>**Get Maps**
 
 Returns json data with user maps card object.
 
@@ -622,11 +630,10 @@ None
 
 </details>
 
-
-
-<a name="update-maps"></a>**Update Maps**
-
 ----
+
+<a id="update-maps"></a>**Update Maps**
+
 
 Update maps instance.
 
@@ -724,9 +731,9 @@ None
 
 </details>
 
-<a name="update-maps"></a>**Create Maps**
-
 ----
+
+<a id="update-maps"></a>**Create Maps**
 
 Create maps instance.
 
@@ -838,9 +845,9 @@ None
 
 </details>
 
-<a name="get-winners"></a>**Get Winners**
-
 ----
+
+<a name="get-winners"></a>**Get Winners**
 
 Return winners.
 
