@@ -22,6 +22,7 @@ export default class State {
     candidateRoom.players = candidateRoom.players.filter((el) => el.socketId !== id);
     if (!candidateRoom.players.length) {
       this.rooms = this.rooms.filter((el) => el !== candidateRoom);
+      candidateRoom.game.destroy(true);
     }
   }
 
