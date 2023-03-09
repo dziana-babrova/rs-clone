@@ -12,8 +12,8 @@ export const LocalStorageKeys = {
 };
 
 export const serverProps = {
-  URL: 'https://rs-clone-server-production-af43.up.railway.app/api',
-  ONLINE: 'https://rs-clone-server-production-af43.up.railway.app/',
+  URL: 'https://rs-clone-golf-api-server.onrender.com/api',
+  ONLINE: 'https://rs-clone-golf-api-server.onrender.com/',
 };
 
 export const hotkeys = {
