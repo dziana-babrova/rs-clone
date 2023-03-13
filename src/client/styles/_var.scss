@@ -1,0 +1,57 @@
+$color-grey: #6F6F6F;
+$color-grey-light: #CDCDCD;
+$color-popup-border: #AFAFAF;
+$color-error: #eb4034;
+$color-valid: #0EB91F;
+$color-popup-background: #fefee3;
+$color-popup-border: #d68d44;
+$color-popup-link-hover: #c77928;
+
+
+$color-main: #46b4e1;
+$color-main-dark: #1A9ED4;
+$color-link: #E11195;
+$color-link-dark: #C20F81;
+
+$color-primary: #ffffff;
+$color-secondary: #000000;
+$color-blue: #46b4e1;
+$color-blue-dark: #1A9ED4;
+$color-pink: #E11195;
+$color-pink-dark: #C20F81;
+
+
+$desktop: 1600px;
+$laptop: 1200px;
+$tablet: 960px;
+$mobile: 560px;
+
+@mixin desktop {
+  @media (max-width: #{$desktop}) {
+    @content;
+  }
+}
+
+@mixin laptop {
+  @media (max-width: #{$laptop}) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (max-width: #{$tablet}) {
+    @content;
+  }
+}
+
+@mixin mobile {
+  @media (max-width: #{$mobile}) {
+    @content;
+  }
+}
+
+@mixin transition($property) {
+  transition-property: $property;
+  transition-duration: 0.3s;
+  transition-timing-function: ease-in-out;
+}

@@ -1,0 +1,11 @@
+.about {
+  margin-top: 34px;
+
+  &__text {
+    font-size: 22px;
+    font-weight: 500;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+  }
+}

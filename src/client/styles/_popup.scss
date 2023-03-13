@@ -1,0 +1,189 @@
+.popup {
+  cursor: default;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  max-width: 580px;
+  padding: 40px;
+  border-radius: 16px;
+  background-color: $color-popup-border;
+  border: 2px solid $color-secondary;
+
+  &_info-start {
+    top: calc(50% + 10px);
+    max-width: 900px;
+    display: grid;
+    gap: 10px 25px;
+    grid-template-columns: 120px 1fr max-content 120px;
+    grid-template-rows: 1fr max-content max-content;
+    grid-template-areas: 
+    'about about hotkeys hotkeys'
+    '. contacts contacts .'
+    '. contacts contacts logo';
+  }
+
+  &_info-game {
+    max-width: 900px;
+    display: grid;
+    gap: 10px 20px;
+    grid-template-columns: 1fr max-content;
+    grid-template-areas: 
+    'about hotkeys'
+    'controls hotkeys'
+  }
+
+
+  &::before{
+    content: '';
+    position: absolute;
+    z-index: -20;
+    top: 6px;
+    left: 6px;
+    width: calc(100% - 12px);
+    height: calc(100% - 12px);
+    border-radius: 14px;
+    background-color: $color-popup-background;
+    border: 2px solid $color-secondary;
+  }
+
+  &__title {
+    display: block;
+    position: absolute;
+    white-space: nowrap;
+    top: -27px;
+    left: 50%;
+    transform: translateX(-50%);
+    min-width: 400px;
+    padding: 0 40px;
+    height: 60px;
+    font-size: 38px;
+    line-height: 58px;
+    text-align: center;
+    color: $color-primary;
+    background-color: $color-popup-border;
+    border-radius: 30px;
+    border: 2px solid $color-secondary;
+  }
+
+  &__subtitle {
+    font-size: 24px;
+    font-weight: 500;
+    margin-bottom: 8px;
+    text-align: center;
+  }
+
+  &__about {
+    grid-area: about;
+    place-self: center start;
+  }
+
+  &__hotkeys {
+    grid-area: hotkeys;
+  }
+
+  &__controls {
+    place-self: end start;
+    grid-area: controls;
+  }
+
+  &__contacts {
+    grid-area: contacts;
+    place-self: end center;
+  }
+
+  &__logo-link {
+    grid-area: logo;
+    place-self: end end;
+  }
+
+  &__logo {
+    width: 100px;
+    height: auto;
+  }
+
+  &__link {
+    @include transition(color);
+
+    &:hover {
+      color: $color-link-dark;
+    }
+  }
+
+  &__copyright {
+    position: absolute;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 16px;
+  }
+
+  &__message-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    font-size: 1.2rem;
+
+  }
+
+  &__message {
+    text-align: center;
+  }
+
+  &__change {
+    color: $color-link;
+    @include transition(color);
+
+    &:hover {
+      color: $color-link-dark;
+    }
+  }
+
+  &__submit {
+    text-transform: capitalize;
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 10px;
+    width: 100%;
+    height: 57px;
+    font-weight: 500;
+    font-size: 2rem;
+    background-color: $color-main;
+    color: $color-primary;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    &:hover {
+      background-color: $color-main-dark;
+    }
+
+    &_random {
+      margin-top: 15px;
+      margin-bottom: 0;
+      background-color: $color-link;
+
+      &:hover {
+        background-color: $color-link-dark;
+      }
+    }
+  }
+
+  &__close {
+    position: absolute;
+    z-index: 100;
+    right: -18px;
+    top: -18px;
+    color: $color-grey-light;
+    width: 46px;
+    height: 46px;
+    background-image: url('../assets/close.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    background-color: transparent;
+    border: none;
+  }
+}
